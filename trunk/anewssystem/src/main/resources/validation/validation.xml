@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN" "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
+
+<form-validation>
+  <global>
+    <constant>
+      <constant-name>url</constant-name>
+      <constant-value>^(http:\/\/)?[\w-]+(\.[\w-]+)*(:[\d]{4,5})?((\/)?[\w-]+[\.\w-]*)*(\/)?$</constant-value>
+    </constant>
+    <constant>
+      <constant-name>phone</constant-name>
+      <constant-value>^\(?(\d{3})\)?[-| ]?(\d{3})[-| ]?(\d{4})$</constant-value>
+    </constant>
+    <constant>
+      <constant-name>postnum</constant-name>
+      <constant-value>^\d{5}\d*$</constant-value>
+    </constant>
+  </global>
+  <formset>
+    <form name="category">
+      <field property="name" depends="required,maxlength">
+        <arg key="category.name"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>50</var-value>
+        </var>
+      </field>
+      <field property="theSort" depends="integer">
+        <arg key="category.theSort"/>
+      </field>
+      <field property="status" depends="integer">
+        <arg key="category.status"/>
+      </field>
+    </form>
+    <form name="news">
+      <field property="name" depends="required,maxlength">
+        <arg key="news.name"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>100</var-value>
+        </var>
+      </field>
+      <field property="subtitle" depends="maxlength">
+        <arg key="news.subtitle"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>100</var-value>
+        </var>
+      </field>
+      <field property="link" depends="maxlength">
+        <arg key="news.link"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>100</var-value>
+        </var>
+      </field>
+      <field property="image" depends="maxlength">
+        <arg key="news.image"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>50</var-value>
+        </var>
+      </field>
+      <field property="hit" depends="integer">
+        <arg key="news.hit"/>
+      </field>
+      <field property="summary" depends="maxlength">
+        <arg key="news.summary"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>255</var-value>
+        </var>
+      </field>
+      <field property="content" depends="required,maxlength">
+        <arg key="news.content"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>2000</var-value>
+        </var>
+      </field>
+      <field property="source" depends="maxlength">
+        <arg key="news.source"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>50</var-value>
+        </var>
+      </field>
+      <field property="editor" depends="maxlength">
+        <arg key="news.editor"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>50</var-value>
+        </var>
+      </field>
+      <field property="updateDate" depends="date">
+        <arg key="news.updateDate"/>
+        <var>
+          <var-name>datePatternStrict</var-name>
+          <var-value>yyyy-MM-dd</var-value>
+        </var>
+      </field>
+      <field property="status" depends="integer">
+        <arg key="news.status"/>
+      </field>
+    </form>
+    <form name="config">
+      <field property="newsNeedAudit" depends="integer">
+        <arg key="config.newsNeedAudit"/>
+      </field>
+      <field property="commentNeedAudit" depends="integer">
+        <arg key="config.commentNeedAudit"/>
+      </field>
+      <field property="couldComment" depends="integer">
+        <arg key="config.couldComment"/>
+      </field>
+    </form>
+    <form name="comment">
+      <field property="name" depends="maxlength">
+        <arg key="comment.name"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>100</var-value>
+        </var>
+      </field>
+      <field property="content" depends="maxlength">
+        <arg key="comment.content"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>2000</var-value>
+        </var>
+      </field>
+      <field property="username" depends="maxlength">
+        <arg key="comment.username"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>50</var-value>
+        </var>
+      </field>
+      <field property="updateDate" depends="date">
+        <arg key="comment.updateDate"/>
+        <var>
+          <var-name>datePatternStrict</var-name>
+          <var-value>yyyy-MM-dd</var-value>
+        </var>
+      </field>
+      <field property="status" depends="integer">
+        <arg key="comment.status"/>
+      </field>
+      <field property="ip" depends="maxlength">
+        <arg key="comment.ip"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>20</var-value>
+        </var>
+      </field>
+    </form>
+    <form name="tag">
+      <field property="name" depends="maxlength">
+        <arg key="tag.name"/>
+        <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
+        <var>
+          <var-name>maxlength</var-name>
+          <var-value>50</var-value>
+        </var>
+      </field>
+      <field property="theSort" depends="integer">
+        <arg key="tag.theSort"/>
+      </field>
+    </form>
+  </formset>
+</form-validation>
+<!--
+      <field property="email" depends="email">
+        <arg key="user.email" />
+      </field>
+      <field property="status" depends="intRange">
+        <arg key="user.status" />
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>1</var-value>
+        </var>
+      </field>
+      <field property="url" depends="mask">
+        <arg key="link.url"/>
+        <var>
+          <var-name>mask</var-name>
+          <var-value>${url}</var-value>
+        </var>
+      </field>
+-->

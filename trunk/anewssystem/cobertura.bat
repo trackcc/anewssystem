@@ -1,0 +1,2 @@
+call mvn site
+pause

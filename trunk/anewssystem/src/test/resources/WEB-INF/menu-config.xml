@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<MenuConfig>
+
+    <Displayers>
+        <Displayer name="DropDown"
+                   type="net.sf.navigator.displayer.DropDownMenuDisplayer"/>
+        <Displayer name="Simple"
+                   type="net.sf.navigator.displayer.SimpleMenuDisplayer"/>
+        <Displayer name="CoolMenu"
+                   type="net.sf.navigator.displayer.CoolMenuDisplayer"/>
+        <Displayer name="CoolMenu4"
+                   type="net.sf.navigator.displayer.CoolMenuDisplayer4"/>
+        <Displayer name="MenuForm"
+                   type="net.sf.navigator.example.PermissionsFormMenuDisplayer"/>
+        <Displayer name="ListMenu"
+                   type="net.sf.navigator.displayer.ListMenuDisplayer"/>
+        <Displayer name="TabbedMenu"
+                   type="net.sf.navigator.displayer.TabbedMenuDisplayer"/>
+        <Displayer name="Velocity"
+                   type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+        <Displayer name="XtreeMenu"
+                   type="net.sf.navigator.displayer.XtreeMenuDisplayer"/>
+        <Displayer name="CSSListMenu"
+                   type="net.sf.navigator.displayer.CSSListMenuDisplayer"/>
+        <Displayer name="OutlookMenu"
+                   type="anni.cms.lag.menu.OutlookMenuDisplayer"/>
+    </Displayers>
+
+
+    <Menus>
+		<Menu name="News" title="新闻管理">
+			<Item name="ListNews" title="浏览新闻" image="../images/icon/16x16/manager.jpg" 
+				  location="listNews.htm" target="dblselect"/>
+			<Item name="AddNews" title="添加新闻" image="../images/icon/16x16/new.jpg" 
+				  location="../addnews.htm?method=create" target="dblselect"/>
+		</Menu>
+		<Menu name="Logout" title="退出系统" location="../j_acegi_logout">
+			<Item name="Logout" title="退出系统" image="../images/icon/16x16/group.jpg" 
+				  location="../j_acegi_logout" target="_parent"/>
+		</Menu>
+    </Menus>
+
+</MenuConfig>

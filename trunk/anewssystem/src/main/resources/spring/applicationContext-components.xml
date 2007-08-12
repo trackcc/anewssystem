@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-lazy-init="true">
+    <!-- acegi security -->
+    <import resource="classpath*:spring/security/no-security.xml"/>
+    <!-- acegi security -->
+    <import resource="classpath*:spring/security/channel-jcaptcha.xml"/>
+    <!-- java mail -->
+    <import resource="classpath*:spring/mail/applicationContext-mail.xml"/>
+    <!-- hibernate-mock -->
+<!--
+    <import resource="classpath*:spring/db/hibernate-mock.xml"/>
+-->
+</beans>

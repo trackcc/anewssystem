@@ -5,7 +5,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import anni.anews.domain.Category;
+import anni.anews.domain.NewsCategory;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
@@ -126,7 +126,7 @@ public class ExtTreeNode {
     * @param category 分类实体类
     * @return ExtTreeNode
     */
-    public static ExtTreeNode fromCategory(Category category) {
+    public static ExtTreeNode fromCategory(NewsCategory category) {
         ExtTreeNode node = new ExtTreeNode();
         node.setId(category.getId());
         node.setText(category.getName());
@@ -144,11 +144,11 @@ public class ExtTreeNode {
     /**
      * 把categoryList转换成JSON，写入writer.
      */
-    public static void write(Writer writer, List<Category> list)
+    public static void write(Writer writer, List<NewsCategory> list)
         throws Exception {
         List<ExtTreeNode> extTreeNodeList = new ArrayList<ExtTreeNode>();
 
-        for (Category category : list) {
+        for (NewsCategory category : list) {
             extTreeNodeList.add(ExtTreeNode.fromCategory(category));
         }
 

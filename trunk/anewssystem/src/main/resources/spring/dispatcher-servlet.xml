@@ -9,20 +9,20 @@
     <!-- 后台管理 -->
     <import resource="classpath*:spring/controller/admin-controller.xml"/>
 
-    <bean class="anni.anews.web.CategoryController" parent="baseController" scope="request">
-        <property name="entityDao" ref="categoryManager"/>
+    <bean class="anni.anews.web.NewsConfigController" parent="baseController" scope="request">
+        <property name="entityDao" ref="newsConfigManager"/>
+    </bean>
+    <bean class="anni.anews.web.NewsCategoryController" parent="baseController" scope="request">
+        <property name="entityDao" ref="newsCategoryManager"/>
     </bean>
     <bean class="anni.anews.web.NewsController" parent="baseController" scope="request">
         <property name="entityDao" ref="newsManager"/>
     </bean>
-    <bean class="anni.anews.web.ConfigController" parent="baseController" scope="request">
-        <property name="entityDao" ref="configManager"/>
+    <bean class="anni.anews.web.NewsCommentController" parent="baseController" scope="request">
+        <property name="entityDao" ref="newsCommentManager"/>
     </bean>
-    <bean class="anni.anews.web.CommentController" parent="baseController" scope="request">
-        <property name="entityDao" ref="commentManager"/>
-    </bean>
-    <bean class="anni.anews.web.TagController" parent="baseController" scope="request">
-        <property name="entityDao" ref="tagManager"/>
+    <bean class="anni.anews.web.NewsTagController" parent="baseController" scope="request">
+        <property name="entityDao" ref="newsTagManager"/>
     </bean>
     <bean id="freemarkerGenerator" class="anni.anews.web.support.FreemarkerGenerator"/>
 

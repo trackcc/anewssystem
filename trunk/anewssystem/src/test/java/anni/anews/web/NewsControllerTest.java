@@ -30,13 +30,13 @@ public class NewsControllerTest extends PrototypeControllerTest {
         request.setRequestURI("/news/list.htm");
         mv = controller.handleRequest(request, response);
         mvHelper.assertModelAttributeAvailable(mv, "page");
-        mvHelper.assertViewName(mv, "/news/listNews");
+        mvHelper.assertViewName(mv, "/anews/news/listNews");
     }
 
     public void testInsert() throws Exception {
         request.setRequestURI("/news/insert.htm");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertViewName(mv, "/news/editNews");
+        mvHelper.assertViewName(mv, "/anews/news/editNews");
     }
 
     public void testInsert2() throws Exception {
@@ -47,7 +47,7 @@ public class NewsControllerTest extends PrototypeControllerTest {
         request.addParameter("tags", "11,22");
         request.addParameter("category_id", "1");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertViewName(mv, "/news/editNews");
+        mvHelper.assertViewName(mv, "redirect:/news/list.htm?status=1");
     }
 
     public void testUpdate() throws Exception {
@@ -85,7 +85,7 @@ public class NewsControllerTest extends PrototypeControllerTest {
     public void testSearch() throws Exception {
         request.setRequestURI("/news/search.htm");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertViewName(mv, null);
+        mvHelper.assertViewName(mv, "/anews/news/search");
     }
 
     public void testSearch2() throws Exception {
@@ -93,6 +93,6 @@ public class NewsControllerTest extends PrototypeControllerTest {
         request.addParameter("keywords", "test");
         mv = controller.handleRequest(request, response);
         mvHelper.assertModelAttributeAvailable(mv, "page");
-        mvHelper.assertViewName(mv, null);
+        mvHelper.assertViewName(mv, "/anews/news/search");
     }
 }

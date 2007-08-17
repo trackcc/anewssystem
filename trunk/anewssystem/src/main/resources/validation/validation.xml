@@ -17,9 +17,20 @@
     </constant>
   </global>
   <formset>
-    <form name="category">
+    <form name="newsConfig">
+      <field property="newsNeedAudit" depends="integer">
+        <arg key="newsConfig.newsNeedAudit"/>
+      </field>
+      <field property="commentNeedAudit" depends="integer">
+        <arg key="newsConfig.commentNeedAudit"/>
+      </field>
+      <field property="couldComment" depends="integer">
+        <arg key="newsConfig.couldComment"/>
+      </field>
+    </form>
+    <form name="newsCategory">
       <field property="name" depends="required,maxlength">
-        <arg key="category.name"/>
+        <arg key="newsCategory.name"/>
         <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
         <var>
           <var-name>maxlength</var-name>
@@ -27,10 +38,10 @@
         </var>
       </field>
       <field property="theSort" depends="integer">
-        <arg key="category.theSort"/>
+        <arg key="newsCategory.theSort"/>
       </field>
       <field property="status" depends="integer">
-        <arg key="category.status"/>
+        <arg key="newsCategory.status"/>
       </field>
     </form>
     <form name="news">
@@ -77,7 +88,7 @@
           <var-value>255</var-value>
         </var>
       </field>
-      <field property="content" depends="required,maxlength">
+      <field property="content" depends="maxlength">
         <arg key="news.content"/>
         <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
         <var>
@@ -112,20 +123,9 @@
         <arg key="news.status"/>
       </field>
     </form>
-    <form name="config">
-      <field property="newsNeedAudit" depends="integer">
-        <arg key="config.newsNeedAudit"/>
-      </field>
-      <field property="commentNeedAudit" depends="integer">
-        <arg key="config.commentNeedAudit"/>
-      </field>
-      <field property="couldComment" depends="integer">
-        <arg key="config.couldComment"/>
-      </field>
-    </form>
-    <form name="comment">
+    <form name="newsComment">
       <field property="name" depends="maxlength">
-        <arg key="comment.name"/>
+        <arg key="newsComment.name"/>
         <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
         <var>
           <var-name>maxlength</var-name>
@@ -133,7 +133,7 @@
         </var>
       </field>
       <field property="content" depends="maxlength">
-        <arg key="comment.content"/>
+        <arg key="newsComment.content"/>
         <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
         <var>
           <var-name>maxlength</var-name>
@@ -141,7 +141,7 @@
         </var>
       </field>
       <field property="username" depends="maxlength">
-        <arg key="comment.username"/>
+        <arg key="newsComment.username"/>
         <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
         <var>
           <var-name>maxlength</var-name>
@@ -149,17 +149,17 @@
         </var>
       </field>
       <field property="updateDate" depends="date">
-        <arg key="comment.updateDate"/>
+        <arg key="newsComment.updateDate"/>
         <var>
           <var-name>datePatternStrict</var-name>
           <var-value>yyyy-MM-dd</var-value>
         </var>
       </field>
       <field property="status" depends="integer">
-        <arg key="comment.status"/>
+        <arg key="newsComment.status"/>
       </field>
       <field property="ip" depends="maxlength">
-        <arg key="comment.ip"/>
+        <arg key="newsComment.ip"/>
         <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
         <var>
           <var-name>maxlength</var-name>
@@ -167,9 +167,9 @@
         </var>
       </field>
     </form>
-    <form name="tag">
+    <form name="newsTag">
       <field property="name" depends="maxlength">
-        <arg key="tag.name"/>
+        <arg key="newsTag.name"/>
         <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
         <var>
           <var-name>maxlength</var-name>
@@ -177,7 +177,7 @@
         </var>
       </field>
       <field property="theSort" depends="integer">
-        <arg key="tag.theSort"/>
+        <arg key="newsTag.theSort"/>
       </field>
     </form>
   </formset>

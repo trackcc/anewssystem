@@ -15,7 +15,7 @@ import java.util.Map;
 
 import anni.anews.domain.News;
 
-import anni.anews.manager.CategoryManager;
+import anni.anews.manager.NewsCategoryManager;
 import anni.anews.manager.NewsManager;
 
 import freemarker.template.Template;
@@ -31,11 +31,11 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 public class FreemarkerGenerator {
     /** * logger. */
     private static Log logger = LogFactory.getLog(FreemarkerGenerator.class);
-    private CategoryManager categoryManager;
+    private NewsCategoryManager categoryManager;
     private NewsManager newsManager;
     private FreeMarkerConfigurer freemarkerConfig = null;
 
-    public void setCategoryManager(CategoryManager categoryManager) {
+    public void setNewsCategoryManager(NewsCategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
 
@@ -53,7 +53,7 @@ public class FreemarkerGenerator {
 
         Date date = news.getUpdateDate();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String fileName = root + "/html/" + news.getCategory().getId()
+        String fileName = root + "/html/" + news.getNewsCategory().getId()
             + "/" + sdf.format(date) + "/" + news.getId() + ".html";
         Map model = new HashMap();
         model.put("news", news);
@@ -105,12 +105,13 @@ public class FreemarkerGenerator {
 
                 if (i != 0) {
                     fileName = root + "/html/"
-                        + news.getCategory().getId() + "/"
+                        + news.getNewsCategory().getId() + "/"
                         + sdf.format(date) + "/" + news.getId() + "_"
                         + (i + 1) + ".html";
                 }
 
-                template2File("newstemplates/news3.ftl", fileName, model);
+                template2File("/anews/newstemplates/news3.ftl", fileName,
+                    model);
             }
         }
 

@@ -24,7 +24,7 @@ public class ExtTreeNodeTest extends TestCase {
     }
 
     public void testFields() {
-        Category category = new Category();
+        NewsCategory category = new NewsCategory();
         category.setId(1L);
         category.setName("name");
 
@@ -45,7 +45,7 @@ public class ExtTreeNodeTest extends TestCase {
     }
 
     public void testWrite() throws Exception {
-        List<Category> categoryList = new ArrayList<Category>();
+        List<NewsCategory> categoryList = new ArrayList<NewsCategory>();
         StringWriter writer = new StringWriter();
         ExtTreeNode.write(writer, categoryList);
         writer.flush();
@@ -55,8 +55,8 @@ public class ExtTreeNodeTest extends TestCase {
     }
 
     public void testWrite2() throws Exception {
-        List<Category> categoryList = new ArrayList<Category>();
-        Category category = new Category();
+        List<NewsCategory> categoryList = new ArrayList<NewsCategory>();
+        NewsCategory category = new NewsCategory();
         category.setId(1L);
         category.setName("name");
         categoryList.add(category);

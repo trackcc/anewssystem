@@ -31,7 +31,7 @@
     <Menus>
         <Menu name="anews" title="新闻发布">
             <Item name="category" title="新闻分类管理" image="../images/icon/16x16/manage.gif"
-                  location="../category/tree.htm" target="dblselect"/>
+                  location="../newscategory/tree.htm" target="dblselect"/>
             <Item name="addNews" title="添加新闻" image="../images/icon/16x16/new.gif"
                   location="../news/create.htm" target="dblselect"/>
             <Item name="addNews" title="管理新闻" image="../images/icon/16x16/manage.gif"
@@ -39,31 +39,31 @@
             <Item name="addNews" title="新闻搜索" image="../images/icon/16x16/manage.gif"
                   location="../news/search.htm" target="dblselect"/>
             <Item name="addNews" title="管理关键字" image="../images/icon/16x16/manage.gif"
-                  location="../tag/list.htm" target="dblselect"/>
+                  location="../newstag/list.htm" target="dblselect"/>
             <Item name="config" title="新闻属性设置" image="../images/icon/16x16/manage.gif"
-                  location="../config/manage.htm" target="dblselect"/>
+                  location="../newsconfig/manage.htm" target="dblselect"/>
         </Menu>
         <Menu name="anews2" title="anews">
-            <Item name="ListCategory" title="浏览Category" image="../images/icon/16x16/manage.gif"
-                  location="../category/list.htm" target="dblselect"/>
-            <Item name="AddCategory" title="添加Category" image="../images/icon/16x16/new.gif"
-                  location="../category/create.htm" target="dblselect"/>
+            <Item name="ListNewsConfig" title="浏览NewsConfig" image="../images/icon/16x16/manage.gif"
+                  location="../newsconfig/list.htm" target="dblselect"/>
+            <Item name="AddNewsConfig" title="添加NewsConfig" image="../images/icon/16x16/new.gif"
+                  location="../newsconfig/create.htm" target="dblselect"/>
+            <Item name="ListNewsCategory" title="浏览NewsCategory" image="../images/icon/16x16/manage.gif"
+                  location="../newscategory/list.htm" target="dblselect"/>
+            <Item name="AddNewsCategory" title="添加NewsCategory" image="../images/icon/16x16/new.gif"
+                  location="../newscategory/create.htm" target="dblselect"/>
             <Item name="ListNews" title="浏览News" image="../images/icon/16x16/manage.gif"
                   location="../news/list.htm" target="dblselect"/>
             <Item name="AddNews" title="添加News" image="../images/icon/16x16/new.gif"
                   location="../news/create.htm" target="dblselect"/>
-            <Item name="ListConfig" title="浏览Config" image="../images/icon/16x16/manage.gif"
-                  location="../config/list.htm" target="dblselect"/>
-            <Item name="AddConfig" title="添加Config" image="../images/icon/16x16/new.gif"
-                  location="../config/create.htm" target="dblselect"/>
-            <Item name="ListComment" title="浏览Comment" image="../images/icon/16x16/manage.gif"
-                  location="../comment/list.htm" target="dblselect"/>
-            <Item name="AddComment" title="添加Comment" image="../images/icon/16x16/new.gif"
-                  location="../comment/create.htm" target="dblselect"/>
-            <Item name="ListTag" title="浏览Tag" image="../images/icon/16x16/manage.gif"
-                  location="../tag/list.htm" target="dblselect"/>
-            <Item name="AddTag" title="添加Tag" image="../images/icon/16x16/new.gif"
-                  location="../tag/create.htm" target="dblselect"/>
+            <Item name="ListNewsComment" title="浏览NewsComment" image="../images/icon/16x16/manage.gif"
+                  location="../newscomment/list.htm" target="dblselect"/>
+            <Item name="AddNewsComment" title="添加NewsComment" image="../images/icon/16x16/new.gif"
+                  location="../newscomment/create.htm" target="dblselect"/>
+            <Item name="ListNewsTag" title="浏览NewsTag" image="../images/icon/16x16/manage.gif"
+                  location="../newstag/list.htm" target="dblselect"/>
+            <Item name="AddNewsTag" title="添加NewsTag" image="../images/icon/16x16/new.gif"
+                  location="../newstag/create.htm" target="dblselect"/>
         </Menu>
         <Menu name="Logout" title="退出系统" location="../j_acegi_logout">
             <Item name="Logout" title="退出系统" image="../images/icon/16x16/group.jpg"

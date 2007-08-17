@@ -47,7 +47,7 @@ Ext.onReady(function(){
     // add an inline editor for the nodes
     var ge = new Ext.tree.TreeEditor(tree, {
         allowBlank:false,
-        blankText:'A name is required',
+        blankText:'请添写名称',
         selectOnFocus:true
     });
     ge.on('beforestartedit', function(){
@@ -58,8 +58,8 @@ Ext.onReady(function(){
     ge.on('complete', function() {
         var node = ge.editNode;
         var item = {
-            id: node.attributes.id,
-            text: node.attributes.text,
+            id: node.id,
+            text: node.text,
             parentId: node.parentNode.id
         };
 
@@ -68,7 +68,7 @@ Ext.onReady(function(){
         var doSuccess = function(responseObject) {
             //alert("success\n" + responseObject.responseText);
             eval("var o = " + responseObject.responseText + ";");
-            ge.editNode = o.id;
+            ge.editNode.id = o.id;
             hide();
         };
         var doFailure = function(responseObject) {

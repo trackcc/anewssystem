@@ -4,18 +4,19 @@ import java.io.Serializable;
 
 import java.text.SimpleDateFormat;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import anni.anews.domain.Category;
 import anni.anews.domain.News;
-import anni.anews.domain.Tag;
+import anni.anews.domain.NewsCategory;
+import anni.anews.domain.NewsTag;
 
-import anni.anews.manager.CategoryManager;
-import anni.anews.manager.ConfigManager;
+import anni.anews.manager.NewsCategoryManager;
+import anni.anews.manager.NewsConfigManager;
 import anni.anews.manager.NewsManager;
-import anni.anews.manager.TagManager;
+import anni.anews.manager.NewsTagManager;
 
 import anni.anews.web.support.FreemarkerGenerator;
 
@@ -37,43 +38,42 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Lingo.
- * @since 2007年08月08日 下午 18时10分12秒781
+ * @since 2007年08月16日 下午 23时13分12秒765
  */
 public class NewsController extends BaseLongController<News, NewsManager> {
     /** * logger. */
     private static Log logger = LogFactory.getLog(NewsController.class);
 
     /** * categoryManager. */
-    private CategoryManager categoryManager = null;
+    private NewsCategoryManager categoryManager = null;
 
     /** * tagManager. */
-    private TagManager tagManager = null;
+    private NewsTagManager tagManager = null;
 
     /** * configManager. */
-    private ConfigManager configManager = null;
+    private NewsConfigManager configManager = null;
 
     /** * freemarkerGenerator. */
     private FreemarkerGenerator freemarkerGenerator = null;
 
-    /** * 构造方法. */
+    /** * constructor. */
     public NewsController() {
-        setEditView("news/editNews");
-        setSuccessView("redirect:/news/list.htm");
-        setListView("news/listNews");
+        setEditView("/anews/news/editNews");
+        setListView("/anews/news/listNews");
     }
 
     /** * @param categoryManager categoryManager. */
-    public void setCategoryManager(CategoryManager categoryManager) {
+    public void setNewsCategoryManager(NewsCategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
 
     /** * @param tagManager TagManager. */
-    public void setTagManager(TagManager tagManager) {
+    public void setNewsTagManager(NewsTagManager tagManager) {
         this.tagManager = tagManager;
     }
 
     /** * @param configManager configManager. */
-    public void setConfigManager(ConfigManager configManager) {
+    public void setNewsConfigManager(NewsConfigManager configManager) {
         this.configManager = configManager;
     }
 
@@ -116,18 +116,19 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         long categoryId = getLongParam("category_id", -1L);
 
         if (categoryId != -1L) {
-            Category category = categoryManager.get(categoryId);
+            NewsCategory category = categoryManager.get(categoryId);
 
             if (category == null) {
                 binder.getBindingResult()
-                      .rejectValue("category", "指定分类不存在", new Object[0],
-                    "指定分类不存在");
+                      .rejectValue("newsCategory", "指定分类不存在",
+                    new Object[0], "指定分类不存在");
             } else {
-                entity.setCategory(category);
+                entity.setNewsCategory(category);
             }
         } else {
             binder.getBindingResult()
-                  .rejectValue("category", "请选择分类", new Object[0], "请选择分类");
+                  .rejectValue("newsCategory", "请选择分类", new Object[0],
+                "请选择分类");
         }
 
         String enter = getStrParam("enter", "");
@@ -152,15 +153,17 @@ public class NewsController extends BaseLongController<News, NewsManager> {
      * 添加.
      */
     @Override
-    public void insert() throws Exception {
-        super.insert();
-
+    public void onInsert() throws Exception {
         News news = (News) mv.getModel().get("news");
+
+        if (news.getUpdateDate() == null) {
+            news.setUpdateDate(new Date());
+        }
 
         if ((news.getLink() == null) || news.getLink().equals("")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             news.setLink(request.getContextPath() + "/html/"
-                + news.getCategory().getId() + "/"
+                + news.getNewsCategory().getId() + "/"
                 + sdf.format(news.getUpdateDate()) + "/" + news.getId()
                 + ".html");
         }
@@ -168,17 +171,16 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         String tags = getStrParam("tags", "");
         logger.info(tags);
 
-        news.getTags().removeAll(news.getTags());
-
+        // news.getNewsTags().removeAll(news.getNewsTags());
         if (!tags.equals("")) {
             String[] array = tags.split(",");
 
             for (String tagName : array) {
-                Tag tag = tagManager.createOrGet(tagName);
+                NewsTag tag = tagManager.createOrGet(tagName);
                 logger.info(tag);
 
                 //if (!news.getTags().contains(tag)) {
-                news.getTags().add(tag);
+                news.getNewsTags().add(tag);
 
                 //tag.getNewses().add(news);
                 //}
@@ -188,21 +190,27 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         getEntityDao().save(news);
 
         generateHtml(news);
+
+        if (news.getStatus() == News.STATUS_NORMAL) {
+            mv.setViewName(successView + "?status=" + News.STATUS_NORMAL);
+        } else if (news.getStatus() == News.STATUS_WAIT) {
+            mv.setViewName(successView + "?status=" + News.STATUS_WAIT);
+        } else if (news.getStatus() == News.STATUS_DRAFT) {
+            mv.setViewName(successView + "?status=" + News.STATUS_DRAFT);
+        }
     }
 
     /**
      * 修改.
      */
     @Override
-    public void update() throws Exception {
-        super.update();
-
+    public void onUpdate() throws Exception {
         News news = (News) mv.getModel().get("news");
 
         if ((news.getLink() == null) || news.getLink().equals("")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             news.setLink(request.getContextPath() + "/html/"
-                + news.getCategory().getId() + "/"
+                + news.getNewsCategory().getId() + "/"
                 + sdf.format(news.getUpdateDate()) + "/" + news.getId()
                 + ".html");
         }
@@ -210,17 +218,17 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         String tags = getStrParam("tags", "");
         logger.info(tags);
 
-        news.getTags().removeAll(news.getTags());
+        news.getNewsTags().removeAll(news.getNewsTags());
 
         if (!tags.equals("")) {
             String[] array = tags.split(",");
 
             for (String tagName : array) {
-                Tag tag = tagManager.createOrGet(tagName);
+                NewsTag tag = tagManager.createOrGet(tagName);
                 logger.info(tag);
 
                 //if (!news.getTags().contains(tag)) {
-                news.getTags().add(tag);
+                news.getNewsTags().add(tag);
 
                 //tag.getNewses().add(news);
                 //}
@@ -230,6 +238,14 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         getEntityDao().save(news);
 
         generateHtml(news);
+
+        if (news.getStatus() == News.STATUS_NORMAL) {
+            mv.setViewName(successView + "?status=" + News.STATUS_NORMAL);
+        } else if (news.getStatus() == News.STATUS_WAIT) {
+            mv.setViewName(successView + "?status=" + News.STATUS_WAIT);
+        } else if (news.getStatus() == News.STATUS_DRAFT) {
+            mv.setViewName(successView + "?status=" + News.STATUS_DRAFT);
+        }
     }
 
     /**
@@ -248,7 +264,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
      * 按状态查询新闻记录.
      */
     @Override
-    public void list() {
+    public void list() throws Exception {
         mv = new ModelAndView(listView);
 
         Limit limit = ExtremeTablePage.getLimit(request,
@@ -330,7 +346,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         String keywords = getStrParam("keywords", "").trim();
 
         if (keywords.equals("")) {
-            mv.setViewName("news/search");
+            mv.setViewName("/anews/news/search");
 
             return;
         }
@@ -342,6 +358,6 @@ public class NewsController extends BaseLongController<News, NewsManager> {
                         .pagedQuery("from News where name like ? or subtitle like ? or summary like ? or content like ?",
                 pageNo, 20, keywords, keywords, keywords, keywords);
         mv.addObject("page", page);
-        mv.setViewName("news/search");
+        mv.setViewName("/anews/news/search");
     }
 }

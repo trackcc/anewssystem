@@ -14,6 +14,7 @@
 <#--分页-->
 <#--<@m.pg "${ctx}/admin/logView.htm" page.totalCount?int "SMT_type" page.currentPageNo/>-->
 <#macro pg pageUrl2 pageTotal pageParamName pageNo=1 pageMaxItems=15 pageMaxIndex=5>
+<#include "/include/taglibs.ftl"/>
   <@pager.pager items = pageTotal
             index = "center"
             maxPageItems = pageMaxItems
@@ -58,6 +59,7 @@
 <#--分页-->
 <#--<@m.pg2 "${ctx}/admin/logView.htm" "a=1&b=2" page.totalCount?int page.currentPageNo/>-->
 <#macro pg2 pageUrl2 params pageTotal pageNo=1 pageMaxItems=15 pageMaxIndex=5>
+<#include "/include/taglibs.ftl"/>
   <@pager.pager items = pageTotal
             index = "center"
             maxPageItems = pageMaxItems

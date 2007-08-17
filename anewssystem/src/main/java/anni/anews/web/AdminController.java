@@ -5,7 +5,7 @@ import anni.core.web.prototype.ExtendController;
 
 /**
  * @author Lingo.
- * @since 2007年08月08日 下午 18时10分12秒781
+ * @since 2007年08月16日 下午 23时13分12秒765
  */
 public class AdminController extends ExtendController {
     /**

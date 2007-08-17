@@ -21,8 +21,8 @@ public class NewsTest extends TestCase {
         News entity = new News();
         entity.setId(null);
         assertNull(entity.getId());
-        entity.setCategory(null);
-        assertNull(entity.getCategory());
+        entity.setNewsCategory(null);
+        assertNull(entity.getNewsCategory());
         entity.setName(null);
         assertNull(entity.getName());
         entity.setSubtitle(null);
@@ -45,9 +45,9 @@ public class NewsTest extends TestCase {
         assertNull(entity.getUpdateDate());
         entity.setStatus(null);
         assertNull(entity.getStatus());
-        entity.setTags(null);
-        assertNull(entity.getTags());
-        entity.setComments(null);
-        assertNull(entity.getComments());
+        entity.setNewsComments(null);
+        assertNull(entity.getNewsComments());
+        entity.setNewsTags(null);
+        assertNull(entity.getNewsTags());
     }
 }

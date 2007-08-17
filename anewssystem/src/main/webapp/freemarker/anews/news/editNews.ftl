@@ -1,4 +1,5 @@
 <#assign ctx=springMacroRequestContext.getContextPath()>
+<#assign ext="${ctx}/widgets/extjs/1.1-rc1">
 <#include "/include/taglibs.ftl">
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -9,6 +10,16 @@
     <link type="text/css" href="${ctx}/css/admin.css" rel="stylesheet"/>
     <script type="text/javascript" src="${ctx}/inc/validation.jsp"></script>
     <@validator.javascript formName="news" staticJavascript="false"/>
+    <link rel="stylesheet" type="text/css" href="${ext}/resources/css/ext-all.css" />
+    <script type="text/javascript" src="${ext}/adapter/yui/yui-utilities.js"></script>
+    <script type="text/javascript" src="${ext}/adapter/yui/ext-yui-adapter.js"></script>
+    <script type="text/javascript" src="${ext}/ext-all.js"></script>
+    <script type="text/javascript" src="${ctx}/widgets/tree/uiField.js"></script>
+    <script type="text/javascript" src="${ctx}/widgets/tree/treecombo.js"></script>
+    <link rel="stylesheet" type="text/css" href="${ctx}/widgets/examples.css" />
+    <script type="text/javascript">
+Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
+    </script>
   </head>
   <body>
 <#if (news.id)?? && news.id != 0>
@@ -31,7 +42,10 @@
     <tr>
       <td class="left" width="20%"><@spring.messageText code="news.category" text="category"/>:</td>
       <td class="right">
-        <select name="category_id" name="category_id">
+        <input type="hidden" id="category_id" name="category_id" <#if action=="update">value="${news.newsCategory.id}"</#if> />
+        <input type="text" id="category_field" name="category_field" <#if action=="update">value="${news.newsCategory.name}"</#if> />
+<#--
+        <select id="category_id" name="category_id">
           <option value="">请选择</option>
 <#list categoryList! as item>
   <#if news??>
@@ -41,6 +55,7 @@
   </#if>
 </#list>
         </select>
+-->
         [<a href="${ctx}/newscategory/tree.htm">修改分类信息</a>]
         <label class="star">*</label>
 <#if (categoryList?size<1)>

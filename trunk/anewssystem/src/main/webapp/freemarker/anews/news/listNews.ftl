@@ -88,7 +88,7 @@
     <@ec.exportXls fileName="NewsList.xls" tooltip="导出 Excel"/>
     <@ec.row>
       <@ec.column property="rowcount" cell="rowCount" title="序号" sortable="false"/>
-      <@ec.column property="category.name" title="news.category"/>
+      <@ec.column property="newsCategory.name" title="news.category"/>
       <@ec.column property="name" title="news.name"/>
 <#--
       <@ec.column property="subtitle" title="news.subtitle"/>

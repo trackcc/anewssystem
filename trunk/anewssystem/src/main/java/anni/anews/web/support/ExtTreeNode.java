@@ -60,62 +60,62 @@ public class ExtTreeNode {
         this.text = text;
     }
 
-    /** * @param leaf boolean. */
+    /** * @return leaf. */
     public boolean getLeaf() {
         return leaf;
     }
 
-    /** * @return leaf. */
+    /** * @param leaf boolean. */
     public void setLeaf(boolean leaf) {
         this.leaf = leaf;
     }
 
-    /** * @param cls String. */
+    /** * @return cls. */
     public String getCls() {
         return cls;
     }
 
-    /** * @return cls. */
+    /** * @param cls String. */
     public void setCls(String cls) {
         this.cls = cls;
     }
 
-    /** * @param draggable boolean. */
+    /** * @return draggable. */
     public boolean getDraggable() {
         return draggable;
     }
 
-    /** * @return draggable. */
+    /** * @param draggable boolean. */
     public void setDraggable(boolean draggable) {
         this.draggable = draggable;
     }
 
-    /** * @param allowEdit boolean. */
+    /** * @return allowEdit. */
     public boolean getAllowEdit() {
         return allowEdit;
     }
 
-    /** * @return allowEdit. */
+    /** * @param allowEdit boolean. */
     public void setAllowEdit(boolean allowEdit) {
         this.allowEdit = allowEdit;
     }
 
-    /** * @param allowDelete boolean. */
+    /** * @return allowDelete. */
     public boolean getAllowDelete() {
         return allowDelete;
     }
 
-    /** * @return allowDelete. */
+    /** * @param allowDelete boolean. */
     public void setAllowDelete(boolean allowDelete) {
         this.allowDelete = allowDelete;
     }
 
-    /** * @param allowChildren boolean. */
+    /** * @return allowChildren. */
     public boolean getAllowChildren() {
         return allowChildren;
     }
 
-    /** * @return allowChildren. */
+    /** * @param allowChildren boolean. */
     public void setAllowChildren(boolean allowChildren) {
         this.allowChildren = allowChildren;
     }
@@ -143,6 +143,10 @@ public class ExtTreeNode {
 
     /**
      * 把categoryList转换成JSON，写入writer.
+     *
+     * @param writer 需要写入的writer
+     * @param list 目录列表
+     * @throws Exception 可能抛出JSON异常
      */
     public static void write(Writer writer, List<NewsCategory> list)
         throws Exception {

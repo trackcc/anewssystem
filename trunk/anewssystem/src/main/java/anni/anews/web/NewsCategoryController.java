@@ -1,8 +1,6 @@
 package anni.anews.web;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import anni.anews.domain.NewsCategory;
 
@@ -37,6 +35,8 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
     /**
      * 根据传入参数，返回对应id分类的子分类，用于显示分类的树形结构.
      * 如果没有指定id的值，则返回所有根节点
+     *
+     * @throws Exception 异常
      */
     public void getChildren() throws Exception {
         logger.info(params());
@@ -65,6 +65,8 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
      * 添加一个分类.
      * 目前还不没有返回成功或者错误信息
      * 校验方式，当输入的data参数不存在的时候，直接返回
+     *
+     * @throws Exception 异常
      */
     public void insertTree() throws Exception {
         logger.info(params());
@@ -158,6 +160,8 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
 
     /**
      * 根据id删除一个分类，由于级联关系，会同时删除所有子分类.
+     *
+     * @throws Exception 异常
      */
     public void removeTree() throws Exception {
         logger.info(params());
@@ -174,7 +178,9 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
 
     /**
      * 保存排序结果.
-     * 参数是JSONArray，保存了id列表，排序时候根据id列表修改theSort字段.
+     * 参数是JSONArray，保存了id列表，排序时候根据id列表修改theSort字段
+     *
+     * @throws Exception 异常
      */
     public void sortTree() throws Exception {
         logger.info(params());

@@ -42,6 +42,9 @@ public class ExtTreeNodeTest extends TestCase {
 
         extTreeNode.setCls("cls");
         assertEquals("cls", extTreeNode.getCls());
+
+        extTreeNode.setLeaf(true);
+        assertTrue(extTreeNode.getLeaf());
     }
 
     public void testWrite() throws Exception {

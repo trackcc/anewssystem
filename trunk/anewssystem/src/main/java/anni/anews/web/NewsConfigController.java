@@ -34,6 +34,8 @@ public class NewsConfigController extends BaseLongController<NewsConfig, NewsCon
      * @param requestIn HttpServletRequest.
      * @param command Object
      * @param binder ServletRequestDataBinder
+     *
+     * @throws Exception 异常
      */
     @Override
     protected void preBind(HttpServletRequest requestIn, Object command,

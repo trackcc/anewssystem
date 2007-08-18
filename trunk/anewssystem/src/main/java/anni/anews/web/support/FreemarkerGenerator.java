@@ -2,6 +2,7 @@ package anni.anews.web.support;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
@@ -15,10 +16,12 @@ import java.util.Map;
 
 import anni.anews.domain.News;
 
-import anni.anews.manager.NewsCategoryManager;
-import anni.anews.manager.NewsManager;
-
+/*
+*import anni.anews.manager.NewsCategoryManager;
+*import anni.anews.manager.NewsManager;
+*/
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,31 +31,60 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 
+/**
+ * 生成静态页面的生成器.
+ *
+ * @author Lingo
+ * @since 2007-08-18
+ */
 public class FreemarkerGenerator {
     /** * logger. */
     private static Log logger = LogFactory.getLog(FreemarkerGenerator.class);
-    private NewsCategoryManager categoryManager;
-    private NewsManager newsManager;
+
+    /** * fckeditor在firefox上的分页符. */
+    public static final String FCK_PAGE_BREAK_FF = "<div style=\"page-break-after: always;\"><span style=\"display: none;\">&nbsp;</span></div>";
+
+    /** * fckeditor在ie上的分页符. */
+    public static final String FCK_PAGE_BREAK_IE = "<div style=\"PAGE-BREAK-AFTER: always\"><span style=\"DISPLAY: none\">&nbsp;</span></div>";
+
+    /** * freemarker配置. */
     private FreeMarkerConfigurer freemarkerConfig = null;
 
-    public void setNewsCategoryManager(NewsCategoryManager categoryManager) {
-        this.categoryManager = categoryManager;
-    }
+    /*
+    *private NewsCategoryManager categoryManager;
+    *private NewsManager newsManager;
+    *public void setNewsCategoryManager(NewsCategoryManager categoryManager) {
+    *    this.categoryManager = categoryManager;
+    *}
+    *public void setNewsManager(NewsManager newsManager) {
+    *    this.newsManager = newsManager;
+    *}
+    */
 
-    public void setNewsManager(NewsManager newsManager) {
-        this.newsManager = newsManager;
-    }
-
+    /**
+     * @param freemarkerConfig 配置
+     */
     public void setFreemarkerConfig(FreeMarkerConfigurer freemarkerConfig) {
         this.freemarkerConfig = freemarkerConfig;
     }
 
+    /**
+     * 生成静态页面.
+     *
+     * @param news 新闻
+     * @param page 开始页
+     * @param pageSize 页面大小
+     * @param root 根目录??????
+     * @param ctx contextPath
+     */
     public void genNews(News news, int page, int pageSize, String root,
         String ctx) {
         logger.info("start generate...");
 
         Date date = news.getUpdateDate();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+        // FIXME: 忘了root是啥意思了
         String fileName = root + "/html/" + news.getNewsCategory().getId()
             + "/" + sdf.format(date) + "/" + news.getId() + ".html";
         Map model = new HashMap();
@@ -69,17 +101,14 @@ public class FreemarkerGenerator {
             logger.info(content);
 
             if (page == 1) {
-                String ff = "<div style=\"page-break-after: always;\"><span style=\"display: none;\">&nbsp;</span></div>";
-                String ie = "<div style=\"PAGE-BREAK-AFTER: always\"><span style=\"DISPLAY: none\">&nbsp;</span></div>";
-
-                if (content.indexOf(ff) != -1) {
-                    String[] tmp = content.split(ff);
+                if (content.indexOf(FCK_PAGE_BREAK_FF) != -1) {
+                    String[] tmp = content.split(FCK_PAGE_BREAK_FF);
 
                     for (String str : tmp) {
                         pages.add(str);
                     }
                 } else {
-                    String[] tmp = content.split(ie);
+                    String[] tmp = content.split(FCK_PAGE_BREAK_IE);
 
                     for (String str : tmp) {
                         pages.add(str);
@@ -118,6 +147,13 @@ public class FreemarkerGenerator {
         logger.info("end generate...");
     }
 
+    /**
+     * 根据freemarker模板生成静态文件.
+     *
+     * @param templateName 模板名称
+     * @param fileName 静态页面名称
+     * @param map 模板使用的参数
+     */
     private void template2File(String templateName, String fileName,
         Map map) {
         try {
@@ -137,7 +173,9 @@ public class FreemarkerGenerator {
             out.println(result);
             out.flush();
             out.close();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (TemplateException ex) {
             ex.printStackTrace();
         }
     }

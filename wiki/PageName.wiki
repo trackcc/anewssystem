@@ -1,0 +1,18 @@
+#无级分类，树形结构
+
+= 无级分类，树形结构 =
+
+javaeye上的同学提供了很好的建议[http://www.javaeye.com/topic/114087]：处理无级分类[http://www.web745.com/article/303.html]。
+
+最简单的方式是使用parent_id，使用外键方式，在数据库保存树形结构，这样的数据结构实现简单，易于理解，使用递归方式很容易就从数据库中得到我们需要的模型。
+
+不过这种模型太过简单了，在级别不限，每级的类目不限的情况下难以对分类下的条目信息进行搜索查询。
+
+简单来说，新闻发布中的新闻分类就是使用上面所说的结构，发布的新闻可以随意归入任何一级分类，这里的分类很可能不是叶子，就是说分类的下面还有子分类，这样进行混排后，很难使用sql语句直接进行查询。
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages

@@ -21,8 +21,8 @@ public class NewsCategoryTest extends TestCase {
         NewsCategory entity = new NewsCategory();
         entity.setId(null);
         assertNull(entity.getId());
-        entity.setTop(null);
-        assertNull(entity.getTop());
+        entity.setCode(0L);
+        assertEquals(new Long(0L), entity.getCode());
         entity.setParent(null);
         assertNull(entity.getParent());
         entity.setName(null);
@@ -31,8 +31,6 @@ public class NewsCategoryTest extends TestCase {
         assertNull(entity.getTheSort());
         entity.setStatus(null);
         assertNull(entity.getStatus());
-        entity.setAllChildren(null);
-        assertNull(entity.getAllChildren());
         entity.setChildren(null);
         assertNull(entity.getChildren());
         entity.setNewses(null);

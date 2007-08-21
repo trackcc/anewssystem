@@ -88,7 +88,7 @@ Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
     <tr>
       <td class="left" width="15%">关键字:</td>
       <td class="right">
-        <input type="text" name="tags" id="tags" size="35" value="<#list (news.tags)! as item>${item.name}<#if item_has_next>,</#if></#list>">&lt;=
+        <input type="text" name="tags" id="tags" size="35" value="<#list (news.newsTags)! as item>${item.name}<#if item_has_next>,</#if></#list>">&lt;=
 <#list tagList! as item>
   <#if (item_index > 5)><#break/></#if>
         <a href="javascript:if(document.news.tags.value!=''){document.news.tags.value+=',${item.name}';}else{document.news.tags.value='${item.name}';}void(0);">${item.name}</a><#if item_has_next> , </#if>

@@ -206,6 +206,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
 
                 //if (!news.getTags().contains(tag)) {
                 news.getNewsTags().add(tag);
+                getEntityDao().save(news);
 
                 //tag.getNewses().add(news);
                 //}
@@ -334,6 +335,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
                         .pagedQuery(hql, pageNo, 20, keywords, keywords,
                 keywords, keywords);
         mv.addObject("page", page);
+        logger.info(page.getResult());
         mv.setViewName("/anews/news/search");
     }
 }

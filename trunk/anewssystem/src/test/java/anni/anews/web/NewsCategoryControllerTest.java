@@ -81,7 +81,6 @@ public class NewsCategoryControllerTest extends PrototypeControllerTest {
         assertNotNull(mv);
     }
 
-    // id��Ϊ-1������Ӧ��category�����ڵ����
     public void testInsertTree5() throws Exception {
         request.setRequestURI("/newscategory/insertTree.htm");
         request.addParameter("data", "{id:100,text:\"name1\",parentId:1}");

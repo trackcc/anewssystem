@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import anni.core.domain.tree.AbstractTreeEntityBean;
 
@@ -49,8 +50,8 @@ public class NewsCategory extends AbstractTreeEntityBean<NewsCategory> {
     /** * status. */
     private Integer status;
 
-    /** * topChildren. */
-    private Set<NewsCategory> allChildren = new HashSet<NewsCategory>(0);
+    /** * code. */
+    private Long code;
 
     /** * children. */
     private Set<NewsCategory> children = new HashSet<NewsCategory>(0);
@@ -74,18 +75,6 @@ public class NewsCategory extends AbstractTreeEntityBean<NewsCategory> {
     /** * @param id id. */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /** * @return newsCategoryByTopId. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TOP_ID")
-    public NewsCategory getTop() {
-        return top;
-    }
-
-    /** * @param newsCategoryByTopId newsCategoryByTopId. */
-    public void setTop(NewsCategory newsCategoryByTopId) {
-        this.top = newsCategoryByTopId;
     }
 
     /** * @return newsCategoryByParentId. */
@@ -133,26 +122,26 @@ public class NewsCategory extends AbstractTreeEntityBean<NewsCategory> {
         this.status = status;
     }
 
-    /** * @return newsCategoriesForTopId. */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "top")
-    public Set<NewsCategory> getAllChildren() {
-        return allChildren;
+    /** * @return code. */
+    @Column(name = "CODE")
+    public Long getCode() {
+        return code;
     }
 
-    /** * @param newsCategoriesForTopId newsCategoriesForTopId. */
-    public void setAllChildren(Set<NewsCategory> newsCategoriesForTopId) {
-        this.allChildren = newsCategoriesForTopId;
+    /** * @param code Long. */
+    public void setCode(Long code) {
+        this.code = code;
     }
 
-    /** * @return newsCategoriesForParentId. */
+    /** * @return Set. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parent")
     public Set<NewsCategory> getChildren() {
         return children;
     }
 
-    /** * @param newsCategoriesForParentId newsCategoriesForParentId. */
-    public void setChildren(Set<NewsCategory> newsCategoriesForParentId) {
-        this.children = newsCategoriesForParentId;
+    /** * @param children Set. */
+    public void setChildren(Set<NewsCategory> children) {
+        this.children = children;
     }
 
     /** * @return newses. */
@@ -164,5 +153,23 @@ public class NewsCategory extends AbstractTreeEntityBean<NewsCategory> {
     /** * @param newses newses. */
     public void setNewses(Set<News> newses) {
         this.newses = newses;
+    }
+
+    /**
+     * 分类深度.
+     *
+     * @return int
+     */
+    @Transient
+    public int getLevel() {
+        int level = 1;
+        NewsCategory upper = getParent();
+
+        while (upper != null) {
+            upper = upper.getParent();
+            level++;
+        }
+
+        return level;
     }
 }

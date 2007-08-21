@@ -30,7 +30,7 @@
           <td class="tableHeader">发布日期</td>
           <td class="tableHeader">修改</td>
         </tr>
-<#if (page?? && page.result?size > 1)>
+<#if (page?? && page.result?size > 0)>
   <#list (page.result)! as item>
     <#if item_index%2==2><#assign className="odd"><#else><#assign className="even"></#if>
         <tr class="${className}" onmouseover="this.className='highlight'" onmouseout="this.className='${className}'">

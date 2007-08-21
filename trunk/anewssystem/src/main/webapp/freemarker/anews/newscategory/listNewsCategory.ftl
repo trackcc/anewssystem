@@ -30,8 +30,8 @@
     <@ec.exportXls fileName="NewsCategoryList.xls" tooltip="导出 Excel"/>
     <@ec.row>
       <@ec.column property="rowcount" cell="rowCount" title="序号" sortable="false"/>
-      <@ec.column property="newsCategoryByTopId" title="newsCategory.newsCategoryByTopId"/>
-      <@ec.column property="newsCategoryByParentId" title="newsCategory.newsCategoryByParentId"/>
+      <@ec.column property="code" title="newsCategory.code"/>
+      <@ec.column property="parent.name" title="newsCategory.parent"/>
       <@ec.column property="name" title="newsCategory.name"/>
       <@ec.column property="theSort" title="newsCategory.theSort"/>
       <@ec.column property="status" title="newsCategory.status"/>

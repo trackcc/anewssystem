@@ -28,16 +28,16 @@
       <input type="hidden" name="id">
     <table class="border" width="90%" cellSpacing="0" cellPadding="2" align="center">
     <tr>
-      <td class="left" width="20%"><@spring.messageText code="newsCategory.newsCategoryByTopId" text="newsCategoryByTopId"/>:</td>
+      <td class="left" width="20%"><@spring.messageText code="newsCategory.code" text="code"/>:</td>
       <td class="right">
-        <input type="text" name="newsCategoryByTopId" id="newsCategoryByTopId" size="35">
+        <input type="text" name="code" id="code" size="35">
         <label class="star">*</label>
       </td>
     </tr>
     <tr>
-      <td class="left" width="20%"><@spring.messageText code="newsCategory.newsCategoryByParentId" text="newsCategoryByParentId"/>:</td>
+      <td class="left" width="20%"><@spring.messageText code="newsCategory.parent" text="parent"/>:</td>
       <td class="right">
-        <input type="text" name="newsCategoryByParentId" id="newsCategoryByParentId" size="35">
+        <input type="text" name="parent" id="parent" size="35">
         <label class="star">*</label>
       </td>
     </tr>

@@ -96,20 +96,6 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
 
                 return;
             }
-
-            // 因为脑子乱了，用最简单的方式前进，先清空外键关系
-            NewsCategory oldParent = category.getParent();
-            NewsCategory oldTop = category.getTop();
-
-            if (oldParent != null) {
-                oldParent.getChildren().remove(category);
-                category.setParent(null);
-                oldTop.getAllChildren().remove(category);
-                category.setTop(null);
-                getEntityDao().save(oldParent);
-                getEntityDao().save(oldTop);
-                getEntityDao().save(category);
-            }
         }
 
         long parentId = jsonObject.getLong("parentId");
@@ -118,25 +104,24 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
             NewsCategory parent = getEntityDao().get(parentId);
 
             if ((parent != null) && !category.checkDeadLock(parent)) {
-                category.setParent(parent);
-                parent.getChildren().add(category);
+                // 老上级
+                NewsCategory oldParent = category.getParent();
 
-                NewsCategory top;
-
-                if (parent.getTop() != null) {
-                    // 上级分类是不是顶级分类
-                    top = parent.getTop();
+                if ((oldParent != null) && (oldParent != parent)) {
+                    // 更新上级分类
+                    oldParent.getChildren().remove(category);
+                    parent.getChildren().add(category);
+                    category.setParent(parent);
+                    getEntityDao().save(parent);
+                    getEntityDao().save(oldParent);
+                    getEntityDao().save(category);
                 } else {
-                    // 上级分类是顶级分类
-                    top = parent;
+                    // 添加上级分类
+                    parent.getChildren().add(category);
+                    category.setParent(parent);
+                    getEntityDao().save(parent);
+                    getEntityDao().save(category);
                 }
-
-                category.setTop(top);
-                top.getAllChildren().add(category);
-
-                getEntityDao().save(parent);
-                getEntityDao().save(top);
-                getEntityDao().save(category);
             }
         }
 
@@ -233,10 +218,7 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
                     top = parent;
                 }
 
-                category.setTop(top);
-                top.getAllChildren().add(category);
                 getEntityDao().save(parent);
-                getEntityDao().save(top);
             } else {
                 logger.info(category);
                 logger.info(parent);

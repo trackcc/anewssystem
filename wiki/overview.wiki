@@ -1,15 +1,4 @@
-#summary One-sentence summary of this page.
 #labels Phase-Design,Featured,Phase-Deploy
+= 我们这个项目是一个新闻发布系统 =
 
-= Introduction =
-
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
-
+= This project is a news publishing system. =

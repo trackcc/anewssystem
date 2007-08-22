@@ -1,0 +1,2 @@
+::export MAVEN_OPTS=-Xmx256M
+set MAVEN_OPTS=-Xmx256M

@@ -1,0 +1,339 @@
+ ---
+ persistence
+ ---
+ Lingo
+ ---
+ 2007-06-21
+
+dao数据访问层
+
+ *springside中将dao,manager合并，并且省略了各自的接口，直接使用cglib实现AOP事务控制。
+
+  我从前考虑的是，将dao,manager合并，但保留一个接口层，这样以后可以将实现替换成ibatis或jdbc，而不需要改动domain,controller,view层，但最近看到ibatis与hibernate的实现相差太远，勉强使用ibatis实现hibernate建立的数据模型，真不如重新设计一遍程序来得轻巧。决定以后即便重新制作几套系统，也要保证单个系统的简洁。以后将使用springside的方式，删除最后一层接口，如果以后真的有需要再增添这一层，但依照现在的经验，基本上是不会有这种问题了。
+
+ *使用范型，让HibernateEntityDao不仅仅包含最基本的操作，连一些通用的业务逻辑也统统包含到基类中。
+
+  当初自己在设计的时候还在考虑使用ibatis和jdbc的情况，使得很多功能都没有添加到基类中，也是因为自己的水平问题，很多功能点感觉控制不住，所以不敢加上。在制作样品管理的时候，也对domain做了NamedEntityBean和TreeEntityBean之类的加强。感觉不支持多重继承的确不方便，下一步的目标就整理这些扩展部分，包括springside的undeletable接口和annotation，自己也应该整理一套annotation。
+
+hibernate
+
+ 现阶段，自己执手的项目，一定会绑定在hibernate上的。虽然自己对hibernate还不熟悉，依然会出现许多问题。
+
+ *参考资料
+
+  *官方参考手册
+
+  *满江红对参考手册的中文翻译
+
+  *还有没机会读到的unit test
+
+ *映射
+
+  *父子关系和多对多关系都是从springside学来的。
+
+   使用hibernate-tools自动生成的annotation一直有问题，父子关系的变量名很难认，多对多关系总会出现embed类，似乎都无法正常使用。
+
+   而且生成的代码没有javadoc，考虑在代码生成之后，再根据它生成的代码，重新生成自己的domain类。
+
+  *继承映射，使用的是一个继承体系共用一张表的方式，因为之前遇到的入库出库，字段是完全相同的。
+
+   遇到的问题是，在对父表搜索的时候，无法使用instanceof判断具体是哪个子类。只好使用entity.toString().indexOf("in") != -1判断，实在是难看死了。
+
+*缓存
+
+ *hibernate的session提供了一级缓存，在同一个session中对同一个id的对象load两次，并不会发送两条sql给数据库，但是session关闭的时候，一级缓存就失效了。
+
+ *二级缓存是SessionFactory级别的全局缓存，在它下面可以使用不同的缓存类库，比如ehcache,oscache，默认是一直使用的ehcache，把cacheManager的shared配置成true，让他们使用同一个cache，可以减少一些异常。
+
+ *基本配置
+
+  hibernate.cache.use_query_cache=true
+
+  hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+
+ *entity级的二级缓存
+
+  entity二级缓存是把po放进cache，缓存的key就是id，value是pojo。这与查询缓存不同。究竟怎么不同就不知道了。
+
+  使用ehcache的时候需要配置ehcache.xml，否则会使用ehcache默认的配置。
+
++--
+<cache name="com.xxx.pojo.Foo" maxElementsInMemory="500" eternal="false" timeToLiveSeconds="7200" timeToIdleSeconds="3600" overflowToDisk="true" />
++--
+
+ *查询缓存
+
+  上面的二级缓存是针对整个对象的，如果针对查询结果，就要用到下面的语句
+
++--
+query.setCacheable(true); // 激活查询缓存
+query.setCacheRegion("myCacheRegion"); // 指明要使用的cacheRegion，可选
++--
+
+  cacheRegion是可选的，可以对使用的缓存进行特殊配置，在ehcache.xml里要补上一段
+
++--
+<cache name="myCacheRegion" maxElementsInMemory="10" eternal="false" timeToLiveSeconds="7200" timeToIdleSeconds="3600" overflowDisk="true" />
++--
+
+*Open Session In View
+
+  为了解决lazyLoadException，加一个Spring带的Filter是最简单通用的方法
+
++--
+<filter>
+  <filter-name>hibernateFilter</filter-name>
+  <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+</filter>
+<filter-mapping>
+  <filter-name>hibernateFilter</filter-name>
+  <url-pattern>*.htm</url-pattern>
+</filter-mapping>
++--
+
+
+*限制修改
+
+  *设置pojo属性的update=false，则该属性插入数据库后不可修改。
+
+  *返回Collection时设置unmodifiable
+
++--
+public List<Category> getCategories() {
+    return Collections.unmodifiableList(categories);
+}
++--
+
+*查询返回Map
+
++--
+String hql = " select new map(goods.goodsNo as goodsNo,goods.code as code)　from Goods goods"
++--
+
+ 即可以用Map进行访问Map goods = (Map) list.get(0); String code = (String) goods.get("code");
+
+ 对比直接用 result[0],result[1]访问的恐怖写法，或者定义一个新pojo的繁琐，返回map比较折衷。
+
+
+*springside对hibernate的封装
+
+ springside对hibernate进行了三层封装
+
+ 第一层：HibernateGenericDao，基于spring的HibernateDaoSupport，加入了分页方法与各种finder方法，并使用范型，避免了返回值强制类型转换。
+
+ 第二层：HibernateEntityDao，基于HibernateGenericDao，用范型声明dao所管理的entity类，默认拥有该entity的CRUD方法。
+
+ 第三层：HibernateExtendDao，基于HibernateEntityDao，扩展各种选择性功能。
+
+**HibernateGenericDao
+
+  *使用范型：
+
+   使find()，get()这些方法不再返回Object，而是返回T，不再需要强制类型转换。
+
+  *提供各种finder的简便方法：
+
+   应用了JDK5可变参数的hsql查询方法：List find(String hsql, Object... values)，支持find(hql), find(hql, param1), find(hql, param1, param2), find(hql, new Object[]{param1, param2})四种接口。
+
+   简单查询的简化方法：findBy(Class entityClass, String name, Object value), findUniqueBy(Class entityClass, String name, Object value), findByLike(Class entityClass, String name, Object value)
+
+  *获得设置好的Query和Criteria：
+
+   createQuery(String hql, Object... values)和createCriteria(Class\<T\> entityClass, Criterion... criterions)
+
+   spring并没有很好的接口封装支持firstResult, maxResult, fetchsize, cache, cacheRegion等多个查询参数，所以springside宁愿返回已设置好查询条件的Query和Criteria，让大家继续剩下的参数配置，最后再执行list()，注意那几个参数可以连续配置：
+
++--
+createQuery(hql, param1).setFirstResult(10).setMaxResult(20).list();
++--
+
+  *分页方法：
+
+   Page pagedQuery(Criteria, int pageNo, int pageSize)和Page pagedQuery(String hql, int pageNo, int pageSize, Object... args)
+
+   这些参数与springside-1.0中的extremetable不兼容，考虑是修改1.0中的util，还是增加对应的pagedQuery方法。
+
+   Page是springside自行封装的一个典型Page类，pagedQuery与hibernate自身分页查询的差别是先运行一次count，获得符合条件的总记录数。
+
+   如果查询不需要总记录数，用普通的hibernate api，加上setFirstResult(), setMaxResult()就解决，不需要pagedQuery()。
+
+  *判别对象属性在数据库中唯一的方法：
+
+   isUnique(Class\<T\> entityClass, Object entity, String names)
+
+**HibernateEntityDao
+
+  所有Manager之类，只管理一类对象的Manager类的基类，只需要在类定义处声明entity类型即可
+
++--
+public class BookManager extends HibernateEntityDao<Book> {
+}
++--
+
+  通过\<Book\>的定义，避免了HibernateGenericDao类各方法中，必有的Class entityClass参数。
+
+  如果需要操作其他的entity，比如BookManager可能需要处理Category（图书目录），可以注入CategoryManager。无需担心事务的问题，JavaEE的默认事务模型已能很好处理。
+
+  如果没有对应的CategoryManager，或者各种原因不想注入的话，可以使用BookManager继承自HibernateGenericDao的带entity class参数的方法来操作Category的增删改，如Category category = this.get(Category.class, 1);
+
+**HibernateExtendDao
+
+  此类演示springside所做的一些扩展
+
+  *支持对象不能被直接删除，只能设置状态列为无效
+
+   接口UndeleteableEntityOperation，定义了要支持此功能必须实现的方法。
+
+   可以有接口（UndeleteableEntity）和annotation（@Undeleteable）两种形式来定义无效列，annotation列形式还而已定义标识对象已删除的状态属性的名称，用接口则必须实现setStatus()方法，在里边操作实际的状态属性。
+
+  *重载save()，在保存前先调用onValid()方法
+
+  *增加find(Map map)方法
+
+   默认查找map中全部条件相同的entity
+
+   <条件的比较运算符默认为相同，用户也可以为属性名加上like_, largerthen_这样的前缀，则使用相应的运算符做比较（未完成）>
+
+ibatis
+
+*springside的封装
+
+**ibatisGenericDao
+
+  springside在spring的SqlMapClientDaoSupport基础上封装的dao，功能如下：
+
+  *应用范型：
+
+   使得find(), get()这些方法返回具体类型，不需要强制类型转换。
+
+  *提供各种finder的简便方法:
+
+   使用了JDK5可变参数的hql查询方法：List find(String hql, Object... values)
+
+   简单查询的简化方法：findBy(Class entityClass, String name, Object value), findUniqueBy(Class entityClass, String name, Object value), findByLike(Class entityClass, String name, Object value)
+
+  *分页函数：
+
+   Page pagedQuery(Criteria criteria, int pageNo, int pageSize), Page pagedQuery(String hql, int pageNo, int pageSize, Object... args)
+
+  *由于ibatis本身的特性，因此有少数方法的使用和HibernateGenericDao不太一样，如save传入的必须是一个制定操作方法的map。
+
+**ibatisEntityDao
+
+  同HibernateEntityDao。
+
+*ibatis配置tips
+
+ ibatis的xml映射里面有不少小窍门可以值得使用：
+
+**使用namespace规划自己的xml映射文件
+
++--
+<sqMap namespace="cn.uisoft.dao">
+  <insert id="insertUserAccount" parameterClass="cn.uisoft.bean.UserAccount">
+    .......
+  </insert>
+</sqlMap>
++--
+
+**使用typeAlias
+
+  上面的那个cn.uisoft.bean.UserAccount是不是太长？加上一个alias就可以在后面直接使用这个parameterClass="cn.uisoft.bean.UserAccount"了
+
++--
+<typeAlias alias="UserAccount" type="cn.uisoft.bean.UserAccount">
++--
+
+**使用默认集中map映射，比如map, int, string, 让程序更加灵活
+
++--
+<select id="countUser" parameterClass="map" resultClass="int" >
+  SELECT
+    count(user_id)
+  From
+    game_users where user_type=#userType# and game_id=#gameId#
+</select>
++--
+
+**$与#
+
+  上面都是使用#的，这个的特点是ibatis会根据反射自动加上一些sql符号，比如字符串的''，但是$就是不加任何符号，直接嵌入sql，比如String a = "Jack";
+
++--
+SELECT
+  count(user_id)
+From
+  game_users where user_type=#userType# and game_id=#gameId#
++--
+
+  就ok，但是如果
+
++--
+SELECT
+  count(user_id)
+From
+  game_users where user_type=#userType# and game_id=$gameId$
++--
+
+  就会因为sql语句是...game_id=Jack报错，因为sql语法要求game_id='Jack'表示字符串
+
+  当然$因此可以直接参与sql逻辑，但是往往直接使用更容易出错，或者导致隐藏的类似于sql注入的漏洞。
+
+  个人建议，自己做一个辅助类，可以类似于Criteria这种，自己包装生成用于$的sql（不过那样的话，可能要考虑各种数据的不同）
+
+  以下是一个简单的$使用，根据不同的字段去取topten的数据
+
++--
+<select id="getTopDB" parameterClass="map" resultClass="dbtopuser" >
+  Use $dbName$
+  SELECT
+    username,nickname,$filedName$ as queryValue
+  From
+  game_users order by $filedName$ DESC
+</select>
++--
+
+**关于动态remapResults="true"的说明
+
+  如果你使用下面这种动态语句的时候，在第二次传入参数tableName或者resultMap参数不同的时候会SQLException:Invalid column name错误，因为ibatis有自己的AutoResultMap的cache，它总是用上次的column去匹配表，解决的方法就是使用多个statement或者设置remapResults="true"，就是每次会自动重新映射。
+
++--
+<select id="selectTable" parameterClass="map" resultMap="$resultMap$" >
+  Use $dbName$
+  SELECT
+    *
+  From
+    $tabileName$
+</select>
++--
+
+*JDBCTemplate
+
+ 当hql等查询方法不能满足性能或灵活性的要求，必须使用sql时，大家有三种选择：
+
+ 第一，使用Hibernate的sql查询函数，将查询结果对象转为entity对象。
+
+ 第二，使用Hibernate Session的getConnection()获得JDBC Connection，然后进行纯JDBC API操作
+
+ 第三，选择把spring的JDBCTemplate作为一种很不错的JDBC utils来使用
+
+ JDBCTemplate的使用很简单，只要在ApplicationContext文件里定义一个jdbcTemplate节点，pojo获得注入后可以直接执行操作。不需要继承什么基类
+
+ ApplicationContext定义
+
++--
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+  <property name="dataSource" ref="dataSource"/>
+</bean>
++--
+
+ 实际使用
+
++--
+SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, params);
++--
+
+ Tips1: jdbcTemplate有很多的ORM化回调操作将返回结果转为对象列表，但很多时候还是需要返回ResultSet，spring有提供一个类似ResultSet的spring SqlRowSet对象。
+
+ Tips2: 注意jdbcTemplate尽量只执行查询操作，莫要进行更新，否则很容易破坏hibernate的二级缓存体系。
+

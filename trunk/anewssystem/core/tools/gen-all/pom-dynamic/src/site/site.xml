@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+  <bannerLeft>
+    <name>@PROJECT_NAME@</name>
+  </bannerLeft>
+  <body>
+    <links>
+      <item name="Maven" href="http://maven.apache.org/"/>
+      <item name="Apache" href="http://www.apache.org/"/>
+    </links>
+    <menu name="about">
+      <item name="ReadMe" href="/readme.html"/>
+    </menu>
+    ${reports}
+  </body>
+</site>

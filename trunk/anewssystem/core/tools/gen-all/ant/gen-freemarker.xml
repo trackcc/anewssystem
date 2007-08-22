@@ -1,0 +1,10 @@
+    <!--生成freemarker模板-->
+    <target name="gen.freemarker">
+        <java classname="anni.tools.GenFreemarker"
+              classpathref="build.lib">
+            <arg value="${target.dir}/gen-freemarker"/>
+            <arg value="${package.name}.domain"/>
+            <arg value="${excel.name}"/>
+            <arg value="${project.name}"/>
+        </java>
+    </target>

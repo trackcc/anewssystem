@@ -1,0 +1,14 @@
+ ---
+ cobertura
+ ---
+ Lingo
+ ---
+ 2007-05-15
+
+cobertura-maven-plugin:2.1有问题
+
+ 其实问题不在plugin，而是由于cobertura-1.8不能自己定义ser文件的路径，导致的问题是显示的报告一直都是100%，但cobertura:check显示的可以是正确的测试覆盖信息。
+
+ 具体的解决方法是给cobertura-1.8打个补丁，问题报告在这里：{http://jira.codehaus.org/browse/MCOBERTURA-61}，直接下载{http://dist.codehaus.org/mule/dependencies/maven2/cobertura/cobertura/1.8/cobertura-1.8.jar}，替换掉本地目录下的cobertura-1.8.jar就可以解决这个问题了
+
+

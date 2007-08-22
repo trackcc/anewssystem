@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<project name="db" basedir="." default="db">
+    <!--使用自定义变量-->
+    <property file="db.properties"/>
+    <!--使用系统设置的环境变量-->
+    <property environment="env"/>
+    <!--这里设置的是maven2默认使用的类库目录-->
+    <property name="repo" location="${env.USERPROFILE}/.m2/repository/"/>
+
+    <!--依赖类库-->
+    <path id="build.lib">
+        <!--hsqldb-->
+        <pathelement location="${repo}/hsqldb/hsqldb/1.8.0.7/hsqldb-1.8.0.7.jar"/>
+        <!--jtds-->
+        <pathelement location="${repo}/net/sourceforge/jtds/jtds/1.2/jtds-1.2.jar"/>
+        <!--mysql-->
+        <pathelement location="${repo}/mysql/mysql-connector-java/5.0.5/mysql-connector-java-5.0.5.jar"/>
+    </path>
+
+	<target name="db">
+        <sql
+            driver="${driver}"
+            url="${url}"
+            userid="${username}"
+            password="${password}"
+            classpathref="build.lib"
+            onerror="continue"
+            print="true"
+        >
+            <transaction src="${script}"/>
+            <transaction>
+                commit;
+                shutdown;
+            </transaction>
+        </sql>
+	</target>
+</project>
+

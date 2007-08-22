@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project [
+    <!ENTITY build-properties                 SYSTEM "ant/build-properties.xml">
+    <!ENTITY build-clean                      SYSTEM "ant/build-clean.xml">
+    <!ENTITY build-common                     SYSTEM "ant/build-common.xml">
+    <!ENTITY build-prepare                    SYSTEM "ant/build-prepare.xml">
+    <!ENTITY build-gen-all                    SYSTEM "ant/build-gen-all.xml">
+    <!ENTITY prepare-excel-hsqldb             SYSTEM "ant/prepare-excel-hsqldb.xml">
+    <!ENTITY prepare-hsqldb                   SYSTEM "ant/prepare-hsqldb.xml">
+    <!ENTITY prepare-excel-hibernate-reveng   SYSTEM "ant/prepare-excel-hibernate-reveng.xml">
+    <!ENTITY prepare-hibernatetools           SYSTEM "ant/prepare-hibernatetools.xml">
+    <!ENTITY prepare-compile-domain           SYSTEM "ant/prepare-compile-domain.xml">
+    <!ENTITY gen-excel-xml                    SYSTEM "ant/gen-excel-xml.xml">
+    <!ENTITY gen-manager                      SYSTEM "ant/gen-manager.xml">
+    <!ENTITY gen-pom                          SYSTEM "ant/gen-pom.xml">
+    <!ENTITY gen-freemarker                   SYSTEM "ant/gen-freemarker.xml">
+    <!ENTITY gen-assemble                   SYSTEM "ant/gen-assemble.xml">
+    <!ENTITY build-ending                     SYSTEM "ant/build-ending.xml">
+]>
+<project name="gen-all" basedir="." default="gen.all">
+
+    <!-- ========================================
+         默认配置
+         ======================================== -->
+    <!-- setting properties -->
+    &build-properties;
+
+    <!-- target clean -->
+    &build-clean;
+
+    <!-- target common -->
+    &build-common;
+
+    <!-- ========================================
+         生成前的准备工作
+         ======================================== -->
+    <!-- target prepare -->
+    &build-prepare;
+
+    <!-- ========================================
+         开始生成工程
+         ======================================== -->
+    <!-- target gen all -->
+    &build-gen-all;
+
+    <!-- ========================================
+         生成完成，工程收尾
+         ======================================== -->
+    &build-ending;
+
+
+    <!-- gen script -->
+    &prepare-excel-hsqldb;
+    <!-- gen hsqldb -->
+    &prepare-hsqldb;
+    <!-- gen domain -->
+    &prepare-excel-hibernate-reveng;
+    <!-- gen domain -->
+    &prepare-hibernatetools;
+    <!-- compile domain -->
+    &prepare-compile-domain;
+
+    <!-- gen pom -->
+    &gen-pom;
+    <!-- gen xml -->
+    &gen-excel-xml;
+    <!-- gen manager -->
+    &gen-manager;
+    <!-- gen freemarker -->
+    &gen-freemarker;
+
+    <!-- target assemble -->
+    &gen-assemble;
+
+</project>

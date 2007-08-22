@@ -1,0 +1,19 @@
+    <!--根据hsqldb建库脚本生成hsqldb数据库-->
+    <target name="prepare.hsqldb">
+        <mkdir dir="${target.dir}/hsqldb"/>
+        <sql
+            driver="org.hsqldb.jdbcDriver"
+            url="${hsqldb.url}"
+            userid="sa"
+            password=""
+            classpathref="build.lib"
+            onerror="continue"
+            print="true"
+        >
+            <transaction src="${script.path}"/>
+            <transaction>
+                commit;
+                shutdown;
+            </transaction>
+        </sql>
+    </target>

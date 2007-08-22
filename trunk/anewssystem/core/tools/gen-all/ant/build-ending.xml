@@ -1,0 +1,4 @@
+    <!--收尾-->
+    <target name="ending">
+        <antcall target="assemble"/>
+    </target>

@@ -1,0 +1,22 @@
+ ---
+ 介绍
+ ---
+ Lingo
+ ---
+ 2007-04-10
+
+使用selenium进行功能集成测试
+
+ 令开一个子项目integration-test，来专门进行blog的功能集成测试。
+
+*遇到一个问题，如果测试验证码
+
+ 在网上找到的资料一个是屏蔽验证码，一个是使用万能验证码。
+
+ 我不希望在验证代码上进行这样不安全的改动，也不想多写太多代码来实现从session中取验证码再传递给selenium。所以采取一个折中的方式：令写一个登录页面进行测试，在jsp的title部分写上当前验证码的数值，由selenium读取后写入文本框，以此进行测试。
+
+ 最终增加了专门用于selenium测试登录的test_login.jsp页面，页面中使用iframe包含了test_get_captcha.jsp。test_get_captcha.jsp中使用暴力反射获得当前sessionId对应的response。并使用js把值设置到test_login.jsp的title部位。selenium进行测试的时候，直接使用user.getTitle()获得验证码的值，添加到j_captcha_response的文本框上就可以通过验证。
+
+ 进行这步的同时，在applicationContext-acegi-security.xml中添加了权限，让anonymous的用户也可以访问新增的两个页面。
+
+

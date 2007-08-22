@@ -1,0 +1,13 @@
+    <!--生成maven2工程-->
+    <target name="gen.pom">
+        <mkdir dir="${target.dir}/${project.name}"/>
+        <copy todir="${target.dir}/${project.name}" encoding="UTF-8">
+            <fileset dir="${pom.static.dir}"/>
+        </copy>
+        <filter token="PROJECT_NAME" value="${project.name}"/>
+        <filter token="GROUP_ID" value="${group.id}"/>
+        <filter token="TODAY" value="${TODAY}"/>
+        <copy todir="${target.dir}/${project.name}" filtering="true" encoding="UTF-8">
+            <fileset dir="${pom.dynamic.dir}"/>
+        </copy>
+    </target>

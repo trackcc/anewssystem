@@ -1,0 +1,10 @@
+    <!--根据excel生成hibernate-reveng反向工程文件配置文件-->
+    <target name="prepare.excel.hibernate.reveng">
+        <java classname="anni.tools.GenHibernateReveng"
+              classpathref="build.lib">
+            <arg value="${target.dir}"/>
+            <arg value="${package.name}.domain."/>
+            <arg value="${excel.name}"/>
+            <arg value="${db.prefix}"/>
+        </java>
+    </target>

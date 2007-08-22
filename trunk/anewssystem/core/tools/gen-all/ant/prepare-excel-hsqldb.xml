@@ -1,0 +1,9 @@
+    <!--根据excel中的配置，生成hsqldb的建库脚本-->
+    <target name="prepare.excel.hsqldb">
+        <java classname="anni.tools.GenHsqldb"
+              classpathref="build.lib">
+            <arg value="${script.path}"/>
+            <arg value="${excel.name}"/>
+            <arg value="${db.prefix}"/>
+        </java>
+    </target>

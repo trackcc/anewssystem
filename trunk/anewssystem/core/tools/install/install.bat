@@ -1,0 +1,1 @@
+mvn install:install-file -DgroupId=net.sf.json-lib -DartifactId=json-lib -Dversion=1.0b2 -Dclassifier=jdk13 -Dpackaging=jar -Dfile=/path/to/file

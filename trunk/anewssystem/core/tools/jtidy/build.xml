@@ -1,0 +1,30 @@
+<project name="jtidy" basedir="." default="jtidy">
+    <property environment="env"/>
+    <property name="repo" location="${env.USERPROFILE}/.m2/repository/"/>
+    <property file="jtidy.properties"/>
+
+    <path id="build.lib">
+        <path location="${repo}/org/hibernate/jtidy/r8-20060801/jtidy-r8-20060801.jar"/>
+    </path>
+
+    <target name="clean" depends="cleanbak">
+        <delete dir="outputdir"/>
+    </target>
+
+    <target name="cleanbak">
+        <delete>
+            <fileset dir=".">
+               <include name="**/*.bak"/>
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="jtidy" depends="cleanbak">
+        <mkdir dir="outputdir"/>
+        <taskdef name="tidy" classname="org.w3c.tidy.ant.JTidyTask" classpathref="build.lib"/>
+         <tidy destdir="outputdir" properties="jtidy.properties">
+            <fileset dir="inputdir" />
+            <parameter name="drop-font-tags" value="true" />
+         </tidy>
+    </target>
+</project>

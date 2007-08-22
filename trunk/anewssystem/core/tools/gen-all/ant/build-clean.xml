@@ -1,0 +1,15 @@
+    <!--清除所有生成临时文件和上次生成的文件-->
+    <target name="clean" depends="cleanbak">
+        <delete dir="${target.dir}"/>
+    </target>
+
+    <!--删除editplus2生成的.bak文件-->
+    <target name="cleanbak">
+        <defaultexcludes remove="**/*.bak"/>
+        <delete>
+            <fileset dir=".">
+               <include name="**/*.bak"/>
+            </fileset>
+        </delete>
+        <defaultexcludes add="**/*.bak"/>
+    </target>

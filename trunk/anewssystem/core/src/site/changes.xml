@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <properties>
+    <title>anni parent</title>
+    <author email="echo_o@163.com">Lingo</author>
+  </properties>
+  <body>
+    <release version="current" date="2007-04-16" description="项目启动">
+      <action dev="Lingo" type="fix">
+        抽离核心api。
+      </action>
+    </release>
+  </body>
+</document>

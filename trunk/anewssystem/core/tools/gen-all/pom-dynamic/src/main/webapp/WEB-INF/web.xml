@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app  xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+    <!--
+      | spring使用的配置文件，使用通配符
+      -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:spring/applicationContext*.xml</param-value>
+    </context-param>
+
+    <!--
+      | Log4jConfigListener把当前工程的根目录设置为webapp.root
+      | 为了不与其他工程发生冲突，这里改名为@PROJECT_NAME@.root
+      -->
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>@PROJECT_NAME@.root</param-value>
+    </context-param>
+
+    <!--
+      | 默认i18n资源文件
+      -->
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>i18n/validation</param-value>
+    </context-param>
+
+    <!--
+      | ExtremeTalbe的i18n资源文件
+      -->
+    <context-param>
+        <param-name>extremecomponentsMessagesLocation</param-name>
+        <param-value>i18n/validation</param-value>
+    </context-param>
+
+    <!--ExtremeTable 表格标签的Properties文件-->
+    <context-param>
+        <param-name>extremecomponentsPreferencesLocation</param-name>
+        <param-value>/conf/extremetable.properties</param-value>
+    </context-param>
+
+    <!-- Acegi Filters -->
+<!--
+    <filter>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
+        <filter-class>org.acegisecurity.util.FilterToBeanProxy</filter-class>
+        <init-param>
+            <param-name>targetClass</param-name>
+            <param-value>org.acegisecurity.util.FilterChainProxy</param-value>
+        </init-param>
+    </filter>
+-->
+
+    <!--
+      | encoding filter by spring
+      -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <!--
+      | springmvc message filter
+      -->
+    <filter>
+        <filter-name>messageFilter</filter-name>
+        <filter-class>anni.core.web.filter.MessageFilter</filter-class>
+    </filter>
+
+    <!--Hibernate Open Session in View Filter-->
+    <filter>
+        <filter-name>hibernateFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+    </filter>
+
+    <!-- ExtremeTable 导出Excel和Pdf的Filter -->
+    <filter>
+        <filter-name>eXtremeExport</filter-name>
+        <filter-class>org.extremecomponents.table.filter.ExportFilter</filter-class>
+    </filter>
+
+
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+<!--
+    <filter-mapping>
+        <filter-name>Acegi Filter Chain Proxy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+-->
+    <filter-mapping>
+        <filter-name>messageFilter</filter-name>
+        <url-pattern>*.htm</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>messageFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>eXtremeExport</filter-name>
+        <url-pattern>*.htm</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>*.htm</url-pattern>
+    </filter-mapping>
+
+    <!--
+      | auto execute hsqldb
+      -->
+    <listener>
+        <listener-class>anni.core.web.listener.HsqldbListener</listener-class>
+    </listener>
+
+    <!--
+      | listener for springframework's ApplicationContext
+      -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--
+      | 负责处理由JavaBeans Introspector的使用而引起的内存泄露。
+      -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <!-- 支持session scope的Spring bean -->
+    <listener>
+         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
+    <!-- struts-menu -->
+    <listener>
+        <listener-class>net.sf.navigator.menu.MenuContextListener</listener-class>
+    </listener>
+
+    <!--
+      | spring-mvc。
+      -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:spring/dispatcher-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <!-- jcaptcha 用来生成验证码图片 -->
+
+    <servlet>
+        <servlet-name>jcaptcha</servlet-name>
+        <servlet-class>anni.core.security.jcaptcha.ImageCaptchaServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>jcaptcha</servlet-name>
+        <url-pattern>/captcha.jpg</url-pattern>
+    </servlet-mapping>
+
+    <!--
+      | session超时时间
+      -->
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+
+    <!--
+      | 默认索引文件
+      -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Error Page定义 -->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/inc/error.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/inc/404.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/inc/403.jsp</location>
+    </error-page>
+</web-app>

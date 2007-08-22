@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project>
+  <bannerLeft>
+    <name>anni documents</name>
+  </bannerLeft>
+<!--
+  <skin>
+    <groupId>org.apache.tapestry</groupId>
+    <artifactId>maven-skin</artifactId>
+    <version>1.1</version>
+  </skin>
+  <skin>
+    <groupId>org.springframework.maven.skins</groupId>
+    <artifactId>maven-spring-skin</artifactId>
+    <version>1.0.3</version>
+  </skin>
+-->
+  <body>
+    <links>
+      <item name="Maven" href="http://maven.apache.org/"/>
+      <item name="Apache" href="http://www.apache.org/"/>
+    </links>
+    <menu name="about">
+      <item name="acegi" href="/acegi.html"/>
+      <item name="basepath" href="/basepath.html"/>
+      <item name="bat" href="/bat.html"/>
+      <item name="cobertura" href="/cobertura.html"/>
+      <item name="cron" href="/cron.html"/>
+      <item name="dbunit" href="/dbunit.html"/>
+      <item name="extremetable" href="/extremetable.html"/>
+      <item name="freemarker1" href="/freemarker1.html"/>
+      <item name="freemarker2" href="/freemarker2.html"/>
+      <item name="jbpm-readme" href="/jbpm-readme.html"/>
+      <item name="jbpm-websale" href="/jbpm-websale.html"/>
+      <item name="persistence" href="/persistence.html"/>
+      <item name="security1" href="/security1.html"/>
+      <item name="security2" href="/security2.html"/>
+      <item name="selenium" href="/selenium.html"/>
+    </menu>
+  </body>
+</project>

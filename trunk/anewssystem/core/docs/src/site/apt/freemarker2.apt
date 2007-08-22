@@ -1,0 +1,98 @@
+ ---
+ 修正FreeMarkerView
+ ---
+ Lingo
+ ---
+ 2007-04-08
+
+springmvc中freemarker有问题
+
+ org.springframework.web.servlet.view.freemarker.FreeMarkerView有点儿问题。我们使用UTF-8编码到时候可以设置freemarker.template.Configuration中的default_encoding，可向HttpServletResponse中写入数据的时候没有设置characterEncoding，只有当我在写入数据前，使用setCharacterEncoding("UTF-8")后，才能正常显示中文。
+
+ 我对FreeMarkerView的修改是重写了processTemplate方法：
+
++--
+@Override
+protected void processTemplate(Template template,
+                               Map model,
+                               HttpServletResponse response)
+                               throws IOException, TemplateException {
+    if (getEncoding() != null) {
+        response.setCharacterEncoding(getEncoding());
+    } else {
+        response.setCharacterEncoding(getConfiguration()
+                                      .getDefaultEncoding());
+    }
+    template.process(model, response.getWriter());
+}
++--
+
+ 先判断getEncoding()是否为null，如果不为null就将getEncoding()设置到response中。
+
+ 如果getEncoding()为null，就将configuration中的defaultEncoding设置到response中。这一步也许应该使用configuration的outputEncoding作为输出吧？但没有在org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer中找到对应的配置，所以我还是用defaultEncoding吧，基本不会出现输入编码与输出编码不同的情况。
+
+ 另外，是否应该使用setContentType("text/html;charset=UTF-8")代替setCharacterEncoding("UTF-8")？
+
+*设置freemarker作为view还有一点问题：
+
+ 在springmvc中使用freemarker不会自动去classpath下查找freemarker.properties。必须为org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer设置configLocation，而且这个值只能以webapp.root为根目录，不能用classpath*。结果不能把他们放在maven2的resources下，必须放在webapp目录下，挺麻烦的。
+
+ 建议把org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver的exposeSpringMacroHelpers设置为true，这样可以使用spring自带的ftl，对我现在来说，最重要的是\<#assign ctx=springMacroRequestContext.getContextPath()\>，省得在写url的时候用\<@spring.relativeUrl "/test/index.htm"\>，还是${ctx}/test/index.htm比较便利。
+
+
+*终于找到了不修改代码也能正常显示中文的办法：
+
++--
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="false"/>
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".ftl"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+<!--
+        <property name="viewClass" value="anni.cms.blog.web.freemarker.EncodingFreeMarkerView"/>
+-->
+        <property name="contentType">
+            <value>text/html; charset=UTF-8</value>
+        </property>
+    </bean>
++--
+
+ 对viewResolver进行配置，把contentType设置为你需要的就可以了。
+
+ 另外，http://spring.jactiongroup.net/viewtopic.php?p=6603中YuLimin建议在ftl文件头引用\<#ftl attributes={"content_type":"text/html; charset=UTF-8"}\>，我使用以后没有成功，但也不报错。说明支持这种写法。
+
+*springmvc中使用freemarker的另一个问题
+
+ 为viewResolver设置contentType之后，直接通过test.htm请求渲染的页面都没有问题。但是在jsp中使用\<jsp:forward page="/test.htm"/\>的依然出现乱码。
+
+ 解决方法：在jsp:forward增加一行
+
++--
+<%@ page contentType="text/html; charset=UTF-8"%>
++--
+
+*springmvc不能直接在freemarker中使用taglib
+
+ 使用了两个地方的代码，让springmvc的freemarker里也可以使用taglib了
+
+ *[http://opensource.atlassian.com/projects/spring/browse/SPR-1052]
+
+ *[http://forum.springframework.org/archive/index.php/t-10434.html]
+
+ []
+
+ 但还不能自动获得jar中的tld，必须把tld文件放在/WEB-INF/tld目录下，然后使用\<#assign jodd="/WEB-INF/tld/jodd.tld"\>进行引用，然后就可以直接使用了\<@jodd.form scope="request" bean="article"\>
+
+*freemarker无法调用setTask(long task)这样的方法
+
+ 在使用jbpm的taglib时发现了这个问题，如果使用taglib：\<@jbpm.processimage task="${taskInstance.id}"/\>，这里的task对应着setTask(long id)或setTask(Long id)，就会出现IllegalArgumentException: argument type mismatch，改为setTask(String id)就没有问题，明显是freemarker在判断参数类型的时候出了问题。而jsp中可以直接调用参数为long的方法，很奇怪已经发展到2.3.10都没有人发现这个问题吗？
+
+ 异常出现在freemarker.ext.jsp.TagTransformModel.java的219行。m.invoke(tag, aarg);，上一行是BeansWrapper.coerceBigDecimals(m, aarg);，这句的功能应该是判断参数类型，但我不知道如何测试，也没办法定位错误，只好把taglib中的参数类型都改为String，心中存着小小的不爽啊。
+
+ 解决方法其实很简单，在官方faq中写着，如果类型为数字或布尔类型，就应该写成\<@jbpm.processimage task=taskInstance.id/\>或\<@jbpm.processimage task=12/\>的形式，否则会把变量当作字符串操作，怪自己没好好看文档。
+
+
+*springframework-2.0.5中支持了在freemarker中调用taglib，可以不用使用额外代码进行配置了。
+
+*freemarker中的map跟java中的map不同，只能使用String类型作为key，如果key不是String，即使可以通过map?keys取到，也无法通过map[key]这样的形式迭代出map中的数据。之前因为这个原因曾经把权限模型中的user状态由Integer改成String，可一直感觉十分别扭，这次又重新读了freemarker的faq，里面提到可以使用ObjectsWrapper代替DefaultObjectWrapper，继承了FreeMarkerConfigurer，在初始化Configuration的时候把ObjectsWrapper放进去就可以了。以后就可以使用这个freemarker不推荐的，不安全的方法调用map.get()一类方法了。

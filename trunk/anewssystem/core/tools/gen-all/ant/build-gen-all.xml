@@ -1,0 +1,9 @@
+    <!--生成所有文件-->
+    <target name="gen.all" depends="prepare">
+        <antcall target="gen.pom"/>
+        <antcall target="gen.manager"/>
+        <antcall target="gen.freemarker"/>
+        <antcall target="gen.excel.xml"/>
+
+        <antcall target="ending"/>
+    </target>

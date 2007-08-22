@@ -1,0 +1,149 @@
+ ---
+ extremetable
+ ---
+ Lingo
+ ---
+ 2007-06-28
+
+记录extremetable的一些应用
+
+ 虽然它已经停止开发了，但依然实现了自己考虑不到的功能，比如i18n，嵌套的field，以及分view显示。
+
+ 来自springside的ExtremeComponents指南
+
+*Extreme Table是功能强大而又容易配置、扩展、自定义的Table控件。
+
+ 常用的功能包括排序、分页、到处Excel, pdf和汇总。
+
+ 网站{http://www.extremecomponents.org}
+
+*安装
+
+ ExtremeComponents安装文件在/components/web/extremetable/下，包括jar文件，images图片和css文件以及properties文件。还包含web.xml, sample.jsp示例。
+
+ images文件，css文件，properties文件可随意摆放
+
+ properties文件中制定images文件的位置，web.xml中制定properties文件的位置，实际jsp中指定css的位置。
+
+*Compact View
+
+ 默认的式样不符合大家的审美，幸亏还有Compact View和css设置，让我们可以敬谢不敏它号称非常方便的HtmlView子类扩展。在全局设置里设置
+
++--
+table.view.html=org.extremecomponents.table.view.CompactView
++--
+
+*导出Excel
+
+ Excel导出的Tag：（官方不支持中文文件名）。\<ec:exportXls fileName="BookList.xls" tooltip="导出 Excel"/\>
+
+ ExtremeTable导出的一项重要特性是可以根据不同的View导出不同的列。
+
+ 比如html管理界面可能只列出订单几个最重要的列，而导出excel时则需要导出所有的列。\<ec:column property="orderdate" title="订单日期" cell="date" format="yyyy-MM-dd" viewsDenied="html"/\>
+
+ 又比如有些操作的按钮，如修改按钮只在html管理界面出现，excel里不想出现：\<ec:column property="null" title="修改" viewsAllowed="html"/\>
+
+*使用排序功能时，如果property为嵌套属性时，需要设置alias
+
+ 因为javascript的关系，\<ec:column property="customer.name" title="客户名称" alias="customer"/\>
+
+*Date Cell与Number Cell和RowCount Cell
+
+ 在全局属性里定义：
+
++--
+column.format.date=yyyy-MM-dd
+column.format.currency=￥###,###,#00.00
++--
+
+ jsp代码：
+
++--
+<ec:column property="totalprice" title="总金额" cell="currency" width="80" />
+<ec:column property="shipdate" title="发货日期" cell="date" width= "80"/>
+<ec:column property="rowcount" cell="rowCount" sortable="false" title="序号" width="60"/>
++--
+
+*汇总
+
+ 在column中加入两个cac属性，就会自动在table的底端显示汇总
+
++--
+<ec:column property="totalprice" title="总金额" cell="number" format="###,###,##0.00" calc="total" calcTitle= "汇总:"/>
++--
+
+*i18n
+
+ 在web.xml里面指定i18n的properties文件：
+
++--
+<context-param>
+  <param-name>extremecomponentsMessagesLocation</param-name>
+  <param-value>messages</param-value>
+</context-param>
++--
+
+ jsp中设置column的title属性：
+
++--
+<ec:column property="name" title="book.name"/>
++--
+
+ EC的算法是先去i18n文件中寻找book.name，如果找不到该key，则显示book.name。所以如果不想i18n，title处可以直接填中文。
+
+*数据库分页
+
+ EC默认从数据库中查找所有记录然后由它来分页，如果查询结果较大，可以考虑使用数据库端分页的方案。
+
+ 此时，EC会使用Limit对象向Controller传递PageNo, PageSize, OrderBy等分页信息，而服务端将向EC返回总记录数和当前页的内容。
+
+*不显示导出excel及分页
+
+ 最快的方式是设置table的showStatusBar=false
+
++--
+<ec:table items= "order.orderItems" var="item" action="" showStatusBar= "false">
++--
+
+*自定义样式与扩展Cell
+
+ ExtremeTable比DisplayTag的一个优点，就是良好的自定义或扩展能力，不用千人一面。
+
+**良好的css定义
+
+  ExtremeTable的css定义非常严谨，并且提供很多个层次的修改方式：
+
+  *直接修改css文件，可以把table view改成任意样式
+
+  *修改全局属性，改变某种元素对应的css class名table.styleClass=tableRegion
+
+  *在某个页面的row, column tag中定义class \<ec:row style="" or styleClass=""/\>
+
+  一般都是采用方法1直接修改。
+
+**方便的\<tr\>\<td\>属性扩展
+
+  row与column已提供了丰富的普通属性与javascript属性如onclick()，如果属性仍然未够，可自行扩展\<row\>与\<column\> tag，并通过全局属性指定新的子类名。
+
+  为了方便大家在子类扩展属性，extreme table提供了专门的回调函数与Util函数，如：
+
++--
+public void addColumnAttributes(Column column){
+  column.addAttribute("customAttributeOne", customAttributeOne);
+}
++--
+
+  详细请看手册，Table, Row, Column都提供相同的扩展：{http://extremecomponents.org/wiki/index.php/Column#Extended_Attributes}
+
+  如果不是ExtremeTable的特别支持，普通taglib class要扩展属性的话：
+
+  *定义真正的java属性，setter, getter
+
+  *tld文件中声明新的属性
+  
+  *重新输出函数将新属性打印出来
+
+**扩展HtmlView, cell等显示组件
+
+  ExtremeTable在这些类的扩展上方便很多，请自行参考官方文档：{http://extremecomponents.org/wiki/index.php/Html_View_Tutorial}
+

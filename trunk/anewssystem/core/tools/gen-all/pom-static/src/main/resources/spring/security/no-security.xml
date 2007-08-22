@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans default-lazy-init="true">
+
+    <!-- ======================== FILTER CHAIN ======================= -->
+    <!--
+         FilterChainProxy会按顺序来调用这些filter,使这些filter能享用Spring ioc的功能,
+         CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON定义了url比较前先转为小写
+         PATTERN_TYPE_APACHE_ANT定义了使用Apache ant的匹配模式
+     -->
+    <bean id="filterChainProxy"
+       class="org.acegisecurity.util.FilterChainProxy">
+        <property name="filterInvocationDefinitionSource">
+            <value>
+                CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+                PATTERN_TYPE_APACHE_ANT
+                /**=anonymousProcessingFilter
+            </value>
+        </property>
+    </bean>
+
+     <!--
+         anonymousProcessingFilter：如果不存在任何授权信息时，自动添加匿名用户身份至SecurityContextHolder中
+     -->
+    <bean id="anonymousProcessingFilter"
+       class="org.acegisecurity.providers.anonymous.AnonymousProcessingFilter">
+        <property name="key" value="changeThis" />
+        <property name="userAttribute" value="anonymousUser,ROLE_ANONYMOUS" />
+    </bean>
+
+</beans>

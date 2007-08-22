@@ -1,0 +1,15 @@
+    <!--使用hibernatetools根据hsqldb中的数据库结构生成ejb3形式的领域模型-->
+    <target name="prepare.hibernatetools">
+        <mkdir dir="${target.dir}/gen"/>
+        <taskdef name="hibernatetool"
+                 classname="org.hibernate.tool.ant.HibernateToolTask"
+                 classpathref="build.lib"/>
+        <hibernatetool destdir="${target.dir}/gen"
+                       templatepath="templates">
+            <jdbcconfiguration configurationfile="${res.dir}/hibernate.cfg.xml"
+                               packagename="${package.name}.domain"
+                               revengfile="${target.dir}/hibernate.reveng.xml"
+                               detectmanytomany="true"/>
+            <hbm2java jdk5="true" ejb3="true"/>
+        </hibernatetool>
+    </target>

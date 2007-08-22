@@ -1,0 +1,30 @@
+ ---
+ dbunit for unit test
+ ---
+ Lingo
+ ---
+ 2007-06-01
+
+dbunit
+
+ 需要注意的是，dbunit导出的xls里那些表的顺序很可能不对，需要手工调节一下顺序。
+
+ 我觉得很可能是dbunit从后向前执行delete from table_name，然后从前向后执行insert into。这样many-to-one的one一端就需要放在前面，比如有父亲，孩子两张表，一个父亲可以有多个孩子，每个孩子只能有一个父亲，父亲就是one一端，这样xls里父亲表就应该在孩子表的前面。
+
+ 还有一点，如果表本身有外键关联关系，比如菜单和上级菜单，上下级菜单都保存在一张表中，这种情况下dbunit没办法自动生成正确的delete语句，需要我们手动写
+
++--
+delete from menu where parent_id is not null
+delete from menu
++--
+
+ 这还仅仅是删除两级的表结构，如果是更复杂的关系就需要更复杂的sql语句了，dbunit估计很难达到这种程度。
+
+ 对于自身关联，无限级别的例子，我想到了一个好主意：
+
++--
+update color set color_id=null
+delete from color
++--
+
+

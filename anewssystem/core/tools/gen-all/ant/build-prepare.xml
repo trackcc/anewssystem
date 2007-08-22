@@ -1,0 +1,8 @@
+    <!--代码生成前的准备工作-->
+    <target name="prepare" depends="compile">
+        <antcall target="prepare.excel.hsqldb"/>
+        <antcall target="prepare.hsqldb"/>
+        <antcall target="prepare.excel.hibernate.reveng"/>
+        <antcall target="prepare.hibernatetools"/>
+        <antcall target="prepare.compile.domain"/>
+    </target>

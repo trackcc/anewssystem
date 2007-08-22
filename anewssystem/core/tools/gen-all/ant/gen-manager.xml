@@ -1,0 +1,10 @@
+    <!--生成manager-->
+    <target name="gen.manager">
+        <java classname="anni.tools.GenManager"
+              classpathref="build.lib">
+            <arg value="${target.dir}/gen"/>
+            <arg value="${package.name}"/>
+            <arg value="${excel.name}"/>
+			<arg value="${project.name}"/>
+        </java>
+    </target>

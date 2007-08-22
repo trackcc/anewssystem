@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<MenuConfig>
+
+    <Displayers>
+        <Displayer name="DropDown"
+                   type="net.sf.navigator.displayer.DropDownMenuDisplayer"/>
+        <Displayer name="Simple"
+                   type="net.sf.navigator.displayer.SimpleMenuDisplayer"/>
+        <Displayer name="CoolMenu"
+                   type="net.sf.navigator.displayer.CoolMenuDisplayer"/>
+        <Displayer name="CoolMenu4"
+                   type="net.sf.navigator.displayer.CoolMenuDisplayer4"/>
+        <Displayer name="MenuForm"
+                   type="net.sf.navigator.example.PermissionsFormMenuDisplayer"/>
+        <Displayer name="ListMenu"
+                   type="net.sf.navigator.displayer.ListMenuDisplayer"/>
+        <Displayer name="TabbedMenu"
+                   type="net.sf.navigator.displayer.TabbedMenuDisplayer"/>
+        <Displayer name="Velocity"
+                   type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+        <Displayer name="XtreeMenu"
+                   type="net.sf.navigator.displayer.XtreeMenuDisplayer"/>
+        <Displayer name="CSSListMenu"
+                   type="net.sf.navigator.displayer.CSSListMenuDisplayer"/>
+        <Displayer name="OutlookMenu"
+                   type="anni.core.menu.OutlookMenuDisplayer"/>
+    </Displayers>
+
+
+    <Menus>
+        <Menu name="${projectName}" title="${projectName}">
+<#list beanList as item>
+  <#if item.display>
+            <Item name="List${item.className}" title="浏览${item.className}" image="../images/icon/16x16/manage.gif"
+                  location="../${item.className?lower_case}/list.htm" target="dblselect"/>
+            <Item name="Add${item.className}" title="添加${item.className}" image="../images/icon/16x16/new.gif"
+                  location="../${item.className?lower_case}/create.htm" target="dblselect"/>
+  </#if>
+</#list>
+        </Menu>
+        <Menu name="Logout" title="退出系统" location="../j_acegi_logout">
+            <Item name="Logout" title="退出系统" image="../images/icon/16x16/group.jpg"
+                  location="../j_acegi_logout" target="_parent"/>
+        </Menu>
+    </Menus>
+
+</MenuConfig>

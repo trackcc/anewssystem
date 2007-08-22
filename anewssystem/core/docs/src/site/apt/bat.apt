@@ -1,0 +1,41 @@
+ ---
+ bat中交互操作
+ ---
+ Lingo
+ ---
+ 2007-07-21
+
+请求输入，根据输入处理，主要是因为2k以及xp中已经不用choice，所以有此处理方式，
+
+ http://www.computerhope.com/sethlp.htm
+ 这里有更多的解释
+
++--
+@ECHO off
+cls
+:start
+ECHO.
+ECHO 1. Print Hello
+ECHO 2. Print Bye
+ECHO 3. Print Test
+set choice=
+set /p choice=Type the number to print text.
+if not '%choice%'=='' set choice=%choice:~0,1%
+if '%choice%'=='1' goto hello
+if '%choice%'=='2' goto bye
+if '%choice%'=='3' goto test
+ECHO "%choice%" is not valid please try again
+ECHO.
+goto start
+:hello
+ECHO HELLO
+goto end
+:bye
+ECHO BYE
+goto end
+:test
+ECHO TEST
+goto end
+:end
+pause
++--

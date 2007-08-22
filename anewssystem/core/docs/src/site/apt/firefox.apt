@@ -1,0 +1,16 @@
+ ---
+ firefox
+ ---
+ Lingo
+ ---
+ 2007-07-07
+
+firefox安全策略不允许远程脚本访问本地图片
+
+ * about:config
+
+ * security.checkloaduri
+
+ * 设置值为false
+
+

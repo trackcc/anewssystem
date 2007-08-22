@@ -1,0 +1,27 @@
+    <!--最终装配-->
+    <target name="assemble">
+        <!--备份配置用的原始excel文件-->
+        <copy todir="${target.dir}/${project.name}/doc/excel/" file="${excel.name}"/>
+        <!--备份生成的数据库脚本-->
+        <copy todir="${target.dir}/${project.name}/doc/excel/" file="${script.path}"/>
+        <!--备份生成的hsqldb数据库文件-->
+        <copy todir="${target.dir}/${project.name}/doc/hsqldb/">
+            <fileset dir="${target.dir}/hsqldb/">
+                <include name="*"/>
+            </fileset>
+        </copy>
+        <copy todir="${target.dir}/${project.name}/src/main/webapp/db/">
+            <fileset dir="${target.dir}/hsqldb/">
+                <include name="*"/>
+            </fileset>
+        </copy>
+        <!--复制生成的java文件，包括pojo,dao,daoImpl,webcontroller-->
+<!--
+        <copy todir="${target.dir}/${project.name}/src/main/java/">
+            <fileset dir="${target.dir}/gen/">
+                <include name="**/*.java"/>
+                <include name="**/package.html"/>
+            </fileset>
+        </copy>
+-->
+    </target>

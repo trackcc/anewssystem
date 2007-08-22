@@ -1,0 +1,58 @@
+2007-05-17
+Lingo
+----------
+
+1.先去http://tinymce.moxiecode.com/下载tinymce的发布包，我找到的是tinymce_2_1_1_1.zip
+
+2.下载后，解压缩，得到tinymce目录，这个目录下有三个子目录
+ docs只有一个文件，似乎是链接到其他地方的，我机器不能上网就没测试
+ examples是一些例子，直接打开html文件就可以感受一下tinymce了
+ jscripts下是所有的代码
+
+3.我们用到的只有jscripts/tiny_mce这个目录下的东西，实际使用的时候我们要把这个目录复制到我们的工程目录下
+ 这里我们演示一下tinymce的simple模式，首先在jscripts目录下新建一个test.html，内容是
+<html>
+  <head>
+    <title>test.html</title>
+  </head>
+  <body>
+    <textarea cols="30" rows="5">test text area.</textarea>
+  </body>
+</html>
+
+我们用浏览器查看一下，显示的是一个普通的textarea。
+
+现在我们以这个textarea为基础，使用tinymce把这个textarea装饰一下。
+
+第一步，在head部分添加一行<script language="javascript" type="text/javascript" src="tiny_mce/tiny_mce.js"></script>引入tinymce的脚本
+
+第二步，告诉tinymce使用什么主题装饰textarea，继续在head中添加script脚本
+
+    <script language="javascript" type="text/javascript">
+tinyMCE.init({
+  mode : "textareas",
+  theme : "simple"
+});
+    </script>
+这里我们对所有的textarea使用simple主题。修改后的test.html变成了这样
+
+<html>
+  <head>
+    <title>test.html</title>
+    <script language="javascript" type="text/javascript" src="tiny_mce/tiny_mce.js"></script>
+    <script language="javascript" type="text/javascript">
+tinyMCE.init({
+  mode : "textareas",
+  theme : "simple"
+});
+    </script>
+  </head>
+  <body>
+    <textarea cols="30" rows="5">test text area.</textarea>
+  </body>
+</html>
+
+
+现在可以打开浏览器看效果了。如果想使用更多的功能，可以参考example中的例子。
+
+

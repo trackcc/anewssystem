@@ -1,0 +1,45 @@
+ ---
+ mysql过招
+ ---
+ Lingo
+ ---
+ 2007-07-05
+
+mysql过招
+
+ 这几天在整MySql，还整出了好几个问题，也学会了几招，共享之，
+
+ *在Linux上装了MySql后，别的机器用root用户连接时，发现连接不上
+
+  可用如下命令解决该问题：
+
++--
+update user set host='%' where user='root' and host='localhost';
++--
+
+ *修改用户密码的命令：
+
++--
+update user set password=PASSWORD('新密码') and user='root';
++--
+
+ *恢复mysql数据库
+
+ 可在命令行下敲下如下命令，具体使用见下例：
+
++--
+mysql -u root -proot -D 数据库名 < "C:\tmp\backup.sql";
++--
+
+  其中第一个root为用户名，第二个root为密码；
+
+ *备份MySql数据库
+
+  在命令行下使用mysqldump命令，举例如下：
+
++--
+mysqldump -u root -proot 数据库名 > backup.sql
+mysqldump -u root -proot 数据库名 > C:\tmp\backup.sql
++--
+
+

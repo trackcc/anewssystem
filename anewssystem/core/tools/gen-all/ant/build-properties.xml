@@ -1,0 +1,43 @@
+    <!--使用自定义变量-->
+    <property file="gen-all.properties"/>
+
+    <!--默认不处理EditPlus2生成的.bak文件-->
+    <defaultexcludes add="**/*.bak"/>
+
+    <!--使用系统设置的环境变量-->
+    <property environment="env"/>
+    <!--这里设置的是maven2默认使用的类库目录-->
+    <property name="repo" location="${env.USERPROFILE}/.m2/repository/"/>
+
+    <!--依赖类库-->
+    <path id="build.lib">
+        <pathelement location="${target.dir}/classes"/>
+        <pathelement location="${target.dir}/gen-classes"/>
+        <!--anni-core-->
+        <path location="${repo}/anni/core/0.0.2/core-0.0.2.jar"/>
+        <!--excel-->
+        <pathelement location="${repo}/net/sourceforge/jexcelapi/jxl/2.6/jxl-2.6.jar"/>
+        <!--hsqldb-->
+        <pathelement location="${repo}/hsqldb/hsqldb/1.8.0.7/hsqldb-1.8.0.7.jar"/>
+		<!--dbunit-->
+		<pathelement location="${repo}/org/dbunit/dbunit/2.2/dbunit-2.2.jar"/>
+		<pathelement location="${repo}/poi/poi/2.5.1-final-20040804/poi-2.5.1-final-20040804.jar"/>
+
+        <!--hibernatetools-->
+        <path location="${repo}/org/hibernate/hibernate-tools/3.2.0.beta9a/hibernate-tools-3.2.0.beta9a.jar"/>
+        <path location="${repo}/org/hibernate/hibernate/3.2.4.ga/hibernate-3.2.4.ga.jar"/>
+        <path location="${repo}/org/freemarker/freemarker/2.3.10/freemarker-2.3.10.jar"/>
+        <path location="${repo}/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+        <path location="${repo}/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar"/>
+        <path location="${repo}/commons-collections/commons-collections/3.2/commons-collections-3.2.jar"/>
+        <path location="${repo}/antlr/antlr/2.7.7/antlr-2.7.7.jar"/>
+        <path location="${repo}/net/sf/ehcache/ehcache/1.3.0/ehcache-1.3.0.jar"/>
+        <path location="${repo}/org/hibernate/jtidy/r8-20060801/jtidy-r8-20060801.jar"/>
+        <path location="${repo}/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar"/>
+        <!--hibernate-annonation-->
+        <path location="${repo}/org/hibernate/hibernate-annotations/3.3.0.ga/hibernate-annotations-3.3.0.ga.jar"/>
+        <path location="${repo}/org/hibernate/hibernate-commons-annotations/3.3.0.ga/hibernate-commons-annotations-3.3.0.ga.jar"/>
+        <path location="${repo}/javax/persistence/persistence-api/1.0/persistence-api-1.0.jar"/>
+        <!--spring-->
+        <path location="${repo}/org/springframework/spring/2.0.5/spring-2.0.6.jar"/>
+    </path>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <properties>
+    <title>anni parent</title>
+    <author email="echo_o@163.com">Lingo</author>
+  </properties>
+  <body>
+    <release version="current" date="2007-05-31" description="修补CacheBaseUrlDefinitionSource.java">
+      <action dev="Lingo" type="fix">
+        CacheBaseUrlDefinitionSource.java中，如果数据库中没有记录的时候，就会报null错误，我在使用urls之前加入了是否为null的判断，如果是null，就初始化成一个空的List.
+      </action>
+      <action dev="Lingo" type="fix">
+        BaseController中存在一个大问题，getCommandName()在使用hibernate从数据库查询出pojo后，如果再次绑定出错，那么错误信息不是user这类的名称，而是变成了user$$EnhancerByCGLIB$$3daeb8bf，因为多了后边一堆东西，直接造成的后果就是修改数据时无法显示错误信息。重写了getCommandName()方法，问题改正。
+      </action>
+    </release>
+    <release version="0.0.2" date="2007-05-22" description="修复taglib的问题">
+      <action dev="Lingo" type="fix">
+        jodd的taglib中数据类型有问题，从html中解析出来的都是String，如果bean中字段类型为Integer，则不会进行渲染。
+      </action>
+    </release>
+    <release version="0.0.1" date="2007-04-16" description="项目启动">
+      <action dev="Lingo" type="fix">
+        抽离核心api。
+      </action>
+    </release>
+  </body>
+</document>

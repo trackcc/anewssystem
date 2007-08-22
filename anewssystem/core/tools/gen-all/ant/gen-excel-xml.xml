@@ -1,0 +1,10 @@
+    <!--根据excel生成xml配置文件-->
+    <target name="gen.excel.xml">
+        <java classname="anni.tools.GenXml"
+              classpathref="build.lib">
+            <arg value="${target.dir}"/>
+            <arg value="${package.name}.domain."/>
+            <arg value="${excel.name}"/>
+            <arg value="${project.name}"/>
+        </java>
+    </target>

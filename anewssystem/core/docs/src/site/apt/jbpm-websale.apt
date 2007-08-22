@@ -1,0 +1,277 @@
+ ---
+ jbpm-webapp的websale
+ ---
+ Lingo
+ ---
+ 2007-04-30
+
+下面记录的是jbpm-webapp演示的websale工作流的流程与实现
+
+ 实际上整个演示包含三个部分：home基本流程操作，administration未实现，monitor状态监视器。这里我们仅仅实现home基本流程操作，对于monitor状态监视器不做考虑。
+
+*home基本流程操作的步骤
+
+ *index.jsp直接转向到login.jsp，在进行任何操作之前必须选择一个角色进入。
+
+ *login.jsp中只有一个form，form中使用select显示角色列表，选择一个角色既可以登录进行操作。
+
+  login.jsp:
+
++--
+<table>
+  <tr>
+    <td>
+      <fieldset>
+        <legend>Log In</legend>
+        <label>
+          <form id="login">
+            <br />
+            Select User:
+            <select id="username">
+              <option value="">${user.name}</option>
+            </select>
+            <br />
+            <center><input type="submit" value="Log In" /></center>
+          </form>
+        </label>
+      </fieldset>
+    </td>
+  </tr>
+</table>
++--
+
+  对应的类中，通过session获得用户列表：
+
++--
+import org.hibernate.Session;
+import org.jbpm.JbpmContext;
+import org.jbpm.identity.User;
+import org.jbpm.identity.hibernate.IdentitySession;
+
+Session session = JbpmContext.getCurrentJbpmContext().getSession();
+IdentitySession identitySession = new IdentitySession(session);
+List list = identitySession.getUsers();
+// user.getName();
++--
+
+  登录时设置当前的角色名：
+
++--
+JbpmContext.getCurrentJbpmContext().setActorId(userName);
++--
+
+  登录后跳转到home.jsp。
+
+ *home.jsp中，显示taskInstances任务列表，latestProcessDefinitions最新工作流列表。
+
+  初始化jbpmContext, graphSession, taskMgmtSession
+
++--
+this.jbpmContext = JbpmContext.getCurrentJbpmContext();
+this.graphSession = jbpmContext.getGraphSession();
+this.taskMgmtSession = jbpmContext.getTaskMgmtSession();
++--
+
+  *taskIntances任务列表包括三列：任务名，工作流名，版本号
+
++--
+<table>
+  <tr>
+    <td>task form link</td>
+    <td>process</td>
+    <td>version</td>
+  </tr>
+  <tr>
+    <td>taskInstance.name</td>
+    <td>taskInstance.taskMgmtInstance.taskMgmtDefinition.processDefinition.name</td>
+    <td>taskInstance.taskMgmtInstance.taskMgmtDefinition.processDefinition.version</td>
+  </tr>
+</table>
++--
+
+  获得任务列表
+
++--
+taskMgmtSession.findTaskInstances(username);
++--
+
+  选择任务
+
++--
+TaskInstance taskInstance = taskMgmtSession.loadTaskInstance(taskInstanceId);
++--
+
+  获得任务后，转向task.jsp
+
+  *latestProcessDefinitions最新工作流列表
+
++--
+<table>
+  <tr>
+    <td>Start Process Link</td>
+    <td>process</td>
+    <td>version</td>
+  </tr>
+  <tr>
+    <td>processDefinition.taskMgmtDefinition.startTask.name</td>
+    <td>processDefinition.name</td>
+    <td>processDefinition.version</td>
+  </tr>
+</table>
++--
+
+  获得最新工作流列表
+
++--
+graphSession.findLatestProcessDefinitions();
++--
+
+  选择工作流，创建startTask开始任务，保存processInstance
+
++--
+ProcessDefinition processDefinition = graphSession.loadProcessDefinition(processDefinitionId);
+ProcessInstance processInstance = new ProcessInstance(processDefinition);
+TaskInstance taskInstance = processInstance.getTaskMgmtInstance().createStartTaskInstance();
+jbpmContext.save(processInstance);
++--
+
+  保存后，转向task.jsp
+
+ *task.jsp显示任务form，显示了任务名，任务里的变量，可以选择的transition，同时显示流程图
+
++--
+<%@ taglib uri="/WEB-INF/jbpm.tld" prefix="jbpm" %>
+<table>
+  <tr>
+    <td>
+      <form id="taskform">
+        <input type="hidden" id="taskInstanceId" value="${taskInstanceId}" />
+        <h2>${taskInstance.name}</h2>
+        <hr />
+        <table>
+          <tr>
+            <td>${label}</td>
+            <td>${description}</td>
+            <td><input type="text" value="${value}" readonly="${readonly}"/></td>
+          </tr>
+        </table>
+        <hr />
+        <#if availableTransitions>
+          <#list availableTransitions as tran>
+            <input id="transitionButton" name="${saveAndClose}" value="${tran.name}"/>
+          </#list>
+        <#else>
+          <input id="transitionButton" name="${saveAndClose}" value="Save and Close Task"/>
+        </#if>
+        <hr />
+        <input type="button" name="${save}" value="Save"/>
+        <input type="button" name="home" value="Cancel"/>
+      </form>
+    </td>
+    <td><jbpm:processimage task="${taskInstanceId}"/> </td>
+  </tr>
+</table>
++--
+
+  初始化任务的变量列表，获得列表的细节
+
++--
+this.taskInstanceId = taskInstance.getId();
+
+// set the parameters
+this.taskFormParameters = new ArrayList();
+TaskController taskController = taskInstance.getTask().getTaskController();
+if (taskController!=null) {
+  List variableAccesses = taskController.getVariableAccesses();
+  Iterator iter = variableAccesses.iterator();
+  while (iter.hasNext()) {
+    VariableAccess variableAccess = (VariableAccess) iter.next();
+    String mappedName = variableAccess.getMappedName();
+    Object value = taskInstance.getVariable(mappedName);
+  }
+}
++--
+
+  获得有效的transition列表
+
++--
+availableTransitions = taskInstance.getAvailableTransitions();
+if ((availableTransitions != null) && (availableTransitions.size() <= 1)) {
+  availableTransitions = null;
+  availableTransitionItems = null;
+} else {
+  availableTransitionItems = new ArrayList();
+  Iterator iter = availableTransitions.iterator();
+  while (iter.hasNext()) {
+    Transition transition = (Transition) iter.next();
+    SelectItem transitionItem = new SelectItem();
+    transitionItem.setValue(transition.getName());
+    transitionItem.setLabel(transition.getName());
+    transitionItem.setDisabled(false);
+    availableTransitionItems.add(transitionItem);
+  }
+}
++--
+
+  保存变量
+
++--
+TaskInstance taskInstance = taskMgmtSession.loadTaskInstance(taskInstanceId);
+Iterator iter = taskFormParameters.iterator();
+while (iter.hasNext()) {
+  TaskFormParameter taskFormParameter = (TaskFormParameter) iter.next();
+  if ((taskFormParameter.isWritable()) && (taskFormParameter.getValue() != null)) {
+    taskInstance.setVariable(taskFormParameter.getLabel(), taskFormParameter.getValue());
+  } else {
+    log.debug("ignoring unwritable [" + taskFormParameter.getLabel() + "]");
+  }
+}
+jbpmContext.save(taskInstance);
++--
+
+  保存变量后转回home.jsp
+
+  保存变量，根据transition关闭任务
+
++--
+    save();
+
+    String transitionButton = JsfHelper.getParameter("taskform:transitionButton");
+    TaskInstance taskInstance = taskMgmtSession.loadTaskInstance(taskInstanceId);
+    if ("Save and Close Task".equals(transitionButton)) {
+      taskInstance.end();
+    } else {
+      taskInstance.end(transitionButton);
+    }
+
+    ProcessInstance processInstance = taskInstance.getTaskMgmtInstance().getProcessInstance();
+    if (processInstance.hasEnded()) {
+      JsfHelper.addMessage("The process has finished.");
+    }
+
+    LoggingInstance loggingInstance = processInstance.getLoggingInstance();
+    List assignmentLogs = loggingInstance.getLogs(TaskAssignLog.class);
+
+    log.debug("assignmentlogs: " + assignmentLogs);
+
+    if (assignmentLogs.size() == 1) {
+      TaskAssignLog taskAssignLog = (TaskAssignLog) assignmentLogs.get(0);
+      JsfHelper.addMessage("A new task has been assigned to '" + taskAssignLog.getTaskNewActorId() + "'");
+
+    } else if (assignmentLogs.size() > 1) {
+      String msg = "New tasks have been assigned to: ";
+      Iterator iter = assignmentLogs.iterator();
+      while (iter.hasNext()) {
+        TaskAssignLog taskAssignLog = (TaskAssignLog) iter.next();
+        msg += taskAssignLog.getActorId();
+        if (iter.hasNext())
+          msg += ", ";
+      }
+      msg += ".";
+      JsfHelper.addMessage(msg);
+    }
+    jbpmContext.save(taskInstance);
++--
+
+  保存后转回home.jsp
+

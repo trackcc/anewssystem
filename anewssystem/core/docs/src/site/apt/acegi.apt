@@ -1,0 +1,59 @@
+ ---
+ 关于acegi
+ ---
+ Lingo
+ ---
+ 2007-05-31
+
+acegi security
+
+ 关于Voter这个投票者的含义终于有一点儿了解了。
+
+ 实际上并没有翻译的字面含义那么有血有肉，实际上就是一些条件，判断权限的时候，这些条件有三个状态。弃权，通过，禁止。最后通过你在xml里配置的策略来决定到底是不是让你访问这个需要验证的对象。
+
+ acegi自己提供的策略有三个：
+
+ *UnanimousBased.java只要有一个Voter不能完全通过权限要求，就禁止访问。这个太可怕了，我今天晚上就载在它上面了。就因为我给所有的资源设置了两个角色，但当前的用户只拥有其中一个角色，就导致这个用户因为权限不够，所以无法继续访问资源了。简直无法理喻啊。
+
+ *AffirmativeBased.java只要有一个Voter不能通过权限要求，就禁止访问。这里应该是一个最小通过，就是说至少满足里其中一个条件就可以通过了。
+
+ *ConsensusBased.java只要通过的Voter比禁止的Voter数目多就可以访问了。嘿嘿。
+
+ 最后我当然选择AffirmativeBased.java，这样，我给一个资源配置几个角色，用户只要满足其中一个角色就可以访问啦。这样更正常一些啊。
+
+关于同一用户重复登录的问题
+
+ 在filterChainProxy里面加上concurrentSessionFilter
+
++--
+<bean name="filterChainProxy" class="org.acegisecurity.util.FilterChainProxy" >
+  <property name="filterInvocationDefinitionSource">
+   <value>
+    CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+    PATTERN_TYPE_APACHE_ANT
+    /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,anonymousProcessingFilter,concurrentSessionFilter,exceptionTranslationFilter,filterInvocationInterceptor
+   </value>
+  </property>
+ </bean>
++--
+
+ 配置concurrentSessionFilter 和concurrentSessionController
+
++--
+<bean id="concurrentSessionFilter" class="org.acegisecurity.concurrent.ConcurrentSessionFilter">
+  <property name="sessionRegistry">
+   <ref bean="sessionRegistry"/>
+  </property>
+  <property name="expiredUrl">
+   <value>/login.action?status=expired</value>
+  </property>
+ </bean>
+
+ <!-- 可以阻止某个用户名在已经成功登录进web应用的同时再进行一次成功的登录 -->
+ <bean id="concurrentSessionController" class="org.acegisecurity.concurrent.ConcurrentSessionControllerImpl">
+  <property name="maximumSessions"><value>1</value></property>
+  <property name="sessionRegistry"><ref local="sessionRegistry" /></property>
+  <!-- property name="exceptionIfMaximumExceeded" value="true"  /-->
+ </bean>
+ <bean id="sessionRegistry" class="org.acegisecurity.concurrent.SessionRegistryImpl" />
++--

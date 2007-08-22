@@ -1,0 +1,21 @@
+ ---
+ 介绍
+ ---
+ Lingo
+ ---
+ 2007-04-29
+
+jbpm，照抄jbpm的seam实现
+
+*2007-04-30 19:08
+
+ *问题一：原以为spring里定义的bean就一定是class的类型，突然发现LocalFactoryBean返回的不是本身类型，而是factory建造出的类型，好比这里使用的
++--
+    <bean id="jbpmConfiguration" class="org.springmodules.workflow.jbpm31.LocalJbpmConfigurationFactoryBean">
++--
+返回的就是org.jbpm.JbpmConfiguration类型的实例，以前在hibernate的用法上应该碰到过这种特性，但是一直没有注意。
+
+*问题二：最开始打算使用jbpmConfiguration.getCurrentJbpmContext()获得org.jbpm.JbpmContext的实例，但是一直失败，后来换成使用createJbpmContext()就成功了。
+
+*问题三：之前已经知道了jbpm处理工作流定义更新的问题，不删除原定义，新增的定义直接添加到数据库中，只有version号递增，现在使用graphSession.findAllProcessDefinitions()返回的是所有的定义，包括相同工作流的多个版本，不知道该如何过滤掉那些老版本。不至于直接用hibernate去查数据库吧？这样还要自己写对应的dao，其他地方都用的jpa形式的hibernate，怕乱了。发现解决方法：使用graphSession.findLatestProcessDefinitions()，之前太慌，没有发觉。
+

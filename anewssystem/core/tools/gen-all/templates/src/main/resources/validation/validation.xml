@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN" "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
+
+<form-validation>
+  <global>
+    <constant>
+      <constant-name>url</constant-name>
+      <constant-value>^(http:\/\/)?[\w-]+(\.[\w-]+)*(:[\d]{4,5})?((\/)?[\w-]+[\.\w-]*)*(\/)?$</constant-value>
+    </constant>
+    <constant>
+      <constant-name>phone</constant-name>
+      <constant-value>^\(?(\d{3})\)?[-| ]?(\d{3})[-| ]?(\d{4})$</constant-value>
+    </constant>
+    <constant>
+      <constant-name>postnum</constant-name>
+      <constant-value>^\d{5}\d*$</constant-value>
+    </constant>
+  </global>
+  <formset>
+<#list beanList as item>
+  <#if item.display>
+    <form name="${item.entityName}">
+  <#list item.rowList as row>
+    <#if row.needValidate()>
+      <field property="${row.fieldName}" depends="${row.depends}">
+        <arg key="${item.entityName}.${row.fieldName}"/>${row.arg}${row.var}
+      </field>
+    </#if>
+  </#list>
+    </form>
+  </#if>
+</#list>
+  </formset>
+</form-validation>
+<#noparse>
+<!--
+      <field property="email" depends="email">
+        <arg key="user.email" />
+      </field>
+      <field property="status" depends="intRange">
+        <arg key="user.status" />
+        <var>
+          <var-name>min</var-name>
+          <var-value>0</var-value>
+        </var>
+        <var>
+          <var-name>max</var-name>
+          <var-value>1</var-value>
+        </var>
+      </field>
+      <field property="url" depends="mask">
+        <arg key="link.url"/>
+        <var>
+          <var-name>mask</var-name>
+          <var-value>${url}</var-value>
+        </var>
+      </field>
+-->
+</#noparse>

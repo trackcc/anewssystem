@@ -1,0 +1,35 @@
+ ---
+ 权限管理
+ ---
+ Lingo
+ ---
+ 2007-05-31
+
+五月最后一天，在对比springside-1.0和springside-2.0的时候，发现了登陆页面中，时常出现的null pointer exception的问题原因。
+
+原因就是springside-2.0中加入的可以判断上次登陆用户的代码：
+
++--
+    <c:if test="${not empty param.login_error}">
+      <font color="red"> Your login attempt was not successful, try again.<BR/><BR/>
+      Reason: <%
+        try {
+            String message = ((AuthenticationException) session.getAttribute(AbstractProcessingFilter.ACEGI_SECURITY_LAST_EXCEPTION_KEY)).getMessage();
+            out.println(message);
+        } catch(Exception ex) {
+            out.println(ex);
+        }
+      %>
+      </font>
+    </c:if>
+
+    <input type='text' name='j_username'
+      <c:if test="${not empty param.login_error}">value='<%=session
+      .getAttribute(AuthenticationProcessingFilter.ACEGI_SECURITY_LAST_USERNAME_KEY)%>'
+      </c:if>>
++--
+
+显示错误信息的时候，是要从session里获得错误信息的，如果发生了错误，还要从session里把刚才输入的用户名显示出来。
+
+这种方式在没有使用安全验证码的时候是没有问题的，但是使用了jcaptcha以后，因为jcaptcha的验证是在验证用户之前进行的，所以session没有需要显示的这些东西，因此需要把这些东西去掉。
+

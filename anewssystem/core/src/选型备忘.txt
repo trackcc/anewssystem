@@ -1,0 +1,155 @@
+2007-04-30
+Lingo
+----------
+1.简介
+  * 本文档记录了在开源框架、系统架构、工具选型上的讨论和决策原因，供以后翻查和新人加入时了解。
+  * 符号：(1)代表选择，(?)代表未确定
+
+2.项目与代码生成器
+  * 参考appfuse, rails grails, seam中的做法
+
+2.1.新项目生成：Maven Archtype(1), Ant插件，纯Java程序
+  * 使用命令行生成，暂时不搞Eclipse Plugin。
+  * Appfuse和Trails都采用了Maven Archtype的方式。
+
+2.2.CRUD代码生成：Maven Plugin(?)，Ant插件(?)，纯Java程序(?)
+  * 需研究Maven有否良好的支持。
+
+2.3.代码模板：Freemarker(1)， Velocity
+  * Freemarker 比Velocity略佳。
+
+3.项目骨架
+
+3.1.基本模式：传统模式(1)，SS2模式
+  * 接口，实现类，dao直接作为manager使用
+  * S2模式：No Interface, No DAO，Service继承父类的CRUD能力。
+
+3.2.IOC Container: Spring(1)、Guice
+  * Spring除了是IOC Container，还有其他很多能力。
+
+3.3.MVC：prototype springmvc(1)，springwebflow(?)，Struts2(?)、Struts、JSF
+  * 使用springmvc，每个request中使用一个controller实例
+  * springwebflow加入了对JSF导航的支持，应该也是有状态的controller，有待了解
+  * Struts2合并WebWork与Struts，也是每个请求一个实例，关注中。
+  * JSF为代表的事件驱动模式目前还命运难料。
+
+3.4.ORM：Hibernate(1)、iBatis
+  * Hibernate代表了EJB3的ORM方向，不用写CRUD操作的sql就已经足够了。
+
+3.5.View：Freemarker(1)、JSP2.0
+  * Freemarker无疑比优秀，与Struts2配合更好，而且能运行在不支持JSP2.0的服务器上
+  * 但Freemaker 缺少懂得使用的程序员和良好的IDE。(有Eclipse插件，但IDEA甚至能对JSP做refactor)
+
+3.6.View修饰：SiteMesh(?)
+  * 是否需要？Rails中也有相应的可选功能，代码是整洁了。但SiteMesh同时也带来了复杂性，同时View 代码(JSP/FM)的也不完整了，IDE对JSP的辅助功能也减弱了。
+
+3.7.Security：Acegi(1)、自写框架、OpenID(?)
+  * Acegi虽然有点烦，但毕竟是个框架。
+  * 带权限的Menu 体系
+  * ACL方案待研究
+  * OpenID功用待研究
+
+3.8.JS Function Lib: Prototype.js(1)、JQuery
+  * Prototype.js使用者较多，JQuery以新秀姿态出现，ExtJs对JQuery支持较好。
+  * 偏向jquery，但jquery封装之后的api用起来不太习惯
+  * prototypejs偏向对已有api的扩展，jquery更像全文检索器，把通过css查找到的元素包裹起来
+
+3.9.表格组件：使用ExtJs编写(?) 、ECSide (?)，ExtremeTable、
+  * ExtremeTable已停止开发，ExtJS的界面更好，ECSide含大量管理界面表格所需的实用功能。
+  * 表格更倾向于ecside，因为支持中文导出pdf。但对firefox有的地方支持不够。
+
+4.应用组件
+
+4.1.Ajax Widget：ExtJs(1)、Dojo、
+  * Dojo太慢，而且样式单调，兼容性也不好。
+  * 喜欢Dojo的fisheye效果，但不知道怎么用，期待Extjs的表现
+
+4.2.在线编辑器：Fckeditor(1)，tinymce(?)
+  * 在架构上要支持多编辑器可选机制。
+  * 挺喜欢tinymce的洋葱头表情插件
+
+4.3.WebService：CXF(1)、XFire、Axis2
+  * Axis2与XFire的比较在SS2时已经做过，XFire较优。
+  * XFire已停止更新，合并到INOA的新项目叫CXF。
+  * CXF支持JAX-WS，目前只有2.0M1版
+  * 网上有人说xfire客户端不是很友好，而且不能直接操作soap，有待研究
+
+4.4.Search Engine：Hibernate-Search(?)，Compass(?)
+  * 两者都是基于Lucene，Hibernate-Search 待研究，其与Hibernate直接结合可能更好。
+  * 兼容性是个问题，hibernate-search可能不支持最新的hibernate-core
+
+4.5.报表：JasperReport(1)，BIRT，手写
+  * JasperReport的架构靠一个个元素拼凑，无论iReport怎么发展，比起画表格的工具还是很难用。
+  * BIRT巨大而笨重。
+  * 手写缺乏包括如图表在内的很多功能。
+  * 与其手写不如直接用excel，图表还没有想好，jfreechart吗？有地方又说不好用
+
+4.6.JMS：ActiveMQ+Spring(1)
+  * 同时采用Spring的jms模块实现MDP-Message Driven POJO。
+  * jencks和lingo是否还会用到？
+
+4.7.定时调度程序：Quartz(1)
+  * 唯一免费选择
+  * www.javaeye.com的robbin对quartz有极大怨言，认为应该用一台硬件进行定时任务。
+
+4.8.Cluster机制：Open Terracotta(1)
+  * 支持Spring分布式运行的免费产品。
+  * 不了解
+
+4.9.插件机制：OSGI-Spring(?)，仿ROR自写(?)
+  * 待研究。
+
+5.运行环境
+
+5.1.JDK:5.0(1)、1.4(?)、6.0
+  * 5.0 的annotation和泛型功能非常有用，考虑用Retrotranslator在JDK1.4上运行。
+  * 6.0 太新，未普及。
+
+5.2.Servlet Container: Tomcat 5.5(1)、Weblogic9/10(2)、JBoss(2)、Geromino(2) 、Tomcat 6.0、Jetty 6.1、Resin
+  * Tomcat6.0 未普及未稳定，而且使用方式与5.5不完全兼容，在测试脚本中控制Container关停的Cargo不支持6.0。
+  * Jetty较少人用。开发测试会使用jetty
+  * 考虑在后几个迭代里，对Weblogic 9/10，JBoss 4.x，Geromino 1.X 进行兼容性测试。
+
+5.3.数据库：HSQLDB(1) 、MySQL(1)、H2DataBase(?)、Oracle(?)
+  * 默认应该支持嵌入式数据库，方便大家快速开始。同时应该支持MySQL，方便实际应用，Confluence Wiki/JIRA都支持这样的双选择，最好还支持Oracle。
+  * H2DataBase 的管理界面相对较好，性能较好，但dbdeploy似乎还不支持H2。
+
+5.4.数据部署：DBDeploy(1)
+  * Thoughtworks的类似Rails migration的，获得第17届JOLT大奖的工具。使用ant来调用。
+
+6.工具
+6.1.UML建模：Enterprise Architecture(1)、Rose 2003、Visio、StarUML
+  * EA只有28M大小，但是功能齐全，也没有Rose2003中的问题
+  * StarUML等开源方案外貌、功能方面均略逊几筹。
+
+6.2.单元测试：JUnit 3(1)、JUnit 4、TestNG
+  * JUnit 4需要写@Test这样的注释，有些IDE未兼容。
+  * TestNG没有人用。
+
+6.3.测试覆盖率：Cobertura(1)， Clover
+  * Cobertura功能相近但开源免费。
+  * clover也可以申请
+
+6.4.Web集成测试：Selenium(1)
+  * 目前record-playback Web集成测试方案中对Ajax测试支持最好的。 
+
+6.5.WebServcie测试：SOAPUI(1)
+  * 唯一免费选择。
+
+6.6.Web服务器控制：Cargo(1)
+  * 控制Tomcat, JBoss,Weblogic等各种服务器的启动和停止。
+
+6.7.项目管理容器：Maven2(1)，Ant
+  * Maven2和Ant不是一个层次上，有规范的体系与较多的插件，不过jar管理的问题我们要慎重处理。
+
+6.8.持续集成：CruiseControl(1)，其他
+  * 李李和差沙熟悉CruiseControl。
+
+6.9.项目代码规范检查：CheckStyle(1)，findbugs(1), pmd(1)
+  * checkstyle老牌项目，且可以定义规则。
+  * findbugs检测class中的代码缺陷
+  * pmd和cpd，检查代码缺陷和重复代码
+
+
+
+

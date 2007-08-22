@@ -1,0 +1,20 @@
+    <!--编译hibernatetools生成类-->
+    <target name="prepare.compile.domain">
+        <mkdir dir="${target.dir}/gen-classes"/>
+        <javac srcdir="${target.dir}/gen"
+               destdir="${target.dir}/gen-classes"
+               debug="true"
+               deprecation="on"
+               classpathref="build.lib"
+               encoding="UTF-8">
+            <compilerarg value="-Xlint"/>
+        </javac>
+        <java classname="anni.tools.GenDomain"
+              classpathref="build.lib">
+            <arg value="${target.dir}/gen-domain"/>
+            <arg value="${package.name}.domain"/>
+            <arg value="${excel.name}"/>
+            <arg value="${project.name}"/>
+            <arg value="${db.prefix}"/>
+        </java>
+    </target>

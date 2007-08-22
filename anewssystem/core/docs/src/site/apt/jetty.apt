@@ -1,0 +1,30 @@
+ ---
+ Jetty在windows下锁定js等静态文件的解决
+ ---
+ Lingo
+ ---
+ 2007-07-23
+
+ Jetty启动后，如果修改javascript文件，将不能保存，使调试很麻烦。这是因为使用了CACHE，JETTY说是WINDOWS下的一个限制。可以通过如下方法修正：
+
+ 解压出jetty.jar中的org/mortbay/jetty/webapp/webdefault.xml文件，将这一选项由true改为false，另存到src目录，或者其它自选目录。
+
++--
+<init-param>
+  <param-name>useFileMappedBuffer</param-name>
+  <param-value>true</param-value>
+  <!-- change to false -->
+</init-param>
++--
+
+ 在pom.xml中加入对这个文件的指向：
+
++--
+<plugin>
+  <groupId>org.mortbay.jetty</groupId>
+  <artifactId>maven-jetty-plugin</artifactId>
+  <configuration>
+    <webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>
+  </configuration>
+</plugin>
++--

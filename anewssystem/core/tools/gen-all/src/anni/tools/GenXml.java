@@ -48,17 +48,21 @@ public class GenXml {
         model.put("beanList", beanList);
         model.put("packageName", packageName);
 
-        FreemarkerUtils.process("templates/src/main/native2ascii/validation.properties",
+        FreemarkerUtils.process("templates/src/main/native2ascii/i18n.properties",
             model,
             "target/" + projectName + "/src/main/native2ascii/",
-            "validation.properties",
+            projectName + ".properties",
             "GB2312",
-			Locale.US);
-        FreemarkerUtils.process("templates/src/main/native2ascii/validation_zh_CN.properties",
+            Locale.US);
+        FreemarkerUtils.process("templates/src/main/native2ascii/i18n_zh_CN.properties",
             model,
             "target/" + projectName + "/src/main/native2ascii/",
-            "validation_zh_CN.properties",
+            projectName + "_zh_CN.properties",
             "GB2312");
+        FileUtils.copy("templates/src/main/native2ascii/message.properties",
+            "target/" + projectName + "/src/main/native2ascii/message.properties");
+        FileUtils.copy("templates/src/main/native2ascii/message_zh_CN.properties",
+            "target/" + projectName + "/src/main/native2ascii/message_zh_CN.properties");
     }
 
     public static void genStrutsMenu() throws Exception {

@@ -88,8 +88,8 @@
     <@ec.exportXls fileName="NewsList.xls" tooltip="导出 Excel"/>
     <@ec.row>
       <@ec.column property="rowcount" cell="rowCount" title="序号" sortable="false"/>
-      <@ec.column property="newsCategory.name" title="news.category"/>
-      <@ec.column property="name" title="news.name"/>
+      <@ec.column property="newsCategory.name" title="${springMacroRequestContext.getMessage('news.category', 'news.category')}"/>
+      <@ec.column property="name" title="${springMacroRequestContext.getMessage('news.name', 'news.name')}"/>
 <#--
       <@ec.column property="subtitle" title="news.subtitle"/>
       <@ec.column property="link" title="news.link"/>
@@ -99,8 +99,8 @@
       <@ec.column property="content" title="news.content"/>
       <@ec.column property="source" title="news.source"/>
 -->
-      <@ec.column property="editor" title="news.editor"/>
-      <@ec.column property="updateDate" title="news.updateDate" cell="date"/>
+      <@ec.column property="editor" title="${springMacroRequestContext.getMessage('news.editor', 'news.editor')}"/>
+      <@ec.column property="updateDate" title="${springMacroRequestContext.getMessage('news.updateDate', 'news.updateDate')}" cell="date"/>
 <#--
       <@ec.column property="status" title="news.status"/>
 -->

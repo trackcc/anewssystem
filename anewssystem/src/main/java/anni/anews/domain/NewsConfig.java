@@ -35,6 +35,9 @@ public class NewsConfig implements Serializable {
     /** * couldComment. */
     private Integer couldComment;
 
+    /** * categoryStrategy. */
+    private Integer categoryStrategy;
+
     /** * 构造方法. */
     public NewsConfig() {
     }
@@ -84,5 +87,16 @@ public class NewsConfig implements Serializable {
     /** * @param couldComment couldComment. */
     public void setCouldComment(Integer couldComment) {
         this.couldComment = couldComment;
+    }
+
+    /** * @return categoryStrategy. */
+    @Column(name = "CATEGORY_STRATEGY")
+    public Integer getCategoryStrategy() {
+        return categoryStrategy;
+    }
+
+    /** * @param categoryStrategy Integer. */
+    public void setCategoryStrategy(Integer categoryStrategy) {
+        this.categoryStrategy = categoryStrategy;
     }
 }

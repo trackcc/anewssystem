@@ -43,8 +43,8 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="annotatedClasses">
             <list>
-                <value>anni.anews.domain.NewsConfig</value>
                 <value>anni.anews.domain.NewsCategory</value>
+                <value>anni.anews.domain.NewsConfig</value>
                 <value>anni.anews.domain.News</value>
                 <value>anni.anews.domain.NewsComment</value>
                 <value>anni.anews.domain.NewsTag</value>

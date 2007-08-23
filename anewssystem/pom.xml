@@ -39,7 +39,6 @@
           <includes>
 <!--
             <include>**/NewsCategoryManagerTest.java</include>
-            <include>**/NewsManagerTest.java</include>
 -->
             <include>**/*Test.java</include>
             <include>**/*TestCase.java</include>

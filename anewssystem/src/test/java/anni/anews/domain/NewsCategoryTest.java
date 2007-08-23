@@ -21,8 +21,7 @@ public class NewsCategoryTest extends TestCase {
         NewsCategory entity = new NewsCategory();
         entity.setId(null);
         assertNull(entity.getId());
-        entity.setCode(0L);
-        assertEquals(new Long(0L), entity.getCode());
+
         entity.setParent(null);
         assertNull(entity.getParent());
         entity.setName(null);
@@ -35,5 +34,10 @@ public class NewsCategoryTest extends TestCase {
         assertNull(entity.getChildren());
         entity.setNewses(null);
         assertNull(entity.getNewses());
+
+        entity.setBitCode(1L);
+        assertEquals(new Long(1L), entity.getBitCode());
+        entity.setCharCode("01");
+        assertEquals("01", entity.getCharCode());
     }
 }

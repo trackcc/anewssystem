@@ -13,8 +13,8 @@
         <mapping class="anni.Foo"/>
         <mapping resource="anni/Foo.hbm.xml"/>
 -->
-        <mapping class="anni.anews.domain.NewsCategory"/>
         <mapping class="anni.anews.domain.News"/>
+        <mapping class="anni.anews.domain.NewsCategory"/>
         <mapping class="anni.anews.domain.NewsConfig"/>
         <mapping class="anni.anews.domain.NewsComment"/>
         <mapping class="anni.anews.domain.NewsTag"/>

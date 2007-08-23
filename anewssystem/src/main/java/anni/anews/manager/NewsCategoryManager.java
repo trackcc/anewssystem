@@ -10,6 +10,9 @@ import anni.anews.domain.NewsConfig;
 
 import anni.core.dao.HibernateTreeEntityDao;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * 采用编码方式保存无级分类的信息.
@@ -22,6 +25,9 @@ import anni.core.dao.HibernateTreeEntityDao;
  * @since 2007年08月16日 下午 23时13分12秒765
  */
 public class NewsCategoryManager extends HibernateTreeEntityDao<NewsCategory> {
+    /** * logger. */
+    private static Log logger = LogFactory.getLog(NewsCategoryManager.class);
+
     /** * newsConfigManager. */
     private NewsConfigManager newsConfigManager = null;
 
@@ -100,39 +106,57 @@ public class NewsCategoryManager extends HibernateTreeEntityDao<NewsCategory> {
      * @param entity NewsCategory
      */
     private void calculateByBitCode(NewsCategory entity) {
-        // 只在新增的时候计算编码值
-        if (entity.getId() != null) {
-            return;
-        }
-
         NewsCategory parent = entity.getParent();
         String hql = null;
 
         // 每次都取上次最大的code值，如果删除了几个中间值，肯定会出现还有空位，可能出现最大数据溢出的问题
         if (parent == null) {
-            hql = "select max(bitCode) from NewsCategory where parent is null";
-        } else {
-            hql = "select max(bitCode) from NewsCategory where parent.id="
-                + parent.getId();
-        }
-
-        Long lastCode = (Long) createQuery(hql).uniqueResult();
-
-        long base = 1L << (8 * (8 - entity.getLevel()));
-
-        long code;
-
-        if (lastCode == null) {
-            if (parent == null) {
-                code = base;
+            if (entity.getId() == null) {
+                hql = "select bitCode from NewsCategory where parent is null";
             } else {
-                code = parent.getBitCode() + base;
+                hql = "select bitCode from NewsCategory where parent is null and id<>"
+                    + entity.getId();
             }
         } else {
-            code = ((lastCode / base) + 1) * base;
+            if (entity.getId() == null) {
+                hql = "select bitCode from NewsCategory where parent.id="
+                    + parent.getId();
+            } else {
+                hql = "select bitCode from NewsCategory where parent.id="
+                    + parent.getId() + " and id<>" + entity.getId();
+            }
         }
 
-        entity.setBitCode(code);
+        List<Long> list = (List<Long>) createQuery(hql).list();
+        long base;
+
+        if (parent == null) {
+            base = 1L << 56;
+        } else {
+            base = 1L << (56 - (8 * parent.getLevel()));
+        }
+
+        long code = -1L;
+
+        for (int i = 1; i <= 256; i++) {
+            if (parent == null) {
+                code = base * i;
+            } else {
+                code = parent.getBitCode() + (base * i);
+            }
+
+            if (list.contains(code)) {
+                code = -1;
+            } else {
+                break;
+            }
+        }
+
+        if (code == -1L) {
+            logger.info("超过分类最大允许数量(256)");
+        } else {
+            entity.setBitCode(code);
+        }
     }
 
     /**
@@ -141,40 +165,58 @@ public class NewsCategoryManager extends HibernateTreeEntityDao<NewsCategory> {
      * @param entity NewsCategory
      */
     private void calculateByCharCode(NewsCategory entity) {
-        // 只在新增的时候计算编码值
-        if (entity.getId() != null) {
-            return;
-        }
-
         NewsCategory parent = entity.getParent();
         String hql = null;
 
         // 每次都取上次最大的code值，如果删除了几个中间值，肯定会出现还有空位，可能出现最大数据溢出的问题
         if (parent == null) {
-            hql = "select max(charCode) from NewsCategory where parent is null";
-        } else {
-            hql = "select max(charCode) from NewsCategory where parent.id="
-                + parent.getId();
-        }
-
-        String lastCode = (String) createQuery(hql).uniqueResult();
-
-        String code;
-
-        if (lastCode == null) {
-            if (parent == null) {
-                code = "01";
+            if (entity.getId() == null) {
+                hql = "select charCode from NewsCategory where parent is null";
             } else {
-                code = parent.getCharCode() + "01";
+                hql = "select charCode from NewsCategory where parent is null and id<>"
+                    + entity.getId();
             }
         } else {
-            int len = lastCode.length();
-
-            code = lastCode.substring(0, len - 2)
-                + Integer.parseInt(lastCode.substring(len - 2));
+            if (entity.getId() == null) {
+                hql = "select charCode from NewsCategory where parent.id="
+                    + parent.getId();
+            } else {
+                hql = "select charCode from NewsCategory where parent.id="
+                    + parent.getId() + " and id<>" + entity.getId();
+            }
         }
 
-        entity.setCharCode(code);
+        List<String> list = (List<String>) createQuery(hql).list();
+
+        String code = null;
+
+        for (int i = 1; i < 100; i++) {
+            if (parent == null) {
+                if (i < 10) {
+                    code = "0" + i;
+                } else {
+                    code = "" + i;
+                }
+            } else {
+                if (i < 10) {
+                    code = parent.getCharCode() + "0" + i;
+                } else {
+                    code = parent.getCharCode() + i;
+                }
+            }
+
+            if (list.contains(code)) {
+                code = null;
+            } else {
+                break;
+            }
+        }
+
+        if (code == null) {
+            logger.info("超过分类最大允许数量(99)");
+        } else {
+            entity.setCharCode(code);
+        }
     }
 
     /**

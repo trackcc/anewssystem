@@ -7,7 +7,7 @@
     <TITLE>新闻属性设置</TITLE>
     <link type="text/css" href="${ctx}/css/admin.css" rel="stylesheet"/>
     <script type="text/javascript" src="${ctx}/inc/validation.jsp"></script>
-    <@validator.javascript formName="config" staticJavascript="false"/>
+    <@validator.javascript formName="newsConfig" staticJavascript="false"/>
   </head>
   <body>
 <div class="pageTitle">新闻属性设置</div>
@@ -20,7 +20,7 @@
   <#assign action="insert">
 </#if>
 <#include "/include/messages.ftl"/>
-<form name="config"
+<form name="newsConfig"
     enctype="multipart/form-data"
     action="${ctx}/newsconfig/${action}.htm"
     method="post" onsubmit="return validateConfig(this)">
@@ -30,21 +30,33 @@
     <tr>
       <td class="left" width="20%"><@spring.messageText code="newsConfig.newsNeedAudit" text="newsNeedAudit"/>:</td>
       <td class="right">
-        <input type="checkbox" name="newsNeedAudit" id="newsNeedAudit" value="1">是
-        <label class="star">*选中则新闻需要先进行审核才能在网上查看</label>
+        <input type="checkbox" name="newsNeedAudit" id="newsNeedAudit" value="1">
+        <label class="star" for="newsNeedAudit">是 * 选中则新闻需要先进行审核才能在网上查看</label>
       </td>
     </tr>
-    <tr style="display:none">
+    <tr>
       <td class="left" width="20%"><@spring.messageText code="newsConfig.commentNeedAudit" text="commentNeedAudit"/>:</td>
       <td class="right">
         <input type="checkbox" name="commentNeedAudit" id="commentNeedAudit" value="1">
-        <label class="star">*</label>
+        <label class="star" for="commentNeedAudit">是 * 选中则评论需要先进行审核才能在网上查看</label>
       </td>
     </tr>
-    <tr style="display:none">
+    <tr>
       <td class="left" width="20%"><@spring.messageText code="newsConfig.couldComment" text="couldComment"/>:</td>
       <td class="right">
         <input type="checkbox" name="couldComment" id="couldComment" value="1">
+        <label class="star" for="couldComment">是 * 选中则可以发表评论</label>
+      </td>
+    </tr>
+    <tr>
+      <td class="left" width="20%"><@spring.messageText code="newsConfig.categoryStrategy" text="categoryStrategy"/>:</td>
+      <td class="right">
+        <input type="radio" name="categoryStrategy" id="bitCode" value="0">
+        <label for="bitCode">位编码</label>
+        <input type="radio" name="categoryStrategy" id="charCode" value="1">
+        <label for="charCode">字符编码</label>
+        <input type="radio" name="categoryStrategy" id="recursion" value="2">
+        <label for="recursion">无编码</label>
         <label class="star">*</label>
       </td>
     </tr>

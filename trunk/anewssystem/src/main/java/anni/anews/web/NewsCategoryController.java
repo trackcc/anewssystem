@@ -205,18 +205,17 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
             //}
             NewsCategory parent = getEntityDao().get(parentId);
 
-            if ((parent != null) && !category.checkDeadLock(parent)) {
+            if (parent == null) {
+                NewsCategory oldParent = category.getParent();
+
+                if (oldParent != null) {
+                    oldParent.getChildren().remove(category);
+                }
+
+                category.setParent(null);
+            } else if (!category.checkDeadLock(parent)) {
                 category.setParent(parent);
                 parent.getChildren().add(category);
-
-                NewsCategory top;
-
-                if (parent.getParent() != null) {
-                    // 非顶级分类
-                    top = parent.getParent();
-                } else {
-                    top = parent;
-                }
 
                 getEntityDao().save(parent);
             } else {

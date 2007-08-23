@@ -30,8 +30,8 @@
     <@ec.exportXls fileName="NewsTagList.xls" tooltip="导出 Excel"/>
     <@ec.row>
       <@ec.column property="rowcount" cell="rowCount" title="序号" sortable="false"/>
-      <@ec.column property="name" title="newsTag.name"/>
-      <@ec.column property="theSort" title="newsTag.theSort"/>
+      <@ec.column property="name" title="${springMacroRequestContext.getMessage('newsTag.name', 'newsTag.name')}"/>
+      <@ec.column property="theSort" title="${springMacroRequestContext.getMessage('newsTag.theSort', 'newsTag.theSort')}"/>
       <@ec.column property="edit" title="修改" sortable="false" viewsAllowed="html" width="40">
         <a href="${ctx}/newstag/edit.htm?id=${item.id}">
           <img src="${ctx}/images/icon/16x16/modify.gif" border="0"/>

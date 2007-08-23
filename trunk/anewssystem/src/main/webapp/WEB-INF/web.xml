@@ -22,7 +22,7 @@
       -->
     <context-param>
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-        <param-value>i18n/validation</param-value>
+        <param-value>i18n/message</param-value>
     </context-param>
 
     <!--
@@ -30,7 +30,7 @@
       -->
     <context-param>
         <param-name>extremecomponentsMessagesLocation</param-name>
-        <param-value>i18n/validation</param-value>
+        <param-value>i18n/message</param-value>
     </context-param>
 
     <!--ExtremeTable 表格标签的Properties文件-->

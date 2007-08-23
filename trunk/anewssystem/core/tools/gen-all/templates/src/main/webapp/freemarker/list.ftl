@@ -33,7 +33,7 @@ ${r"<#include"} "/include/taglibs.ftl">
       ${"<@ec.column"} property="rowcount" cell="rowCount" title="序号" sortable="false"/>
 <#list fields as field>
   <#if field.name != "id" && field.type.name != "java.util.Set">
-      ${"<@ec.column"} property="${field.name}" title="${clz?uncap_first}.${field.name}"/>
+      ${"<@ec.column"} property="${field.name}" <#noparse>title="${springMacroRequestContext.getMessage('</#noparse>${clz?uncap_first}.${field.name}', '${clz?uncap_first}.${field.name}')}"/>
   </#if>
 </#list>
       ${r"<@ec.column"} property="edit" title="修改" sortable="false" viewsAllowed="html" width="40">

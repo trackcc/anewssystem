@@ -42,9 +42,6 @@ public class NewsCategory extends AbstractTreeEntityBean<NewsCategory> {
     /** * id. */
     private Long id;
 
-    /** * top. */
-    private NewsCategory top;
-
     /** * parent. */
     private NewsCategory parent;
 
@@ -87,16 +84,16 @@ public class NewsCategory extends AbstractTreeEntityBean<NewsCategory> {
         this.id = id;
     }
 
-    /** * @return newsCategoryByParentId. */
+    /** * @return NewsCategory. */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     public NewsCategory getParent() {
         return parent;
     }
 
-    /** * @param newsCategoryByParentId newsCategoryByParentId. */
-    public void setParent(NewsCategory newsCategoryByParentId) {
-        this.parent = newsCategoryByParentId;
+    /** * @param parent NewsCategory. */
+    public void setParent(NewsCategory parent) {
+        this.parent = parent;
     }
 
     /** * @return name. */

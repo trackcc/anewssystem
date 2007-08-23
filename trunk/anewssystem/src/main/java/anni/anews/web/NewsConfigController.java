@@ -1,9 +1,13 @@
 package anni.anews.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import anni.anews.domain.NewsCategory;
 import anni.anews.domain.NewsConfig;
 
+import anni.anews.manager.NewsCategoryManager;
 import anni.anews.manager.NewsConfigManager;
 
 import anni.core.web.prototype.BaseLongController;
@@ -22,12 +26,21 @@ public class NewsConfigController extends BaseLongController<NewsConfig, NewsCon
     /** * logger. */
     private static Log logger = LogFactory.getLog(NewsConfigController.class);
 
+    /** * newsCategoryManager. */
+    private NewsCategoryManager newsCategoryManager = null;
+
     /** * constructor. */
     public NewsConfigController() {
         setEditView("/anews/newsconfig/manage");
         // setEditView("/anews/newsconfig/editNewsConfig");
         setListView("/anews/newsconfig/listNewsConfig");
         setSuccessView("redirect:/newsconfig/manage.htm");
+    }
+
+    /** * @param newsCategoryManager NewsCategoryManager. */
+    public void setNewsCategoryManager(
+        NewsCategoryManager newsCategoryManager) {
+        this.newsCategoryManager = newsCategoryManager;
     }
 
     /**
@@ -64,5 +77,17 @@ public class NewsConfigController extends BaseLongController<NewsConfig, NewsCon
 
         mv.addObject("config", config);
         mv.setViewName("/anews/newsconfig/manage");
+    }
+
+    /**
+     * 保证修改分类策略后，更新所有分类的编码.
+     */
+    @Override
+    protected void onUpdate() {
+        List<NewsCategory> newsCategoryList = newsCategoryManager.getAll();
+
+        for (NewsCategory newsCategory : newsCategoryList) {
+            newsCategoryManager.save(newsCategory);
+        }
     }
 }

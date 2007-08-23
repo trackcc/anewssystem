@@ -13,7 +13,21 @@
   <version>0.0.1</version>
   <name>anews</name>
   <url>http://localhost:8080/</url>
-
+<!--
+  <pluginRepositories>
+    <pluginRepository>
+      <id>Codehaus Snapshots</id>
+      <name>codehaus plugin repo</name>
+      <url>http://snapshots.repository.codehaus.org/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </pluginRepository>
+  </pluginRepositories>
+-->
   <dependencies>
     <dependency>
       <groupId>anni</groupId>
@@ -86,6 +100,9 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
+<!--
+        <version>1.2-SNAPSHOT</version>
+-->
         <configuration>
           <targetjdk>1.5</targetjdk>
         </configuration>

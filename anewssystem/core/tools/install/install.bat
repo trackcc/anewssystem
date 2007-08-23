@@ -1,1 +1,1 @@
-mvn install:install-file -DgroupId=net.sf.json-lib -DartifactId=json-lib -Dversion=1.0b2 -Dclassifier=jdk13 -Dpackaging=jar -Dfile=/path/to/file
+mvn install:install-file -DgroupId=com.sun.xml.bind -DartifactId=jaxb-impl -Dversion=2.0.5 -Dpackaging=jar -Dfile=%1

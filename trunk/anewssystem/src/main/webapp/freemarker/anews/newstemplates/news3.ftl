@@ -240,7 +240,7 @@ a:link{
 
 
                             <div class="fanhui_info_banner">
-                              <span class="style75" id="fanhui_info"><a href="http://epple.cn:8080/index/news2.htm?id=5">返回<#if news.category.top??>${news.category.top.name}<#else>${news.category.name}</#if></a></span>
+                              <span class="style75" id="fanhui_info"><a href="http://epple.cn:8080/index/news2.htm?id=5">返回${news.newsCategory.name}</a></span>
                             </div>
                           </div>
                         </td>

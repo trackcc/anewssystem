@@ -13,21 +13,6 @@
   <version>0.0.1</version>
   <name>anews</name>
   <url>http://localhost:8080/</url>
-<!--
-  <pluginRepositories>
-    <pluginRepository>
-      <id>Codehaus Snapshots</id>
-      <name>codehaus plugin repo</name>
-      <url>http://snapshots.repository.codehaus.org/</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
--->
   <dependencies>
     <dependency>
       <groupId>anni</groupId>
@@ -40,6 +25,13 @@
       <version>2.0</version>
       <classifier>jdk15</classifier>
     </dependency>
+<!--
+    <dependency>
+        <groupId>rsslibj</groupId>
+        <artifactId>rsslibj</artifactId>
+        <version>1.0RC2</version>
+    </dependency>
+-->
   </dependencies>
 
   <build>

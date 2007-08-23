@@ -16,6 +16,8 @@ import java.util.Map;
 
 import anni.anews.domain.News;
 
+import anni.anews.manager.NewsManager;
+
 /*
 *import anni.anews.manager.NewsCategoryManager;
 *import anni.anews.manager.NewsManager;
@@ -50,14 +52,19 @@ public class FreemarkerGenerator {
     /** * freemarker配置. */
     private FreeMarkerConfigurer freemarkerConfig = null;
 
+    /** * newsManager. */
+    private NewsManager newsManager;
+
+    /** * @param newsManager NewsManager. */
+    public void setNewsManager(NewsManager newsManager) {
+        this.newsManager = newsManager;
+    }
+
     /*
     *private NewsCategoryManager categoryManager;
     *private NewsManager newsManager;
     *public void setNewsCategoryManager(NewsCategoryManager categoryManager) {
     *    this.categoryManager = categoryManager;
-    *}
-    *public void setNewsManager(NewsManager newsManager) {
-    *    this.newsManager = newsManager;
     *}
     */
 
@@ -93,7 +100,7 @@ public class FreemarkerGenerator {
 
         if (page == 0) {
             // 无分页
-            template2File("newstemplates/news3.ftl", fileName, model);
+            template2File("/anews/newstemplates/news3.ftl", fileName, model);
         } else {
             List<String> pages = new ArrayList<String>();
             String content = news.getContent();
@@ -145,6 +152,14 @@ public class FreemarkerGenerator {
         }
 
         logger.info("end generate...");
+
+        // 生成rss
+        Map map = new HashMap();
+        map.put("now", new Date());
+        map.put("page",
+            newsManager.pagedQuery("from News order by id desc", 1, 10));
+        template2File("/anews/newstemplates/rss.ftl",
+            root + "/html/rss.xml", map);
     }
 
     /**

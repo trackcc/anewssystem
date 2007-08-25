@@ -29,6 +29,11 @@
 
 <!---->
   <repositories>
+    <repository>
+      <id>local repository</id>
+      <name>local repository</name>
+      <url>file:///repository/</url>
+    </repository>
 <!--
     <repository>
       <id>people apache</id>

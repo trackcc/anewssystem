@@ -198,7 +198,7 @@ public class News implements Serializable {
     }
 
     /** * @return content. */
-    @Column(name = "CONTENT", length = 2000)
+    @Column(name = "CONTENT", length = 60000)
     @Lob
     public String getContent() {
         return content;

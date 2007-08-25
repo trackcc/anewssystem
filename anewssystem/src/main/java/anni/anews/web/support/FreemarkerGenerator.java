@@ -20,7 +20,6 @@ import anni.anews.manager.NewsManager;
 
 /*
 *import anni.anews.manager.NewsCategoryManager;
-*import anni.anews.manager.NewsManager;
 */
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -53,7 +52,7 @@ public class FreemarkerGenerator {
     private FreeMarkerConfigurer freemarkerConfig = null;
 
     /** * newsManager. */
-    private NewsManager newsManager;
+    private NewsManager newsManager = null;
 
     /** * @param newsManager NewsManager. */
     public void setNewsManager(NewsManager newsManager) {

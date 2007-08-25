@@ -107,7 +107,7 @@
         <arg name="maxlength" key="${var:maxlength}" resource="false" position="1"/>
         <var>
           <var-name>maxlength</var-name>
-          <var-value>2000</var-value>
+          <var-value>60000</var-value>
         </var>
       </field>
       <field property="source" depends="maxlength">

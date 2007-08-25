@@ -2,7 +2,7 @@
 
 call jvm
 
-call mvn package -U -cpu
+call mvn package site -U -cpu
 
 call mvn clean
 

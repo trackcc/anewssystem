@@ -23,7 +23,7 @@
   </dependencies>
 
   <build>
-    <finalName>@PROJECT_NAME@</finalName>
+    <finalName>@PROJECT_NAME@-${version}</finalName>
     <defaultGoal>jetty:run</defaultGoal>
     <plugins>
       <plugin>

@@ -55,6 +55,14 @@ public class NewsConfigController extends BaseLongController<NewsConfig, NewsCon
         ServletRequestDataBinder binder) throws Exception {
         //
         NewsConfig config = (NewsConfig) command;
+
+        if (config == null) {
+            config = new NewsConfig();
+            config.setCommentNeedAudit(0);
+            config.setNewsNeedAudit(0);
+            config.setCouldComment(0);
+        }
+
         config.setCommentNeedAudit(0);
         config.setNewsNeedAudit(0);
         config.setCouldComment(0);

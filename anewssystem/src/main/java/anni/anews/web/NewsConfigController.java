@@ -56,13 +56,6 @@ public class NewsConfigController extends BaseLongController<NewsConfig, NewsCon
         //
         NewsConfig config = (NewsConfig) command;
 
-        if (config == null) {
-            config = new NewsConfig();
-            config.setCommentNeedAudit(0);
-            config.setNewsNeedAudit(0);
-            config.setCouldComment(0);
-        }
-
         config.setCommentNeedAudit(0);
         config.setNewsNeedAudit(0);
         config.setCouldComment(0);

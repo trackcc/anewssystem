@@ -5,21 +5,16 @@
 <html>
   <head>
     <#include "/include/meta.ftl"/>
+<#--
     <#include "/include/calendar.ftl"/>
+-->
     <TITLE>新闻</TITLE>
     <link type="text/css" href="${ctx}/css/admin.css" rel="stylesheet"/>
     <script type="text/javascript" src="${ctx}/inc/validation.jsp"></script>
     <@validator.javascript formName="news" staticJavascript="false"/>
-    <link rel="stylesheet" type="text/css" href="${ext}/resources/css/ext-all.css" />
-    <script type="text/javascript" src="${ext}/adapter/yui/yui-utilities.js"></script>
-    <script type="text/javascript" src="${ext}/adapter/yui/ext-yui-adapter.js"></script>
-    <script type="text/javascript" src="${ext}/ext-all.js"></script>
+    <#include "/include/extjs.ftl"/>
     <script type="text/javascript" src="${ctx}/widgets/tree/uiField.js"></script>
     <script type="text/javascript" src="${ctx}/widgets/tree/treecombo.js"></script>
-    <link rel="stylesheet" type="text/css" href="${ctx}/widgets/examples.css" />
-    <script type="text/javascript">
-Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
-    </script>
   </head>
   <body>
 <#if (news.id)?? && news.id != 0>
@@ -141,17 +136,12 @@ Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
         <label class="star">*</label>
       </td>
     </tr>
+<#if news??>
     <tr>
       <td class="left" width="15%"><@spring.messageText code="news.updateDate" text="updateDate"/>:</td>
-      <td class="right">
-<#if news??>
-        <@m.jscalendar "updateDate" news.updateDate?string("yyyy-MM-dd")/>
-<#else>
-        <@m.jscalendar "updateDate" ""/>
-</#if>
-        <label class="star">*</label>
-      </td>
+      <td class="right">${news.updateDate?datetime}</td>
     </tr>
+</#if>
     <tr style="display:none">
       <td class="left" width="15%"><@spring.messageText code="news.image" text="image"/>:</td>
       <td class="right">

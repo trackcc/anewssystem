@@ -39,7 +39,7 @@
           <td>${item.name}</td>
           <td>${item.subtitle!}</td>
           <td>${item.editor}</td>
-          <td>${item.updateDate?date}</td>
+          <td>${item.updateDate?datetime}</td>
           <td><a href="${ctx}/news/edit.htm?id=${item.id}"><img src="${ctx}/images/icon/16x16/modify.gif" border="0"/></a></td>
         </tr>
   </#list>

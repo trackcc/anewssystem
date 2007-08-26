@@ -24,6 +24,7 @@ import anni.core.dao.support.Page;
 
 import anni.core.web.prototype.BaseLongController;
 import anni.core.web.prototype.ExtremeTablePage;
+import anni.core.web.prototype.SimpleDateEditor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -112,6 +113,8 @@ public class NewsController extends BaseLongController<News, NewsManager> {
             });
 
         News entity = (News) command;
+        entity.setUpdateDate(new SimpleDateEditor.ExtDate(
+                System.currentTimeMillis()));
 
         // 这里绑定新闻分类
         long categoryId = getLongParam("category_id", -1L);

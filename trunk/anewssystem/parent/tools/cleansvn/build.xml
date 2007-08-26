@@ -1,0 +1,9 @@
+<project name="cleansvn" default="cleansvn" basedir=".">
+    <target name="cleansvn">
+        <defaultexcludes remove="**/.svn"/>
+        <defaultexcludes remove="**/.svn/**"/>
+        <delete includeemptydirs="true">
+            <fileset dir="." includes="**/.svn/**"/>
+        </delete>
+    </target>
+</project>

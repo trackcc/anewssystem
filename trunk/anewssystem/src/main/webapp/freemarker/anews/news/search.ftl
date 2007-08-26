@@ -37,7 +37,7 @@
           <td>${item_index + 1}</td>
           <td>${item.newsCategory.name}</td>
           <td>${item.name}</td>
-          <td>${item.subtitle}</td>
+          <td>${item.subtitle!}</td>
           <td>${item.editor}</td>
           <td>${item.updateDate?date}</td>
           <td><a href="${ctx}/news/edit.htm?id=${item.id}"><img src="${ctx}/images/icon/16x16/modify.gif" border="0"/></a></td>

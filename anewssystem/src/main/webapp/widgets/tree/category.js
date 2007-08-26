@@ -18,17 +18,27 @@ Ext.onReady(function(){
 
     var tb = new Ext.Toolbar(tree.el.createChild({tag:'div'}));
     tb.add({
-        text: '新增分类',
+        text: '新增子分类',
         cls: 'x-btn-text-icon album-btn',
-        tooltip: '在选中节点下添加一个分类',
-        handler: create
+        tooltip: '添加选中节点的下级分类',
+        handler: createChild
+    }, {
+        text: '新增兄弟分类',
+        cls: 'x-btn-text-icon album-btn',
+        tooltip: '添加选中节点的同级分类',
+        handler: createBrother
+    }, {
+        text: '修改分类',
+        cls: 'x-btn-text-icon album-btn',
+        tooltip: '修改选中分类',
+        handler: updateNode
     }, {
         text: '删除分类',
         cls: 'x-btn-text-icon album-btn',
         tooltip:'删除一个分类',
         handler:removeNode
     }, {
-        text: '保存',
+        text: '排序',
         cls: 'x-btn-text-icon album-btn',
         tooltip:'保存排序结果',
         handler:save
@@ -51,12 +61,20 @@ Ext.onReady(function(){
         selectOnFocus:true
     });
     ge.on('beforestartedit', function(){
-        if(!ge.editNode.attributes.allowEdit){
+        var node = ge.editNode;
+        if(!node.attributes.allowEdit){
             return false;
+        } else {
+            node.attributes.oldText = node.text;
         }
     });
     ge.on('complete', function() {
         var node = ge.editNode;
+        // 如果节点没有改变，就向服务器发送修改信息
+        if (node.attributes.oldText == node.text) {
+            node.attributes.oldText = null;
+            return true;
+        }
         var item = {
             id: node.id,
             text: node.text,
@@ -94,7 +112,7 @@ Ext.onReady(function(){
 
     // function
 
-    function create() {
+    function createChild() {
         var sm = tree.getSelectionModel();
         var n = sm.getSelectedNode();
         if (!n) {
@@ -103,6 +121,21 @@ Ext.onReady(function(){
             n.expand(false, false);
         }
         // var selectedId = (n) ? n.id : -1;
+        createNode(n);
+    }
+
+    function createBrother() {
+        var n = tree.getSelectionModel().getSelectedNode();
+        if (!n) {
+            Ext.Msg.alert('提示', "请选择一个节点");
+        } else if (n == tree.getRootNode()) {
+            Ext.Msg.alert('提示', "不能为根节点增加兄弟节点");
+        } else {
+            createNode(n.parentNode);
+        }
+    }
+
+    function createNode(n) {
         var node = n.appendChild(new Ext.tree.TreeNode({
             id:-1,
             text:'请输入分类名',
@@ -119,7 +152,18 @@ Ext.onReady(function(){
         }, 10);
     }
 
-    function insert() {
+    function updateNode() {
+        var n = tree.getSelectionModel().getSelectedNode();
+        if (!n) {
+            Ext.Msg.alert('提示', "请选择一个节点");
+        } else if (n == tree.getRootNode()) {
+            Ext.Msg.alert('提示', "不能为根节点增加兄弟节点");
+        } else {
+            setTimeout(function(){
+                ge.editNode = n;
+                ge.startEdit(n.ui.textNode);
+            }, 10);
+        }
     }
 
     function removeNode() {
@@ -188,20 +232,35 @@ Ext.onReady(function(){
     var ctxMenu = new Ext.menu.Menu({
         id:'copyCtx',
         items: [{
+                id:'createChild',
+                handler:createChild,
+                cls:'create-mi',
+                text: '新增子节点'
+            },{
+                id:'createBrother',
+                handler:createBrother,
+                cls:'create-mi',
+                text: '新增兄弟节点'
+            },{
+                id:'updateNode',
+                handler:updateNode,
+                cls:'update-mi',
+                text: '修改节点'
+            },{
+                id:'remove',
+                handler:removeNode,
+                cls:'remove-mi',
+                text: '删除'
+            },'-',{
                 id:'expand',
                 handler:expandAll,
                 cls:'expand-all',
-                text:'Expand All'
+                text:'展开'
             },{
                 id:'collapse',
                 handler:collapseAll,
                 cls:'collapse-all',
-                text:'Collapse All'
-            },'-',{
-                id:'remove',
-                handler:removeNode,
-                cls:'remove-mi',
-                text: 'Remove Item'
+                text:'关闭'
         }]
     });
 

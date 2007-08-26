@@ -7,6 +7,8 @@
   font-size:12px;
 }.x-btn button {
   font-size:12px;
+}.x-menu-list-item {
+  font-size:12px;
 }
 </style>
 <script type="text/javascript" src="${ext}/adapter/yui/yui-utilities.js"></script>

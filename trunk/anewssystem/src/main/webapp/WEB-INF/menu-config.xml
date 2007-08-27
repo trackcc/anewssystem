@@ -43,6 +43,12 @@
             <Item name="config" title="新闻属性设置" image="../images/icon/16x16/manage.gif"
                   location="../newsconfig/manage.htm" target="dblselect"/>
         </Menu>
+        <Menu name="search" title="全文搜索">
+            <Item name="compassindex" title="重新建立索引" image="../images/icon/16x16/manage.gif"
+                  location="../compassindex.htm" target="dblselect"/>
+            <Item name="compasssearch" title="全文搜索" image="../images/icon/16x16/manage.gif"
+                  location="../compasssearch.htm" target="dblselect"/>
+        </Menu>
         <Menu name="anews2" title="anews">
             <Item name="ListNewsConfig" title="浏览NewsConfig" image="../images/icon/16x16/manage.gif"
                   location="../newsconfig/list.htm" target="dblselect"/>

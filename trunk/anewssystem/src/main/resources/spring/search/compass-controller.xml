@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!-- ========================= CONTROLLER DEFINITIONS ========================= -->
+    <bean id="searchController" class="org.compass.spring.web.mvc.CompassSearchController">
+        <property name="compass" ref="compass"/>
+        <property name="searchView" value="anews/compass/search"/>
+        <property name="searchResultsView" value="anews/compass/search"/>
+        <property name="pageSize" value="10"/>
+        <property name="searchHelper" ref="advanceCompassSearchHelper"/>
+    </bean>
+
+    <bean id="indexController" class="org.compass.spring.web.mvc.CompassIndexController">
+        <property name="compassGps" ref="compassGps"/>
+        <property name="indexView" value="anews/compass/index"/>
+        <property name="indexResultsView" value="anews/compass/index"/>
+    </bean>
+</beans>

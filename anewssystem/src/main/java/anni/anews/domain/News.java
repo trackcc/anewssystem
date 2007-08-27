@@ -20,6 +20,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableComponent;
+import org.compass.annotations.SearchableId;
+import org.compass.annotations.SearchableProperty;
+
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -30,6 +35,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @since 2007年08月16日 下午 23时13分00秒31
  */
 @Entity
+@Searchable(alias = "a_news")
 @Table(name = "A_NEWS")
 public class News implements Serializable {
     /** * serial. */
@@ -57,15 +63,19 @@ public class News implements Serializable {
     public static final int STATUS_HIDE = 6;
 
     /** * id. */
+    @SearchableId
     private Long id;
 
     /** * newsCategory. */
+    @SearchableComponent
     private NewsCategory newsCategory;
 
     /** * name. */
+    @SearchableProperty
     private String name;
 
     /** * subtitle. */
+    @SearchableProperty
     private String subtitle;
 
     /** * link. */
@@ -78,15 +88,19 @@ public class News implements Serializable {
     private Integer hit;
 
     /** * summary. */
+    @SearchableProperty
     private String summary;
 
     /** * content. */
+    @SearchableProperty
     private String content;
 
     /** * source. */
+    @SearchableProperty
     private String source;
 
     /** * editor. */
+    @SearchableProperty
     private String editor;
 
     /** * updateDate. */

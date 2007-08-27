@@ -17,6 +17,9 @@ import javax.persistence.Transient;
 
 import anni.core.domain.tree.AbstractTreeEntityBean;
 
+import org.compass.annotations.Searchable;
+import org.compass.annotations.SearchableProperty;
+
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -25,6 +28,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @since 2007-08-22
  */
 @Entity
+@Searchable(root = false, alias = "a_news_category")
 @Table(name = "A_NEWS_CATEGORY")
 public class NewsCategory extends AbstractTreeEntityBean<NewsCategory> {
     /** * serial. */
@@ -46,6 +50,7 @@ public class NewsCategory extends AbstractTreeEntityBean<NewsCategory> {
     private NewsCategory parent;
 
     /** * name. */
+    @SearchableProperty(name = "categoryname")
     private String name;
 
     /** * theSort. */

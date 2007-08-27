@@ -7,6 +7,7 @@
     <title>左侧菜单</title>
     <@strutsmenu.useMenuDisplayer name="OutlookMenu">
       <@strutsmenu.displayMenu name="anews"/>
+      <@strutsmenu.displayMenu name="search"/>
       <@strutsmenu.displayMenu name="Logout"/>
     </@strutsmenu.useMenuDisplayer>
 

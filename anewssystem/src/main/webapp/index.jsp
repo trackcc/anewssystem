@@ -12,11 +12,11 @@
       <h1>首页</h1>
       <p><a href="${ctx}/admin/index.htm">管理后台</a></p>
       <ol>
-        <li><a href="${ctx}/category/list.htm">Category</a></li>
+        <li><a href="${ctx}/newsconfig/list.htm">NewsConfig</a></li>
+        <li><a href="${ctx}/newscategory/list.htm">NewsCategory</a></li>
         <li><a href="${ctx}/news/list.htm">News</a></li>
-        <li><a href="${ctx}/config/list.htm">Config</a></li>
-        <li><a href="${ctx}/comment/list.htm">Comment</a></li>
-        <li><a href="${ctx}/tag/list.htm">Tag</a></li>
+        <li><a href="${ctx}/newscomment/list.htm">NewsComment</a></li>
+        <li><a href="${ctx}/newstag/list.htm">NewsTag</a></li>
       </ol>
     </div>
   </body>

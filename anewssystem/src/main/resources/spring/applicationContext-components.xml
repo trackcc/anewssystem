@@ -8,8 +8,8 @@
     <!-- java mail -->
     <import resource="classpath*:spring/mail/applicationContext-mail.xml"/>
     <!-- compass search -->
-    <import resource="classpath*:spring/search/applicationContext-compass.xml"/>
 <!--
+    <import resource="classpath*:spring/search/applicationContext-compass.xml"/>
 -->
     <!-- ActiveMQ JMS -->
 <!--

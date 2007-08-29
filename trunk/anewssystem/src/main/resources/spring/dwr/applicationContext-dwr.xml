@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  | <servlet>
+  |   <servlet-name>dwr</servlet-name>
+  |   <servlet-class>org.directwebremoting.spring.DwrSpringServlet</servlet-class>
+  |   <init-param>
+  |     <param-name>debug</param-name>
+  |     <param-value>true</param-value>
+  |   </init-param>
+  |   <load-on-startup>1</load-on-startup>
+  | </servlet>
+  |
+  | <servlet-mapping>
+  |   <servlet-name>dwr</servlet-name>
+  |   <url-pattern>/dwr/*</url-pattern>
+  | </servlet-mapping>
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+
+    <dwr:configuration>
+        <dwr:convert class="net.blogjava.max.pws.domain.Album" type="bean">
+            <dwr:exclude method ="photos"/>
+        </dwr:convert >
+        <dwr:convert class="net.blogjava.max.pws.domain.Photo" type="bean">
+            <dwr:exclude method="original, poster, thumb, full, album" />
+        </dwr:convert>
+    </dwr:configuration>
+
+    <bean id="ajaxFacade" class="net.blogjava.max.pws.web.ajax.AjaxFacade">
+        <dwr:remote javascript="AjaxFacade" />
+        <property name="personalWebSite" ref="personalWebSite"/>
+    </bean>
+
+</beans>

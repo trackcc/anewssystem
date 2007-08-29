@@ -1,0 +1,73 @@
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:amq="http://activemq.org/config/1.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://activemq.org/config/1.0 http://people.apache.org/repository/org.apache.activemq/xsds/activemq-core-4.1-incubator-SNAPSHOT.xsd">
+    <!--
+        最简单的embedded版本，使用spring的listenerContainer，消息不持久化保存，服务器重启会丢失
+     -->
+
+    <!--  embedded ActiveMQ Broker -->
+    <amq:broker useJmx="false" persistent="false">
+        <amq:transportConnectors>
+            <amq:transportConnector uri="tcp://localhost:6000"/>
+        </amq:transportConnectors>
+    </amq:broker>
+
+    <!--  ActiveMQ connectionFactory  -->
+    <amq:connectionFactory id="jmsConnectionFactory" brokerURL="tcp://localhost:6000"/>
+
+    <!--  ActiveMQ destinations  -->
+    <amq:queue name="destination" physicalName="org.apache.activemq.spring.Test.spring.embedded"/>
+
+
+    <!-- ============================================================
+        发送端
+    ================================================================= -->
+
+    <!--  Spring JmsTemplate config -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory">
+            <!--  lets wrap in a pool to avoid creating a connection per send -->
+            <bean class="org.springframework.jms.connection.SingleConnectionFactory">
+                <property name="targetConnectionFactory" ref="jmsConnectionFactory"/>
+            </bean>
+        </property>
+        <!-- custom MessageConverter -->
+        <property name="messageConverter" ref="messageConverter"/>
+        <property name="deliveryPersistent" value="true"/>
+        <property name="deliveryMode" value="2"/>
+    </bean>
+
+    <!--  Message converter  -->
+    <bean id="messageConverter" class="anni.anews.jms.MessageConverter"/>
+
+    <!-- POJO which send Message uses  Spring JmsTemplate -->
+    <bean id="messageProducer" class="anni.anews.jms.MessageProducer">
+        <property name="template" ref="jmsTemplate"/>
+        <property name="destination" ref="destination"/>
+    </bean>
+
+    <!-- ============================================================
+        接收端
+    ================================================================= -->
+
+    <!--  Message Driven POJO (MDP) -->
+    <bean id="messageListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+        <constructor-arg>
+            <bean class="anni.anews.jms.MessageConsumer"/>
+        </constructor-arg>
+        <!--  may be other method -->
+        <property name="defaultListenerMethod" value="consume"/>
+        <!-- custom MessageConverter define -->
+        <property name="messageConverter" ref="messageConverter"/>
+    </bean>
+
+    <!--  listener container，MDP无需实现接口 -->
+    <bean id="listenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destination" ref="destination"/>
+        <property name="messageListener" ref="messageListener"/>
+    </bean>
+</beans>

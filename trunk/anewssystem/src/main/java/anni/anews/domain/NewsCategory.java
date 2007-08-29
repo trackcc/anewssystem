@@ -246,7 +246,7 @@ public class NewsCategory extends AbstractTreeEntityBean<NewsCategory> {
         int level = 1;
         NewsCategory upper = parent;
 
-        while (parent != null) {
+        while (upper != null) {
             upper = upper.getParent();
             level++;
         }

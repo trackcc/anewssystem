@@ -52,6 +52,11 @@ Ext.onReady(function(){
         cls: 'x-btn-text-icon album-btn',
         tooltip:'关闭所有分类',
         handler:collapseAll
+    }, {
+        text: '刷新',
+        cls: 'x-btn-text-icon album-btn',
+        tooltip:'刷新所有节点',
+        handler:refresh
     });
 
     // add an inline editor for the nodes
@@ -261,6 +266,11 @@ Ext.onReady(function(){
                 handler:collapseAll,
                 cls:'collapse-all',
                 text:'关闭'
+            },{
+                id:'refresh',
+                handler:refresh,
+                cls:'refresh',
+                text:'刷新'
         }]
     });
 
@@ -275,4 +285,9 @@ Ext.onReady(function(){
         //alert(n + "," + e.target + "," + e.point);
         return true;
     });
+
+    function refresh() {
+        tree.root.reload();
+        tree.root.expand(true, false);
+    }
 });

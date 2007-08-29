@@ -34,20 +34,23 @@ public class CompassIndexBuilder implements InitializingBean {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(lazyTime * 1000);
+                    if (!compassGps.isPerformingIndexOperation()) {
+                        Thread.sleep(lazyTime * 1000);
 
-                    log.info("begin compass index...");
+                        log.info("begin compass index...");
 
-                    long beginTime = System
-                        .currentTimeMillis();
-                    // 重建索引.
-                    // 如果compass实体中定义的索引文件已存在，索引过程中会建立临时索引，
-                    // 索引完成后再进行覆盖.
-                    compassGps.index();
+                        long beginTime = System
+                            .currentTimeMillis();
+                        // 重建索引.
+                        // 如果compass实体中定义的索引文件已存在，索引过程中会建立临时索引，
+                        // 索引完成后再进行覆盖.
+                        compassGps.index();
 
-                    long costTime = System.currentTimeMillis() - beginTime;
-                    log.info("compss index finished.");
-                    log.info("costed " + costTime + " milliseconds");
+                        long costTime = System.currentTimeMillis()
+                            - beginTime;
+                        log.info("compss index finished.");
+                        log.info("costed " + costTime + " milliseconds");
+                    }
                 } catch (InterruptedException e) {
                     // simply proceed
                 }

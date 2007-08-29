@@ -9,8 +9,26 @@
     <import resource="classpath*:spring/mail/applicationContext-mail.xml"/>
     <!-- compass search -->
     <import resource="classpath*:spring/search/applicationContext-compass.xml"/>
+<!--
+-->
+    <!-- ActiveMQ JMS -->
+<!--
+    <import resource="classpath:spring/jms/applicationContext-activemq-embedded-persistence.xml"/>
+-->
+    <!-- cxf WebService -->
+<!--
+    <import resource="classpath:spring/cxf/applicationContext-cxf.xml"/>
+-->
+    <!-- quartz TimerTask -->
+<!--
+    <import resource="classpath:spring/quartz/applicationContext-quartz.xml"/>
+-->
     <!-- hibernate-mock -->
 <!--
     <import resource="classpath*:spring/db/hibernate-mock.xml"/>
+-->
+    <!-- groovy -->
+<!--
+    <import resource="classpath*:spring/groovy/applicationContext-groovy.xml"/>
 -->
 </beans>

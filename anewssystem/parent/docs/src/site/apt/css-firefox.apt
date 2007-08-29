@@ -1,0 +1,34 @@
+---
+ firefox中css实现省略号
+ ---
+ Lingo
+ ---
+ 2007-08-28
+
+CSS的办法
+
+{http://www.jide.fr/emulate-text-overflowellipsis-in-firefox-with-css}
+
++--
+.ellipsis span {
+  white-space:nowrap;
+  text-overflow:ellipsis; /* for internet explorer */
+  overflow:hidden;
+  width:190px;
+  display:block;
+}
+
+html>body .ellipsis {
+  clear:both;
+}
+
+html>body .ellipsis span:after {
+  content: "...";
+}
+
+html>body .ellipsis span {
+  max-width:180px;
+  width:auto !important;
+  float:left;
+}
++--

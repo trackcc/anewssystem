@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<!--
+  | 陷阱一：启动计划的FactoryBean们不要lazy-load，否则计划无法启动。
+  | 陷阱二：Scheduler 不要 Autowire，否则会传入一个DataSource/SessionFactory给Scheduler，Scheduler就会认为是许要持久化任务执行情况，而其实你是JVM形式执行的，就会报没有建立Quartz持久化表，Table or View not Found。
+  |
+  | 附：cronExpression配置说明
+  |
+  |   字段         允许值      允许的特殊字符
+  |    秒           0-59         , - * /
+  |    分           0-59         , - * /
+  |   小时          0-23         , - * /
+  |   日期          1-31         , - * ? / L W C
+  |   月份    1-12 或者 JAN-DEC  , - * /
+  |   星期     1-7 或者 SUN-SAT  , - * ? / L C #
+  | 年（可选）  留空, 1970-2099  , - * /
+  -->
+<beans default-lazy-init="false">
+    <bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+           <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+        <property name="configLocation" value="classpath:conf/quartz.properties"/>
+    </bean>
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <!--朝九晚五工作时间内每十分钟执行一次-->
+        <property name="cronExpression" value="0 0/10 9-17 *,* * ?"/>
+    </bean>
+
+    <!-- 使用pojo来做job，指定pojo和method -->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="client"/>
+        <property name="targetMethod" value="check"/>
+    </bean>
+</beans>

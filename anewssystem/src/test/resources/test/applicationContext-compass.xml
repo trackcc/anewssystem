@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans default-lazy-init="true">
+    <bean id="compass" class="anni.anews.domain.News" lazy-init="true"/>
+    <bean id="compassGps" class="anni.anews.domain.News" lazy-init="true"/>
+    <bean id="compassIndexBuilder" class="anni.anews.domain.News" lazy-init="true"/>
+    <bean id="searchController" class="anni.anews.domain.News"/>
+    <bean id="indexController" class="anni.anews.domain.News"/>
+</beans>

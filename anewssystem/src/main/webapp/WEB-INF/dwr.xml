@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://www.getahead.ltd.uk/dwr/dwr20.dtd">
+<dwr>
+  <allow>
+    <create creator="new" javascript="JavaDate" class="java.util.Date"/>
+<!--
+    <create creator="spring" javascript="newsServiceClient">
+      <param name="beanName" value="newsServiceClient"/>
+      <include method="pagedQuery"/>
+      <exclude method="remove"/>
+    </create>
+    <convert converter="bean" match="anni.anews.domain.News">
+      <param name="include" value="id, name"/>
+      <param name="exclude" value="class, comments"/>
+    </convert>
+-->
+  </allow>
+</dwr>

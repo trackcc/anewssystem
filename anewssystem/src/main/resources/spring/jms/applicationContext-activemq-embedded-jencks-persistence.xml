@@ -1,0 +1,142 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:amq="http://activemq.org/config/1.0"
+	   xmlns:amqra="http://activemq.org/ra/1.0" xmlns:jencks="http://jencks.org/1.3"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://activemq.org/config/1.0 http://people.apache.org/repository/org.apache.activemq/xsds/activemq-core-4.1-incubator-SNAPSHOT.xsd
+  http://activemq.org/ra/1.0 http://people.apache.org/repository/org.apache.activemq/xsds/activemq-ra-4.1-incubator-SNAPSHOT.xsd
+  http://jencks.org/1.3 http://repository.codehaus.org/org/jencks/jencks/1.3/jencks-1.3.xsd">
+    <!-- 
+    	JCA版本，使用Jencks的listenerContainer，消息用数据库持久化保存，服务器重启不会丢失
+     -->
+
+	<!--  embedded ActiveMQ Broker -->
+	<amq:broker useJmx="false" persistent="true">
+		<amq:persistenceAdapter>
+			<amq:jdbcPersistenceAdapter id="jdbcAdapter" dataSource="#hsql-ds" createTablesOnStartup="true"
+										useDatabaseLock="false"/>
+			<!-- 
+				Mysql can setup useDatabaseLock="true",this is defualt
+				HSQLDB,MSSQL plz setup useDatabaseLock="false",
+				if u setup useDatabaseLock="true",u will catch error:
+				MSSQL Error Info:FOR UPDATE clause allowed only for DECLARE CURSOR 
+				HSQLDB Error Info:FOR in statement [SELECT * FROM ACTIVEMQ_LOCK FOR UPDATE]
+
+				see http://www.nabble.com/ActiveMQ-JDBC-Persistence-with-SQL-Server-tf2022248.html#a5560296
+			-->
+		</amq:persistenceAdapter>
+		<amq:transportConnectors>
+			<amq:transportConnector uri="tcp://localhost:0"/>
+		</amq:transportConnectors>
+	</amq:broker>
+
+	<!--  ActiveMQ Normal connectionFactory  -->
+	<amq:connectionFactory id="jmsNormalConnectionFactory" brokerURL="vm://localhost"/>
+
+	<amqra:managedConnectionFactory id="jmsManagedConnectionFactory" resourceAdapter="#resourceAdapter"/>
+
+	<amqra:resourceAdapter id="resourceAdapter" serverUrl="vm://localhost"/>
+
+	<!--  ActiveMQ destinations  -->
+	<amq:queue name="destination" physicalName="org.apache.activemq.spring.Test.spring.embedded"/>
+
+	<!-- The HSQL Datasource that will be used by the Broker -->
+	<bean id="hsql-ds" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+		<!--mysql version
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		-->	
+		<property name="url">
+			<!--springside use HSQL,table info see hsql/activemq.script-->
+			<value>jdbc:hsqldb:res:/hsqldb/activemq</value>
+			<!-- mysql version
+			<value>jdbc:mysql://localhost/myproject?relaxAutoCommit=true</value>
+			-->
+		</property>
+		<property name="username" value="sa"/>
+		<property name="password" value=""/>
+		<property name="poolPreparedStatements" value="true"/>
+	</bean>	
+
+	<!-- Jencks -->
+	<jencks:jcaContainer>
+
+		<jencks:bootstrapContext>
+			<jencks:bootstrapContextFactory threadPoolSize="25"/>
+		</jencks:bootstrapContext>
+		<jencks:connectors>
+
+			<!-- use jencks container (use spring MessageListenerAdapter)-->
+			<jencks:connector ref="messageListener">
+				<jencks:activationSpec>
+					<amqra:activationSpec destination="org.apache.activemq.spring.Test.spring.embedded"
+										  destinationType="javax.jms.Queue"/>
+				</jencks:activationSpec>
+			</jencks:connector>
+
+		</jencks:connectors>
+
+		<jencks:resourceAdapter>
+			<amqra:resourceAdapter serverUrl="vm://localhost"/>
+		</jencks:resourceAdapter>
+	</jencks:jcaContainer>
+
+	<!-- jencks PoolFactory config-->
+	<jencks:singlePoolFactory id="poolingSupport" maxSize="16" minSize="5" blockingTimeoutMilliseconds="60"
+							  idleTimeoutMinutes="60" matchOne="true" matchAll="true" selectOneAssumeMatch="true"/>
+
+	<!-- jencks XATransactionFactory -->
+	<jencks:xATransactionFactory id="transactionSupport" useTransactionCaching="true" useThreadCaching="true"/>
+
+
+	<!-- jencks ConnectionManagerFactory -->
+	<jencks:connectionManagerFactory id="connectionManager" containerManagedSecurity="false"
+									 poolingSupport="#poolingSupport" transactionSupport="#transactionSupport"/>
+
+	<!-- jencks TransactionContextManagerFactory -->
+	<jencks:transactionContextManagerFactory id="transactionContextManagerFactory"/>
+
+	<!-- spring config jms with jca-->
+	<bean id="jmsManagerConnectionFactory" class="org.springframework.jca.support.LocalConnectionFactoryBean">
+		<property name="managedConnectionFactory">
+			<ref local="jmsManagedConnectionFactory"/>
+		</property>
+		<property name="connectionManager">
+			<ref local="connectionManager"/>
+		</property>
+	</bean>
+
+	<!--  Spring JmsTemplate config -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory">
+			<!--  lets wrap in a pool to avoid creating a connection per send -->
+			<bean class="org.springframework.jms.connection.SingleConnectionFactory">
+				<!-- <property name="targetConnectionFactory" ref="jmsNormalConnectionFactory" />-->
+				<property name="targetConnectionFactory" ref="jmsManagerConnectionFactory"/>
+			</bean>
+		</property>
+		<!-- custom MessageConverter -->
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+
+	<!--  OrderMessage converter  -->
+	<bean id="messageConverter" class="anni.anews.jms.MessageConverter"/>
+
+	<!-- POJO which send Message uses  Spring JmsTemplate -->
+	<bean id="messageProducer" class="anni.anews.jms.MessageProducer">
+		<property name="template" ref="jmsTemplate"/>
+		<property name="destination" ref="destination"/>
+	</bean>
+
+	<!--  Message Driven POJO (MDP) -->
+	<bean id="messageListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg>
+			<bean class="anni.anews.jms.MessageConsumer"/>
+		</constructor-arg>
+		<!--  may be other method -->
+		<property name="defaultListenerMethod" value="consume"/>
+		<!-- custom MessageConverter define -->
+		<property name="messageConverter" ref="messageConverter"/>
+	</bean>
+
+
+</beans>

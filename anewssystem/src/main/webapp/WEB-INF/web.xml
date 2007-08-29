@@ -124,6 +124,11 @@
         <url-pattern>*.htm</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/dwr/*</url-pattern>
+    </filter-mapping>
+
     <!--
       | auto execute hsqldb
       -->
@@ -169,11 +174,30 @@
     </servlet>
 
     <!-- jcaptcha 用来生成验证码图片 -->
-
     <servlet>
         <servlet-name>jcaptcha</servlet-name>
         <servlet-class>anni.core.security.jcaptcha.ImageCaptchaServlet</servlet-class>
         <load-on-startup>3</load-on-startup>
+    </servlet>
+
+    <!--cxf WebService-->
+<!--
+    <servlet>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+        <load-on-startup>4</load-on-startup>
+    </servlet>
+-->
+
+    <!--配置DWR拦截器-->
+    <servlet>
+        <servlet-name>dwr-invoker</servlet-name>
+        <servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <load-on-startup>5</load-on-startup>
     </servlet>
 
     <servlet-mapping>
@@ -184,6 +208,16 @@
     <servlet-mapping>
         <servlet-name>jcaptcha</servlet-name>
         <url-pattern>/captcha.jpg</url-pattern>
+    </servlet-mapping>
+<!--
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/service/*</url-pattern>
+    </servlet-mapping>
+-->
+    <servlet-mapping>
+        <servlet-name>dwr-invoker</servlet-name>
+        <url-pattern>/dwr/*</url-pattern>
     </servlet-mapping>
 
     <!--

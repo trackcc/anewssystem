@@ -5,4 +5,5 @@
 <beans default-lazy-init="false" default-autowire="byName">
     <bean class="anni.anews.web.AdminController" scope="request"/>
     <bean class="anni.anews.web.IndexController" scope="request"/>
+    <bean class="anni.anews.web.TemplateController" scope="request"/>
 </beans>

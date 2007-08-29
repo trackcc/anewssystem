@@ -43,19 +43,23 @@
             <Item name="config" title="新闻属性设置" image="../images/icon/16x16/manage.gif"
                   location="../newsconfig/manage.htm" target="dblselect"/>
         </Menu>
+<!--
         <Menu name="search" title="全文搜索">
             <Item name="compassindex" title="重新建立索引" image="../images/icon/16x16/manage.gif"
                   location="../compassindex.htm" target="dblselect"/>
             <Item name="compasssearch" title="全文搜索" image="../images/icon/16x16/manage.gif"
                   location="../compasssearch.htm" target="dblselect"/>
-<!--
             <Item name="activemq" title="activemq异步消息" image="../images/icon/16x16/manage.gif"
                   location="../demo/activemq.htm" target="dblselect"/>
             <Item name="cxf" title="cxf WebService" image="../images/icon/16x16/manage.gif"
                   location="../demo/cxf.htm" target="dblselect"/>
             <Item name="dwr" title="dwr AJAX" image="../images/icon/16x16/manage.gif"
                   location="../demo/dwr.htm" target="dblselect"/>
+        </Menu>
 -->
+        <Menu name="template" title="模板">
+            <Item name="dd" title="设置模板" image="../images/icon/16x16/manage.gif"
+                  location="../template/dd.htm" target="dblselect"/>
         </Menu>
         <Menu name="anews2" title="anews">
             <Item name="ListNewsConfig" title="浏览NewsConfig" image="../images/icon/16x16/manage.gif"

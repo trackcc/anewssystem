@@ -1,0 +1,62 @@
+BODY {
+    PADDING-RIGHT: 30px;
+    PADDING-LEFT: 30px;
+    FONT-SIZE: 12px;
+    PADDING-BOTTOM: 30px;
+    PADDING-TOP: 30px;
+    FONT-FAMILY: verdana, sans-serif
+}
+P {
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    PADDING-TOP: 0px
+}
+HR {
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    PADDING-TOP: 0px;
+    CLEAR: both;
+    VISIBILITY: hidden
+}
+.section {
+    PADDING-RIGHT: 20px;
+    PADDING-LEFT: 20px;
+    BACKGROUND: #e0ff85;
+    PADDING-BOTTOM: 20px;
+    PADDING-TOP: 0px
+}
+.slot {
+    MIN-HEIGHT: 450px;
+    BACKGROUND: #ff9999;
+    FLOAT: left;
+    MARGIN: 20px 20px 0px 0px;
+    WIDTH: 300px
+}
+.block {
+    BORDER-RIGHT: #007fd1 1px solid;
+    PADDING-RIGHT: 10px;
+    BORDER-TOP: #007fd1 1px solid;
+    PADDING-LEFT: 10px;
+    BACKGROUND: #99d7ff;
+    PADDING-BOTTOM: 10px;
+    MARGIN: 10px;
+    BORDER-LEFT: #007fd1 1px solid;
+    PADDING-TOP: 10px;
+    BORDER-BOTTOM: #007fd1 1px solid
+}
+.operation {
+    text-align: right;
+}
+.title {
+    font-weight: bold;
+    text-align: center;
+}
+.content {
+}
+.foot {
+    text-align: right;
+}

@@ -9,7 +9,9 @@
     <!-- 后台管理 -->
     <import resource="classpath*:spring/controller/admin-controller.xml"/>
     <!-- compass -->
+<!--
     <import resource="classpath*:spring/search/compass-controller.xml"/>
+-->
 
     <bean class="anni.anews.web.NewsConfigController" parent="baseController" scope="request">
         <property name="entityDao" ref="newsConfigManager"/>

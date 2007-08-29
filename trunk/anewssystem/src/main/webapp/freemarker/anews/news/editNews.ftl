@@ -1,5 +1,4 @@
 <#assign ctx=springMacroRequestContext.getContextPath()>
-<#assign ext="${ctx}/widgets/extjs/1.1-rc1">
 <#include "/include/taglibs.ftl">
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>

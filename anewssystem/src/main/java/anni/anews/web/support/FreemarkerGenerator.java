@@ -82,9 +82,10 @@ public class FreemarkerGenerator {
      * @param pageSize 页面大小
      * @param root 根目录??????
      * @param ctx contextPath
+     * @param templateName 模板名称
      */
     public void genNews(News news, int page, int pageSize, String root,
-        String ctx) {
+        String ctx, String templateName) {
         logger.info("start generate...");
 
         Date date = news.getUpdateDate();

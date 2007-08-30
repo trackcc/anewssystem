@@ -60,6 +60,13 @@
         <label class="star">*</label>
       </td>
     </tr>
+	<tr>
+      <td class="left" width="20%"><@spring.messageText code="newsConfig.templateName" text="templateName"/>:</td>
+      <td class="right">
+	    <input type="radio" name="templateName" id="defaultTemplate" value="default"/>
+		<label for="defaultTemplate">默认模板</label>
+      </td>
+	</tr>
     <tr>
       <td colspan="2" class="bottom">
         <input type="submit" class="submitButton" value="确定" style="margin-right:60px"/>

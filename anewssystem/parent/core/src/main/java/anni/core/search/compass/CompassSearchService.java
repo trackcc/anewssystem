@@ -1,6 +1,6 @@
-package anni.anews.search;
+package anni.core.search.compass;
 
-import anni.anews.search.AdvancedSearchCommand.CompassSort;
+import anni.core.search.compass.AdvancedSearchCommand.CompassSort;
 
 import org.compass.core.Compass;
 import org.compass.core.CompassCallback;

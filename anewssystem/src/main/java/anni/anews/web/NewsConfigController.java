@@ -59,6 +59,8 @@ public class NewsConfigController extends BaseLongController<NewsConfig, NewsCon
         config.setCommentNeedAudit(0);
         config.setNewsNeedAudit(0);
         config.setCouldComment(0);
+        config.setCategoryStrategy(NewsCategory.STRATEGY_BIT_CODE);
+        config.setTemplateName("default");
     }
 
     /** * manage. */

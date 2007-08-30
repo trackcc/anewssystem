@@ -1,4 +1,4 @@
-package anni.anews.search;
+package anni.core.search.compass;
 
 import java.util.HashSet;
 import java.util.Set;

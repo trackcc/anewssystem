@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import anni.anews.domain.News;
 import anni.anews.domain.NewsCategory;
+import anni.anews.domain.NewsConfig;
 import anni.anews.domain.NewsTag;
 
 import anni.anews.manager.NewsCategoryManager;
@@ -234,7 +235,9 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         int pageSize = getIntParam("pagesize", 1000);
         String root = request.getRealPath("/");
         String ctx = request.getContextPath();
-        freemarkerGenerator.genNews(entity, page, pageSize, root, ctx);
+        NewsConfig newsConfig = newsConfigManager.get(1L);
+        freemarkerGenerator.genNews(entity, page, pageSize, root, ctx,
+            newsConfig.getTemplateName());
     }
 
     /**
@@ -340,5 +343,33 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         mv.addObject("page", page);
         logger.info(page.getResult());
         mv.setViewName("/anews/news/search");
+    }
+
+    // 前台显示模板
+    /** * index. */
+    public void index() {
+        NewsConfig newsConfig = newsConfigManager.get(1L);
+        String templateName = newsConfig.getTemplateName();
+        mv.addObject("newsCategoryList",
+            newsCategoryManager.getAll("theSort", true));
+        mv.setViewName("/anews/template/" + templateName + "/index");
+    }
+
+    /** * more. */
+    public void more() {
+        NewsConfig newsConfig = newsConfigManager.get(1L);
+        String templateName = newsConfig.getTemplateName();
+        long id = getLongParam("id", -1L);
+        mv.addObject("newsCategory", newsCategoryManager.get(id));
+        mv.setViewName("/anews/template/" + templateName + "/more");
+    }
+
+    /** * detail. */
+    public void detail() {
+        NewsConfig newsConfig = newsConfigManager.get(1L);
+        String templateName = newsConfig.getTemplateName();
+        long id = getLongParam("id", -1L);
+        mv.addObject("news", getEntityDao().get(id));
+        mv.setViewName("/anews/template/" + templateName + "/detail");
     }
 }

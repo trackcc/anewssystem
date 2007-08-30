@@ -1,4 +1,4 @@
-package anni.anews.search;
+package anni.core.search.compass;
 
 import org.apache.log4j.Logger;
 

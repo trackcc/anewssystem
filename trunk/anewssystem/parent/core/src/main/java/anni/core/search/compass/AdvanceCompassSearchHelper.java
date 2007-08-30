@@ -1,4 +1,4 @@
-package anni.anews.search;
+package anni.core.search.compass;
 
 import org.compass.core.Compass;
 import org.compass.core.CompassHits;

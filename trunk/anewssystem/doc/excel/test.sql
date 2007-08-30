@@ -17,6 +17,7 @@ create table a_news_config (
     comment_need_audit int,
     could_comment int,
     category_strategy int,
+    template_name varchar(50),
     constraint pk_news_config primary key(id)
 );
 
@@ -43,7 +44,7 @@ create table a_news (
     image varchar(50),
     hit int,
     summary varchar(255),
-    content varchar(2000),
+    content varchar(60000),
     source varchar(50),
     editor varchar(50),
     update_date datetime,

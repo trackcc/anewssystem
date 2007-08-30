@@ -38,6 +38,9 @@ public class NewsConfig implements Serializable {
     /** * categoryStrategy. */
     private Integer categoryStrategy;
 
+    /** * templateName. */
+    private String templateName;
+
     /** * 构造方法. */
     public NewsConfig() {
     }
@@ -98,5 +101,16 @@ public class NewsConfig implements Serializable {
     /** * @param categoryStrategy Integer. */
     public void setCategoryStrategy(Integer categoryStrategy) {
         this.categoryStrategy = categoryStrategy;
+    }
+
+    /** * @return templateName. */
+    @Column(name = "TEMPLATE_NAME", length = 50)
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    /** * @param templateName String. */
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
     }
 }

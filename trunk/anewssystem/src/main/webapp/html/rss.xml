@@ -6,7 +6,13 @@
     <language>zh-cn</language>
     <description >A news publishing system</description>
     <webMaster>xyz20003@gmail.com(Lingo)</webMaster>
-    <lastBuildDate>2007-8-27</lastBuildDate>
+    <lastBuildDate>2007-8-30</lastBuildDate>
+    <item>
+      <title>路北新闻</title>
+      <link>http://localhost:8080/anews//anews/html/5/2007/08/30/4.html</link>
+      <pubDate>2007-8-30 15:43:42</pubDate>
+      <description><![CDATA[]]></description>
+    </item>
     <item>
       <title>a b c d</title>
       <link>http://localhost:8080/anews//anews/html/1/2007/08/27/3.html</link>

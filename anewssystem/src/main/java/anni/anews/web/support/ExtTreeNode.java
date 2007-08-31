@@ -19,6 +19,9 @@ public class ExtTreeNode {
     /** * id. */
     private long id;
 
+    /** * qtip. */
+    private String qtip = "tooltip";
+
     /** * text. */
     private String text;
 
@@ -39,6 +42,16 @@ public class ExtTreeNode {
 
     /** * 允许有子节点. */
     private boolean allowChildren;
+
+    /** * @return qtip. */
+    public String getQtip() {
+        return qtip;
+    }
+
+    /** * @param qtip String. */
+    public void setQtip(String qtip) {
+        this.qtip = qtip;
+    }
 
     /** * @return id. */
     public long getId() {

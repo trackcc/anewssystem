@@ -34,11 +34,11 @@
                   location="../newscategory/tree.htm" target="dblselect"/>
             <Item name="addNews" title="添加新闻" image="../images/icon/16x16/new.gif"
                   location="../news/create.htm" target="dblselect"/>
-            <Item name="addNews" title="管理新闻" image="../images/icon/16x16/manage.gif"
+            <Item name="editNews" title="管理新闻" image="../images/icon/16x16/manage.gif"
                   location="../news/list.htm" target="dblselect"/>
-            <Item name="addNews" title="新闻搜索" image="../images/icon/16x16/manage.gif"
+            <Item name="searchNews" title="新闻搜索" image="../images/icon/16x16/manage.gif"
                   location="../news/search.htm" target="dblselect"/>
-            <Item name="addNews" title="管理关键字" image="../images/icon/16x16/manage.gif"
+            <Item name="tagInline" title="管理关键字" image="../images/icon/16x16/manage.gif"
                   location="../newstag/list.htm" target="dblselect"/>
             <Item name="config" title="新闻属性设置" image="../images/icon/16x16/manage.gif"
                   location="../newsconfig/manage.htm" target="dblselect"/>
@@ -60,7 +60,12 @@
         <Menu name="template" title="模板">
             <Item name="dd" title="设置模板" image="../images/icon/16x16/manage.gif"
                   location="../template/dd.htm" target="dblselect"/>
+            <Item name="tagInline" title="体验edit grid" image="../images/icon/16x16/manage.gif"
+                  location="../newstag/inlineManage.htm" target="dblselect"/>
+            <Item name="tagDialog" title="体验dial" image="../images/icon/16x16/manage.gif"
+                  location="../newstag/dialogManage.htm" target="dblselect"/>
         </Menu>
+<!--
         <Menu name="anews2" title="anews">
             <Item name="ListNewsConfig" title="浏览NewsConfig" image="../images/icon/16x16/manage.gif"
                   location="../newsconfig/list.htm" target="dblselect"/>
@@ -83,6 +88,7 @@
             <Item name="AddNewsTag" title="添加NewsTag" image="../images/icon/16x16/new.gif"
                   location="../newstag/create.htm" target="dblselect"/>
         </Menu>
+-->
         <Menu name="Logout" title="退出系统" location="../j_acegi_logout">
             <Item name="Logout" title="退出系统" image="../images/icon/16x16/group.jpg"
                   location="../j_acegi_logout" target="_parent"/>

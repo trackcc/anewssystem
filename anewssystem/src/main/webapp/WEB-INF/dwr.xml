@@ -3,6 +3,15 @@
 <dwr>
   <allow>
     <create creator="new" javascript="JavaDate" class="java.util.Date"/>
+    <create creator="spring" javascript="NewsTagHelper">
+      <param name="beanName" value="newsTagHelper"/>
+    </create>
+    <convert converter="bean" match="anni.core.dao.support.Page">
+	  <param name="include" value="totalCount, result"/>
+    </convert>
+    <convert converter="bean" match="anni.anews.domain.NewsTag">
+	  <param name="include" value="id, name"/>
+	</convert>
 <!--
     <create creator="spring" javascript="newsServiceClient">
       <param name="beanName" value="newsServiceClient"/>

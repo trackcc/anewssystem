@@ -45,6 +45,10 @@ public class ExtTreeNodeTest extends TestCase {
 
         extTreeNode.setLeaf(true);
         assertTrue(extTreeNode.getLeaf());
+
+        assertNotNull(extTreeNode.getQtip());
+        extTreeNode.setQtip("qtip");
+        assertEquals("qtip", extTreeNode.getQtip());
     }
 
     public void testWrite() throws Exception {
@@ -69,7 +73,8 @@ public class ExtTreeNodeTest extends TestCase {
         writer.flush();
 
         String result = writer.toString();
-        assertEquals("[{\"text\":\"name\",\"allowChildren\":true,\"leaf\":false,\"cls\":\"\",\"allowDelete\":true,\"draggable\":true,\"allowEdit\":true,\"id\":1}]",
+        //assertEquals("", result);
+        assertEquals("[{\"text\":\"name\",\"allowChildren\":true,\"leaf\":false,\"cls\":\"\",\"qtip\":\"tooltip\",\"allowDelete\":true,\"draggable\":true,\"allowEdit\":true,\"id\":1}]",
             result);
     }
 }

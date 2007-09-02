@@ -60,24 +60,14 @@ public class NewsConfigController extends BaseLongController<NewsConfig, NewsCon
         config.setNewsNeedAudit(0);
         config.setCouldComment(0);
         config.setCategoryStrategy(NewsCategory.STRATEGY_BIT_CODE);
-        config.setTemplateName("default");
+        config.setTemplateName(NewsConfig.DEFAULT_TEMPLATE_NAME);
     }
 
     /** * manage. */
     public void manage() {
         logger.info("start");
 
-        long id = 1L;
-        NewsConfig config = getEntityDao().get(id);
-
-        if (config == null) {
-            config = new NewsConfig();
-            config.setCommentNeedAudit(0);
-            config.setNewsNeedAudit(0);
-            config.setCouldComment(0);
-            getEntityDao().save(config);
-        }
-
+        NewsConfig config = getEntityDao().getDefaultConfig();
         mv.addObject("config", config);
         mv.setViewName("/anews/newsconfig/manage");
     }

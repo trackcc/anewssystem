@@ -3,8 +3,6 @@ package anni.anews.helper;
 import java.util.List;
 import java.util.Map;
 
-import anni.anews.domain.NewsTag;
-
 import anni.anews.manager.NewsTagManager;
 
 import anni.core.dao.support.Page;
@@ -29,7 +27,12 @@ public class NewsTagHelper {
         this.newsTagManager = newsTagManager;
     }
 
-    /** * @return page. */
+    /**
+         * ��ҳ��ʾ�ؼ����б�.
+         *
+         * @param conditions Map
+         * @return page
+         */
     public Page getItems(Map conditions) {
         logger.info(conditions);
 

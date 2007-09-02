@@ -42,24 +42,7 @@ public class NewsCategoryManager extends HibernateTreeEntityDao<NewsCategory> {
      * @return strategy
      */
     private int getCategoryStrategy() {
-        NewsConfig newsConfig = newsConfigManager.get(1L);
-
-        if (newsConfig == null) {
-            newsConfig = new NewsConfig();
-            newsConfig.setNewsNeedAudit(0);
-            newsConfig.setCommentNeedAudit(0);
-            newsConfig.setCouldComment(0);
-            newsConfig.setCategoryStrategy(NewsCategory.STRATEGY_BIT_CODE);
-            newsConfigManager.save(newsConfig);
-        } else {
-            int strategy = newsConfig.getCategoryStrategy();
-
-            if ((strategy < NewsCategory.STRATEGY_BIT_CODE)
-                    || (strategy > NewsCategory.STRATEGY_RECURSION)) {
-                newsConfig.setCategoryStrategy(NewsCategory.STRATEGY_BIT_CODE);
-                newsConfigManager.save(newsConfig);
-            }
-        }
+        NewsConfig newsConfig = newsConfigManager.getDefaultConfig();
 
         return newsConfig.getCategoryStrategy();
     }

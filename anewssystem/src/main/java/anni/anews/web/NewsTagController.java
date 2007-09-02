@@ -35,7 +35,11 @@ public class NewsTagController extends BaseLongController<NewsTag, NewsTagManage
         mv.setViewName("anews/newstag/dialogManage");
     }
 
-    /** * insertRow. */
+    /**
+     * insertRow.
+     *
+     * @throws Exception response.getWriter().print()可能出现异常
+     */
     public void insertRow() throws Exception {
         String name = getStrParam("name", "");
 
@@ -47,7 +51,11 @@ public class NewsTagController extends BaseLongController<NewsTag, NewsTagManage
         response.getWriter().print("{success:true,info:'success'}");
     }
 
-    /** * updateRow. */
+    /**
+     * updateRow.
+     *
+     * @throws Exception response.getWriter().print()可能出现异常
+     */
     public void updateRow() throws Exception {
         long id = getLongParam("id", -1L);
         logger.info(id);
@@ -67,7 +75,11 @@ public class NewsTagController extends BaseLongController<NewsTag, NewsTagManage
         response.getWriter().print("{success:true,info:'success'}");
     }
 
-    /** * loadData. */
+    /**
+     * loadData.
+     *
+     * @throws Exception response.getWriter().print()可能出现异常
+     */
     public void loadData() throws Exception {
         long id = getLongParam("id", -1L);
 

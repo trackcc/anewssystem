@@ -11,22 +11,26 @@
     <format>zip</format>
   </formats>
   <fileSets>
-    <useDefaultExcludes>false</useDefaultExcludes>
+    <useDefaultExcludes>true</useDefaultExcludes>
     <fileSet>
+<!--
       <includes>
         <include>*.txt</include>
         <include>*.xml</include>
       </includes>
+-->
       <excludes>
         <exclude>*.bak</exclude>
       </excludes>
     </fileSet>
     <fileSet>
+<!--
       <includes>
         <include>**/src/**</include>
         <include>**/repository/**</include>
         <include>**/pom.xml</include>
       </includes>
+-->
       <excludes>
         <exclude>**/*.bak</exclude>
       </excludes>
@@ -44,6 +48,7 @@
   </dependencySets>
 -->
   <repositories>
+    <includeMetadata>true</includeMetadata>
     <repository>
       <outputDirectory>/repository</outputDirectory>
     </repository>

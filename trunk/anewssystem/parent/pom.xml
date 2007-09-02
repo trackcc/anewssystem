@@ -32,7 +32,7 @@
     <repository>
       <id>local repository</id>
       <name>local repository</name>
-      <url>file:///repository/</url>
+      <url>file://${basedir}/../repository/</url>
     </repository>
 <!--
     <repository>

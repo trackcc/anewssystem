@@ -5,6 +5,11 @@
   <head>
     <#include "/include/meta.ftl">
     <title>${news.name}</title>
+    <script type="text/javascript">
+function changeFont(size) {
+  document.getElementById('newsContent').style.fontSize = size;
+}
+     </script>
   </head>
   <body>
     <a href="${ctx}/news/index.htm">首页</a> - &gt; 新闻内容
@@ -12,9 +17,10 @@
     <h1>${news.name}</h1>
     <h3>${news.subtitle}</h3>
     <p>发表时间：${news.updateDate?datetime}</p>
+    <span style="font-size:12px">字体选择：<a href="#" onclick="changeFont('16px')">大</a> <a href="#" onclick="changeFont('14px')">中</a> <a href="#" onclick="changeFont('12px')">小</a></span>
     <p>新闻来源：${news.source}</p>
     <p>责任编辑：${news.editor}</p>
     <p>新闻简介：${news.summary}</p>
-    <div>${news.content}</div>
+    <div id="newsContent">${news.content}</div>
   </body>
 </html>

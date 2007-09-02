@@ -12,7 +12,7 @@
     <groupId>anni</groupId>
     <artifactId>parent</artifactId>
     <version>0.0.2</version>
-    <relativePath>./parent/</relativePath>
+    <relativePath>parent</relativePath>
   </parent>
   <groupId>anni.anews</groupId>
   <artifactId>anews</artifactId>

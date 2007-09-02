@@ -235,7 +235,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         int pageSize = getIntParam("pagesize", 1000);
         String root = request.getRealPath("/");
         String ctx = request.getContextPath();
-        NewsConfig newsConfig = newsConfigManager.get(1L);
+        NewsConfig newsConfig = newsConfigManager.getDefaultConfig();
         freemarkerGenerator.genNews(entity, page, pageSize, root, ctx,
             newsConfig.getTemplateName());
     }
@@ -348,7 +348,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
     // 前台显示模板
     /** * index. */
     public void index() {
-        NewsConfig newsConfig = newsConfigManager.get(1L);
+        NewsConfig newsConfig = newsConfigManager.getDefaultConfig();
         String templateName = newsConfig.getTemplateName();
         mv.addObject("newsCategoryList",
             newsCategoryManager.getAll("theSort", true));
@@ -357,7 +357,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
 
     /** * more. */
     public void more() {
-        NewsConfig newsConfig = newsConfigManager.get(1L);
+        NewsConfig newsConfig = newsConfigManager.getDefaultConfig();
         String templateName = newsConfig.getTemplateName();
         long id = getLongParam("id", -1L);
         mv.addObject("newsCategory", newsCategoryManager.get(id));
@@ -366,7 +366,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
 
     /** * detail. */
     public void detail() {
-        NewsConfig newsConfig = newsConfigManager.get(1L);
+        NewsConfig newsConfig = newsConfigManager.getDefaultConfig();
         String templateName = newsConfig.getTemplateName();
         long id = getLongParam("id", -1L);
         mv.addObject("news", getEntityDao().get(id));

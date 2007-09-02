@@ -63,8 +63,8 @@ Ext.onReady (function() {
   var rz = new Ext.Resizable('grid-example', {
     wrap:true,
     minHeight:100,
-    pinned:true,
-    handles: 's'
+    pinned:false/*,
+    handles: 's'*/
   });
   rz.on('resize', grid.autoSize, grid);
 

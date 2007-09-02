@@ -23,6 +23,12 @@ public class NewsConfig implements Serializable {
     /** * serial. */
     static final long serialVersionUID = 0L;
 
+    /** * 默认配置的id. */
+    public static final long DEFAULT_CONFIG_ID = 1L;
+
+    /** * 默认模板名称. */
+    public static final String DEFAULT_TEMPLATE_NAME = "default";
+
     /** * id. */
     private Long id;
 

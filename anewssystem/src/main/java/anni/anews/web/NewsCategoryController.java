@@ -1,5 +1,6 @@
 package anni.anews.web;
 
+import java.util.Collection;
 import java.util.List;
 
 import anni.anews.domain.NewsCategory;
@@ -30,6 +31,53 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
     public NewsCategoryController() {
         setEditView("/anews/newscategory/editNewsCategory");
         setListView("/anews/newscategory/listNewsCategory");
+    }
+
+    /**
+     * 一次性获得整棵树的数据.
+     *
+     * @throws Exception 异常
+     */
+    public void getAllTree() throws Exception {
+        String hql = "from NewsCategory where parent is null order by theSort asc, id desc";
+        List<NewsCategory> list = getEntityDao().find(hql);
+
+        StringBuffer buff = appendCategory(list);
+
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().print(buff.toString());
+
+        StreamView view = new StreamView("application/json");
+        mv.setView(view);
+    }
+
+    /** * appendCategory. */
+    private StringBuffer appendCategory(Collection<NewsCategory> list) {
+        StringBuffer buff = new StringBuffer();
+        buff.append("[");
+
+        for (NewsCategory category : list) {
+            buff.append("{\"text\":\"").append(category.getName())
+                .append("\",\"id\":\"").append(category.getId())
+                .append("\",\"depth\":\"").append(category.getLevel() - 1)
+                .append("\",\"leaf\":").append(category.isLeaf())
+                .append(",\"checked\":\"false\"");
+
+            if (!category.isLeaf()) {
+                buff.append(",\"children\":")
+                    .append(appendCategory(category.getChildren()));
+            }
+
+            buff.append("},");
+        }
+
+        if (buff.length() > 1) {
+            buff.deleteCharAt(buff.length() - 1);
+        }
+
+        buff.append("]");
+
+        return buff;
     }
 
     /**

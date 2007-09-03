@@ -57,7 +57,7 @@
                   location="../demo/dwr.htm" target="dblselect"/>
         </Menu>
 -->
-        <Menu name="template" title="模板">
+        <Menu name="template" title="sandbox">
             <Item name="dd" title="设置模板" image="../images/icon/16x16/manage.gif"
                   location="../template/dd.htm" target="dblselect"/>
             <Item name="tagInline" title="体验edit grid" image="../images/icon/16x16/manage.gif"

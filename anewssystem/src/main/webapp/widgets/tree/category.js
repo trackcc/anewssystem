@@ -10,7 +10,8 @@ Ext.onReady(function(){
         containerScroll: true,
         enableDD:true,
         lines: true,
-        loader: new Ext.tree.TreeLoader({dataUrl:'getChildren.htm'})
+        //loader: new Ext.tree.TreeLoader({dataUrl:'getChildren.htm'})
+		loader: new Ext.tree.TreeLoader({dataUrl:'getAllTree.htm'})
     });
 
     tree.el.addKeyListener(Ext.EventObject.DELETE, removeNode);

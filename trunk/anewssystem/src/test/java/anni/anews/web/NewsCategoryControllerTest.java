@@ -122,4 +122,11 @@ public class NewsCategoryControllerTest extends PrototypeControllerTest {
         mv = controller.handleRequest(request, response);
         assertNotNull(mv);
     }
+
+    /** * getAllTree. */
+    public void testAllTree() throws Exception {
+        request.setRequestURI("/newscategory/getAllTree.htm");
+        mv = controller.handleRequest(request, response);
+        assertNotNull("[]", response.getContentAsString());
+    }
 }

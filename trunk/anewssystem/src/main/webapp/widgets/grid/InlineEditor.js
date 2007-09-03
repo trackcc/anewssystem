@@ -59,18 +59,18 @@ Ext.onReady (function() {
 
   var grid = new Ext.grid.EditorGrid("grid-example", {ds: ds, cm: cm, enableColLock: false});
 
+  var layout = Ext.BorderLayout.create({
+    center: {margins:{left:30,top:30,right:100,bottom:100}, panels: [new Ext.GridPanel(grid)]}
+  }, document.body);
+
   // make the grid resizable, do before render for better performance
   var rz = new Ext.Resizable('grid-example', {
     wrap:true,
     minHeight:100,
-    pinned:false/*,
-    handles: 's'*/
+    pinned:true,
+    handles:'s'
   });
   rz.on('resize', grid.autoSize, grid);
-
-  var layout = Ext.BorderLayout.create({
-    center: {margins:{left:3,top:3,right:3,bottom:3}, panels: [new Ext.GridPanel(grid)]}
-  }, "grid-panel");
 
   grid.render();
 
@@ -81,8 +81,7 @@ Ext.onReady (function() {
     handler : function(){
       var tag = new Tag({
         id: -1,
-        name: ''//,
-        //newRecord:true  //增加一个补充字段，设为真标识为是新记录
+        name: ''
       });
       grid.stopEditing();
       ds.insert(0, tag);
@@ -113,18 +112,18 @@ Ext.onReady (function() {
   var paging = new Ext.PagingToolbar(gridFoot, ds, {
     pageSize: 10,
     displayInfo: true,
-    displayMsg: 'display {0} - {1} of {2}',
-    emptyMsg: "no record"
+    displayMsg: '显示 {0} - {1} 共 {2}',
+    emptyMsg: "没有数据"
   });
-/*
+
   //查询时需要用到的参数
-  ds.on('beforeload', function() {
-    ds.baseParams = {
-      param1: 'test111',
-      param2: true
-    };
-  });
-*/
+  //ds.on('beforeload', function() {
+  //  ds.baseParams = {
+  //    param1: 'test111',
+  //    param2: true
+  //  };
+  //});
+
   //分页基本参数
   ds.load({params:{start:0, limit:10}});
 });

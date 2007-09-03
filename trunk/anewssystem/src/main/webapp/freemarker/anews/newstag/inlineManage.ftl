@@ -14,8 +14,6 @@
   </head>
 
   <body>
-    <div id="grid-panel" style="width:600px;height:300px;">
-      <div id="grid-example"></div>
-    </div>
+    <div id="grid-example"></div>
   </body>
 </html>

@@ -7,6 +7,12 @@
   font-size:12px;
 }.x-btn button {
   font-size:12px;
+}.x-menu-list-item {
+  font-size:12px;
+}.x-layout-panel-hd-text {
+  font-size:12px;
+}.x-grid-hd-row td, .x-grid-row td {
+  font-size:12px;
 }
 </style>
 <script type="text/javascript" src="${ext}/adapter/yui/yui-utilities.js"></script>

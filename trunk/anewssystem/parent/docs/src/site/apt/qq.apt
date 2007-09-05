@@ -1,0 +1,55 @@
+ ---
+ 给qq留言
+ ---
+ Lingo
+ ---
+ 2007-09-04
+
++--
+    <p>
+      <!--给qq发消息http://is.qq.com/webpresence/code.shtml-->
+      <a id="qqMsg" target="blank" href="tencent://message/?uin=416529445&Site=localhost&Menu=yes">
+        <img id="qqImage" border="0" src="http://wpa.qq.com/pa?p=1:416529445:1" alt="点击这里给我发消息">
+      </a>
+      <input type="text" id="qq" name="qq" onchange="changeQq()">
+      <script type="text/javascript">
+function changeQq() {
+  var qqNumber = document.getElementById("qq").value;
+  document.getElementById("qqImage").src="http://wpa.qq.com/pa?p=1:" + qqNumber + ":1";
+  document.getElementById("qqMsg").href="tencent://message/?uin=" + qqNumber + "&Site=localhost&Menu=yes";
+}
+      </script>
+    </p>
++--
+
++--
+    <!--<p>给msn发消息<a href="mailto:lingo20003@hotmail.com">msn</a>-->
+    <OBJECT height='1' id='MsgrObj' width='1'></OBJECT>
+    <script>
+    //collected by robin.xiao ( http://www.xiaobin.net )
+    function DoInstantMessage(person,screen) {
+        //Check if person has messenger installed
+        try{
+            MsgrObj.classid="clsid:B69003B3-C55E-4B48-836C-BC5946FC3B28";
+        } catch(e) {
+	    if(!(e.number && 2148139390) == 2148139390)return;
+	}
+        //Check if you are logged in
+        if(MsgrObj.MyStatus == 1) {
+            alert("你还没有登陆MSN Messegner。\n在继续之前你必须登陆MSN Messegner");
+            return;
+        }
+        //Check if person is already in contact list
+        try{
+	    var contact = MsgrObj.GetContact(person,"");
+	} catch(e) {
+	    if((e.number && 2164261642) == 2164261642) //MSGR_E_USER_NOT_FOUND {
+	        if(confirm("把 " + screen + " 加入你的列表？") == true) MsgrObj.AddContact(0, person);
+	    }
+        }
+        //Ask to send an instant message
+        if(confirm("给 " + screen + " 发送一个信息？") == true) MsgrObj.InstantMessage(person);
+    }
+    </script>
+    <a href='javascript:DoInstantMessage("robin.xiao@gmail.com","绿茵汗将");'>发送消息</a>
++--

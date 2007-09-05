@@ -28,11 +28,11 @@ public class NewsTagHelper {
     }
 
     /**
-         * ��ҳ��ʾ�ؼ����б�.
-         *
-         * @param conditions Map
-         * @return page
-         */
+     * 分页查询关键字.
+     *
+     * @param conditions Map
+     * @return page
+     */
     public Page getItems(Map conditions) {
         logger.info(conditions);
 

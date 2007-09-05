@@ -61,6 +61,7 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
                 .append("\",\"id\":\"").append(category.getId())
                 .append("\",\"depth\":\"").append(category.getLevel() - 1)
                 .append("\",\"leaf\":").append(category.isLeaf())
+                .append(",\"allowEdit\":true,\"draggable\":true,\"allowDelete\":true,\"allowChildren\":true")
                 .append(",\"checked\":\"false\"");
 
             if (!category.isLeaf()) {

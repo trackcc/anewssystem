@@ -7,4 +7,14 @@
   <bean id="newsManager" class="anni.anews.manager.NewsManager"/>
   <bean id="newsCommentManager" class="anni.anews.manager.NewsCommentManager"/>
   <bean id="newsTagManager" class="anni.anews.manager.NewsTagManager"/>
+
+  <bean id="deptManager" class="anni.asecurity.manager.DeptManager"/>
+  <bean id="userManager" class="anni.asecurity.manager.UserManager"/>
+  <bean id="roleManager" class="anni.asecurity.manager.RoleManager"/>
+  <bean id="resourceManager" class="anni.asecurity.manager.ResourceManager"/>
+  <bean id="menuManager" class="anni.asecurity.manager.MenuManager"/>
+
+  <bean id="resourceHelper" class="anni.asecurity.helper.ResourceHelper"/>
+  <bean id="roleHelper" class="anni.asecurity.helper.RoleHelper"/>
+  <bean id="userHelper" class="anni.asecurity.helper.UserHelper"/>
 </beans>

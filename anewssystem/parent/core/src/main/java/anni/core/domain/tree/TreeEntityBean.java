@@ -66,5 +66,5 @@ public interface TreeEntityBean<T extends TreeEntityBean>
      * @param parent TreeEntityBean
      * @return boolean 是否形成环状
      */
-    public boolean checkDeadLock(TreeEntityBean<T> parent);
+    public boolean checkDeadLock(T parent);
 }

@@ -89,7 +89,7 @@ public class StringTreeEntityBean<T extends StringTreeEntityBean>
      * @return boolean 是否形成环状
      */
     @Transient
-    public boolean checkDeadLock(TreeEntityBean<T> entityBean) {
+    public boolean checkDeadLock(T entityBean) {
         return TreeHelper.checkDeadLock(this, entityBean);
     }
 }

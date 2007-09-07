@@ -5,15 +5,40 @@
 <!--
     <create creator="new" javascript="JavaDate" class="java.util.Date"/>
 -->
+    <!--新闻-->
     <create creator="spring" javascript="NewsTagHelper">
       <param name="beanName" value="newsTagHelper"/>
     </create>
     <convert converter="bean" match="anni.core.dao.support.Page">
-	  <param name="include" value="totalCount, result"/>
+      <param name="include" value="totalCount, result"/>
     </convert>
     <convert converter="bean" match="anni.anews.domain.NewsTag">
-	  <param name="include" value="id, name"/>
-	</convert>
+      <param name="include" value="id, name"/>
+    </convert>
+
+    <!--权限-->
+    <create creator="spring" javascript="ResourceHelper">
+      <param name="beanName" value="resourceHelper"/>
+    </create>
+    <create creator="spring" javascript="RoleHelper">
+      <param name="beanName" value="roleHelper"/>
+    </create>
+    <create creator="spring" javascript="UserHelper">
+      <param name="beanName" value="userHelper"/>
+    </create>
+    <convert converter="bean" match="anni.core.dao.support.Page">
+      <param name="include" value="totalCount, result"/>
+    </convert>
+    <convert converter="bean" match="anni.asecurity.domain.Resource">
+      <param name="exclude" value="roles"/>
+    </convert>
+    <convert converter="bean" match="anni.asecurity.domain.Role">
+      <param name="exclude" value="users,menus,resources"/>
+    </convert>
+    <convert converter="bean" match="anni.asecurity.domain.User"/>
+    <convert converter="bean" match="anni.asecurity.domain.Dept">
+      <param name="exclude" value="users"/>
+    </convert>
 <!--
     <create creator="spring" javascript="newsServiceClient">
       <param name="beanName" value="newsServiceClient"/>

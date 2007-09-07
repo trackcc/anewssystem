@@ -30,6 +30,22 @@
     </bean>
     <bean id="freemarkerGenerator" class="anni.anews.web.support.FreemarkerGenerator"/>
 
+    <bean class="anni.asecurity.web.DeptController" parent="baseController" scope="request">
+        <property name="entityDao" ref="deptManager"/>
+    </bean>
+    <bean class="anni.asecurity.web.UserController" parent="baseController" scope="request">
+        <property name="entityDao" ref="userManager"/>
+    </bean>
+    <bean class="anni.asecurity.web.RoleController" parent="baseController" scope="request">
+        <property name="entityDao" ref="roleManager"/>
+    </bean>
+    <bean class="anni.asecurity.web.ResourceController" parent="baseController" scope="request">
+        <property name="entityDao" ref="resourceManager"/>
+    </bean>
+    <bean class="anni.asecurity.web.MenuController" parent="baseController" scope="request">
+        <property name="entityDao" ref="menuManager"/>
+    </bean>
+
     <bean class="anni.core.web.prototype.ControllerClassNameHandlerMapping"/>
 
     <bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator"/>

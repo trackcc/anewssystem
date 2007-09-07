@@ -9,6 +9,8 @@ import anni.anews.manager.NewsCategoryManager;
 
 import anni.anews.web.support.ExtTreeNode;
 
+import anni.asecurity.web.support.extjs.TreeHelper;
+
 import anni.core.web.prototype.StreamView;
 import anni.core.web.prototype.TreeLongController;
 
@@ -104,7 +106,8 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
         }
 
         response.setCharacterEncoding("UTF-8");
-        ExtTreeNode.write(response.getWriter(), categoryList);
+        //ExtTreeNode.write(response.getWriter(), categoryList);
+        response.getWriter().print(TreeHelper.createTreeJson(categoryList));
 
         StreamView view = new StreamView("application/json");
         mv.setView(view);

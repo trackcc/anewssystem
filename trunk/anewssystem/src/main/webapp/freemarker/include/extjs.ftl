@@ -1,13 +1,17 @@
 <#if ctx??><#else><#assign ctx=springMacroRequestContext.getContextPath()></#if>
 <#assign ext="${ctx}/widgets/extjs/1.1">
 <link rel="stylesheet" type="text/css" href="${ext}/resources/css/ext-all.css" />
-<link rel="stylesheet" type="text/css" href="${ctx}/widgets/examples.css" />
+<#--<link rel="stylesheet" type="text/css" href="${ctx}/widgets/examples.css" />-->
 <style type="text/css">
 .x-tree-node {
   font-size:12px;
 }.x-btn button {
   font-size:12px;
 }.x-menu-list-item {
+  font-size:12px;
+}.x-layout-panel-hd-text {
+  font-size:12px;
+}.x-grid-hd-row td, .x-grid-row td {
   font-size:12px;
 }
 </style>

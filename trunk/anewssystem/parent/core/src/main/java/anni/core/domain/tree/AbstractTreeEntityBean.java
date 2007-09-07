@@ -33,7 +33,7 @@ public abstract class AbstractTreeEntityBean<T extends AbstractTreeEntityBean<T>
      * @param parent TreeEntityBean
      * @return boolean 是否形成环状
      */
-    public boolean checkDeadLock(TreeEntityBean<T> parent) {
+    public boolean checkDeadLock(T parent) {
         return TreeHelper.checkDeadLock(this, parent);
     }
 }

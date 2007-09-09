@@ -90,11 +90,12 @@
          rememberMeServices用于在验证成功后添加cookie信息
      -->
     <bean id="authenticationProcessingFilter"
-       class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilter">
+       class="anni.asecurity.web.filter.UserAuthenticationProcessingFilter">
         <property name="authenticationManager" ref="authenticationManager" />
         <property name="authenticationFailureUrl" value="/login.jsp?login_error=1" />
-        <property name="defaultTargetUrl" value="/admin/index.jsp" />
+        <property name="defaultTargetUrl" value="/admin/index.htm" />
         <property name="filterProcessesUrl" value="/j_acegi_security_check" />
+        <property name="userManager" ref="userManager" />
         <property name="rememberMeServices" ref="rememberMeServices" />
         <property name="exceptionMappings">
             <value>
@@ -298,23 +299,23 @@
         <property name="dataSource" ref="dataSource" />
 
         <property name="loadUsersQuery">
-            <value>select username,password,status from user</value>
+            <value>select username,password,status from a_security_user</value>
         </property>
         <property name="authoritiesByUsernameQuery">
             <value>
-                select r.name from user u,role r,user_role ur
+                select r.name from a_security_user u,a_security_role r,a_security_role_user ur
                 where u.id = ur.user_id and r.id = ur.role_id and u.username
                 = ?
             </value>
         </property>
 
         <property name="loadResourcesQuery">
-            <value>select res_string, res_type from resource</value>
+            <value>select res_string, res_type from a_security_resource</value>
         </property>
         <property name="authoritiesByResourceQuery">
             <value>
-                select r.name from resource c,role
-                r,role_res rc where c.id = rc.res_id and r.id =
+                select r.name from a_security_resource c,a_security_role
+                r,a_security_resource_role rc where c.id = rc.resource_id and r.id =
                 rc.role_id and c.res_string = ?
             </value>
         </property>

@@ -1,6 +1,5 @@
 package anni.asecurity.helper;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +15,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
+/**
+ * 用户grid的帮助类.
+ *
+ * @author Lingo
+ * @since 2007-09-09
+ */
 public class UserHelper {
     /** * logger. */
     private Log logger = LogFactory.getLog(UserHelper.class);
@@ -36,6 +41,12 @@ public class UserHelper {
         this.roleManager = roleManager;
     }
 
+    /**
+     * 分页查询.
+     *
+     * @param conditions 分页和查询条件
+     * @return 分页查询的结果
+     */
     public Page pagedQuery(Map conditions) {
         logger.info(conditions);
 
@@ -65,16 +76,35 @@ public class UserHelper {
         return page;
     }
 
+    /**
+     * 根据用户id查询对应的角色.
+     *
+     * @param userId long
+     * @return 角色集合
+     */
     public Set<Role> getRolesForUser(long userId) {
         logger.info(userId);
 
         return userManager.get(userId).getRoles();
     }
 
+    /**
+     * FIXME:查询所有用户.
+     *
+     * @param conditions 分页和查询条件
+     * @return 分页查询的结果
+     */
     public Page getUsersPage(Map conditions) {
         return pagedQuery(conditions);
     }
 
+    /**
+     * 验证或取消验证.
+     *
+     * @param userId 用户id
+     * @param roleId 角色id
+     * @param isCancel 是否是取消验证
+     */
     public void authRoleForUser(long userId, long roleId, boolean isCancel) {
         logger.info(userId);
         logger.info(roleId);

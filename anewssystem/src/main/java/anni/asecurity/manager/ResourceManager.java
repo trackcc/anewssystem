@@ -47,10 +47,9 @@ public class ResourceManager extends ECHibernateEntityDao<Resource> {
 
         super.save(o);
 
-        if (!isNew) {
-            if (!StringUtils.equals(resource.getResString(), orginString)) {
-                removeRescInCache(orginString);
-            }
+        if (!isNew
+                && !StringUtils.equals(resource.getResString(), orginString)) {
+            removeRescInCache(orginString);
         }
 
         saveRescInCache(resource);

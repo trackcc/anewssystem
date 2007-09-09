@@ -17,6 +17,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
+/**
+ * 角色辅助类.
+ *
+ * @author Lingo
+ * @since 2007-09-09
+ */
 public class RoleHelper {
     /** * logger. */
     private Log logger = LogFactory.getLog(RoleHelper.class);
@@ -45,6 +51,12 @@ public class RoleHelper {
         this.roleManager = roleManager;
     }
 
+    /**
+     * 根据条件，分页查询.
+     *
+     * @param conditions 条件
+     * @return 分页结果
+     */
     public Page pagedQuery(Map conditions) {
         logger.info(conditions);
 
@@ -63,6 +75,12 @@ public class RoleHelper {
         return roleManager.pagedQuery("from Role", pageNo, pageSize);
     }
 
+    /**
+     * 根据用户，分页查询角色.
+     *
+     * @param conditions 条件
+     * @return 分页结果
+     */
     public Page getRoleForUserPage(Map conditions) {
         long userId = -1L;
 
@@ -88,6 +106,13 @@ public class RoleHelper {
         return page;
     }
 
+    /**
+     * 根据角色id，授权或取消授权资源.
+     *
+     * @param roleId 角色id
+     * @param resourceId 资源id
+     * @param isCancel 是否取消
+     */
     public void authResourceForRole(long roleId, long resourceId,
         boolean isCancel) {
         logger.info(roleId);

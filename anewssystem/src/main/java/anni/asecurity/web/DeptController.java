@@ -1,9 +1,5 @@
 package anni.asecurity.web;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import anni.asecurity.domain.Dept;
 
 import anni.asecurity.manager.DeptManager;
@@ -12,8 +8,6 @@ import anni.asecurity.web.support.extjs.TreeController;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.springframework.web.bind.ServletRequestDataBinder;
 
 
 /**
@@ -35,7 +29,11 @@ public class DeptController extends TreeController<Dept, DeptManager> {
         mv.setViewName("asecurity/dept/index");
     }
 
-    /** * getExcludes(). */
+    /**
+     * getExcludes().
+     *
+     * @return 不需要转化成json的属性
+     */
     @Override
     public String[] getExcludes() {
         return new String[] {"users", "children", "parent"};

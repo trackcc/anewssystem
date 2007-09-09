@@ -66,14 +66,22 @@ public class ResourceController extends BaseLongController<Resource, ResourceMan
         mv.setViewName("asecurity/resource/index");
     }
 
-    /** * onInsert. */
+    /**
+     * onInsert.
+     *
+     * @throws Exception 写入response可能出现异常
+     */
     @Override
     public void onInsert() throws Exception {
         response.getWriter().print("{success:true,info:\"success\"}");
         mv.setView(new StreamView("application/json"));
     }
 
-    /** * onUpdate. */
+    /**
+     * onUpdate.
+     *
+     * @throws Exception 写入response可能出现异常
+     */
     @Override
     public void onUpdate() throws Exception {
         response.getWriter().print("{success:true,info:\"success\"}");

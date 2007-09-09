@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
  * @since 2007-06-21
  */
 public class UserLogoutHandler implements LogoutHandler {
+    /** * logger. */
     private static Log logger = LogFactory.getLog(UserLogoutHandler.class);
 
     /**

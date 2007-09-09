@@ -1,8 +1,5 @@
 package anni.asecurity.web.support.extjs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * @author Lingo.
@@ -140,10 +137,10 @@ public class TreeNode {
     }
 
     /**
-    * 把category转换成extjs树形需要的格式.
+    * 把LongSortedTreeEntityBean转换成extjs树形需要的格式.
     *
-    * @param category 分类实体类
-    * @return ExtTreeNode
+    * @param bean pojo
+    * @return TreeNode
     */
     public static TreeNode createTreeNode(LongSortedTreeEntityBean bean) {
         TreeNode node = new TreeNode();

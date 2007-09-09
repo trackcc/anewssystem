@@ -28,6 +28,9 @@ import org.apache.commons.logging.LogFactory;
  * @since 2007年08月18日 下午 20时19分00秒578
  */
 public class RoleManager extends ECHibernateEntityDao<Role> {
+    /** * logger. */
+    private static Log logger = LogFactory.getLog(RoleManager.class);
+
     /**
      * AcegiCacheManager.
      */
@@ -45,14 +48,14 @@ public class RoleManager extends ECHibernateEntityDao<Role> {
      */
     @Override
     public void save(Object o) {
-        Role role = (Role) o;
         super.save(o);
 
-        //Set<Resource> resources = role.getResources();
+        Role role = (Role) o;
+        Set<Resource> resources = role.getResources();
 
-        //for (Resource resource : resources) {
-        //    saveRoleInCache(resource);
-        //}
+        for (Resource resource : resources) {
+            saveRoleInCache(resource);
+        }
     }
 
     /**

@@ -213,7 +213,11 @@ public class UserController extends BaseLongController<User, UserManager> {
         mv.setViewName("asecurity/user/index");
     }
 
-    /** * onInsert. */
+    /**
+     * onInsert.
+     *
+     * @throws Exception 写入response可能出现异常
+     */
     @Override
     public void onInsert() throws Exception {
         logger.info(params());
@@ -221,7 +225,11 @@ public class UserController extends BaseLongController<User, UserManager> {
         mv.setView(new StreamView("application/json"));
     }
 
-    /** * onUpdate. */
+    /**
+     * onUpdate.
+     *
+     * @throws Exception 写入response可能出现异常
+     */
     @Override
     public void onUpdate() throws Exception {
         logger.info(params());

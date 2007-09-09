@@ -2,18 +2,15 @@ package anni.asecurity.web;
 
 import java.util.List;
 
-import anni.asecurity.domain.Dept;
 import anni.asecurity.domain.Resource;
 import anni.asecurity.domain.Role;
 
-import anni.asecurity.manager.DeptManager;
 import anni.asecurity.manager.ResourceManager;
 import anni.asecurity.manager.RoleManager;
 
 import anni.core.web.prototype.BaseLongController;
 import anni.core.web.prototype.StreamView;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -61,9 +58,11 @@ public class RoleController extends BaseLongController<Role, RoleManager> {
 
         Role role = getEntityDao().get(id);
 
-        for (Resource resource : resources) {
-            if (role.getResources().contains(resource)) {
-                resource.setAuthorized(true);
+        if (role != null) {
+            for (Resource resource : resources) {
+                if (role.getResources().contains(resource)) {
+                    resource.setAuthorized(true);
+                }
             }
         }
 
@@ -128,7 +127,11 @@ public class RoleController extends BaseLongController<Role, RoleManager> {
         mv.setViewName("asecurity/role/index");
     }
 
-    /** * onInsert. */
+    /**
+     * onInsert.
+     *
+     * @throws Exception 写入response可能发生异常
+     */
     @Override
     public void onInsert() throws Exception {
         logger.info(params());
@@ -136,7 +139,11 @@ public class RoleController extends BaseLongController<Role, RoleManager> {
         mv.setView(new StreamView("application/json"));
     }
 
-    /** * onUpdate. */
+    /**
+         * onUpdate.
+     *
+     * @throws Exception 写入response可能发生异常
+         */
     @Override
     public void onUpdate() throws Exception {
         logger.info(params());

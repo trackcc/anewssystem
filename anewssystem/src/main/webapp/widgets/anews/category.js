@@ -1,10 +1,10 @@
 
 Ext.onReady(function(){
 
-    // turn on quick tips
+    // 开启提示功能
     Ext.QuickTips.init();
 
-    // this is the source code tree
+    // 创建树形
     var tree = new Ext.tree.TreePanel('main', {
         animate:true,
         containerScroll: true,
@@ -68,7 +68,7 @@ Ext.onReady(function(){
         handler:refresh
     });
 
-    // add an inline editor for the nodes
+    // 设置inlineEditor
     var ge = new Ext.tree.TreeEditor(tree, {
         allowBlank:false,
         blankText:'请添写名称',
@@ -98,19 +98,14 @@ Ext.onReady(function(){
         tree.el.mask('正在与服务器交换数据...', 'x-mask-loading');
         var hide = tree.el.unmask.createDelegate(tree.el);
         var doSuccess = function(responseObject) {
-            //alert("success\n" + responseObject.responseText);
             eval("var o = " + responseObject.responseText + ";");
             ge.editNode.id = o.id;
-            hide();
-        };
-        var doFailure = function(responseObject) {
-            //alert("faliure\n" + responseObject.responseText);
             hide();
         };
         Ext.lib.Ajax.request(
             'POST',
             'insertTree.htm',
-            {success:doSuccess,failure:doFailure},
+            {success:doSuccess,failure:hide},
             'data='+encodeURIComponent(Ext.encode(item))
         );
     });
@@ -224,7 +219,7 @@ Ext.onReady(function(){
     }
 
     function collapseAll(){
-        //ctxMenu.hide();
+        ctxMenu.hide();
         setTimeout(function(){
             root.eachChild(function(n){
                n.collapse(false, false);
@@ -233,7 +228,7 @@ Ext.onReady(function(){
     }
 
     function expandAll(){
-        //ctxMenu.hide();
+        ctxMenu.hide();
         setTimeout(function(){
             root.eachChild(function(n){
                n.expand(false, false);
@@ -242,7 +237,7 @@ Ext.onReady(function(){
     }
 
     tree.on('contextmenu', prepareCtx);
-    // context menus
+    // 右键菜单
     var ctxMenu = new Ext.menu.Menu({
         id:'copyCtx',
         items: [{

@@ -35,12 +35,13 @@ public class ResourceControllerTest extends PrototypeControllerTest {
 
     public void testInsert() throws Exception {
         request.setRequestURI("/resource/insert.htm");
+        request.addParameter("name", "resource");
         request.addParameter("resType", "METHOD");
         request.addParameter("resString",
             "anni.asecurity.web.ResourceController.*");
         mv = controller.handleRequest(request, response);
         mvHelper.assertModelAttributeAvailable(mv, "resource");
-        mvHelper.assertViewName(mv, "redirect:/resource/list.htm");
+        mvHelper.assertViewName(mv, null);
     }
 
     public void testInsert2() throws Exception {
@@ -51,6 +52,6 @@ public class ResourceControllerTest extends PrototypeControllerTest {
             "anni.asecurity.manager.ResourceManager.*");
         mv = controller.handleRequest(request, response);
         mvHelper.assertModelAttributeAvailable(mv, "resource");
-        mvHelper.assertViewName(mv, "redirect:/resource/list.htm");
+        mvHelper.assertViewName(mv, null);
     }
 }

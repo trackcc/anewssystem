@@ -58,7 +58,7 @@
         <configuration>
           <includes>
 <!--
-            <include>**/NewsCategoryManagerTest.java</include>
+            <include>**/Test.java</include>
 -->
             <include>**/*Test.java</include>
             <include>**/*TestCase.java</include>
@@ -94,12 +94,11 @@
 
   <reporting>
     <plugins>
+<!--
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
-<!--
         <version>2.2-SNAPSHOT</version>
--->
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -122,6 +121,7 @@
           </excludes>
         </configuration>
       </plugin>
+-->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>

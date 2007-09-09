@@ -1,0 +1,8 @@
+简要步骤如下：
+0. 为eclipse添加Maven2和MyEclipse插件
+1. 将Maven项目转为Eclipse项目，具体操作为将dos命令窗口切换到Maven项目的目录下，输入命令： mvn eclipse:eclipse
+2. 进入eclipse，将这个项目导入工作空间
+3. 在该项目上点右键Maven->Enable
+4. 在该项目上点右键Build Path->Configure Build Path->Java Build Path->Libraries->去掉Maven添加的变量路径
+5. 在该项目上点右键MyEclipse->Add Web Capabilities->修改Web root地址（点【浏览】按钮指定为当前工作空间下的src/main/webapp文件夹）
+6. 配置完毕，可以用MyEclipse插件配置服务器等开始正常开发，自动部署，调试等操作了。

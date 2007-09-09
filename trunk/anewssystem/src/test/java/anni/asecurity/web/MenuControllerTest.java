@@ -65,18 +65,18 @@ public class MenuControllerTest extends PrototypeControllerTest {
         session.setAttribute("loginUser", userManager.get(1L));
         mv = controller.handleRequest(request, response);
         // mvHelper.assertModelAttributeAvailable(mv, "repository");
-        mvHelper.assertViewName(mv, null);
+        mvHelper.assertViewName(mv, "asecurity/menu/createMenu");
     }
 
-    public void testListMenuRole() throws Exception {
-        request.setRequestURI("/menu/listMenuRole.htm");
-        request.addParameter("roleId", "1");
-        mv = controller.handleRequest(request, response);
-        mvHelper.assertModelAttributeAvailable(mv, "roleId");
-        mvHelper.assertModelAttributeAvailable(mv, "treeText");
-        mvHelper.assertViewName(mv, null);
-    }
-
+    /*
+        public void testListMenuRole() throws Exception {
+            request.setRequestURI("/menu/listMenuRole.htm");
+            request.addParameter("roleId", "1");
+            mv = controller.handleRequest(request, response);
+            mvHelper.assertModelAttributeAvailable(mv, "roleId");
+            mvHelper.assertModelAttributeAvailable(mv, "treeText");
+            mvHelper.assertViewName(mv, null);
+        }
     public void testListMenuRole2() throws Exception {
         request.setRequestURI("/menu/listMenuRole.htm");
         request.addParameter("roleId", "");
@@ -85,7 +85,6 @@ public class MenuControllerTest extends PrototypeControllerTest {
         mvHelper.assertModelAttributeAvailable(mv, "treeText");
         mvHelper.assertViewName(mv, null);
     }
-
     public void testListMenuRole3() throws Exception {
         request.setRequestURI("/menu/listMenuRole.htm");
         request.addParameter("roleId", "not numeric");
@@ -94,7 +93,7 @@ public class MenuControllerTest extends PrototypeControllerTest {
         mvHelper.assertModelAttributeAvailable(mv, "treeText");
         mvHelper.assertViewName(mv, null);
     }
-
+    */
     public void testSaveMenuRole() throws Exception {
         request.setRequestURI("/menu/saveMenuRole.htm");
         mv = controller.handleRequest(request, response);

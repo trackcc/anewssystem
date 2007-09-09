@@ -26,8 +26,15 @@ public class TreeHelper {
     /** * logger. */
     private static Log logger = LogFactory.getLog(TreeHelper.class);
 
+    /** * 工具类需要的保护构造方法. */
+    protected TreeHelper() {
+    }
+
     /**
      * 为异步树，一次加载所有的节点，生成json.
+     *
+     * @param list 树节点列表
+     * @return 生成的json
      */
     public static String createAllTreeJson(
         Collection<?extends LongSortedTreeEntityBean> list) {
@@ -35,7 +42,11 @@ public class TreeHelper {
     }
 
     /**
+     * 递归生成json数组.
      *
+     * @param list 树节点列表
+     * @param wantToAll 是否递归调用子节点
+     * @return json字符串
      */
     public static JSONArray createJSONArray(
         Collection<?extends LongSortedTreeEntityBean> list,
@@ -67,6 +78,9 @@ public class TreeHelper {
 
     /**
      * 把tree列表转化成json数组.
+     *
+     * @param list 树节点列表
+     * @return json字符串
      */
     public static String createTreeJson(
         Collection<?extends LongSortedTreeEntityBean> list) {
@@ -75,6 +89,9 @@ public class TreeHelper {
 
     /**
      * data={"id":"1","text":"1","parentId":-1}.
+     *
+     * @param data json
+     * @return 一个树节点
      */
     public static TreeNode createBeanFromJson(String data) {
         logger.info(data);
@@ -90,6 +107,9 @@ public class TreeHelper {
 
     /**
      * data=[{"id":"1","parentId":-1},{"id":"2","parentId":-1}].
+     *
+     * @param data json
+     * @return 树节点队列
      */
     public static List<TreeNode> createBeanListFromJson(String data) {
         logger.info(data);
@@ -137,7 +157,15 @@ public class TreeHelper {
         return false;
     }
 
-    /** * write. */
+    /**
+     * write.
+     *
+     * @param bean obj
+     * @param writer 输出流
+     * @param excludes 不转换的属性数组
+     * @param datePattern date到string转换的模式
+     * @throws Exception 写入数据可能出现异常
+     */
     public static void write(Object bean, Writer writer,
         String[] excludes, String datePattern) throws Exception {
         JsonConfig jsonConfig = JsonConfig.getInstance();

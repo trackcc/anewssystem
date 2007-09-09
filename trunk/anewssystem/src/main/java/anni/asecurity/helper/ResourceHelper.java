@@ -15,6 +15,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
+/**
+ * ��Դ������.
+ *
+ * @author Lingo
+ * @since 2007-09-09
+ */
 public class ResourceHelper {
     /** * logger. */
     private Log logger = LogFactory.getLog(ResourceHelper.class);
@@ -35,6 +41,12 @@ public class ResourceHelper {
         this.roleManager = roleManager;
     }
 
+    /**
+     * ���������ҳ��ѯ.
+     *
+     * @param conditions ���
+     * @return ��ҳ���
+     */
     public Page pagedQuery(Map conditions) {
         logger.info(conditions);
 
@@ -53,6 +65,12 @@ public class ResourceHelper {
         return resourceManager.pagedQuery("from Resource", pageNo, pageSize);
     }
 
+    /**
+     * ��ݽ�ɫ����ҳ��ѯ��Դ.
+     *
+     * @param conditions ���
+     * @return ��ҳ���
+     */
     public Page getResourceForRolePage(Map conditions) {
         long roleId = -1L;
 

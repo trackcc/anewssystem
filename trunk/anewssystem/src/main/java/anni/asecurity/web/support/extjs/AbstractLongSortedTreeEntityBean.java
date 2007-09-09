@@ -1,7 +1,13 @@
 package anni.asecurity.web.support.extjs;
 
 
-/** * 与extjs结合，主键为long的可排序树. */
+/**
+ * 与extjs结合，主键为long的可排序树.
+ *
+ * @author Lingo
+ * @since 2007-09-09
+ * @param <T> AbstractLongSortedTreeEntityBean的子类
+ */
 public abstract class AbstractLongSortedTreeEntityBean<T extends AbstractLongSortedTreeEntityBean<T>>
     implements LongSortedTreeEntityBean<T> {
     /**

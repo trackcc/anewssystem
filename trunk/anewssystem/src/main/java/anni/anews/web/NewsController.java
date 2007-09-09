@@ -124,6 +124,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
             NewsCategory category = newsCategoryManager.get(categoryId);
 
             if (category == null) {
+                logger.info("指定分类不存在" + categoryId);
                 binder.getBindingResult()
                       .rejectValue("newsCategory", "指定分类不存在",
                     new Object[0], "指定分类不存在");
@@ -134,6 +135,7 @@ public class NewsController extends BaseLongController<News, NewsManager> {
             binder.getBindingResult()
                   .rejectValue("newsCategory", "请选择分类", new Object[0],
                 "请选择分类");
+            logger.info("请选择分类");
         }
 
         String enter = getStrParam("enter", "");

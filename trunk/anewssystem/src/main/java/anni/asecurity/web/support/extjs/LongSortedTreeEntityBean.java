@@ -1,11 +1,15 @@
 package anni.asecurity.web.support.extjs;
 
-import java.util.Set;
-
 import anni.core.domain.tree.TreeEntityBean;
 
 
-/** * 与extjs结合，主键为long的可排序树. */
+/**
+ * 与extjs结合，主键为long的可排序树.
+ *
+ * @author Lingo
+ * @since 2007-09-09
+ * @param <T> LongSortedTreeEntityBean的子类
+ */
 public interface LongSortedTreeEntityBean<T extends LongSortedTreeEntityBean>
     extends TreeEntityBean<T> {
     /** * @return id. */

@@ -1,7 +1,5 @@
 package anni.asecurity.web.support.extjs;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +17,14 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.ServletRequestDataBinder;
 
 
+/**
+ * 操作树型的基类.
+ *
+ * @author Lingo
+ * @since 2007-09-09
+ * @param <T> LongSortedTreeEntityBean的子类
+ * @param <D> HibernateTreeEntityDao的子类
+ */
 public class TreeController<T extends LongSortedTreeEntityBean<T>, D extends HibernateTreeEntityDao<T>>
     extends BaseController<T, D> {
     /** * logger. */
@@ -82,7 +88,7 @@ public class TreeController<T extends LongSortedTreeEntityBean<T>, D extends Hib
         String json = TreeHelper.createAllTreeJson(list);
 
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().print(json.toString());
+        response.getWriter().print(json);
 
         StreamView view = new StreamView("application/json");
         mv.setView(view);
@@ -120,6 +126,8 @@ public class TreeController<T extends LongSortedTreeEntityBean<T>, D extends Hib
 
     /**
      * 根据id获取一条记录.
+     *
+     * @throws Exception 写入json可能出现异常
      */
     public void loadData() throws Exception {
         long id = getLongParam("id", -1L);
@@ -281,19 +289,31 @@ public class TreeController<T extends LongSortedTreeEntityBean<T>, D extends Hib
         mv.setView(new StreamView("application/json"));
     }
 
-    /** * onUpdate. */
+    /**
+     * onUpdate.
+     *
+     * @throws Exception 写入response可能出现异常
+     */
     @Override
     public void onUpdate() throws Exception {
         response.getWriter().print("{success:true,info:\"success\"}");
         mv.setView(new StreamView("application/json"));
     }
 
-    /** * getExcludes(). */
+    /**
+     * getExcludes().
+     *
+     * @return 不需要转化成json的属性列表，默认是空的
+     */
     public String[] getExcludes() {
         return new String[0];
     }
 
-    /** * getDatePattern(). */
+    /**
+     * getDatePattern().
+     *
+     * @return 格式化日期类型的字符串
+     */
     public String getDatePattern() {
         return "yyyy-MM-dd";
     }

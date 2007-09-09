@@ -7,8 +7,6 @@ import anni.anews.domain.NewsCategory;
 
 import anni.anews.manager.NewsCategoryManager;
 
-import anni.anews.web.support.ExtTreeNode;
-
 import anni.asecurity.web.support.extjs.TreeHelper;
 
 import anni.core.web.prototype.StreamView;
@@ -53,7 +51,12 @@ public class NewsCategoryController extends TreeLongController<NewsCategory, New
         mv.setView(view);
     }
 
-    /** * appendCategory. */
+    /**
+     * appendCategory.
+     *
+     * @param list 分类队列
+     * @return json
+     */
     private StringBuffer appendCategory(Collection<NewsCategory> list) {
         StringBuffer buff = new StringBuffer();
         buff.append("[");

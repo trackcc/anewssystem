@@ -33,7 +33,7 @@ public class MenuManagerTest extends AbstractDaoTestCase {
     }
 
     public void testLoadTopMenus() {
-        List<Menu> list = menuManager.loadTops("seq", "asc");
+        List<Menu> list = menuManager.loadTops("theSort", "asc");
         assertEquals(0, list.size());
     }
 

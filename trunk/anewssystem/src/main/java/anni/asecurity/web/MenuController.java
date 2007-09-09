@@ -83,7 +83,7 @@ public class MenuController extends TreeController<Menu, MenuManager> {
     @Override
     protected void referenceData(Map model) {
         // logger.info(entityDao.loadTopMenus());
-        model.put("parents", entityDao.loadTops("seq", "asc"));
+        model.put("parents", entityDao.loadTops("theSort", "asc"));
     }
 
     /**
@@ -236,7 +236,11 @@ public class MenuController extends TreeController<Menu, MenuManager> {
         mv.setViewName("asecurity/menu/index");
     }
 
-    /** * getExcludes(). */
+    /**
+     * getExcludes().
+     *
+     * @return 返回不需要转化成json的属性
+     */
     @Override
     public String[] getExcludes() {
         return new String[] {

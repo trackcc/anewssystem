@@ -1,6 +1,9 @@
 package anni.anews.web;
 
 import anni.anews.domain.News;
+import anni.anews.domain.NewsCategory;
+
+import anni.anews.manager.NewsCategoryManager;
 
 import anni.core.test.PrototypeControllerTest;
 
@@ -10,6 +13,12 @@ import org.apache.commons.logging.LogFactory;
 
 public class NewsControllerTest extends PrototypeControllerTest {
     protected static Log logger = LogFactory.getLog(NewsControllerTest.class);
+    private NewsCategoryManager newsCategoryManager;
+
+    public void setNewsCategoryManager(
+        NewsCategoryManager newsCategoryManager) {
+        this.newsCategoryManager = newsCategoryManager;
+    }
 
     /** * setup */
     @Override
@@ -39,17 +48,18 @@ public class NewsControllerTest extends PrototypeControllerTest {
         mvHelper.assertViewName(mv, "/anews/news/editNews");
     }
 
-    public void testInsert2() throws Exception {
-        request.setRequestURI("/news/insert.htm");
-        request.addParameter("name", "name");
-        request.addParameter("subtitle", "subtitle");
-        request.addParameter("content", "content");
-        request.addParameter("tags", "11,22");
-        request.addParameter("category_id", "1");
-        mv = controller.handleRequest(request, response);
-        mvHelper.assertViewName(mv, "redirect:/news/list.htm?status=1");
-    }
-
+    /*
+        public void testInsert2() throws Exception {
+            request.setRequestURI("/news/insert.htm");
+            request.addParameter("name", "name");
+            request.addParameter("subtitle", "subtitle");
+            request.addParameter("content", "content");
+            request.addParameter("tags", "11,22");
+            request.addParameter("category_id", "1");
+            mv = controller.handleRequest(request, response);
+            mvHelper.assertViewName(mv, "redirect:/news/list.htm?status=1");
+        }
+    */
     public void testUpdate() throws Exception {
         request.setRequestURI("/news/update.htm");
 

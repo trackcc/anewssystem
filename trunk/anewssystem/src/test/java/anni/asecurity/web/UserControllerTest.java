@@ -131,6 +131,6 @@ public class UserControllerTest extends PrototypeControllerTest {
 
         mv = controller.handleRequest(request, response);
 
-        mvHelper.assertViewName(mv, "redirect:/user/list.htm");
+        mvHelper.assertViewName(mv, null);
     }
 }

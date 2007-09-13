@@ -120,8 +120,12 @@ Ext.extend(Ext.data.ListRangeReader, Ext.data.DataReader, {
 
       for(var j = 0; j < fields.length; j++){
         f = fields.items[j];
-        var v = this.ef[j](n);
-        values[f.name] = f.convert((v !== undefined) ? v : f.defaultValue);
+        try {
+          var v = this.ef[j](n);
+          values[f.name] = f.convert((v !== undefined) ? v : f.defaultValue);
+        } catch(e) {
+          values[f.name] = "";
+        }
       }
       var record = new recordType(values, id);
       records[i] = record;

@@ -1,0 +1,335 @@
+
+/* davi ------------------------------------------------------------------------------------------------------------ */
+/*
+input {
+    border-color: #7f9db9;
+    border: 1px solid;
+
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    margin: 0px;
+    padding-top: 0px
+}*/
+
+body{
+    margin: 0;
+    padding: 0;
+
+    scrollbar-face-color: #f6f6f6;
+    scrollbar-highlight-color: #f6f6f6;
+    scrollbar-shadow-color: #7f9db9;
+    scrollbar-3dlight-color: #7f9db9;
+    scrollbar-arrow-color: #083772;
+    scrollbar-track-color: #f6f6f6;
+    scrollbar-darkshadow-color: #ffffff;
+
+    font: 12px tahoma, verdana, helvetica;
+    color: #222222;
+    border: 0px solid;
+}
+
+/*Checkboxes*/
+.checkboxArea, .checkboxAreaChecked, .radioArea, .radioAreaChecked {
+    display:block;
+    float:left;
+    clear:left;
+    width:14px;
+    height:14px;
+    font-size:0;
+    padding:0;
+    margin: 1px;
+    cursor: pointer;
+    /*border: #000000 1px solid;*/
+}
+.checkboxArea {background:url("../images/default/user/checkbox/checkbox.gif") no-repeat ;}
+.checkboxAreaChecked {background:url("../images/default/user/checkbox/checkboxchecked.gif") no-repeat ;}
+
+.radioArea {background:url("../images/default/user/checkbox/radio.gif") no-repeat ;}
+.radioAreaChecked {background:url("../images/default/user/checkbox/radiochecked.gif") no-repeat ;}
+
+.setHide {
+    display: none;
+}
+
+.setShow {
+    display: '';
+}
+
+#standard-panel {
+    overflow: auto;
+}
+
+#standard-panel {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font: 12px tahoma, verdana, helvetica;
+    color: #222222;
+    border: 0px solid;
+    /*height:1001px;*/ /*background: url() #fff repeat-y right 50%;*/
+}
+
+#load-panel {
+    font: 12px tahoma, verdana, helvetica;
+    color: #222222;
+    border: 0px solid;
+    /*background: url() #fff repeat-y right 50%;*/
+}
+
+.dl-link {
+    border-right: #c3daf9 1px solid;
+    padding-right: 12px;
+    border-top: #c3daf9 1px solid;
+    padding-left: 12px;
+    background: url(../images/default/user/index/post-bg.gif) #ddecfe repeat-x;
+    padding-bottom: 12px;
+    margin: 10px;
+    border-left: #c3daf9 1px solid;
+    width: 300px;
+    padding-top: 12px;
+    border-bottom: #c3daf9 1px solid;
+    text-align: center
+}
+
+.dl-link a {
+    font: bold 12px verdana, tahoma, helvetica;
+    color: #083772;
+    text-decoration: none
+}
+
+.dl-link a:hover {
+    color: #0b4b9f;
+    text-decoration: underline
+}
+
+.dl-link .date {
+    margin-bottom: 2px;
+    font: 11px tahoma, verdana, helvetica;
+    color: #444444
+}
+
+.loading-loginInfo,.waitting,.user,.pwd,.unlock,.lock {
+    text-align: left;
+    padding-left: 20px;
+    background-repeat: no-repeat;
+    background-position: top left;
+    font-size: 8pt;
+    height: 18px;
+    padding-top: 3px;
+    border: 0px solid;
+    color: #666666;
+}
+
+.waitting {
+    background-image: url('../images/default/user/index/loading.gif');
+}
+
+.user {
+    background-image: url('../images/default/user/login/user.gif');
+}
+
+.pwd {
+    background-image: url('../images/default/user/login/pwd.gif');
+}
+
+.lock {
+    background-image: url('../images/default/user/login/lock.gif');
+}
+
+.unlock {
+    background-image: url('../images/default/user/login/unlock.gif');
+}
+
+/* toolbar°´Å¥ */
+.add .x-btn-text{
+    background-image: url('../images/default/user/toolbar/add.gif');
+}
+.del .x-btn-text{
+    background-image: url('../images/default/user/toolbar/del.gif');
+}
+.edit .x-btn-text{
+    background-image: url('../images/default/user/toolbar/edit.gif');
+}
+.save .x-btn-text{
+    background-image: url('../images/default/user/toolbar/edit.gif');
+}
+.search .x-btn-text{
+    background-image: url('../images/default/user/toolbar/search.gif');
+}
+.detail .x-btn-text{
+    background-image: url('../images/default/user/toolbar/detail.gif');
+}
+.foreign .x-btn-text{
+    background-image: url('../images/default/user/toolbar/foreign.gif');
+}
+.foreign-all .x-btn-text{
+    background-image: url('../images/default/user/toolbar/foreign-all.gif');
+}
+.theme .x-btn-text{
+    background-image: url('../images/default/user/toolbar/view.gif');
+}
+.logout .x-btn-text{
+    background-image: url('../images/default/user/toolbar/logout.gif');
+}
+.plugin .x-btn-text{
+    background-image: url('../images/aero/user/toolbar/plugin.gif');
+}
+
+.x-form-focus{
+    border: 1px solid #656B86;
+}
+
+.dl-selection {
+    border-right: white 1px solid;
+    padding-right: 4px;
+    border-top: white 1px solid;
+    padding-left: 10px; /*davi padding-left: 4px;*/
+    padding-bottom: 5px;
+    margin: 0px;
+    border-left: white 1px solid;
+    padding-top: 5px;
+    border-bottom: white 1px solid;
+    vertical-align:bottom;
+}
+
+.dl-selection-alt .dl-selection {
+
+}
+
+.dl-selection div {
+    padding-left: 20px;
+    font: 11px "sans serif", tahoma, verdana, helvetica;
+    color: #222222;
+}
+
+.dl-selection input {
+    margin-top: 3px;
+    width: 13px;
+    height: 13px
+}
+
+.dl-selection span {
+    font: bold 12px "sans serif", tahoma, verdana, helvetica;
+    color: #222222;
+    border: 0px solid;
+}
+
+.dl-selection img {/*davi*/
+    vertical-align:top;
+}
+
+.dl-selection-over .dl-selection {
+    background: url(../images/aero/layout/post-bg.gif) #ddecfe repeat-x;
+    cursor: pointer;
+    border: #c3daf9 1px solid;
+}
+
+#dl-details .detail-part h3 {
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-bottom: 3px;
+    font: bold 12px "sans serif", tahoma, verdana, helvetica;
+    color: #083772;
+    padding-top: 3px
+}
+
+#dl-details .detail-part li {
+    padding-left: 5px;
+    padding-bottom: 2px;
+    font: 11px "sans serif", tahoma, verdana, helvetica;
+    color: black
+}
+
+#dl-details .detail-part span {
+    padding-right: 3px;
+    display: block;
+    padding-left: 5px;
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+    font: 11px "sans serif", tahoma, verdana, helvetica;
+    color: black;
+    padding-top: 3px
+}
+
+#dl-details .help {
+    padding-right: 8px;
+    padding-left: 8px;
+    padding-bottom: 8px;
+    font: 11px "sans serif", tahoma, verdana, helvetica;
+    padding-top: 8px
+}
+
+.collapser-collapsed .dl-expand-icon {
+    background-image: url(../images/default/layout/ns-expand.gif);
+}
+
+.collapser-expanded .dl-expand-icon {
+    background-image: url(../images/default/layout/ns-collapse.gif);
+}
+
+/* top */
+#top .x-layout-panel-north{
+   border:0px none;
+   background:#0000aa url(../images/default/basic-dialog/hd-sprite.gif) repeat-x 0px -83px;
+   padding-top:3px;
+   padding-left:3px;
+}
+
+#top .ylayout-collapsed-west{
+   background-image: url(../images/default/user/index/loading.gif);
+   background-repeat:no-repeat;
+   background-position:center;
+}
+
+#header {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+/*msgbox*/
+.x-dlg .x-tabs-body{
+    background: url(../images/default/user/msgbox/dl-std-bg.gif) #fff repeat-y right 50%;
+    overflow: auto;
+}
+
+.msg .x-box-mc {
+    font-size:14px;
+}
+/*davi*/
+#msg-div {
+    position:absolute;
+    top: 70px;
+    right: 20px;
+    width: 250px;
+    z-index:20000;
+}
+/*----*/
+.alert, .confirm{
+    left: 15px;
+    top: 10px;
+    position:absolute;
+    background-repeat: no-repeat;
+    display:block;
+    height: 32px;
+    width: 32px;
+}
+
+.alert {
+    background-image: url(../images/default/user/toolbar/alert.gif);
+}
+.confirm {
+    background-image: url(../images/default/user/toolbar/confirm.gif);
+}
+
+/*paging input*/
+.x-grid-page-number{
+    width:20px;
+    height:14px;
+
+    border-color: #656B86;
+    border: 1px solid;
+}
+
+/* davi ------------------------------------------------------------------------------------------------------------ */

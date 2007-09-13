@@ -288,6 +288,8 @@ Ext.onReady(function(){
             var id = menuData.getAt(0).data['id'];
             var name = menuData.getAt(0).data['name'];
             fieldName.setValue(name);
+            var image = menuData.getAt(0).data['image'];
+            fieldImage.setValue(image);
             var tip = menuData.getAt(0).data['tip'];
             fieldTip.setValue(tip);
             var forward = menuData.getAt(0).data['forward'];
@@ -341,19 +343,26 @@ Ext.onReady(function(){
         readOnly: false,
         allowBlank:false
     });
-    var fieldTip = new Ext.form.TextField({
-        fieldLabel: '提示',
-        name: 'tip',
-        width:170,
-        readOnly: false,
-        allowBlank:true
-    });
     var fieldForward = new Ext.form.TextField({
         fieldLabel: '链接',
         name: 'forward',
         width:170,
         readOnly: false,
         allowBlank:false
+    });
+    var fieldImage = new Ext.form.TextField({
+        fieldLabel: '图标',
+        name: 'image',
+        width:170,
+        readOnly: false,
+        allowBlank: false
+    });
+    var fieldTip = new Ext.form.TextField({
+        fieldLabel: '提示',
+        name: 'tip',
+        width:170,
+        readOnly: false,
+        allowBlank:true
     });
     var fieldDescn = new Ext.form.TextField({
         fieldLabel: '描述',
@@ -371,8 +380,9 @@ Ext.onReady(function(){
     menuForm.fieldset(
         {id:'id', legend:'修改'},
         fieldName,
-        fieldTip,
+        fieldImage,
         fieldForward,
+        fieldTip,
         fieldDescn
     );
 

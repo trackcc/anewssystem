@@ -8,9 +8,11 @@ import de.hunsicker.jalopy.storage.*;
 public class JalopyUtil {
     public static void main(String[] args) throws Exception {
         // System.out.println(System.currentTimeMillis());
+		if (args.length < 1) {
+			args = new String[]{"C:/Documents and Settings/Administrator/.jalopy.15/default/history.dat"};
+		}
+        File file = new File(args[0]);
 
-        File file = new File(
-                "C:/Documents and Settings/Administrator/.jalopy.15/default/history.dat");
         ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
                     file));
         Map map = (Map) ois.readObject();

@@ -245,7 +245,7 @@ public class MenuController extends TreeController<Menu, MenuManager> {
     public String[] getExcludes() {
         return new String[] {
             "parent", "children", "roles", "theSort", "target", "title",
-            "class", "leaf", "image", "root"
+            "class", "leaf", "root"
         };
     }
 }

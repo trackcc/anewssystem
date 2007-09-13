@@ -14,7 +14,9 @@
   <bean id="resourceManager" class="anni.asecurity.manager.ResourceManager"/>
   <bean id="menuManager" class="anni.asecurity.manager.MenuManager"/>
 
+  <bean id="newsTagHelper" class="anni.anews.helper.NewsTagHelper"/>
   <bean id="resourceHelper" class="anni.asecurity.helper.ResourceHelper"/>
   <bean id="roleHelper" class="anni.asecurity.helper.RoleHelper"/>
   <bean id="userHelper" class="anni.asecurity.helper.UserHelper"/>
+  <bean id="menuHelper" class="anni.asecurity.helper.MenuHelper"/>
 </beans>

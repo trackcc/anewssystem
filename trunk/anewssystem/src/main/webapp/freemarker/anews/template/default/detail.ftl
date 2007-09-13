@@ -7,7 +7,12 @@
     <title>${news.name}</title>
     <script type="text/javascript">
 function changeFont(size) {
-  document.getElementById('newsContent').style.fontSize = size;
+  var content = document.getElementById('newsContent');
+  content.style.fontSize = size;
+  var tds = content.getElementsByTagName("td");
+  for (var i = 0; i < tds.length; i++) {
+    tds[i].style.fontSize = size;
+  }
 }
      </script>
   </head>

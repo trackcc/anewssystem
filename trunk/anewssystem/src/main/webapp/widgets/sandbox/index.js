@@ -12,8 +12,8 @@ var index = function(){
                     titlebar: false
                 }, west: {
                     split:true,
-                    initialSize: 250,
-                    minSize: 175,
+                    initialSize: 200,
+                    minSize: 150,
                     maxSize: 400,
                     titlebar: true,
                     collapsible: true,

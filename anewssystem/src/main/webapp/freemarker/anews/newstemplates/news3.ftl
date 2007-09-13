@@ -6,6 +6,9 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 <style type="text/css">
+* {
+  font-size:12px;
+}
 .style75 {
         COLOR: #ff6600
 }
@@ -181,16 +184,7 @@ a:link{
                                   </td>
                                 </tr>
                               </table>
-                            </div>
-
-                            <table cellspacing="0" cellpadding="0" width="527" border="0">
-                              <tbody>
-                                <tr>
-                                  <td bgcolor="#CC0000" height="2">
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table><br />
+                            </div><br />
 
 
                             <table width="100%" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="92B0DD">

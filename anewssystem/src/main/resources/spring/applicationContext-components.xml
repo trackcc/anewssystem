@@ -7,8 +7,6 @@
     <import resource="classpath*:spring/security/channel-jcaptcha.xml"/>
     <!-- java mail -->
     <import resource="classpath*:spring/mail/applicationContext-mail.xml"/>
-    <!-- dwr helper -->
-    <import resource="classpath*:spring/dwr/applicationContext-helper.xml"/>
     <!-- compass search -->
 <!--
     <import resource="classpath*:spring/search/applicationContext-compass.xml"/>

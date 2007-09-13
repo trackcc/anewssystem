@@ -26,6 +26,9 @@
     <create creator="spring" javascript="UserHelper">
       <param name="beanName" value="userHelper"/>
     </create>
+    <create creator="spring" javascript="MenuHelper">
+      <param name="beanName" value="menuHelper"/>
+    </create>
     <convert converter="bean" match="anni.core.dao.support.Page">
       <param name="include" value="totalCount, result"/>
     </convert>
@@ -38,6 +41,9 @@
     <convert converter="bean" match="anni.asecurity.domain.User"/>
     <convert converter="bean" match="anni.asecurity.domain.Dept">
       <param name="exclude" value="users"/>
+    </convert>
+    <convert converter="bean" match="anni.asecurity.domain.Menu">
+      <param name="include" value="id,image,name,forward,parent,children"/>
     </convert>
 <!--
     <create creator="spring" javascript="newsServiceClient">

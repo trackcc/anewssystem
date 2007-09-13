@@ -12,6 +12,7 @@
       <h1>首页</h1>
       <p><a href="${ctx}/admin/index.htm">新闻后台</a></p>
       <p><a href="${ctx}/index/index.htm">测试首页</a></p>
+      <p><a href="${ctx}/sandbox/index.htm">sandbox</a></p>
     </div>
   </body>
 </html>

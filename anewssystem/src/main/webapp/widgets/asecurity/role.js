@@ -235,7 +235,7 @@ Ext.onReady(function(){
             //取消授权事件
             var mRole = grid.getSelections();
             var mResc = gridResc.getSelections();
-			console.info(mRole + "," + mRole);
+            console.info(mRole + "," + mRole);
             if(mResc.length<=0){
                 Ext.MessageBox.alert('提示', '请选择至少一行纪录进行操作！');
                 return;

@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.Map;
 
 import anni.anews.domain.News;
+import anni.anews.domain.NewsTag;
 
 import anni.anews.manager.NewsManager;
+import anni.anews.manager.NewsTagManager;
 
 /*
 *import anni.anews.manager.NewsCategoryManager;
@@ -54,9 +56,17 @@ public class FreemarkerGenerator {
     /** * newsManager. */
     private NewsManager newsManager = null;
 
+    /** * newsTagManager. */
+    private NewsTagManager newsTagManager = null;
+
     /** * @param newsManager NewsManager. */
     public void setNewsManager(NewsManager newsManager) {
         this.newsManager = newsManager;
+    }
+
+    /** * @param newsTagManager NewsTagManager. */
+    public void setNewsTagManager(NewsTagManager newsTagManager) {
+        this.newsTagManager = newsTagManager;
     }
 
     /*
@@ -91,12 +101,21 @@ public class FreemarkerGenerator {
         Date date = news.getUpdateDate();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-        // FIXME: 忘了root是啥意思了
+        // root是用getRealPath("/")获得的根目录，将html保存在网站根目录下，可以通过tomcat直接访问
         String fileName = root + "/html/" + news.getNewsCategory().getId()
             + "/" + sdf.format(date) + "/" + news.getId() + ".html";
         Map model = new HashMap();
         model.put("news", news);
         model.put("ctx", ctx);
+
+        // 查找关键字相同的相关新闻
+        String hql = "select distinct a "
+            + "from News a join a.newsTags b "
+            + "where b in (select d from News c join c.newsTags d where c.id=?) "
+            + "and a.id<>? order by a.id";
+        List<NewsTag> tagList = newsTagManager.createQuery(hql,
+                news.getId(), news.getId()).setMaxResults(10).list();
+        model.put("tagList", tagList);
 
         if (page == 0) {
             // 无分页

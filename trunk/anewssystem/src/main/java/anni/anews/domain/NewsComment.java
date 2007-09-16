@@ -54,7 +54,7 @@ public class NewsComment implements Serializable {
     private String username;
 
     /** * updateDate. */
-    private Date updateDate;
+    private Date updateDate = null;
 
     /** * status. */
     private Integer status;
@@ -129,12 +129,20 @@ public class NewsComment implements Serializable {
     /** * @return updateDate. */
     @Column(name = "UPDATE_DATE")
     public Date getUpdateDate() {
-        return updateDate;
+        if (updateDate != null) {
+            return (Date) updateDate.clone();
+        } else {
+            return null;
+        }
     }
 
     /** * @param updateDate updateDate. */
     public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
+        if (updateDate != null) {
+            this.updateDate = (Date) updateDate.clone();
+        } else {
+            this.updateDate = null;
+        }
     }
 
     /** * @return status. */

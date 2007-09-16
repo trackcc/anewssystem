@@ -167,9 +167,9 @@ public class PrototypeControllerTest
 
     /**
      * 做测试完成后的收尾工作.
-         * 1.dbunit的收尾
-         * 2.告诉RequestContextListener请求结束，估计会销毁绑定的controller
-         * 3.关闭hibernate的session
+     * 1.dbunit的收尾
+     * 2.告诉RequestContextListener请求结束，估计会销毁绑定的controller
+     * 3.关闭hibernate的session
      *
      * @throws Exception 收尾时可能发生的异常
      */

@@ -122,7 +122,7 @@ public class TreeFactory {
     private String[] getArgs(Menu menu, int type, Long roleId, Long menuId) {
         String[] args = new String[4];
 
-        args[0] = menu.getTitle();
+        args[0] = menu.getName();
         args[1] = String.valueOf(menu.getId());
         args[2] = "false";
 

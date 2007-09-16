@@ -1,11 +1,5 @@
 package anni.anews.web;
 
-import anni.asecurity.domain.Menu;
-
-import anni.asecurity.manager.MenuManager;
-
-import anni.core.dao.support.Page;
-
 import anni.core.web.prototype.ExtendController;
 import anni.core.web.prototype.StreamView;
 
@@ -20,14 +14,6 @@ import org.apache.commons.logging.LogFactory;
 public class SandboxController extends ExtendController {
     /** * logger. */
     private static Log logger = LogFactory.getLog(SandboxController.class);
-
-    /** * menuManager. */
-    private MenuManager menuManager = null;
-
-    /** * @param menuManager MenuManager. */
-    public void setMenuManager(MenuManager menuManager) {
-        this.menuManager = menuManager;
-    }
 
     /**
      * 首页.
@@ -54,7 +40,7 @@ public class SandboxController extends ExtendController {
         logger.info("start");
         logger.info(params());
 
-        Page page = menuManager.pagedQuery("from Menu", 1, 20);
+        //Page page = menuManager.pagedQuery("from Menu", 1, 20);
         mv.setView(new StreamView("application/json"));
     }
 }

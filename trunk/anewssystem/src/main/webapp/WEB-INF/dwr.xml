@@ -43,7 +43,7 @@
       <param name="exclude" value="users"/>
     </convert>
     <convert converter="bean" match="anni.asecurity.domain.Menu">
-      <param name="include" value="id,image,name,forward,parent,children"/>
+      <param name="include" value="id,image,name,url,parent,children"/>
     </convert>
 <!--
     <create creator="spring" javascript="newsServiceClient">

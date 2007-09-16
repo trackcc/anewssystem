@@ -29,17 +29,12 @@ public class HibernateNamedEntityDao<T extends NamedEntityBean>
      */
     public T createOrGet(String name) {
         // 输入的名称不应该为空.
-        if ((name == null) || "".equals(name)) {
+        if ((name == null) || "".equals(name.trim())) {
             return null;
         }
 
-        // 根据名称查找记录
-        //String hql = "from " + getEntityClass().getName()
-        //    + " where name=?";
-        //logger.trace(hql);
-
-        //getSession().clear();
-        List<T> list = findBy("name", name);
+        String beanName = name.trim();
+        List<T> list = findBy("name", beanName);
 
         // 如果找到记录，应该是只有一项目，就返回这条记录的实体类
         if (list.size() > 0) {
@@ -48,7 +43,7 @@ public class HibernateNamedEntityDao<T extends NamedEntityBean>
             try {
                 // 如果没找到记录，需要把这个数据字典保存进数据库
                 T namedEntityBean = (T) getEntityClass().newInstance();
-                namedEntityBean.setName(name);
+                namedEntityBean.setName(beanName);
                 save(namedEntityBean);
 
                 return namedEntityBean;

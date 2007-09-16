@@ -33,7 +33,11 @@ public class MenuHelper {
         this.menuManager = menuManager;
     }
 
-    /** * 初始化菜单. */
+    /**
+     * 初始化菜单.
+     *
+     * @return List
+     */
     public List<Menu> init() {
         List<Menu> list = menuManager.find(
                 "from Menu where parent is null order by theSort,id");
@@ -41,12 +45,18 @@ public class MenuHelper {
         return list;
     }
 
+    /**
+     * @return String[] 列表显示的字段.
+     */
     public String[] getTags() {
         return new String[] {"id", "image", "name", "forward", "theSort"};
     }
 
     /**
      * listMenu.
+     *
+     * @param conditions 查询条件
+     * @return 分页结果
      */
     public Page pagedQuery(Map conditions) {
         logger.info("start");
@@ -72,10 +82,15 @@ public class MenuHelper {
 
     /**
      * save.
+     *
+     * @param id 主键
+     * @param menu 需要保存的menu
+     * @return 成功信息
      */
     public String save(long id, Menu menu) {
         Menu entity;
-        boolean isUpdate = false;
+
+        // boolean isUpdate = false;
         String str;
         String msg = "菜单失败！";
 
@@ -98,23 +113,22 @@ public class MenuHelper {
     }
 
     /**
-     * 删除
-     * @param id
+     * 删除.
+     *
+     * @param ids 需要删除的id组成的数组
+     * @return 成功信息
      */
     public String del(String ids) {
-        boolean isDelete = false;
+        //boolean isDelete = false;
         String msg = "您选择的菜单删除成功！";
 
         for (String str : ids.split(",")) {
-            long id = -1;
-
             try {
-                id = Long.parseLong(str);
+                long id = Long.parseLong(str);
+                menuManager.removeById(id);
             } catch (NumberFormatException ex) {
-                continue;
+                logger.info(ex);
             }
-
-            menuManager.removeById(id);
         }
 
         // msg = "您选择的菜单删除失败！";

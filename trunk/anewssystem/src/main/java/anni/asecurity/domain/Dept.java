@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import anni.asecurity.web.support.extjs.AbstractLongSortedTreeEntityBean;
+import anni.core.tree.LongTreeNode;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -30,7 +30,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "A_SECURITY_DEPT")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Dept extends AbstractLongSortedTreeEntityBean<Dept> {
+public class Dept extends LongTreeNode<Dept> {
     /** * serial. */
     static final long serialVersionUID = 0L;
 
@@ -83,6 +83,12 @@ public class Dept extends AbstractLongSortedTreeEntityBean<Dept> {
     /** * @param parent Dept. */
     public void setParent(Dept parent) {
         this.parent = parent;
+
+        if (parent != null) {
+            setParentId(parent.getId());
+        } else {
+            setParentId(null);
+        }
     }
 
     /** * @return name. */

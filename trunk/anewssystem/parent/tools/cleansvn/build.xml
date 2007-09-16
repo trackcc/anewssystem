@@ -4,6 +4,7 @@
         <defaultexcludes remove="**/.svn/**"/>
         <delete includeemptydirs="true">
             <fileset dir="." includes="**/.svn/**"/>
+            <fileset dir="." includes="**/Thumbs.db"/>
         </delete>
     </target>
 </project>

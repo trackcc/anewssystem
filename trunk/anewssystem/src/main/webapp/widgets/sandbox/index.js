@@ -100,11 +100,11 @@ var index = function(){
             tb.add({cls: 'theme', text:'系统风格', menu: menu});
         },
 
-        getLayout : function(){
+        getLayout : function() {
             return layout;
         },
 
-        setLoginName : function(user){
+        setLoginName : function(user) {
             user = user == null ? '' : user;
             this.menuLayout.updateTitle(user);
         },
@@ -122,7 +122,7 @@ var index = function(){
                 var child = data[i].children;
                 menuArray = new Array();
                 for (j = 0; j < child.length; j++) {
-                    var col = "{image:'" + child[j].image + "',title:'" + child[j].name + "',href:'" + child[j].forward + "', parentImg:'{0}'}";
+                    var col = "{image:'" + child[j].image + "',title:'" + child[j].name + "',href:'" + child[j].url + "', parentImg:'{0}'}";
                     menuArray = menuArray.concat(col);
                 }
                 if (menuArray.length > 0) {

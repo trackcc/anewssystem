@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import anni.asecurity.web.support.extjs.AbstractLongSortedTreeEntityBean;
+import anni.core.tree.LongTreeNode;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -33,7 +33,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "A_SECURITY_MENU")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Menu extends AbstractLongSortedTreeEntityBean<Menu> {
+public class Menu extends LongTreeNode<Menu> {
     /** * serial. */
     static final long serialVersionUID = 0L;
 
@@ -49,20 +49,14 @@ public class Menu extends AbstractLongSortedTreeEntityBean<Menu> {
     /** * theSort. */
     private Integer theSort;
 
-    /** * title. */
-    private String title;
-
-    /** * tip. */
-    private String tip;
+    /** * qtip. */
+    private String qtip;
 
     /** * image. */
     private String image;
 
     /** * forward. */
-    private String forward;
-
-    /** * target. */
-    private String target;
+    private String url;
 
     /** * descn. */
     private String descn;
@@ -101,6 +95,12 @@ public class Menu extends AbstractLongSortedTreeEntityBean<Menu> {
     /** * @param parent Menu. */
     public void setParent(Menu parent) {
         this.parent = parent;
+
+        if (parent != null) {
+            setParentId(parent.getId());
+        } else {
+            setParentId(null);
+        }
     }
 
     /** * @return name. */
@@ -125,26 +125,15 @@ public class Menu extends AbstractLongSortedTreeEntityBean<Menu> {
         this.theSort = theSort;
     }
 
-    /** * @return title. */
-    @Column(name = "TITLE", length = 50)
-    public String getTitle() {
-        return title;
+    /** * @return qtip. */
+    @Column(name = "QTIP", length = 50)
+    public String getQtip() {
+        return qtip;
     }
 
-    /** * @param title title. */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /** * @return tip. */
-    @Column(name = "TIP", length = 50)
-    public String getTip() {
-        return tip;
-    }
-
-    /** * @param tip tip. */
-    public void setTip(String tip) {
-        this.tip = tip;
+    /** * @param qtip String. */
+    public void setQtip(String qtip) {
+        this.qtip = qtip;
     }
 
     /** * @return image. */
@@ -158,26 +147,15 @@ public class Menu extends AbstractLongSortedTreeEntityBean<Menu> {
         this.image = image;
     }
 
-    /** * @return forward. */
-    @Column(name = "FORWARD", length = 50)
-    public String getForward() {
-        return forward;
+    /** * @return url. */
+    @Column(name = "URL", length = 50)
+    public String getUrl() {
+        return url;
     }
 
-    /** * @param forward forward. */
-    public void setForward(String forward) {
-        this.forward = forward;
-    }
-
-    /** * @return target. */
-    @Column(name = "TARGET", length = 50)
-    public String getTarget() {
-        return target;
-    }
-
-    /** * @param target target. */
-    public void setTarget(String target) {
-        this.target = target;
+    /** * @param url String. */
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     /** * @return descn. */

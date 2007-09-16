@@ -49,7 +49,7 @@ Ext.extend(Ext.DataGrid, Ext.DaoFactory, {
         }
     }, showDlg : function(tbBtn) {
         var b = tbBtn.cls == "view" ? true : eval("this." + tbBtn.cls + "()");
-		console.error(tbBtn);
+        console.error(tbBtn);
         if(b) {
             if(!this.dlg) {
                 this.createDialog();
@@ -226,10 +226,10 @@ Ext.extend(Ext.DataGrid, Ext.DaoFactory, {
                 C[i] = B;
             } else if(M.vType == "date") {
                 C[i] = B == "" ? "" : B.dateFormat("Y-m-d");
-				result[M.id] = B == "" ? "" : B.dateFormat("Y-m-d");
+                result[M.id] = B == "" ? "" : B.dateFormat("Y-m-d");
             } else {
                 C[i] = B;
-				result[M.id] = M.obj.getValue();
+                result[M.id] = M.obj.getValue();
             }
             //var str = "result." + M.id + "=\'" + M.obj.getValue() + "\';";
             //console.debug(str);
@@ -440,7 +440,8 @@ Ext.extend(Ext.DataGrid, Ext.DaoFactory, {
         if(D.indexOf(".gif") >= 0) {
             D = "<image src=\"" + path + "/widgets/extjs/1.1/resources/images/aero/user/tree/" + D + "\">";
         }
-        var E = "datagrids[{1}].colClick=true;datagrids[{1}].view(this)", A = "<span style='cursor:pointer;color=#5285C5' id='{0}' onclick='" + E + "'>{2}</span>";
+        var E = "datagrids[{1}].colClick=true;datagrids[{1}].view(this)";
+        var A = "<span style='cursor:pointer;color=#5285C5' id='{0}' onclick='" + E + "'>{2}</span>";
         A = String.format(A, I, F.obj.datagrids, D, G);
         return A;
     }, date : function(C, F, B, E, A, D) {
@@ -500,7 +501,11 @@ Ext.extend(Ext.DataGrid, Ext.DaoFactory, {
             name:"id", mapping:"id"
         }];
         for(var i = 0; i < h.length; i++) {
-            var renderer = h[i].renderer, align = "left", hidden = false, draw = h[i].draw != undefined ? h[i].draw : true;
+            var renderer = h[i].renderer;
+            console.error(h[i].type);
+            var align = "left";
+            var hidden = false;
+            var draw = h[i].draw != undefined ? h[i].draw : true;
             if(h[i].type != undefined) {
                 renderer = eval("this." + h[i].type);
             }

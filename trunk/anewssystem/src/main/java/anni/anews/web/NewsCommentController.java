@@ -22,5 +22,6 @@ public class NewsCommentController extends BaseLongController<NewsComment, NewsC
     public NewsCommentController() {
         setEditView("/anews/newscomment/editNewsComment");
         setListView("/anews/newscomment/listNewsComment");
+        logger.info("start");
     }
 }

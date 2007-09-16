@@ -27,9 +27,9 @@ public class DeptControllerTest extends PrototypeControllerTest {
 
     public void testDefault() throws Exception {
         assertNotNull(controller);
-        request.setRequestURI("/dept/list.htm");
+        request.setRequestURI("/dept/index.htm");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertModelAttributeAvailable(mv, "page");
-        mvHelper.assertViewName(mv, "/asecurity/dept/listDept");
+        //mvHelper.assertModelAttributeAvailable(mv, "page");
+        mvHelper.assertViewName(mv, "asecurity/dept/index");
     }
 }

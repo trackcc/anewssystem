@@ -14,6 +14,7 @@ import net.sf.json.processors.JsonValueProcessor;
  * @since 2007-08-02
  */
 public class DateJsonValueProcessor implements JsonValueProcessor {
+    public static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
     private DateFormat dateFormat;
 
     /**
@@ -22,7 +23,11 @@ public class DateJsonValueProcessor implements JsonValueProcessor {
      * @param datePattern 日期格式
      */
     public DateJsonValueProcessor(String datePattern) {
-        dateFormat = new SimpleDateFormat(datePattern);
+        try {
+            dateFormat = new SimpleDateFormat(datePattern);
+        } catch (Exception ex) {
+            dateFormat = new SimpleDateFormat(DEFAULT_DATE_PATTERN);
+        }
     }
 
     public Object processArrayValue(Object value) {

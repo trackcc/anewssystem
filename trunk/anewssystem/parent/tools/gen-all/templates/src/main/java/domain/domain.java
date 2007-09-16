@@ -38,7 +38,7 @@ public class ${className} implements Serializable {
 ${domainUtils.createGetterAnnotation(item, pojo)}
 ${domainUtils.createGetter(item)}
 
-    /** * @param ${item.name} ${item.name}. */
+    /** * @param ${item.name} ${item.type.simpleName}. */
 ${domainUtils.createSetter(item)}
 
 </#list>

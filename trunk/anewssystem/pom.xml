@@ -19,7 +19,15 @@
   <packaging>war</packaging>
   <version>0.0.1</version>
   <name>anews</name>
-  <url>http://localhost:8080/</url>
+  <url>http://code.google.com/p/anewssystem/</url>
+  <developers>
+    <developer>
+      <name>Lingo</name>
+      <id/>
+      <email>echo_o@163.com</email>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
   <dependencies>
     <dependency>
       <groupId>anni</groupId>
@@ -58,7 +66,7 @@
         <configuration>
           <includes>
 <!--
-            <include>**/Test.java</include>
+            <include>**/LongTreeNodeTest.java</include>
 -->
             <include>**/*Test.java</include>
             <include>**/*TestCase.java</include>
@@ -95,6 +103,7 @@
   <reporting>
     <plugins>
 <!--
+-->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
@@ -121,13 +130,9 @@
           </excludes>
         </configuration>
       </plugin>
--->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-<!--
-        <version>1.2-SNAPSHOT</version>
--->
         <configuration>
           <targetjdk>1.5</targetjdk>
         </configuration>
@@ -135,9 +140,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
-<!--
-        <version>2.1-SNAPSHOT</version>
--->
         <configuration>
           <encoding>UTF-8</encoding>
         </configuration>
@@ -161,18 +163,18 @@
 <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-clover-plugin</artifactId>
-        <configuration>
-          <jdk>1.5</jdk>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>surefire-report-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clover-plugin</artifactId>
+        <configuration>
+          <jdk>1.5</jdk>
+        </configuration>
       </plugin>
 -->
     </plugins>

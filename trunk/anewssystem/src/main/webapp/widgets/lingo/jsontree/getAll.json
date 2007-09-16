@@ -1,0 +1,4 @@
+[
+{"text":"text","id":100,"leaf":false,"cls":"folder",allowEdit:true,draggable:true,allowDelete:true,allowChildren:true},
+{"text":"night","id":101,"leaf":true,"cls":"file"}
+]

@@ -87,9 +87,9 @@ Ext.extend(Ext.DaoFactory, Ext.util.Observable, {
         return false;
     }, view : function(A) {
         this.showDlg({
-            text:"查看",
-            cls:"view",
-            btnText:$(A)
+            text    : "查看",
+            cls     : "view",
+            btnText : $(A)
         });
     }
 })

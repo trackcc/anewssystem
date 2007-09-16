@@ -27,16 +27,14 @@ public class MenuTest extends TestCase {
         assertNull(entity.getName());
         entity.setTheSort(null);
         assertNull(entity.getTheSort());
-        entity.setTitle(null);
-        assertNull(entity.getTitle());
-        entity.setTip(null);
-        assertNull(entity.getTip());
+
+        entity.setQtip(null);
+        assertNull(entity.getQtip());
         entity.setImage(null);
         assertNull(entity.getImage());
-        entity.setForward(null);
-        assertNull(entity.getForward());
-        entity.setTarget(null);
-        assertNull(entity.getTarget());
+        entity.setUrl(null);
+        assertNull(entity.getUrl());
+
         entity.setDescn(null);
         assertNull(entity.getDescn());
         entity.setChildren(null);

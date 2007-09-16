@@ -73,7 +73,8 @@ public class NewsCategoryManager extends HibernateTreeEntityDao<NewsCategory> {
             calculateByBitCode(entity);
         } else if (strategy == NewsCategory.STRATEGY_CHAR_CODE) {
             calculateByCharCode(entity);
-        } else if (strategy == NewsCategory.STRATEGY_RECURSION) {
+
+            //} else if (strategy == NewsCategory.STRATEGY_RECURSION) {
             // do nothing
         } else {
             // 默认使用位编码

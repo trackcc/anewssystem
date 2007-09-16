@@ -1,5 +1,9 @@
 package anni.asecurity.web.support.extjs;
 
+import java.beans.PropertyDescriptor;
+
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +14,8 @@ import anni.core.dao.HibernateTreeEntityDao;
 
 import anni.core.web.prototype.BaseController;
 import anni.core.web.prototype.StreamView;
+
+import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -190,9 +196,10 @@ public class TreeController<T extends LongSortedTreeEntityBean<T>, D extends Hib
             // 老上级
             T oldParent = entity.getParent();
 
-            if (oldParent == parent) {
-                // 没改变分类级别。忽略更新
-            } else if (oldParent != null) {
+            //if (oldParent == parent) {
+            // 没改变分类级别。忽略更新
+            //} else
+            if (oldParent != null) {
                 // 更新上级分类
                 oldParent.getChildren().remove(entity);
                 parent.getChildren().add(entity);
@@ -286,6 +293,43 @@ public class TreeController<T extends LongSortedTreeEntityBean<T>, D extends Hib
             getEntityDao().save(entity);
         }
 
+        mv.setView(new StreamView("application/json"));
+    }
+
+    /**
+     * updateTree.
+     * 修改信息信息
+     *
+     * @throws Exception 异常
+     */
+    public void updateTree() throws Exception {
+        String data = getStrParam("data", "");
+        JSONObject jsonObject = JSONObject.fromString(data);
+
+        T entity = getEntityDao().get(jsonObject.getLong("id"));
+
+        for (Object object : jsonObject.entrySet()) {
+            Map.Entry entry = (Map.Entry) object;
+            String propertyName = entry.getKey().toString();
+
+            if (propertyName.equals("id")) {
+                continue;
+            }
+
+            String propertyValue = entry.getValue().toString();
+            PropertyDescriptor propertyDescriptor = new PropertyDescriptor(propertyName,
+                    getEntityClass());
+            Class propertyType = propertyDescriptor.getPropertyType();
+
+            if (propertyType == String.class) {
+                Method writeMethod = propertyDescriptor.getWriteMethod();
+                writeMethod.invoke(entity, propertyValue);
+            }
+        }
+
+        getEntityDao().save(entity);
+
+        response.getWriter().print("{success:true,info:\"success\"}");
         mv.setView(new StreamView("application/json"));
     }
 

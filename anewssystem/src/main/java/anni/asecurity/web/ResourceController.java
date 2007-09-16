@@ -27,6 +27,7 @@ public class ResourceController extends BaseLongController<Resource, ResourceMan
     public ResourceController() {
         setEditView("/asecurity/resource/editResource");
         setListView("/asecurity/resource/listResource");
+        logger.info("start");
     }
 
     /**

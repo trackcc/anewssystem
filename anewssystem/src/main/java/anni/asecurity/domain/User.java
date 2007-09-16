@@ -81,7 +81,7 @@ public class User implements Serializable {
     private Byte sex;
 
     /** * birthday. */
-    private Date birthday;
+    private Date birthday = null;
 
     /** * tel. */
     private String tel;
@@ -200,12 +200,20 @@ public class User implements Serializable {
     /** * @return birthday. */
     @Column(name = "BIRTHDAY")
     public Date getBirthday() {
-        return birthday;
+        if (birthday == null) {
+            return null;
+        } else {
+            return (Date) birthday.clone();
+        }
     }
 
     /** * @param birthday birthday. */
     public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+        if (birthday != null) {
+            this.birthday = (Date) birthday.clone();
+        } else {
+            this.birthday = null;
+        }
     }
 
     /** * @return tel. */

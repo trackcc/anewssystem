@@ -16,7 +16,7 @@ import anni.asecurity.manager.RoleManager;
 import anni.asecurity.menu.MenuFactory;
 import anni.asecurity.menu.TreeFactory;
 
-import anni.asecurity.web.support.extjs.TreeController;
+import anni.core.tree.LongTreeController;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
  * @author Lingo.
  * @since 2007年08月18日 下午 20时19分00秒578
  */
-public class MenuController extends TreeController<Menu, MenuManager> {
+public class MenuController extends LongTreeController<Menu, MenuManager> {
     /** * logger. */
     private static Log logger = LogFactory.getLog(MenuController.class);
 
@@ -50,8 +50,8 @@ public class MenuController extends TreeController<Menu, MenuManager> {
 
     /** * constructor. */
     public MenuController() {
-        setEditView("/asecurity/menu/editMenu");
-        setListView("/asecurity/menu/listMenu");
+        //setEditView("/asecurity/menu/editMenu");
+        //setListView("/asecurity/menu/listMenu");
     }
 
     /**
@@ -80,7 +80,6 @@ public class MenuController extends TreeController<Menu, MenuManager> {
      *
      * @param model ModelAndView中的数据模型
      */
-    @Override
     protected void referenceData(Map model) {
         // logger.info(entityDao.loadTopMenus());
         model.put("parents", entityDao.loadTops("theSort", "asc"));
@@ -94,7 +93,6 @@ public class MenuController extends TreeController<Menu, MenuManager> {
      * @param binder 绑定工具
      * @throws Exception 异常
      */
-    @Override
     protected void preBind(HttpServletRequest request, Object command,
         ServletRequestDataBinder binder) throws Exception {
         binder.setDisallowedFields(new String[] {"parent_id"});
@@ -108,7 +106,7 @@ public class MenuController extends TreeController<Menu, MenuManager> {
                 Menu parent = entityDao.get(id);
 
                 // check dead lock -- 不允许将自表外键关系设置成环状
-                if (menu.checkDeadLock(parent)) {
+                if (menu.isDeadLock(parent)) {
                     binder.getBindingResult()
                           .rejectValue("parent", "不能把父节点设置为子节点的叶子",
                         new Object[0], "不能把父节点设置为子节点的叶子");
@@ -237,15 +235,24 @@ public class MenuController extends TreeController<Menu, MenuManager> {
     }
 
     /**
-     * getExcludes().
+     * all.
      *
-     * @return 返回不需要转化成json的属性
+     * @return 返回不需要转化成json的属性数组
      */
     @Override
-    public String[] getExcludes() {
+    public String[] getExcludesForAll() {
+        return new String[] {"parent", "roles", "theSort", "class", "root"};
+    }
+
+    /**
+     * children.
+     *
+     * @return 返回不需要转化成json的属性数组
+     */
+    @Override
+    public String[] getExcludesForChildren() {
         return new String[] {
-            "parent", "children", "roles", "theSort", "target", "title",
-            "class", "leaf", "root"
+            "parent", "children", "roles", "theSort", "class", "root"
         };
     }
 }

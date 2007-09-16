@@ -4,14 +4,14 @@ import java.util.List;
 
 import anni.asecurity.domain.Menu;
 
-import anni.core.dao.HibernateTreeEntityDao;
+import anni.core.tree.LongTreeHibernateDao;
 
 
 /**
  * @author Lingo.
  * @since 2007年08月18日 下午 20时19分00秒578
  */
-public class MenuManager extends HibernateTreeEntityDao<Menu> {
+public class MenuManager extends LongTreeHibernateDao<Menu> {
     /**
      * 读取用户可见的菜单.
      *

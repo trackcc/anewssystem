@@ -212,15 +212,10 @@ a:link{
                                         <tbody>
                                           <tr>
                                             <td bgcolor="#FFFFFF">
-<#assign index=0/>
-<#list news.tags! as tag>
-  <#list tag.news! as item>
-    <#assign index=index+1/>
-    <#if (index > 10)><#break/></#if>
+<#list tagList! as item>
                                               <div class="paihang_left style137" style="text-align: left">
                                                 <img height="10" src="" width="9" /> <span class="style139"><a href="http://epple.cn:8080/index/news3.htm?id=146">${item.name}(${item.updateDate?date})</a></span>
                                               </div>
-  </#list>
 </#list>
                                             </td>
                                           </tr>

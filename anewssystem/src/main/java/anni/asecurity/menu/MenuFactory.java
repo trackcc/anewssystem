@@ -76,10 +76,10 @@ public class MenuFactory {
                     logger.info(list + ", contains " + menu.getId());
 
                     MenuComponent mc = new MenuComponent();
-                    mc.setName(menu.getTitle());
-                    mc.setTitle(menu.getTitle());
-                    mc.setPage(menu.getForward());
-                    mc.setTarget(menu.getTarget());
+                    mc.setName(menu.getName());
+                    mc.setTitle(menu.getName());
+                    mc.setPage(menu.getUrl());
+                    mc.setTarget("dblselect");
                     mc.setParent(null);
                     mc.setImage(menu.getImage());
 
@@ -91,10 +91,10 @@ public class MenuFactory {
 
                         if (list.contains(sub.getId())) {
                             MenuComponent subMc = new MenuComponent();
-                            subMc.setName(sub.getTitle());
-                            subMc.setTitle(sub.getTitle());
-                            subMc.setPage(sub.getForward());
-                            subMc.setTarget(sub.getTarget());
+                            subMc.setName(sub.getName());
+                            subMc.setTitle(sub.getName());
+                            subMc.setPage(sub.getUrl());
+                            subMc.setTarget("dblselect");
                             subMc.setImage(sub.getImage());
                             subMc.setParent(mc);
 

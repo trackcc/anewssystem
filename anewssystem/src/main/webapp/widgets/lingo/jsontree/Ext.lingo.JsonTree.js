@@ -1,0 +1,594 @@
+/*
+ * Ext JS Library 1.1
+ * Copyright(c) 2006-2007, Ext JS, LLC.
+ * licensing@extjs.com
+ *
+ * http://www.extjs.com/license
+ *
+ * @author Lingo
+ * @since 2007-09-13
+ * http://code.google.com/p/anewssystem/
+ */
+/**
+ * 声明Ext.lingo命名控件
+ * TODO: 完全照抄，作用不明
+ */
+Ext.namespace("Ext.lingo");
+/**
+ * 拥有CRUD功能的树形.
+ *
+ * @param container 被渲染的html元素的id，<div id="container"></div>
+ * @param config    需要的配置{}
+ */
+Ext.lingo.JsonTree = function(container, config) {
+    this.container     = Ext.get(container);
+    this.id            = this.container.id;
+    this.config        = config;
+    this.urlGetAll     = config.urlGetAll ? config.urlGetAll : "getAllTree.htm";
+    this.urlInsertTree = config.urlInsertTree ? config.urlInsertTree : "insertTree.htm";
+    this.urlRemoveTree = config.urlRemoveTree ? config.urlRemoveTree : "removeTree.htm";
+    this.urlSortTree   = config.urlSortTree ? config.urlSortTree : "sortTree.htm";
+    this.urlLoadData   = config.urlLoadData ? config.urlLoadData : "loadData.htm";
+    this.urlUpdate     = config.urlUpdate ? config.urlUpdate : "updateTree.htm";
+
+    Ext.lingo.JsonTree.superclass.constructor.call(this);
+};
+
+Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
+    init : function() {
+        // 生成代理
+        var createChild = this.createChild.createDelegate(this);
+        var createBrother = this.createBrother.createDelegate(this);
+        var updateNode = this.updateNode.createDelegate(this);
+        var removeNode = this.removeNode.createDelegate(this);
+        var save = this.save.createDelegate(this);
+        var expandAll = this.expandAll.createDelegate(this);
+        var collapseAll = this.collapseAll.createDelegate(this);
+        var refresh = this.refresh.createDelegate(this);
+        var configInfo = this.configInfo.createDelegate(this);
+        var prepareContext = this.prepareContext.createDelegate(this);
+
+        // 创建树形
+        if (this.treePanel == null) {
+            var treeLoader = new Ext.tree.TreeLoader({dataUrl:this.urlGetAll});
+            this.treePanel = new Ext.tree.TreePanel(this.id, {
+                animate         : true,
+                containerScroll : true,
+                enableDD        : true,
+                lines           : true,
+                loader          : treeLoader
+            });
+
+            // DEL快捷键，删除节点
+            this.treePanel.el.addKeyListener(Ext.EventObject.DELETE, removeNode);
+
+            // 自动排序
+            if (this.config.folderSort) {
+                new Ext.tree.TreeSorter(this.treePanel, {folderSort:true});
+            }
+        }
+        // 生成工具条
+        if (this.toolbar == null) {
+            this.toolbar = new Ext.Toolbar(this.treePanel.el.createChild({tag:'div'}));
+
+            this.toolbar.add({
+                text    : '新增下级分类',
+                icon    : '../widgets/lingo/list-items.gif',
+                cls     : 'x-btn-text-icon album-btn',
+                tooltip : '添加选中节点的下级分类',
+                handler : createChild
+            }, {
+                text    : '新增同级分类',
+                icon    : '../widgets/lingo/list-items.gif',
+                cls     : 'x-btn-text-icon album-btn',
+                tooltip : '添加选中节点的同级分类',
+                handler : createBrother
+            }, {
+                text    : '修改分类',
+                icon    : '../widgets/lingo/list-items.gif',
+                cls     : 'x-btn-text-icon album-btn',
+                tooltip : '修改选中分类',
+                handler : updateNode
+            }, {
+                text    : '删除分类',
+                icon    : '../widgets/lingo/list-items.gif',
+                cls     : 'x-btn-text-icon album-btn',
+                tooltip : '删除一个分类',
+                handler : removeNode
+            }, '-', {
+                text    : '保存排序',
+                icon    : '../widgets/lingo/list-items.gif',
+                cls     : 'x-btn-text-icon album-btn',
+                tooltip : '保存排序结果',
+                handler : save
+            }, '-', {
+                text    : '展开',
+                icon    : '../widgets/lingo/list-items.gif',
+                cls     : 'x-btn-text-icon album-btn',
+                tooltip : '展开所有分类',
+                handler : expandAll
+            }, {
+                text    : '合拢',
+                icon    : '../widgets/lingo/list-items.gif',
+                cls     : 'x-btn-text-icon album-btn',
+                tooltip : '合拢所有分类',
+                handler : collapseAll
+            }, {
+                text    : '刷新',
+                icon    : '../widgets/lingo/list-items.gif',
+                cls     : 'x-btn-text-icon album-btn',
+                tooltip : '刷新所有节点',
+                handler : refresh
+            });
+        }
+
+        // 设置编辑器
+        if (this.treeEditor == null) {
+            this.treeEditor = new Ext.tree.TreeEditor(this.treePanel, {
+                allowBlank    : false,
+                blankText     : '请添写名称',
+                selectOnFocus : true
+            });
+            this.treeEditor.on('beforestartedit', function() {
+                var node = this.treeEditor.editNode;
+                if(!node.attributes.allowEdit) {
+                    return false;
+                } else {
+                    node.attributes.oldText = node.text;
+                }
+            }.createDelegate(this));
+            this.treeEditor.on('complete', function() {
+                var node = this.treeEditor.editNode;
+                // 如果节点没有改变，就向服务器发送修改信息
+                if (node.attributes.oldText == node.text) {
+                    node.attributes.oldText = null;
+                    return true;
+                }
+                var item = {
+                    id       : node.id,
+                    text     : node.text,
+                    parentId : node.parentNode.id
+                };
+
+                this.treePanel.el.mask('提交数据，请稍候...', 'x-mask-loading');
+                var hide = this.treePanel.el.unmask.createDelegate(this.treePanel.el);
+                var doSuccess = function(responseObject) {
+                    eval("var o = " + responseObject.responseText + ";");
+                    this.treeEditor.editNode.id = o.id;
+                    hide();
+                }.createDelegate(this);
+                Ext.lib.Ajax.request(
+                    'POST',
+                    this.urlInsertTree,
+                    {success:doSuccess,failure:hide},
+                    'data=' + encodeURIComponent(Ext.encode(item))
+                );
+            }.createDelegate(this));
+        }
+
+        // 右键菜单
+        this.treePanel.on('contextmenu', prepareContext);
+        this.contextMenu = new Ext.menu.Menu({
+            id    : 'copyCtx',
+            items : [{
+                    id      : 'createChild',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : createChild,
+                    cls     : 'create-mi',
+                    text    : '新增下级节点'
+                },{
+                    id      : 'createBrother',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : createBrother,
+                    cls     : 'create-mi',
+                    text    : '新增同级节点'
+                },{
+                    id      : 'updateNode',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : updateNode,
+                    cls     : 'update-mi',
+                    text    : '修改节点'
+                },{
+                    id      : 'remove',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : removeNode,
+                    cls     : 'remove-mi',
+                    text    : '删除节点'
+                },'-',{
+                    id      : 'expand',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : expandAll,
+                    cls     : 'expand-all',
+                    text    : '展开'
+                },{
+                    id      : 'collapse',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : collapseAll,
+                    cls     : 'collapse-all',
+                    text    : '合拢'
+                },{
+                    id      : 'refresh',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : refresh,
+                    cls     : 'refresh',
+                    text    : '刷新'
+                },{
+                    id      : 'config',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : configInfo,
+                    text    : '详细配置'
+            }]
+        });
+
+        // 拖拽判断
+        this.treePanel.on("nodedragover", function(e){
+          var n = e.target;
+          if (n.leaf) {
+            n.leaf = false;
+          }
+          return true;
+        });
+        // 拖拽后，就向服务器发送消息，更新数据
+        // 本人不喜欢这种方式
+        if (this.config.dropUpdate) {
+          this.treePanel.on('nodedrop', function(e) {
+            var n = e.dropNode;
+            var item = {
+              id       : n.id,
+              text     : n.text,
+              parentId : e.target.id
+            };
+            this.treePanel.el.mask('提交数据，请稍候...', 'x-mask-loading');
+            var hide = this.treePanel.el.unmask.createDelegate(this.treePanel.el);
+            Ext.lib.Ajax.request(
+              'POST',
+              this.urlInsertTree,
+              {success:hide,failure:hide},
+              'data=' + encodeURIComponent(Ext.encode(item))
+            );
+          });
+        } else {
+          this.treePanel.on('nodedrop', function(e) {
+            var n = e.dropNode;
+            n.ui.textNode.style.fontWeight = "bold";
+            n.ui.textNode.style.color = "red";
+            n.ui.textNode.style.border = "1px red dotted";
+          });
+        }
+    }, render : function() {
+        this.init();
+
+        // 创建根节点
+        var root = new Ext.tree.AsyncTreeNode({
+            text      : '分类',
+            draggable : true,
+            id        : '-1'
+        });
+        this.treePanel.setRootNode(root);
+        this.treePanel.render();
+        root.expand(false, false);
+    }, createChild : function() {
+        var sm = this.treePanel.getSelectionModel();
+        var n = sm.getSelectedNode();
+        if (!n) {
+            n = this.treePanel.getRootNode();
+        } else {
+            n.expand(false, false);
+        }
+        this.createNode(n);
+    }, createBrother : function() {
+        var n = this.treePanel.getSelectionModel().getSelectedNode();
+        if (!n) {
+            Ext.Msg.alert('提示', "请选择一个节点");
+        } else if (n == this.treePanel.getRootNode()) {
+            Ext.Msg.alert('提示', "不能为根节点增加同级节点");
+        } else {
+            this.createNode(n.parentNode);
+        }
+    }, createNode : function(n) {
+        var node = n.appendChild(new Ext.tree.TreeNode({
+            id            : -1,
+            text          : '请输入分类名',
+            cls           : 'album-node',
+            allowDrag     : true,
+            allowDelete   : true,
+            allowEdit     : true,
+            allowChildren : true
+        }));
+        this.treePanel.getSelectionModel().select(node);
+        setTimeout(function(){
+            this.treeEditor.editNode = node;
+            this.treeEditor.startEdit(node.ui.textNode);
+        }.createDelegate(this), 10);
+    }, updateNode : function() {
+        var n = this.treePanel.getSelectionModel().getSelectedNode();
+        if (!n) {
+            Ext.Msg.alert('提示', "请选择一个节点");
+        } else if (n == this.treePanel.getRootNode()) {
+            Ext.Msg.alert('提示', "不能修改根节点");
+        } else {
+            setTimeout(function(){
+                this.treeEditor.editNode = n;
+                this.treeEditor.startEdit(n.ui.textNode);
+            }.createDelegate(this), 10);
+        }
+    }, removeNode : function() {
+        var sm = this.treePanel.getSelectionModel();
+        var n = sm.getSelectedNode();
+        if (n == null) {
+            Ext.Msg.alert('提示', "请选择一个节点");
+        } else if(n.attributes.allowDelete) {
+            Ext.Msg.confirm("提示", "是否确定删除？", function(btn, text) {
+                if (btn == 'yes') {
+                    this.treePanel.getSelectionModel().selectPrevious();
+                    this.treePanel.el.mask('提交数据，请稍候...', 'x-mask-loading');
+                    // var hide = this.treePanel.el.unmask.createDelegate(this.treePanel.el);
+                    var hide = function() {
+                        this.treePanel.el.unmask(this.treePanel.el);
+                        n.parentNode.removeChild(n);
+                    }.createDelegate(this);
+                    Ext.lib.Ajax.request(
+                        'POST',
+                        this.urlRemoveTree,
+                        {success:hide,failure:hide},
+                        'id=' + n.id
+                    );
+                }
+            }.createDelegate(this));
+        } else {
+            Ext.Msg.alert("提示", "这个节点不能删除");
+        }
+    }, appendNode : function(node, array) {
+        if (!node || node.childNodes.length < 1) {
+            return;
+        }
+        for (var i = 0; i < node.childNodes.length; i++) {
+            var child = node.childNodes[i];
+            array.push({id:child.id,parentId:child.parentNode.id});
+            this.appendNode(child, array);
+        }
+    }, save : function() {
+        // 向数据库发送一个json数组，保存排序信息
+        this.treePanel.el.mask('提交数据，请稍候...', 'x-mask-loading');
+        // var hide = this.treePanel.el.unmask.createDelegate(this.treePanel.el);
+        var hide = function() {
+            this.treePanel.el.unmask(this.treePanel.el);
+            this.refresh();
+        }.createDelegate(this);
+        var ch = [];
+        this.appendNode(this.treePanel.root, ch);
+
+        Ext.lib.Ajax.request(
+            'POST',
+            this.urlSortTree,
+            {success:hide,failure:hide},
+            'data=' + encodeURIComponent(Ext.encode(ch))
+        );
+    }, collapseAll : function() {
+        this.contextMenu.hide();
+        setTimeout(function() {
+            var node = this.getSelectedNode();
+            if (node == null) {
+                this.treePanel.getRootNode().eachChild(function(n) {
+                    n.collapse(true, false);
+                });
+            } else {
+                node.collapse(true, false);
+            }
+        }.createDelegate(this), 10);
+    }, expandAll : function() {
+        this.contextMenu.hide();
+        setTimeout(function() {
+            var node = this.getSelectedNode();
+            if (node == null) {
+                this.treePanel.getRootNode().eachChild(function(n) {
+                    n.expand(false, false);
+                });
+            } else {
+                node.expand(false, false);
+            }
+        }.createDelegate(this), 10);
+    }, prepareContext : function(node, e) {
+        node.select();
+        this.contextMenu.items.get('remove')[node.attributes.allowDelete ? 'enable' : 'disable']();
+        this.contextMenu.showAt(e.getXY());
+    }, refresh : function() {
+        this.treePanel.root.reload();
+        this.treePanel.root.expand(false, false);
+    }, configInfo : function() {
+        if (!this.dialog) {
+            this.createDialog();
+        }
+
+        var sm = this.treePanel.getSelectionModel();
+        var n = sm.getSelectedNode();
+        this.menuData = new Ext.data.Store({
+            proxy      : new Ext.data.HttpProxy({url:this.urlLoadData + "?id=" + n.id}),
+            reader     : new Ext.data.JsonReader({},this.headers),
+            remoteSort : false
+        });
+
+        this.menuData.on('load', function() {
+            for (var i = 0; i < this.headers.length; i++) {
+                var id = this.headers[i];
+                this.columns[i].setValue(this.menuData.getAt(0).data[id]);
+            }
+            this.dialog.show(this.treePanel.getSelectionModel().getSelectedNode().ui.textNode);
+        }.createDelegate(this));
+
+        this.menuData.load();
+    }, input : function(meta) {
+        var field = new Ext.form.TextField({
+            allowBlank : meta.allowBlank == undefined ? false : meta.allowBlank,
+            vType      : meta.vType,
+            cls        : meta.type == "password" ? meta.cls : null,
+            width      : meta.vWidth,
+            id         : meta.id,
+            name       : meta.id,
+            style      : (meta.vType == "integer" || meta == "number" ? "text-align: right;" : ""),
+            readOnly   : meta.readOnly,
+            defValue   : meta.defValue,
+            alt        : meta.alt,
+            maxLength  : meta.maxlength ? meta.maxlength : Number.MAX_VALUE,
+            minLength  : meta.minlength ? meta.minlength : 0,
+            minValue   : meta.minvalue ? meta.minvalue : 0,
+            maxValue   : meta.maxvalue ? meta.maxvalue : Number.MAX_VALUE
+        });
+        if(meta.readOnly) {
+            field.style += "color:#656B86;";
+        }
+        //if(meta.value != "" && meta.format == "date") {
+        //    field.value = datagrids[0].date(meta.value);
+        //}
+        field.applyTo(meta.id);
+        if(meta.defValue) {
+            field.setValue(meta.defValue);
+        }
+        return field;
+    }, date : function(meta) {
+        var field = new Ext.form.DateField({
+            id          : meta.id,
+            name        : meta.id,
+            allowBlank  : meta.allowBlank == undefined ? false : eval(meta.allowBlank),
+            format      : meta.format ? meta.format : "Y年m月d日",
+            readOnly    : true,
+            width       : meta.vWidth,
+            defValue    : meta.defValue,
+            vType       : "date",
+            alt         : meta.alt,
+            setAllMonth : meta.setAllMonth ? el.setAllMonth : false
+        });
+        field.applyTo(meta.id);
+        if(meta.defValue) {
+            field.setValue(meta.defValue);
+        } else {
+            field.setValue(new Date());
+        }
+        return field;
+    }, createDlgContentDiv : function() {
+        // 内容
+        var dialogContent = document.getElementById(this.config.dialogContent);
+        var contentDiv = document.createElement("div");
+        contentDiv.id = this.id + "-content";
+        contentDiv.appendChild(dialogContent);
+
+        // 消息
+        var dialogMessage = document.createElement("div");
+        var waitMessage = document.createElement("div");
+        var waitText = document.createElement("div");
+        dialogMessage.id = "dlg-msg";
+        waitMessage.id = "post-wait";
+        waitMessage.className = "posting-msg";
+        waitText.className = "waitting";
+        waitText.innerHTML = "正在保存，请稍候...";
+        waitMessage.appendChild(waitText);
+        dialogMessage.appendChild(waitMessage);
+
+        //
+        var dialogDiv = document.createElement("div");
+        var dialog_head = document.createElement("div");
+        var dialog_body = document.createElement("div");
+        var dlg_tab = document.createElement("div");
+        var dlg_help = document.createElement("div");
+        var helpContent = document.createElement("div");
+        var dialog_foot = document.createElement("div");
+        dialogDiv.id = this.id + "-dialog-content";
+        dialogDiv.style.visibility = "hidden";
+        dialog_head.className = "x-dlg-hd";
+        dialog_body.className = "x-dlg-bd";
+        dialog_foot.className = "x-dlg-ft";
+        dlg_tab.className = "x-dlg-tab";
+        dlg_tab.title = " 详细配置 ";
+        dlg_help.className = "x-dlg-tab";
+        dlg_help.title = " 帮助 ";
+        helpContent.innerHTML = "<div id='help-content'><div id='standard-panel'>帮助...</div></div><div id='temp-content'></div>";
+        dlg_help.appendChild(helpContent);
+        dialog_body.appendChild(dlg_tab);
+        dialog_body.appendChild(dlg_help);
+        dialog_foot.appendChild(dialogMessage);
+        dialogDiv.appendChild(dialog_head);
+        dialogDiv.appendChild(dialog_body);
+        dialogDiv.appendChild(dialog_foot);
+
+        document.body.appendChild(dialogDiv);
+        document.body.appendChild(contentDiv);
+    }, createDialog : function() {
+        this.createDlgContentDiv();
+        this.dialog = new Ext.BasicDialog(this.id + "-dialog-content", {
+            modal     : false,
+            autoTabs  : true,
+            width     : (this.config.dlgWidth == undefined ? 600 : this.config.dlgWidth),
+            height    : (this.config.dlgHeight == undefined ? 400 : this.config.dlgHeight),
+            shadow    : false,
+            minWidth  : 200,
+            minHeight : 100,
+            closable  : true,
+            autoCreate : true
+        });
+
+        this.dialog.addKeyListener(27, this.dialog.hide, this.dialog);
+        this.yesBtn = this.dialog.addButton("确定", function() {
+            var item = {};
+            for (var i = 0; i < this.columns.length; i++) {
+                var obj = this.columns[i];
+                item[obj.id] = obj.getValue();
+            }
+            this.dialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
+            // var hide = this.dialog.el.unmask.createDelegate(this.dialog.el);
+            var hide = function() {
+                this.dialog.el.unmask();
+                this.dialog.hide();
+                this.refresh();
+            }.createDelegate(this);
+            Ext.lib.Ajax.request(
+                'POST',
+                this.urlUpdate,
+                {success:hide,failure:hide},
+                'data=' + encodeURIComponent(Ext.encode(item))
+            );
+        }.createDelegate(this), this.dialog);
+        this.tabs = this.dialog.getTabs();
+        this.tabs.getTab(1).on("activate", function(){
+            this.yesBtn.hide();
+        }, this, true);
+
+        var dialogContent = Ext.get(this.id + "-content");
+        this.tabs.getTab(0).setContent(dialogContent.dom.innerHTML);
+        this.applyElements();
+        this.noBtn = this.dialog.addButton("取消", this.dialog.hide, this.dialog);
+    }, applyElements : function() {
+        if (this.columns == null || this.headers == null) {
+            this.columns = new Array();
+            this.headers = new Array();
+            for (var i = 0; i < this.config.metaData.length; i++) {
+                this.headers[this.headers.length] = this.config.metaData[i].id;
+            }
+
+            // 打开验证功能
+            //Ext.form.Field.prototype.msgTarget = 'side';
+            //Ext.form.Field.prototype.height = 20;
+            //Ext.form.Field.prototype.fieldClass = 'text-field-default';
+            //Ext.form.Field.prototype.focusClass = 'text-field-focus';
+            //Ext.form.Field.prototype.invalidClass = 'text-field-invalid';
+
+            var dialogContent = Ext.get(this.config.dialogContent);
+            for (var i = 0; i < this.config.metaData.length; i++) {
+                var meta = this.config.metaData[i];
+                var field;
+                if (meta.vType == "date") {
+                    field = this.date(meta);
+                } else if (meta.vType == "comboBox") {
+                } else if (meta.vType == "textArea") {
+                } else if (meta.vType == "treeField") {
+                } else {
+                    field = this.input(meta);
+                }
+                this.columns[this.columns.length] = field;
+            }
+        }
+    }, getSelectedNode : function() {
+        var selectionModel = this.treePanel.getSelectionModel();
+        var node = selectionModel.getSelectedNode();
+        return node;
+    }
+});

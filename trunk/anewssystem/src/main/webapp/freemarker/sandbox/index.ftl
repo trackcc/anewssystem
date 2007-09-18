@@ -34,7 +34,7 @@
       </div>
     </div>
     <div id="toolbar"></div>
-    <iframe id='main' frameborder='no' scrolling='no'></iframe>
+    <iframe id='main' frameborder='no' scrolling='yes'></iframe>
     <div id='login-dlg' style='visibility:hidden;'>
       <div class='x-dlg-hd'></div>
       <div class='x-dlg-bd' style='overflow:hidden;'>

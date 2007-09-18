@@ -4,12 +4,12 @@
 <html>
   <head>
     <#include "/include/meta.ftl"/>
-    <title>目录管理</title>
+    <title>新闻分类管理</title>
     <#include "/include/extjs.ftl"/>
     <script type="text/javascript" src="${ctx}/widgets/lingo/Ext.form.VTypes.js"></script>
     <script type="text/javascript" src="${ctx}/widgets/lingo/Ext.lingo.Theme.js"></script>
     <script type="text/javascript" src="${ctx}/widgets/lingo/jsontree/Ext.lingo.JsonTree.js"></script>
-    <script type="text/javascript" src="${ctx}/widgets/asecurity/menu-20070916.js"></script>
+    <script type="text/javascript" src="${ctx}/widgets/anews/newscategory-20070918.js"></script>
   </head>
   <body>
     <div id="loading">
@@ -26,40 +26,26 @@
     <table id='content' width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
       <tr height="50%"><td>&nbsp;</td></tr>
       <tr>
-        <td width="20%" align="right"><label for="url" style="font-size:12px;">链接地址：</label></td>
-        <td width="80%" colspan="3">
+        <td width="20%" align="right"><label for="name" style="font-size:12px;">分类名称：</label></td>
+        <td width="80%">
           <div class="x-form-item">
-            <input id="url" type="text" size="65">
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td width="20%" align="right"><label for="name" style="font-size:12px;">菜单名称：</label></td>
-        <td width="30%">
-          <div class="x-form-item">
-            <input id="name" type="text" size="20">
-          </div>
-        </td>
-        <td width="20%" align="right"><label for="qtip" style="font-size:12px;">提示信息：</label></td>
-        <td width="30%">
-          <div class="x-form-item">
-            <input id="qtip" type="text" size="20">
+            <input id="name" type="text" size="50">
           </div>
         </td>
       </tr>
       <tr>
         <td width="20%" align="right"><label for="descn" style="font-size:12px;">描述：</label></td>
-        <td width="80%" colspan="3" colspan="3">
+        <td width="80%" colspan="3">
           <div class="x-form-item">
-            <input id="descn" type="text" size="65">
+            <input id="descn" type="text" size="50">
           </div>
         </td>
       </tr>
       <tr>
         <td align="right" width="20%"><label for="descn" style="font-size:12px;">id：</label></td>
-        <td width="80%" colspan="3" colspan="3">
+        <td width="80%" colspan="3">
           <div class="x-form-item">
-            <input id="id" type="text" size="65" readonly>
+            <input id="id" type="text" size="50" readonly>
           </div>
         </td>
       </tr>

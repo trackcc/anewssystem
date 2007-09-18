@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import anni.asecurity.web.support.extjs.AbstractLongSortedTreeEntityBean;
+import anni.core.tree.LongTreeNode;
 
 import org.compass.annotations.Searchable;
 import org.compass.annotations.SearchableProperty;
@@ -30,7 +30,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Searchable(root = false, alias = "a_news_category")
 @Table(name = "A_NEWS_CATEGORY")
-public class NewsCategory extends AbstractLongSortedTreeEntityBean<NewsCategory> {
+public class NewsCategory extends LongTreeNode<NewsCategory> {
     /** * serial. */
     static final long serialVersionUID = 0L;
 

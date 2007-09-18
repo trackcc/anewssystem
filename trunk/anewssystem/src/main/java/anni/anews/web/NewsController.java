@@ -114,8 +114,17 @@ public class NewsController extends BaseLongController<News, NewsManager> {
             });
 
         News entity = (News) command;
-        entity.setUpdateDate(new SimpleDateEditor.ExtDate(
-                System.currentTimeMillis()));
+
+        // 修改时，不会更新发布时间
+        long updateDate;
+
+        if (entity.getUpdateDate() == null) {
+            updateDate = System.currentTimeMillis();
+        } else {
+            updateDate = entity.getUpdateDate().getTime();
+        }
+
+        entity.setUpdateDate(new SimpleDateEditor.ExtDate(updateDate));
 
         // 这里绑定新闻分类
         long categoryId = getLongParam("category_id", -1L);
@@ -259,15 +268,39 @@ public class NewsController extends BaseLongController<News, NewsManager> {
         Map<String, String> sortMap = ExtremeTablePage.getSort(limit);
         logger.info(sortMap);
 
-        String hql;
+        String hql = "from News where status=?";
+
+        // 添加可以根据分类搜索的功能
+        // add by Lingo 2007-09-17 09:58
+        // -1代表没有参数传递进来，0代表选择全部分类
+        long categoryId = getLongParam("category_id", -1L);
+
+        if (categoryId == -1L) {
+            Long newsCategoryId = (Long) session.getAttribute(
+                    "news_category_id");
+
+            if (newsCategoryId == null) {
+                categoryId = 0L;
+            } else {
+                categoryId = newsCategoryId;
+            }
+        }
+
+        // 重新向session中设置news_category_id
+        session.setAttribute("news_category_id", categoryId);
+
+        // 如果不是选择全部分类，就需要按分类查询新闻
+        if (categoryId != 0L) {
+            hql += (" and newsCategory.id=" + categoryId);
+            mv.addObject("categoryId", categoryId);
+        }
 
         if (sortMap.isEmpty()) {
-            hql = "from News where status=? order by id desc";
+            hql += " order by id desc";
         } else {
             Map.Entry entry = (Map.Entry) sortMap.entrySet().iterator()
                                                  .next();
-            hql = "from News where status=? order by " + entry.getKey()
-                + " " + entry.getValue();
+            hql += (" order by " + entry.getKey() + " " + entry.getValue());
         }
 
         logger.info(hql);

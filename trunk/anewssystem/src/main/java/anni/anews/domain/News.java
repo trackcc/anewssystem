@@ -276,7 +276,9 @@ public class News implements Serializable {
     }
 
     /** * @return newsComments. */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "news")
+    @OneToMany(cascade =  {
+        CascadeType.PERSIST, CascadeType.MERGE}
+    , fetch = FetchType.LAZY, mappedBy = "news")
     public Set<NewsComment> getNewsComments() {
         return newsComments;
     }

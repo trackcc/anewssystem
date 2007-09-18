@@ -31,7 +31,7 @@ public class DeptController extends LongTreeController<Dept, DeptManager> {
      */
     @Override
     public String[] getExcludesForAll() {
-        return new String[] {"class", "root", "parent"};
+        return new String[] {"class", "root", "parent", "users"};
     }
 
     /**
@@ -41,6 +41,6 @@ public class DeptController extends LongTreeController<Dept, DeptManager> {
      */
     @Override
     public String[] getExcludesForChildren() {
-        return new String[] {"class", "root", "parent", "children"};
+        return new String[] {"class", "root", "parent", "users", "children"};
     }
 }

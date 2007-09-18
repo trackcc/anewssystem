@@ -71,7 +71,7 @@ public class LongTreeUtilsTest extends TestCase {
         String[] excludes = new String[] {"class", "root", "parent"};
         LongTreeUtils.write(node, writer, excludes, null);
 
-        assertEquals("{\"parentId\":0,\"theSort\":0,\"cls\":\"\",\"leaf\":true,\"qtip\":\"\",\"allowDelete\":false,\"allowEdit\":false,\"draggable\":false,\"id\":0,\"text\":\"\",\"allowChildren\":false,\"name\":\"\",\"children\":[]}",
+        assertEquals("{\"parentId\":0,\"theSort\":0,\"cls\":\"\",\"leaf\":true,\"qtip\":\"\",\"allowDelete\":true,\"allowEdit\":true,\"draggable\":true,\"id\":0,\"text\":\"\",\"allowChildren\":true,\"name\":\"\",\"children\":[]}",
             writer.toString());
     }
 

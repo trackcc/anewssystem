@@ -35,7 +35,22 @@
   <#else>
       <span class="unselected"><a href="${ctx}/news/list.htm?status=${item_index}">${item}</a></span>
   </#if>
+</#list><div>
+      <form action="${ctx}/news/list.htm">
+        <input type="hidden" name="status" value="${status}">
+        <span>按分类选择：</span>
+        <select name="category_id" name="category_id">
+          <option value="0">全部</option>
+<#list categoryList! as item>
+  <#if categoryId??>
+    <@m.treeSelect item 0 categoryId/>
+  <#else>
+    <@m.treeSelect item 0/>
+  </#if>
 </#list>
+        </select>
+        <input type="submit">
+      </form></div>
     </div>
       <div id="operationDiv">
         <span class="operations"><a href="${ctx}/index.jsp">返回首页</a>&nbsp;

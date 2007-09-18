@@ -27,10 +27,10 @@ public class NewsCategoryControllerTest extends PrototypeControllerTest {
 
     public void testDefault() throws Exception {
         assertNotNull(controller);
-        request.setRequestURI("/newscategory/list.htm");
+        request.setRequestURI("/newscategory/index.htm");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertModelAttributeAvailable(mv, "page");
-        mvHelper.assertViewName(mv, "/anews/newscategory/listNewsCategory");
+        //mvHelper.assertModelAttributeAvailable(mv, "page");
+        mvHelper.assertViewName(mv, "/anews/newscategory/index");
     }
 
     public void testGetChildren() throws Exception {
@@ -56,34 +56,35 @@ public class NewsCategoryControllerTest extends PrototypeControllerTest {
 
     public void testInsertTree() throws Exception {
         request.setRequestURI("/newscategory/insertTree.htm");
+        request.addParameter("data", "{id:-1}");
         mv = controller.handleRequest(request, response);
         assertNotNull(mv);
     }
 
     public void testInsertTree2() throws Exception {
         request.setRequestURI("/newscategory/insertTree.htm");
-        request.addParameter("data", "{id:-1,text:\"name1\",parentId:-1}");
+        request.addParameter("data", "{id:-1,name:\"name1\",parentId:-1}");
         mv = controller.handleRequest(request, response);
         assertNotNull(mv);
     }
 
     public void testInsertTree3() throws Exception {
         request.setRequestURI("/newscategory/insertTree.htm");
-        request.addParameter("data", "{id:1,text:\"name1\",parentId:-1}");
+        request.addParameter("data", "{id:1,name:\"name1\",parentId:-1}");
         mv = controller.handleRequest(request, response);
         assertNotNull(mv);
     }
 
     public void testInsertTree4() throws Exception {
         request.setRequestURI("/newscategory/insertTree.htm");
-        request.addParameter("data", "{id:-1,text:\"name1\",parentId:1}");
+        request.addParameter("data", "{id:-1,name:\"name1\",parentId:1}");
         mv = controller.handleRequest(request, response);
         assertNotNull(mv);
     }
 
     public void testInsertTree5() throws Exception {
         request.setRequestURI("/newscategory/insertTree.htm");
-        request.addParameter("data", "{id:100,text:\"name1\",parentId:1}");
+        request.addParameter("data", "{id:100,name:\"name1\",parentId:1}");
         mv = controller.handleRequest(request, response);
         assertNotNull(mv);
     }
@@ -104,6 +105,7 @@ public class NewsCategoryControllerTest extends PrototypeControllerTest {
 
     public void testSortTree() throws Exception {
         request.setRequestURI("/newscategory/sortTree.htm");
+        request.addParameter("data", "[]");
         mv = controller.handleRequest(request, response);
         assertNotNull(mv);
     }
@@ -116,9 +118,9 @@ public class NewsCategoryControllerTest extends PrototypeControllerTest {
         assertNotNull(mv);
     }
 
-    /** * tree. */
-    public void testTree() throws Exception {
-        request.setRequestURI("/newscategory/tree.htm");
+    /** * index. */
+    public void testIndex() throws Exception {
+        request.setRequestURI("/newscategory/index.htm");
         mv = controller.handleRequest(request, response);
         assertNotNull(mv);
     }

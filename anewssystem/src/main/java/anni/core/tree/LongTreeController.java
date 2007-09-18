@@ -176,20 +176,22 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
 
         T entity = getEntityDao().get(node.getId());
 
-        if (entity == null) {
-            // 添加
-            long parentId = node.getParentId();
+        // 更新上级分类
+        Long parentId = node.getParentId();
+
+        if (parentId != null) {
             T parent = getEntityDao().get(parentId);
             node.setParent(parent);
+        }
+
+        if (entity == null) {
+            // 添加
+            // 只有在id = null的情况下，才执行insert，否则执行update
+            node.setId(null);
             getEntityDao().save(node);
             entity = node;
         } else {
             // 修改
-            // 更新上级分类
-            long parentId = node.getParentId();
-            T parent = getEntityDao().get(parentId);
-            node.setParent(parent);
-            // 更新分类名
             entity.setName(node.getName());
             getEntityDao().save(entity);
         }

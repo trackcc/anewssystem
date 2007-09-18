@@ -19,6 +19,9 @@
         </form>
       </span>
     </div>
+    <#if page??>
+      <@m.pg2 "${ctx}/news/search.htm" "keywords=${RequestParameters.keywords!}" page.totalCount?int page.currentPageNo 20/>
+    </#if>
     <div id="tableDiv">
       <table class="eXtremeTable" width="100%" cellSpacing="0" cellPadding="2">
         <tr>
@@ -29,6 +32,7 @@
           <td class="tableHeader">编辑</td>
           <td class="tableHeader">发布日期</td>
           <td class="tableHeader">修改</td>
+          <td class="tableHeader">删除</td>
         </tr>
 <#if (page?? && page.result?size > 0)>
   <#list (page.result)! as item>
@@ -41,14 +45,20 @@
           <td>${item.editor}</td>
           <td>${item.updateDate?datetime}</td>
           <td><a href="${ctx}/news/edit.htm?id=${item.id}"><img src="${ctx}/images/icon/16x16/modify.gif" border="0"/></a></td>
+          <td><a href="${ctx}/news/remove.htm?id=${item.id}"><img src="${ctx}/images/icon/16x16/delete.gif" border="0"/></a></td>
         </tr>
   </#list>
 <#else>
         <tr>
-	  <td colspan="7" class="even" style="text-align:center">无记录</td>
+      <td colspan="7" class="even" style="text-align:center">无记录</td>
         </tr>
 </#if>
       </table>
+    </div>
+    <div>
+    <#if page??>
+      <@m.pg2 "${ctx}/news/search.htm" "keywords=${RequestParameters.keywords!}" page.totalCount?int page.currentPageNo 20/>
+    </#if>
     </div>
   </body>
 </html>

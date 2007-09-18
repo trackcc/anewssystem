@@ -27,9 +27,9 @@ public interface TreeNode<T extends TreeNode> extends Serializable {
      *
      * 实际中使用时，实现类需要使用导入javax.persistence.Column
      * 并对name字段进行如下注释
-     * @Column(unique = true, nullable = false)
-     * 我们考虑使用NamedEntityBean的情况，很可能是除了id就只有name字段的情况
-     * 这样，name重复，或者为空，就没有实际意义了，所以在进行这样的注释
+     * @Column(unique = false, nullable = false)
+     * name应该是可以重复的，应该可以允许不同级别的下的分类名称相同
+     * 如果有特殊业务要求，则应该按照业务要求进行注释
      *
      * @return String 名称.
      */

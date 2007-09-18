@@ -8,7 +8,7 @@ import anni.anews.domain.News;
 import anni.anews.domain.NewsCategory;
 import anni.anews.domain.NewsConfig;
 
-import anni.core.dao.HibernateTreeEntityDao;
+import anni.core.tree.LongTreeHibernateDao;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,7 +24,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Lingo.
  * @since 2007年08月16日 下午 23时13分12秒765
  */
-public class NewsCategoryManager extends HibernateTreeEntityDao<NewsCategory> {
+public class NewsCategoryManager extends LongTreeHibernateDao<NewsCategory> {
     /** * logger. */
     private static Log logger = LogFactory.getLog(NewsCategoryManager.class);
 
@@ -282,7 +282,7 @@ public class NewsCategoryManager extends HibernateTreeEntityDao<NewsCategory> {
      * 递归获得所有子分类的列表.
      *
      * @param newsCategory 分类
-         * @param idList 分类主键集合
+     * @param idList 分类主键集合
      */
     private void getIdList(NewsCategory newsCategory, Set<Long> idList) {
         idList.add(newsCategory.getId());

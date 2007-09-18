@@ -74,7 +74,7 @@ public class LongTreeControllerTest extends TestCase {
         mv = controller.handleRequest(request, response);
         assertNull(mv.getViewName());
         response.getWriter().flush();
-        assertEquals("[{\"parentId\":0,\"theSort\":0,\"cls\":\"\",\"leaf\":false,\"qtip\":\"\",\"allowDelete\":false,\"allowEdit\":false,\"draggable\":false,\"id\":0,\"text\":\"\",\"allowChildren\":false,\"name\":\"\",\"children\":[{\"parentId\":0,\"theSort\":0,\"cls\":\"\",\"leaf\":true,\"qtip\":\"\",\"allowDelete\":false,\"allowEdit\":false,\"draggable\":false,\"id\":0,\"text\":\"\",\"allowChildren\":false,\"name\":\"\",\"children\":[]}]}]",
+        assertEquals("[{\"parentId\":0,\"theSort\":0,\"cls\":\"\",\"leaf\":false,\"qtip\":\"\",\"allowDelete\":true,\"allowEdit\":true,\"draggable\":true,\"id\":0,\"text\":\"\",\"allowChildren\":true,\"name\":\"\",\"children\":[{\"parentId\":0,\"theSort\":0,\"cls\":\"\",\"leaf\":true,\"qtip\":\"\",\"allowDelete\":true,\"allowEdit\":true,\"draggable\":true,\"id\":0,\"text\":\"\",\"allowChildren\":true,\"name\":\"\",\"children\":[]}]}]",
             response.getContentAsString());
     }
 
@@ -84,7 +84,7 @@ public class LongTreeControllerTest extends TestCase {
         mv = controller.handleRequest(request, response);
         assertNull(mv.getViewName());
         response.getWriter().flush();
-        assertEquals("[{\"text\":\"\",\"parentId\":0,\"theSort\":0,\"allowChildren\":false,\"leaf\":false,\"cls\":\"\",\"qtip\":\"\",\"allowDelete\":false,\"name\":\"\",\"draggable\":false,\"allowEdit\":false,\"id\":0}]",
+        assertEquals("[{\"text\":\"\",\"parentId\":0,\"theSort\":0,\"allowChildren\":true,\"leaf\":false,\"cls\":\"\",\"qtip\":\"\",\"allowDelete\":true,\"name\":\"\",\"draggable\":true,\"allowEdit\":true,\"id\":0}]",
             response.getContentAsString());
     }
 
@@ -95,7 +95,7 @@ public class LongTreeControllerTest extends TestCase {
         mv = controller.handleRequest(request, response);
         assertNull(mv.getViewName());
         response.getWriter().flush();
-        assertEquals("[{\"text\":\"\",\"parentId\":0,\"theSort\":0,\"allowChildren\":false,\"leaf\":true,\"cls\":\"\",\"qtip\":\"\",\"allowDelete\":false,\"name\":\"\",\"draggable\":false,\"allowEdit\":false,\"id\":1}]",
+        assertEquals("[{\"text\":\"\",\"parentId\":0,\"theSort\":0,\"allowChildren\":true,\"leaf\":true,\"cls\":\"\",\"qtip\":\"\",\"allowDelete\":true,\"name\":\"\",\"draggable\":true,\"allowEdit\":true,\"id\":1}]",
             response.getContentAsString());
     }
 
@@ -106,7 +106,7 @@ public class LongTreeControllerTest extends TestCase {
         mv = controller.handleRequest(request, response);
         assertNull(mv.getViewName());
         response.getWriter().flush();
-        assertEquals("[{\"text\":\"\",\"parentId\":0,\"theSort\":0,\"allowChildren\":false,\"leaf\":true,\"cls\":\"\",\"qtip\":\"\",\"allowDelete\":false,\"name\":\"\",\"draggable\":false,\"allowEdit\":false,\"id\":1}]",
+        assertEquals("[{\"text\":\"\",\"parentId\":0,\"theSort\":0,\"allowChildren\":true,\"leaf\":true,\"cls\":\"\",\"qtip\":\"\",\"allowDelete\":true,\"name\":\"\",\"draggable\":true,\"allowEdit\":true,\"id\":1}]",
             response.getContentAsString());
     }
 
@@ -123,7 +123,8 @@ public class LongTreeControllerTest extends TestCase {
     public void testInsertTree() throws Exception {
         controller.setEntityDao(dao);
         request.setRequestURI("test/insertTree.htm");
-        request.addParameter("data", "{\"id\":0,\"parentId\":0}");
+        request.addParameter("data",
+            "{\"id\":0,\"name\":\"text\",\"parentId\":0}");
         mv = controller.handleRequest(request, response);
         assertNull(mv.getViewName());
         assertEquals("{success:true,id:3}", response.getContentAsString());

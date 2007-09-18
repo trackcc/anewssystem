@@ -6,29 +6,11 @@
     <language>zh-cn</language>
     <description >A news publishing system</description>
     <webMaster>xyz20003@gmail.com(Lingo)</webMaster>
-    <lastBuildDate>2007-8-30</lastBuildDate>
+    <lastBuildDate>2007-9-17</lastBuildDate>
     <item>
-      <title>路北新闻</title>
-      <link>http://localhost:8080/anews//anews/html/5/2007/08/30/4.html</link>
-      <pubDate>2007-8-30 15:43:42</pubDate>
-      <description><![CDATA[]]></description>
-    </item>
-    <item>
-      <title>a b c d</title>
-      <link>http://localhost:8080/anews//anews/html/1/2007/08/27/3.html</link>
-      <pubDate>2007-8-27 18:18:32</pubDate>
-      <description><![CDATA[aaaaaaaaaaaaaaaa]]></description>
-    </item>
-    <item>
-      <title>11111111</title>
-      <link>http://localhost:8080/anews//anews/html/3/2007/08/24/2.html</link>
-      <pubDate>2007-8-24 0:00:00</pubDate>
-      <description><![CDATA[11]]></description>
-    </item>
-    <item>
-      <title>111111111</title>
-      <link>http://localhost:8080/anews//anews/html/3/2007/08/23/1.html</link>
-      <pubDate>2007-8-23 0:00:00</pubDate>
+      <title>dd</title>
+      <link>http://localhost:8080/anews//anews/html/3/2007/09/17/1.html</link>
+      <pubDate>2007-9-17 11:25:48</pubDate>
       <description><![CDATA[dd]]></description>
     </item>
   </channel>

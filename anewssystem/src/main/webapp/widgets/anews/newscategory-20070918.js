@@ -34,7 +34,7 @@ Ext.onReady(function(){
     // 设置布局
     layout.beginUpdate();
         layout.add('center', new Ext.ContentPanel('tab1', {
-            title      : '菜单管理',
+            title      : '分类管理',
             toolbar    : null,
             closable   : false,
             fitToFrame : true
@@ -53,9 +53,7 @@ Ext.onReady(function(){
     // 其他随意定制
     var metaData = [
         {id : 'id',    qtip : "ID",       vType : "integer", allowBlank : true,  defValue : -1},
-        {id : 'url',   qtip : "链接地址", vType : "url",     allowBlank : false},
-        {id : 'name',  qtip : "菜单名称", vType : "chn",     allowBlank : false},
-        {id : 'qtip',  qtip : "提示信息", vType : "chn",     allowBlank : true},
+        {id : 'name',  qtip : "分类名称", vType : "chn",     allowBlank : false},
         {id : 'descn', qtip : "描述",     vType : "chn",     allowBlank : true}
     ];
 

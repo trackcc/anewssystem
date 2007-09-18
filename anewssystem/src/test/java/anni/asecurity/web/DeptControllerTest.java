@@ -32,4 +32,23 @@ public class DeptControllerTest extends PrototypeControllerTest {
         //mvHelper.assertModelAttributeAvailable(mv, "page");
         mvHelper.assertViewName(mv, "asecurity/dept/index");
     }
+
+    public void testGetExcludesForAll() {
+        DeptController target = (DeptController) controller;
+        assertEquals(4, target.getExcludesForAll().length);
+        assertEquals("class", target.getExcludesForAll()[0]);
+        assertEquals("root", target.getExcludesForAll()[1]);
+        assertEquals("parent", target.getExcludesForAll()[2]);
+        assertEquals("users", target.getExcludesForAll()[3]);
+    }
+
+    public void testGetExcludesForChildren() {
+        DeptController target = (DeptController) controller;
+        assertEquals(5, target.getExcludesForChildren().length);
+        assertEquals("class", target.getExcludesForChildren()[0]);
+        assertEquals("root", target.getExcludesForChildren()[1]);
+        assertEquals("parent", target.getExcludesForChildren()[2]);
+        assertEquals("users", target.getExcludesForChildren()[3]);
+        assertEquals("children", target.getExcludesForChildren()[4]);
+    }
 }

@@ -42,6 +42,17 @@ public class NewsControllerTest extends PrototypeControllerTest {
         mvHelper.assertViewName(mv, "/anews/news/listNews");
     }
 
+    // 测试按分类搜索的情况
+    public void testListByCategory() throws Exception {
+        assertNotNull(controller);
+        request.setRequestURI("/news/list.htm");
+        request.addParameter("category_id", "1");
+        mv = controller.handleRequest(request, response);
+        mvHelper.assertModelAttributeAvailable(mv, "categoryId");
+        mvHelper.assertModelAttributeAvailable(mv, "page");
+        mvHelper.assertViewName(mv, "/anews/news/listNews");
+    }
+
     public void testInsert() throws Exception {
         request.setRequestURI("/news/insert.htm");
         mv = controller.handleRequest(request, response);

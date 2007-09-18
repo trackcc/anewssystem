@@ -84,7 +84,9 @@ public class NewsTag implements NamedEntityBean {
     }
 
     /** * @return newses. */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade =  {
+        CascadeType.PERSIST, CascadeType.MERGE}
+    , fetch = FetchType.LAZY)
     @JoinTable(name = "A_NEWS_NEWSTAG", joinColumns =  {
         @JoinColumn(name = "NEWSTAG_ID")
     }

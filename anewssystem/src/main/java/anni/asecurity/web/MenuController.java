@@ -252,7 +252,7 @@ public class MenuController extends LongTreeController<Menu, MenuManager> {
     @Override
     public String[] getExcludesForChildren() {
         return new String[] {
-            "parent", "children", "roles", "theSort", "class", "root"
+            "parent", "roles", "theSort", "class", "root", "children"
         };
     }
 }

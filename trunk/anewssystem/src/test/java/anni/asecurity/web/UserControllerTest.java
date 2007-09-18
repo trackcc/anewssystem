@@ -2,13 +2,13 @@ package anni.asecurity.web;
 
 import anni.asecurity.domain.User;
 
-import anni.core.test.PrototypeControllerTest;
+import anni.core.test.AbstractPrototypeControllerTest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class UserControllerTest extends PrototypeControllerTest {
+public class UserControllerTest extends AbstractPrototypeControllerTest {
     protected static Log logger = LogFactory.getLog(UserControllerTest.class);
 
     /** * setup */

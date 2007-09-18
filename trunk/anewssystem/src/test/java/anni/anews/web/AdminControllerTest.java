@@ -1,12 +1,12 @@
 package anni.anews.web;
 
-import anni.core.test.PrototypeControllerTest;
+import anni.core.test.AbstractPrototypeControllerTest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class AdminControllerTest extends PrototypeControllerTest {
+public class AdminControllerTest extends AbstractPrototypeControllerTest {
     protected static Log logger = LogFactory.getLog(AdminControllerTest.class);
 
     /** * setup */

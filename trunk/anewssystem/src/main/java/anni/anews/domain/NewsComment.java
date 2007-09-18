@@ -14,10 +14,11 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableId;
-import org.compass.annotations.SearchableProperty;
-
+/*
+ *import org.compass.annotations.Searchable;
+ *import org.compass.annotations.SearchableId;
+ *import org.compass.annotations.SearchableProperty;
+ */
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -28,29 +29,29 @@ import org.hibernate.annotations.GenericGenerator;
  * @since 2007年08月16日 下午 23时13分00秒31
  */
 @Entity
-@Searchable(alias = "a_news_comment")
+//@Searchable(alias = "a_news_comment")
 @Table(name = "A_NEWS_COMMENT")
 public class NewsComment implements Serializable {
     /** * serial. */
     static final long serialVersionUID = 0L;
 
     /** * id. */
-    @SearchableId
+    //@SearchableId
     private Long id;
 
     /** * news. */
     private News news;
 
     /** * name. */
-    @SearchableProperty
+    //@SearchableProperty
     private String name;
 
     /** * content. */
-    @SearchableProperty
+    //@SearchableProperty
     private String content;
 
     /** * username. */
-    @SearchableProperty
+    //@SearchableProperty
     private String username;
 
     /** * updateDate. */

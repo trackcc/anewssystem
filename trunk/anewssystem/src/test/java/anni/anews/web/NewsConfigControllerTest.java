@@ -2,13 +2,14 @@ package anni.anews.web;
 
 import anni.anews.domain.NewsConfig;
 
-import anni.core.test.PrototypeControllerTest;
+import anni.core.test.AbstractPrototypeControllerTest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class NewsConfigControllerTest extends PrototypeControllerTest {
+public class NewsConfigControllerTest
+    extends AbstractPrototypeControllerTest {
     protected static Log logger = LogFactory.getLog(NewsConfigControllerTest.class);
 
     /** * setup */

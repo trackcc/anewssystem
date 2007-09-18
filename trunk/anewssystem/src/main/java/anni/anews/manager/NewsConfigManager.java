@@ -17,7 +17,7 @@ public class NewsConfigManager extends ECHibernateEntityDao<NewsConfig> {
 
         if (newsConfig == null) {
             newsConfig = new NewsConfig();
-            newsConfig.setId(NewsConfig.DEFAULT_CONFIG_ID);
+            // newsConfig.setId(NewsConfig.DEFAULT_CONFIG_ID);
             newsConfig.setNewsNeedAudit(0);
             newsConfig.setCommentNeedAudit(0);
             newsConfig.setCouldComment(0);

@@ -52,6 +52,8 @@ INSERT INTO A_SECURITY_MENU VALUES(59,'','../role/index.htm','user.gif','\u89d2\
 INSERT INTO A_SECURITY_MENU VALUES(60,'','../menu/index.htm','user.gif','\u83dc\u5355',1,'',56)
 INSERT INTO A_SECURITY_MENU VALUES(61,'','../sandbox/datagrid.htm','user.gif','DataGrid',14,'',44)
 INSERT INTO A_SECURITY_MENU VALUES(62,'\u90e8\u95e8','../dept/index.htm','user.gif','\u90e8\u95e8',2,'\u90e8\u95e8',56)
+INSERT INTO A_SECURITY_MENU VALUES(63,'','../widgets/lingo/jsontree/Ext.lingo.JsonTree.html','user.gif','Ext.lingo.JsonTree',NULL,'',44)
+INSERT INTO A_SECURITY_MENU VALUES(64,'','../widgets/lingo/jsongrid/Ext.lingo.JsonGrid.html','user.gif','Ext.lingo.JsonGrid',NULL,'',44)
 INSERT INTO A_SECURITY_USER VALUES(22,NULL,NULL,'test',NULL,'test',NULL,'098f6bcd4621d373cade4e832627b4f6',NULL,NULL,NULL,NULL,'test',NULL)
 INSERT INTO A_SECURITY_USER VALUES(23,NULL,NULL,'test',NULL,'test',NULL,'098f6bcd4621d373cade4e832627b4f6',NULL,NULL,NULL,NULL,'test1',NULL)
 INSERT INTO A_SECURITY_USER VALUES(24,NULL,NULL,'test',NULL,'test',NULL,'098f6bcd4621d373cade4e832627b4f6',NULL,NULL,NULL,NULL,'test1',NULL)

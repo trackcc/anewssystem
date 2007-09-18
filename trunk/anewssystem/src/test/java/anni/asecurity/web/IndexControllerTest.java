@@ -1,12 +1,12 @@
 package anni.asecurity.web;
 
-import anni.core.test.PrototypeControllerTest;
+import anni.core.test.AbstractPrototypeControllerTest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class IndexControllerTest extends PrototypeControllerTest {
+public class IndexControllerTest extends AbstractPrototypeControllerTest {
     protected static Log logger = LogFactory.getLog(IndexControllerTest.class);
 
     /** * setup */

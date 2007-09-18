@@ -17,9 +17,10 @@ import javax.persistence.Transient;
 
 import anni.core.tree.LongTreeNode;
 
-import org.compass.annotations.Searchable;
-import org.compass.annotations.SearchableProperty;
-
+/*
+ *import org.compass.annotations.Searchable;
+ *import org.compass.annotations.SearchableProperty;
+ */
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -28,7 +29,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @since 2007-08-22
  */
 @Entity
-@Searchable(root = false, alias = "a_news_category")
+//@Searchable(root = false, alias = "a_news_category")
 @Table(name = "A_NEWS_CATEGORY")
 public class NewsCategory extends LongTreeNode<NewsCategory> {
     /** * serial. */
@@ -50,7 +51,7 @@ public class NewsCategory extends LongTreeNode<NewsCategory> {
     private NewsCategory parent;
 
     /** * name. */
-    @SearchableProperty(name = "categoryname")
+    //@SearchableProperty(name = "categoryname")
     private String name;
 
     /** * theSort. */

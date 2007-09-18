@@ -17,7 +17,7 @@ Ext.namespace("Ext.lingo");
 /**
  * 拥有CRUD功能的树形.
  *
- * @param container 被渲染的html元素的id，<div id="container"></div>
+ * @param container 被渲染的html元素的id，<div id="lighttree"></div>
  * @param config    需要的配置{}
  */
 Ext.lingo.JsonTree = function(container, config) {
@@ -400,8 +400,10 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
             this.createDialog();
         }
 
-        var sm = this.treePanel.getSelectionModel();
-        var n = sm.getSelectedNode();
+        var n = this.getSelectedNode();
+        //if (n == null) {
+        //    Ext.MessageBox.alert("提示", "需要选中一个节点");
+        //}
         this.menuData = new Ext.data.Store({
             proxy      : new Ext.data.HttpProxy({url:this.urlLoadData + "?id=" + n.id}),
             reader     : new Ext.data.JsonReader({},this.headers),

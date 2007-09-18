@@ -4,13 +4,13 @@ import anni.asecurity.domain.Menu;
 
 import anni.asecurity.manager.*;
 
-import anni.core.test.PrototypeControllerTest;
+import anni.core.test.AbstractPrototypeControllerTest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class MenuControllerTest extends PrototypeControllerTest {
+public class MenuControllerTest extends AbstractPrototypeControllerTest {
     protected static Log logger = LogFactory.getLog(MenuControllerTest.class);
     private UserManager userManager = null;
 

@@ -34,7 +34,7 @@ Ext.onReady(function(){
     // 设置布局
     layout.beginUpdate();
         layout.add('center', new Ext.ContentPanel('tab1', {
-            title      : '菜单管理',
+            title      : '菜单设置',
             toolbar    : null,
             closable   : false,
             fitToFrame : true
@@ -52,22 +52,22 @@ Ext.onReady(function(){
     // 默认需要id, name, theSort, parent, children
     // 其他随意定制
     var metaData = [
-        {id : 'id',    qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1},
-        {id : 'url',   qtip : "链接地址", vType : "url",      allowBlank : false},
-        {id : 'name',  qtip : "菜单名称", vType : "chn",      allowBlank : false},
-        {id : 'qtip',  qtip : "提示信息", vType : "chn",      allowBlank : true},
-        {id : 'image', qtip : "图片",     vType : "alphanum", allowBlank : true,  defValue : "user.gif"},
-        {id : 'descn', qtip : "描述",     vType : "chn",      allowBlank : true}
+        {id : 'id',         qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1},
+        {id : 'name',       qtip : "菜单名称", vType : "chn",      allowBlank : false},
+        {id : 'qtip',       qtip : "提示",     vType : "chn",      allowBlank : true},
+        {id : 'url',        qtip : "访问路径", vType : "url",      allowBlank : true},
+        {id : 'image',      qtip : "图片",     vType : "alphanum", allowBlank : true,  defValue : "user.gif"},
+        {id : 'updateDate', qtip : "更新时间", vType : "date",     allowBlank : false},
+        {id : 'descn',      qtip : "描述",     vType : "chn",      allowBlank : true}
     ];
 
-    // 创建树形
-    var lightTree = new Ext.lingo.JsonTree("lighttree", {
+    // 创建表格
+    var lightGrid = new Ext.lingo.JsonGrid("lightgrid", {
         metaData      : metaData,
-        dlgWidth      : 500,
-        dlgHeight     : 300,
-        dialogContent : "content",
+        dialogContent : "content"
     });
 
-    // 渲染树形
-    lightTree.render();
+    // 渲染表格
+    lightGrid.render();
+
 });

@@ -33,6 +33,12 @@
       <groupId>anni</groupId>
       <artifactId>core</artifactId>
       <version>0.0.2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.compass</groupId>
+          <artifactId>compass</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.sf.json-lib</groupId>
@@ -67,6 +73,7 @@
           <includes>
 <!--
             <include>**/NewsCategoryControllerTest.java</include>
+            <include>**/NewsConfigControllerTest.java</include>
 -->
             <include>**/*Test.java</include>
             <include>**/*TestCase.java</include>
@@ -181,7 +188,7 @@
   </reporting>
 
   <properties>
-    <skip-db-test>false</skip-db-test>
+    <skip-db-test>true</skip-db-test>
     <use-scope>compile</use-scope>
   </properties>
 

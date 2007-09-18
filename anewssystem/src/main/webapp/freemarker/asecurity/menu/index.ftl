@@ -48,10 +48,16 @@
         </td>
       </tr>
       <tr>
-        <td width="20%" align="right"><label for="descn" style="font-size:12px;">描述：</label></td>
-        <td width="80%" colspan="3" colspan="3">
+        <td width="20%" align="right"><label for="name" style="font-size:12px;">图片：</label></td>
+        <td width="30%">
           <div class="x-form-item">
-            <input id="descn" type="text" size="65">
+            <input id="image" type="text" size="20">
+          </div>
+        </td>
+        <td width="20%" align="right"><label for="qtip" style="font-size:12px;">描述：</label></td>
+        <td width="30%">
+          <div class="x-form-item">
+            <input id="descn" type="text" size="20">
           </div>
         </td>
       </tr>

@@ -5,13 +5,13 @@ import anni.anews.domain.NewsCategory;
 
 import anni.anews.manager.NewsCategoryManager;
 
-import anni.core.test.PrototypeControllerTest;
+import anni.core.test.AbstractPrototypeControllerTest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class NewsControllerTest extends PrototypeControllerTest {
+public class NewsControllerTest extends AbstractPrototypeControllerTest {
     protected static Log logger = LogFactory.getLog(NewsControllerTest.class);
     private NewsCategoryManager newsCategoryManager;
 

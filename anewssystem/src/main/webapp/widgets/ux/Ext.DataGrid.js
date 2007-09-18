@@ -49,7 +49,7 @@ Ext.extend(Ext.DataGrid, Ext.DaoFactory, {
         }
     }, showDlg : function(tbBtn) {
         var b = tbBtn.cls == "view" ? true : eval("this." + tbBtn.cls + "()");
-        console.error(tbBtn);
+
         if(b) {
             if(!this.dlg) {
                 this.createDialog();

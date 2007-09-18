@@ -18,6 +18,12 @@
         <mapping class="anni.anews.domain.NewsConfig"/>
         <mapping class="anni.anews.domain.NewsComment"/>
         <mapping class="anni.anews.domain.NewsTag"/>
+
+        <mapping class="anni.asecurity.domain.Dept"/>
+        <mapping class="anni.asecurity.domain.User"/>
+        <mapping class="anni.asecurity.domain.Role"/>
+        <mapping class="anni.asecurity.domain.Resource"/>
+        <mapping class="anni.asecurity.domain.Menu"/>
     </session-factory>
 </hibernate-configuration>
 

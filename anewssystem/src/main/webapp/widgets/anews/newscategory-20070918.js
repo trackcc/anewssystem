@@ -62,7 +62,7 @@ Ext.onReady(function(){
         metaData      : metaData,
         dlgWidth      : 500,
         dlgHeight     : 300,
-        dialogContent : "content",
+        dialogContent : "content"
     });
 
     // 渲染树形

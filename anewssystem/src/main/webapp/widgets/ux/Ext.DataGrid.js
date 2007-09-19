@@ -502,7 +502,7 @@ Ext.extend(Ext.DataGrid, Ext.DaoFactory, {
         }];
         for(var i = 0; i < h.length; i++) {
             var renderer = h[i].renderer;
-            console.error(h[i].type);
+            //console.error(h[i].type);
             var align = "left";
             var hidden = false;
             var draw = h[i].draw != undefined ? h[i].draw : true;

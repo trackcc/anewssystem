@@ -6,7 +6,7 @@
  * http://www.extjs.com/license
  *
  * @author Lingo
- * @since 2007-09-13
+ * @since 2007-09-20
  * http://code.google.com/p/anewssystem/
  */
 Ext.onReady(function(){
@@ -34,7 +34,7 @@ Ext.onReady(function(){
     // 设置布局
     layout.beginUpdate();
         layout.add('center', new Ext.ContentPanel('tab1', {
-            title      : '菜单设置',
+            title      : '资源管理',
             toolbar    : null,
             closable   : false,
             fitToFrame : true
@@ -53,22 +53,16 @@ Ext.onReady(function(){
     // 其他随意定制
     var metaData = [
         {id : 'id',         qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1},
-        {id : 'name',       qtip : "菜单名称", vType : "chn",      allowBlank : false},
-        {id : 'qtip',       qtip : "提示",     vType : "chn",      allowBlank : true},
-        {id : 'url',        qtip : "访问路径", vType : "url",      allowBlank : true},
-        {id : 'image',      qtip : "图片",     vType : "alphanum", allowBlank : true,  defValue : "user.gif"},
-        {id : 'updateDate', qtip : "更新时间", vType : "date",     allowBlank : false},
+        {id : 'name',       qtip : "资源名称", vType : "chn",      allowBlank : false},
+        {id : 'resType',    qtip : "资源类型", vType : "chn",      allowBlank : false},
+        {id : 'resString',  qtip : "资源内容", vType : "chn",      allowBlank : false},
         {id : 'descn',      qtip : "描述",     vType : "chn",      allowBlank : true}
     ];
 
     // 创建表格
     var lightGrid = new Ext.lingo.JsonGrid("lightgrid", {
         metaData      : metaData,
-        dialogContent : "content",
-        urlPagedQuery : "pagedQuery.json",
-        urlSave       : "success.json",
-        urlLoadData   : "loadData.json",
-        urlRemove     : "success.json"
+        dialogContent : "content"
     });
 
     // 渲染表格

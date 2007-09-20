@@ -173,7 +173,7 @@ public class PrototypeController extends AbstractController
      * Helper object that knows how to return method names from incoming requests.
      * Can be overridden via the methodNameResolver bean property.
      */
-    private MethodNameResolver methodNameResolver = new InternalPathMethodNameResolver();
+    protected MethodNameResolver methodNameResolver = new InternalPathMethodNameResolver();
 
     /** List of Validators to apply to commands. */
     private Validator[] validators;

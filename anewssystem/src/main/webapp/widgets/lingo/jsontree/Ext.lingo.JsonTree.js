@@ -427,7 +427,7 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
             width      : meta.vWidth,
             id         : meta.id,
             name       : meta.id,
-            style      : (meta.vType == "integer" || meta == "number" ? "text-align: right;" : ""),
+            style      : (meta.vType == "integer" || meta.vType == "number" ? "text-align: right;" : ""),
             readOnly   : meta.readOnly,
             defValue   : meta.defValue,
             alt        : meta.alt,

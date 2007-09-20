@@ -2,7 +2,7 @@ package anni.asecurity.manager;
 
 import anni.asecurity.domain.Resource;
 
-import anni.core.dao.ECHibernateEntityDao;
+import anni.core.dao.hibernate.HibernateEntityDao;
 
 import anni.core.security.AuthenticationHelper;
 import anni.core.security.cache.AcegiCacheManager;
@@ -17,7 +17,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Lingo.
  * @since 2007年08月18日 下午 20时19分00秒578
  */
-public class ResourceManager extends ECHibernateEntityDao<Resource> {
+public class ResourceManager extends HibernateEntityDao<Resource> {
     /**
      * AcegiCacheManager.
      */

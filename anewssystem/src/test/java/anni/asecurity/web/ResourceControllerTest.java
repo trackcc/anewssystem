@@ -27,31 +27,27 @@ public class ResourceControllerTest extends AbstractPrototypeControllerTest {
 
     public void testDefault() throws Exception {
         assertNotNull(controller);
-        request.setRequestURI("/resource/list.htm");
+        request.setRequestURI("/resource/index.htm");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertModelAttributeAvailable(mv, "page");
-        mvHelper.assertViewName(mv, "/asecurity/resource/listResource");
+        //mvHelper.assertModelAttributeAvailable(mv, "page");
+        mvHelper.assertViewName(mv, "asecurity/resource/index");
     }
 
-    public void testInsert() throws Exception {
-        request.setRequestURI("/resource/insert.htm");
-        request.addParameter("name", "resource");
-        request.addParameter("resType", "METHOD");
-        request.addParameter("resString",
-            "anni.asecurity.web.ResourceController.*");
+    public void testSave() throws Exception {
+        request.setRequestURI("/resource/save.htm");
+        request.addParameter("data",
+            "{id:'0',name:'resource',resType:'METHOD',resString:'anni.asecurity.web.ResourceController.*'}");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertModelAttributeAvailable(mv, "resource");
+        //mvHelper.assertModelAttributeAvailable(mv, "resource");
         mvHelper.assertViewName(mv, null);
     }
 
-    public void testInsert2() throws Exception {
-        request.setRequestURI("/resource/insert.htm");
-        request.addParameter("name", "res dao");
-        request.addParameter("resType", "METHOD");
-        request.addParameter("resString",
-            "anni.asecurity.manager.ResourceManager.*");
+    public void testSave2() throws Exception {
+        request.setRequestURI("/resource/save.htm");
+        request.addParameter("data",
+            "{id:'0',name:'res dao',resType:'METHOD',resString:'anni.asecurity.manager.ResourceManager.*'}");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertModelAttributeAvailable(mv, "resource");
+        //mvHelper.assertModelAttributeAvailable(mv, "resource");
         mvHelper.assertViewName(mv, null);
     }
 }

@@ -44,15 +44,16 @@ public class LongTreeControllerTest extends TestCase {
 
     public void testDefault() {
         assertNotNull(controller);
-        //
-        assertEquals(Node.class, controller.getEntityClass());
-        assertEquals("node", controller.getCommandName(node));
 
         //
-        controller.setEntityDao(dao);
-        assertEquals(dao, controller.getEntityDao());
+        //assertEquals(Node.class, controller.getEntityClass());
+        //assertEquals("node", controller.getCommandName(node));
+
         //
-        assertEquals("yyyy-MM-dd", controller.getDatePattern());
+        //controller.setEntityDao(dao);
+        //assertEquals(dao, controller.getEntityDao());
+        //
+        //assertEquals("yyyy-MM-dd", controller.getDatePattern());
     }
 
     public void testExcludes() {
@@ -134,6 +135,15 @@ public class LongTreeControllerTest extends TestCase {
         controller.setEntityDao(dao);
         request.setRequestURI("test/insertTree.htm");
         request.addParameter("data", "{\"id\":1,\"parentId\":0}");
+        mv = controller.handleRequest(request, response);
+        assertNull(mv.getViewName());
+        assertEquals("{success:true,id:1}", response.getContentAsString());
+    }
+
+    public void testInsertTree3() throws Exception {
+        controller.setEntityDao(dao);
+        request.setRequestURI("test/insertTree.htm");
+        request.addParameter("data", "{\"id\":1}");
         mv = controller.handleRequest(request, response);
         assertNull(mv.getViewName());
         assertEquals("{success:true,id:1}", response.getContentAsString());

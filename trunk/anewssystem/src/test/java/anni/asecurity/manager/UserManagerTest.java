@@ -34,6 +34,7 @@ public class UserManagerTest extends AbstractDaoTestCase {
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
+        userManager.removeAll();
     }
 
     @Override

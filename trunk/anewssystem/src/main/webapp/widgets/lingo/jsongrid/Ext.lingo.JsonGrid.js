@@ -25,10 +25,12 @@ Ext.lingo.JsonGrid = function(container, config) {
     this.id        = container;
     this.config    = config;
     this.pageSize  = config.pageSize ? config.pageSize : 15;
-    this.urlPagedQuery = config.urlPagedQuery ? config.urlPagedQuery : "pagedQuery.json";
-    this.urlLoadData   = config.urlLoadData   ? config.urlLoadData   : "loadData.json";
-    this.urlSave       = config.urlSave       ? config.urlSave       : "success.json";
-    this.urlRemove     = config.urlRemove     ? config.urlRemove     : "success.json";
+    this.urlPagedQuery = config.urlPagedQuery ? config.urlPagedQuery : "pagedQuery.htm";
+    this.urlLoadData   = config.urlLoadData   ? config.urlLoadData   : "loadData.htm";
+    this.urlSave       = config.urlSave       ? config.urlSave       : "save.htm";
+    this.urlRemove     = config.urlRemove     ? config.urlRemove     : "remove.htm";
+
+    this.filterTxt = "";
 
     Ext.lingo.JsonGrid.superclass.constructor.call(this);
 }
@@ -86,7 +88,8 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                 cm : this.columnModel,
                 // selModel: new Ext.grid.CellSelectionModel(),
                 // selModel: new Ext.grid.RowSelectionModel({singleSelect:false}),
-                enableColLock:false
+                enableColLock:false,
+                loadMask : true
             });
         }
 
@@ -167,7 +170,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         var paging = new Ext.PagingToolbar(gridFooter, this.dataStore, {
             pageSize    : this.pageSize,
             displayInfo : true,
-            displayMsg  : '数据: {0} - {1} 共 {2}',
+            displayMsg  : '显示: {0} - {1} 共 {2}',
             emptyMsg    : "没有找到相关数据"
         });
 
@@ -175,7 +178,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         this.dataStore.on('beforeload', function() {
             this.dataStore.baseParams = {
                 filterValue : this.filter.getValue(),
-                filterTxt   : this.filterButton.getText()
+                filterTxt   : this.filterTxt
             };
         }.createDelegate(this));
         this.dataStore.load({
@@ -186,6 +189,14 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
     add : function() {
         if (!this.dialog) {
             this.createDialog();
+        }
+        for (var i = 0; i < this.columns.length; i++) {
+            var column = this.columns[i];
+            if (column.vType == "integer") {
+                column.setValue(0);
+            } else {
+                column.reset();
+            }
         }
         this.dialog.show(Ext.get("add"));
     },
@@ -240,7 +251,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                     Ext.Ajax.request({
                         url     : this.urlRemove + '?id=' + ids,
                         success : function(){
-                            Ext.MessageBox.alert('提示', '删除成功！');
+                            Ext.MessageBox.alert(' 提示', '删除成功！');
                             this.refresh();
                         }.createDelegate(this),
                         failure : function(){Ext.MessageBox.alert('提示', '删除失败！');}
@@ -256,7 +267,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             width      : meta.vWidth,
             id         : meta.id,
             name       : meta.id,
-            style      : (meta.vType == "integer" || meta == "number" ? "text-align: right;" : ""),
+            style      : (meta.vType == "integer" || meta.vType == "number" ? "text-align: right;" : ""),
             readOnly   : meta.readOnly,
             defValue   : meta.defValue,
             alt        : meta.alt,
@@ -425,6 +436,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
     }, onItemCheck : function(item, checked) {
         if(checked) {
             this.filterButton.setText(item.text + ':');
+            this.filterTxt = item.value;
         }
     },
     // 弹出右键菜单

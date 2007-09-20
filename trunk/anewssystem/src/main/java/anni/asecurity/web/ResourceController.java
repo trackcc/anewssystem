@@ -6,7 +6,8 @@ import anni.asecurity.domain.Resource;
 
 import anni.asecurity.manager.ResourceManager;
 
-import anni.core.web.prototype.BaseLongController;
+import anni.core.grid.LongGridController;
+
 import anni.core.web.prototype.StreamView;
 
 import org.apache.commons.logging.Log;
@@ -19,15 +20,15 @@ import org.springframework.web.bind.ServletRequestDataBinder;
  * @author Lingo.
  * @since 2007年08月18日 下午 20时19分00秒578
  */
-public class ResourceController extends BaseLongController<Resource, ResourceManager> {
+public class ResourceController extends LongGridController<Resource, ResourceManager> {
     /** * logger. */
     private static Log logger = LogFactory.getLog(ResourceController.class);
 
     /** * constructor. */
     public ResourceController() {
-        setEditView("/asecurity/resource/editResource");
-        setListView("/asecurity/resource/listResource");
-        logger.info("start");
+        //setEditView("/asecurity/resource/editResource");
+        //setListView("/asecurity/resource/listResource");
+        //logger.info("start");
     }
 
     /**
@@ -39,7 +40,6 @@ public class ResourceController extends BaseLongController<Resource, ResourceMan
      * @param binder 绑定工具
      * @throws Exception 异常
      */
-    @Override
     protected void preBind(HttpServletRequest request, Object command,
         ServletRequestDataBinder binder) throws Exception {
         String resType = getStrParam("resType", null);
@@ -62,17 +62,11 @@ public class ResourceController extends BaseLongController<Resource, ResourceMan
         }
     }
 
-    /** * index. */
-    public void index() {
-        mv.setViewName("asecurity/resource/index");
-    }
-
     /**
      * onInsert.
      *
      * @throws Exception 写入response可能出现异常
      */
-    @Override
     public void onInsert() throws Exception {
         response.getWriter().print("{success:true,info:\"success\"}");
         mv.setView(new StreamView("application/json"));
@@ -83,9 +77,50 @@ public class ResourceController extends BaseLongController<Resource, ResourceMan
      *
      * @throws Exception 写入response可能出现异常
      */
-    @Override
     public void onUpdate() throws Exception {
         response.getWriter().print("{success:true,info:\"success\"}");
         mv.setView(new StreamView("application/json"));
+    }
+
+    /** * index. */
+    public void index() {
+        mv.setViewName("asecurity/resource/index");
+    }
+
+    /**
+     * 保存，新增或修改.
+     *
+     * @throws Exception 异常
+     */
+    @Override
+    public void save() throws Exception {
+        logger.info(params());
+
+        Resource entity = bindObject();
+
+        if ("METHOD".equals(entity.getResType())) {
+            String resString = entity.getResString();
+
+            try {
+                int lastDotIndex = resString.lastIndexOf('.');
+                String className = resString.substring(0, lastDotIndex);
+                Class.forName(className);
+            } catch (Exception ex) {
+                logger.info(ex);
+                response.getWriter().print("success:false");
+            }
+        }
+
+        getEntityDao().save(entity);
+        response.getWriter().print("{success:true}");
+    }
+
+    /**
+     * 不转换成json的属性.
+     *
+     * @return excludes
+     */
+    public String[] getExcludes() {
+        return new String[] {"roles"};
     }
 }

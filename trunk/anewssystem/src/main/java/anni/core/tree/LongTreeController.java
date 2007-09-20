@@ -3,18 +3,15 @@ package anni.core.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-import anni.core.utils.GenericsUtils;
+import anni.core.json.JsonController;
+import anni.core.json.JsonUtils;
 
-import anni.core.web.prototype.ExtendController;
 import anni.core.web.prototype.StreamView;
 
 import net.sf.json.JSONObject;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.springframework.util.Assert;
 
 
 /**
@@ -26,72 +23,9 @@ import org.springframework.util.Assert;
  * @param <D> LongTreeHibernateDao的子类
  */
 public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHibernateDao<T>>
-    extends ExtendController {
+    extends JsonController<T, D> {
     /** * logger. */
     private static Log logger = LogFactory.getLog(LongTreeController.class);
-
-    /**
-     * DAO所管理的Entity类型.
-     */
-    protected Class<T> entityClass;
-
-    /**
-     * 对应的dao.
-     */
-    protected D entityDao;
-
-    /**
-     * 构造方法，初始化一系列泛型参数.
-     */
-    public LongTreeController() {
-        logger.info("start");
-        // 根据T,反射获得entityClass
-        entityClass = GenericsUtils.getSuperClassGenricType(getClass());
-    }
-
-    /**
-     * 取得entityClass.
-     * JDK1.4不支持泛型的子类可以抛开Class&lt;T&gt; entityClass
-     * 重载此函数达到相同效果。
-     *
-     * @return Class 具体类型
-     */
-    protected Class<T> getEntityClass() {
-        return entityClass;
-    }
-
-    /**
-     * 获得EntityDao类进行CRUD操作,可以在子类重载.
-     * @return D 实体dao
-     */
-    protected D getEntityDao() {
-        Assert.notNull(entityDao, "dao未能成功初始化");
-
-        return entityDao;
-    }
-
-    /**
-     * 为spring留个接口，注入EntityDao.
-         *
-     * @param entityDao EntityDao
-     */
-    public void setEntityDao(D entityDao) {
-        this.entityDao = entityDao;
-    }
-
-    /**
-     * 回调函数，声明CommandName--对象的名字,默认为首字母小写的类名.
-     * 问题是hibernate用cglib对类进行加强，得到的类名就变成resource$$EnhancerByCGLIB$$3daeb8bf
-     * 为了这个问题晚上两点还在翻spring的代码，真是晕哦
-     *
-     * @see #bindObject(HttpServletRequest, Object)
-     * @param command 对象
-     * @return 对象名称
-     */
-    @Override
-    protected String getCommandName(Object command) {
-        return StringUtils.uncapitalize(getEntityClass().getSimpleName());
-    }
 
     /**
      * 一次性获得整棵树的数据.
@@ -99,14 +33,16 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
      * @throws Exception 异常
      */
     public void getAllTree() throws Exception {
+        logger.info(params());
+
         String hql = "from " + getEntityClass().getSimpleName()
             + " where parent is null order by theSort asc, id desc";
 
         List<T> list = getEntityDao().find(hql);
 
         response.setCharacterEncoding("UTF-8");
-        LongTreeUtils.write(list, response.getWriter(),
-            getExcludesForAll(), getDatePattern());
+        JsonUtils.write(list, response.getWriter(), getExcludesForAll(),
+            getDatePattern());
 
         StreamView view = new StreamView("application/json");
         mv.setView(view);
@@ -133,12 +69,8 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
                        .find(hql + " where parent.id=?" + orderBy, parentId);
         }
 
-        response.setCharacterEncoding("UTF-8");
-        LongTreeUtils.write(list, response.getWriter(),
+        JsonUtils.write(list, response.getWriter(),
             getExcludesForChildren(), getDatePattern());
-
-        StreamView view = new StreamView("application/json");
-        mv.setView(view);
     }
 
     /**
@@ -151,15 +83,11 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
         T entity = getEntityDao().get(id);
 
         if (entity != null) {
-            response.setCharacterEncoding("UTF-8");
-
             List<T> list = new ArrayList<T>();
             list.add(entity);
-            LongTreeUtils.write(list, response.getWriter(),
+            JsonUtils.write(list, response.getWriter(),
                 getExcludesForChildren(), getDatePattern());
         }
-
-        mv.setView(new StreamView("application/json"));
     }
 
     /**
@@ -171,7 +99,7 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
      */
     public void insertTree() throws Exception {
         String data = getStrParam("data", "");
-        T node = LongTreeUtils.json2Node(data, getEntityClass(),
+        T node = JsonUtils.json2Bean(data, getEntityClass(),
                 getExcludesForChildren(), getDatePattern());
 
         T entity = getEntityDao().get(node.getId());
@@ -198,7 +126,6 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
 
         response.getWriter()
                 .print("{success:true,id:" + entity.getId() + "}");
-        mv.setView(new StreamView("application/json"));
     }
 
     /**
@@ -212,8 +139,6 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
         if (id != -1L) {
             getEntityDao().removeById(id);
         }
-
-        mv.setView(new StreamView("application/json"));
     }
 
     /**
@@ -224,7 +149,7 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
      */
     public void sortTree() throws Exception {
         String data = getStrParam("data", "");
-        List<T> list = LongTreeUtils.json2List(data, getEntityClass(),
+        List<T> list = JsonUtils.json2List(data, getEntityClass(),
                 getExcludesForChildren(), getDatePattern());
 
         for (int i = 0; i < list.size(); i++) {
@@ -241,8 +166,6 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
                 getEntityDao().save(entity);
             }
         }
-
-        mv.setView(new StreamView("application/json"));
     }
 
     /**
@@ -256,13 +179,12 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
         JSONObject jsonObject = JSONObject.fromString(data);
 
         T entity = getEntityDao().get(jsonObject.getLong("id"));
-        LongTreeUtils.json2Node(jsonObject, entity,
-            getExcludesForChildren(), getDatePattern());
+        JsonUtils.json2Bean(jsonObject, entity, getExcludesForChildren(),
+            getDatePattern());
 
         getEntityDao().save(entity);
 
         response.getWriter().print("{success:true,info:\"success\"}");
-        mv.setView(new StreamView("application/json"));
     }
 
     /**
@@ -281,14 +203,5 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
      */
     public String[] getExcludesForChildren() {
         return new String[] {"class", "root", "parent", "children"};
-    }
-
-    /**
-     * getDatePattern().
-     *
-     * @return 格式化日期类型的字符串
-     */
-    public String getDatePattern() {
-        return "yyyy-MM-dd";
     }
 }

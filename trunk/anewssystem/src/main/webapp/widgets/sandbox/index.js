@@ -2,9 +2,9 @@ var index = function(){
     var layout;
     return {
         init : function(){
-            // initialize state manager, we will use cookies
+            // 使用cookie保存状态
             //Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
-            // create the main layout
+            // 创建主面板
             layout = new Ext.BorderLayout(document.body, {
                 north: {
                     split:false,
@@ -26,19 +26,19 @@ var index = function(){
                     autoScroll: false
                 }
             });
-            // tell the layout not to perform layouts until we're done adding everything
+            // 让布局在我们安排了所以部分之后，再显示
             var innerLayout = new Ext.BorderLayout('south', {
                 center: {
-                    autoScroll: false,
-                    split: true ,
-                    titlebar: false,
-                    collapsible: true,
-                    showPin: true,
-                    animate: true
+                    autoScroll  : false,
+                    split       : true ,
+                    titlebar    : false,
+                    collapsible : true,
+                    showPin     : true,
+                    animate     : true
                 }, south: {
-                    initialSize: '26px',
-                    autoScroll: false,
-                    split: false
+                    initialSize : '26px',
+                    autoScroll  : false,
+                    split       : false
                 }
             });
             this.createToolbar();
@@ -59,9 +59,11 @@ var index = function(){
             this.loadMain('./welcome.htm');
             this.setLoginName('尖叫的土豆 监制');
             MenuHelper.init(this.render);
+
+            Ext.lingo.LoginDialog.init();
         },
 
-        createToolbar : function(){
+        createToolbar : function() {
             var theme = Cookies.get('xrinsurtheme') || 'aero'
             var menu = new Ext.menu.Menu({
                 id: 'mainMenu',
@@ -175,8 +177,10 @@ var index = function(){
                 }
             }
         }
-    };
+    }
 }();
+
+
 function info(o) {
     var buff = "";
     for (var i in o) {

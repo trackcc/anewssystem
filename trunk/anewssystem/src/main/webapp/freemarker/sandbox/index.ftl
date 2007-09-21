@@ -13,9 +13,12 @@
     <script type='text/javascript' src='${ctx}/dwr/engine.js'></script>
     <script type='text/javascript' src='${ctx}/dwr/util.js'></script>
     <script type='text/javascript' src='${ctx}/widgets/ux/Ext.Common.js'></script>
+<#--
     <script type='text/javascript' src='${ctx}/widgets/ux/Ext.DaoFactory.js'></script>
     <script type='text/javascript' src='${ctx}/widgets/ux/Ext.DataGrid.js'></script>
     <script type='text/javascript' src='${ctx}/widgets/ux/Ext.Forms.js'></script>
+-->
+    <script type='text/javascript' src='${ctx}/widgets/lingo/form/Ext.lingo.FormUtils.js'></script>
     <script type='text/javascript' src='${ctx}/widgets/sandbox/index.js'></script>
   </head>
   <body scroll='no' id='top'>

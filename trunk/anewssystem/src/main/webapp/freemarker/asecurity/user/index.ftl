@@ -6,38 +6,125 @@
     <#include "/include/meta.ftl"/>
     <title>用户管理</title>
     <#include "/include/extjs.ftl"/>
-    <script type='text/javascript' src="${ctx}/dwr/interface/UserHelper.js"></script>
-    <script type='text/javascript' src="${ctx}/dwr/interface/RoleHelper.js"></script>
-    <script type='text/javascript' src='${ctx}/dwr/engine.js'></script>
-    <script type='text/javascript' src='${ctx}/dwr/util.js'></script>
-    <script type="text/javascript" src="${ctx}/widgets/asecurity/DWRProxy.js"></script>
-    <script type="text/javascript" src="${ctx}/widgets/asecurity/user.js"></script>
+    <script type="text/javascript" src="${ctx}/widgets/asecurity/user-20070921.js"></script>
   </head>
   <body>
-    <div id="main-ct" style="width:840px;height:510px;"></div>
-    <div id="a-addInstance-dlg" style="visibility:hidden;">
-      <div class="x-dlg-hd">新增用户</div>
+    <div id="loading">
+      <div class="waitting">请稍候...</div>
+    </div>
+    <div id="tabs">
+      <div id="tab1">
+        <div id="toolbar"></div>
+        <div id="lightgrid" style="border: 0px solid #cccccc; overflow: hidden; width:auto;height:100%;"></div>
+      </div>
+      <div id="tab2"></div>
+    </div>
+    <!-- 增加、修改、查看 弹出框内容-->
+    <table id='content' width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
+      <tr height="50%"><td>&nbsp;</td></tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">帐号：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="username" type="text" size="20">
+          </div>
+        </td>
+        <td width="15%" align="right" style="font-size:12px;">密码：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="password" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">姓名：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="truename" type="text" size="20">
+          </div>
+        </td>
+        <td width="15%" align="right" style="font-size:12px;">性别：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="sex" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">生日：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="birthday" type="text" size="20">
+          </div>
+        </td>
+        <td width="15%" align="right" style="font-size:12px;">电话：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="tel" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">手机：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="mobile" type="text" size="20">
+          </div>
+        </td>
+        <td width="15%" align="right" style="font-size:12px;">邮箱：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="email" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">部门：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="dept" type="text" size="20">
+          </div>
+        </td>
+        <td width="15%" align="right" style="font-size:12px;">职务：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="duty" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">备注：</td>
+        <td width="85%" colspan="3">
+          <div class="x-form-item">
+            <input id="descn" type="text" size="60">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="right" width="15%">id：</td>
+        <td width="85%" colspan="3">
+          <div class="x-form-item">
+            <input id="id" type="text" size="60" readonly>
+          </div>
+        </td>
+      </tr>
+      <tr height="50%"><td>&nbsp;</td></tr>
+    </table>
+    <div id="role-dlg" style="visibility:hidden;">
+      <div class="x-dlg-hd">选择角色</div>
       <div class="x-dlg-bd">
-        <div id="a-addInstance-inner" class="x-layout-inactive-content">
-          <div id="a-addInstance-form"></div>
+        <div id="role-inner" class="x-layout-inactive-content">
+          <div id="role-grid" style="width:630px;height:380px;"></div>
         </div>
       </div>
     </div>
-    <div id="a-updateInstance-dlg" style="visibility:hidden;">
-      <div class="x-dlg-hd">修改用户</div>
-      <div class="x-dlg-bd">
-        <div id="a-updateInstance-inner" class="x-layout-inactive-content">
-          <div id="a-updateInstance-form"></div>
-        </div>
-      </div>
-    </div>
-    <div id="userAuthRole-dlg" style="visibility:hidden;">
-      <div class="x-dlg-hd">用户授权</div>
-      <div class="x-dlg-bd">
-        <div id="userAuthRole-inner" class="x-layout-inactive-content">
-          <div id="userAuthRole-grid" style="width:450px;height:220px;"></div>
-        </div>
-      </div>
-    </div>
-  </body>
+    <div id="error_message" style="display:block"></div>
+<script type="text/javascript">
+//DWREngine.setErrorHandler(errorHandler);
+function errorHandler(errorString, exception) {
+    console.error(errorString);
+    console.error(exception);
+}
+</script>
+</body>
 </html>

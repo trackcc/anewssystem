@@ -9,6 +9,7 @@
  * @since 2007-09-13
  * http://code.google.com/p/anewssystem/
  */
+// cookieºÍÖ÷Ìâ
 var Cookies = {
 };
 

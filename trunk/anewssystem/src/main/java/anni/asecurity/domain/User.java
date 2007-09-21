@@ -1,7 +1,5 @@
 package anni.asecurity.domain;
 
-import java.io.Serializable;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -21,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import anni.core.grid.LongGridBean;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -35,7 +35,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "A_SECURITY_USER")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class User implements Serializable {
+public class User extends LongGridBean {
     // ----------------------------------------------------
     // static fields
     // ----------------------------------------------------

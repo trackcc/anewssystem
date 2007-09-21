@@ -101,7 +101,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
         // header
         var gridHeader = this.grid.getView().getHeaderPanel(true);
-        var toolbar = new Ext.Toolbar(gridHeader);
+        this.toolbar = new Ext.Toolbar(gridHeader);
         var checkItems = new Array();
         for (var i = 0; i < this.config.metaData.length; i++) {
             var item = new Ext.menu.CheckItem({
@@ -122,7 +122,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             menu     : checkItems,
             minWidth : 105
         });
-        toolbar.add({
+        this.toolbar.add({
             id      : 'add',
             text    : '新增',
             cls     : 'add',
@@ -143,7 +143,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         }, '->', this.filterButton);
 
         // 输入框
-        this.filter = Ext.get(toolbar.addDom({
+        this.filter = Ext.get(this.toolbar.addDom({
              tag   : 'input',
              type  : 'text',
              size  : '20',
@@ -152,15 +152,15 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         }).el);
 
         this.filter.on('keypress', function(e) {
-          if(e.getKey() == e.ENTER && this.filter.getValue().length > 0) {
-              this.dataStore.load({params:{start:0, limit:this.pageSize}});
-          }
+            if(e.getKey() == e.ENTER && this.filter.getValue().length > 0) {
+                this.dataStore.load({params:{start:0, limit:this.pageSize}});
+            }
         }.createDelegate(this));
 
         this.filter.on('keyup', function(e) {
-          if(e.getKey() == e.BACKSPACE && this.filter.getValue().length === 0) {
-              this.dataStore.load({params:{start:0, limit:this.pageSize}});
-          }
+            if(e.getKey() == e.BACKSPACE && this.filter.getValue().length === 0) {
+                this.dataStore.load({params:{start:0, limit:this.pageSize}});
+            }
         }.createDelegate(this));
 
         // 页脚

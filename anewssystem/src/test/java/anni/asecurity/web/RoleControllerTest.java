@@ -27,36 +27,34 @@ public class RoleControllerTest extends AbstractPrototypeControllerTest {
 
     public void testDefault() throws Exception {
         assertNotNull(controller);
-        request.setRequestURI("/role/list.htm");
+        request.setRequestURI("/role/index.htm");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertModelAttributeAvailable(mv, "page");
-        mvHelper.assertViewName(mv, "/asecurity/role/listRole");
+        //mvHelper.assertModelAttributeAvailable(mv, "page");
+        mvHelper.assertViewName(mv, "asecurity/role/index");
     }
 
-    public void testSelectResources() throws Exception {
-        request.setRequestURI("/role/selectResources.htm");
+    public void testGetResources() throws Exception {
+        request.setRequestURI("/role/getResources.htm");
         request.addParameter("roleId", "1");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertModelAttributeAvailable(mv, "resources");
-        mvHelper.assertViewName(mv, "/asecurity/role/selectResources");
+        //mvHelper.assertModelAttributeAvailable(mv, "resources");
+        mvHelper.assertViewName(mv, null);
     }
 
-    public void testAuthResources() throws Exception {
-        request.setRequestURI("/role/authResources.htm");
-        request.addParameter("itemlist", "1");
-        request.addParameter("itemlist", "2");
+    public void testAuth() throws Exception {
+        request.setRequestURI("/role/auth.htm");
+        request.addParameter("ids", "1,2");
         session.setAttribute("roleId", new Long(2L));
         mv = controller.handleRequest(request, response);
-        mvHelper.assertViewName(mv, "forward:/role/selectResources.htm");
+        mvHelper.assertViewName(mv, null);
     }
 
-    public void testAuthResources2() throws Exception {
-        request.setRequestURI("/role/authResources.htm");
-        request.addParameter("itemlist", "1");
-        request.addParameter("itemlist", "2");
-        request.addParameter("auth", "true");
+    public void testAuth2() throws Exception {
+        request.setRequestURI("/role/auth.htm");
+        request.addParameter("ids", "1,2");
+        request.addParameter("isAuth", "true");
         session.setAttribute("roleId", new Long(2L));
         mv = controller.handleRequest(request, response);
-        mvHelper.assertViewName(mv, "forward:/role/selectResources.htm");
+        mvHelper.assertViewName(mv, null);
     }
 }

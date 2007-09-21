@@ -66,6 +66,14 @@
       </tr>
       <tr height="50%"><td>&nbsp;</td></tr>
     </table>
+    <div id="resource-dlg" style="visibility:hidden;">
+      <div class="x-dlg-hd">角色授权</div>
+      <div class="x-dlg-bd">
+        <div id="userAuthRole-inner" class="x-layout-inactive-content">
+          <div id="resource-grid" style="width:630px;height:380px;"></div>
+        </div>
+      </div>
+    </div>
     <div id="error_message" style="display:block"></div>
 <script type="text/javascript">
 //DWREngine.setErrorHandler(errorHandler);

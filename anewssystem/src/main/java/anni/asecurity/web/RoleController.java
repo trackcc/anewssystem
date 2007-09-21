@@ -8,31 +8,24 @@ import anni.asecurity.domain.Role;
 import anni.asecurity.manager.ResourceManager;
 import anni.asecurity.manager.RoleManager;
 
-import anni.core.web.prototype.BaseLongController;
-import anni.core.web.prototype.StreamView;
+import anni.core.grid.LongGridController;
+
+import anni.core.json.JsonUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.springframework.web.util.WebUtils;
 
 
 /**
  * @author Lingo.
  * @since 2007年08月18日 下午 20时19分00秒578
  */
-public class RoleController extends BaseLongController<Role, RoleManager> {
+public class RoleController extends LongGridController<Role, RoleManager> {
     /** * logger. */
     private static Log logger = LogFactory.getLog(RoleController.class);
 
     /** * resource manager. */
     private ResourceManager resourceManager = null;
-
-    /** * constructor. */
-    public RoleController() {
-        setEditView("/asecurity/role/editRole");
-        setListView("/asecurity/role/listRole");
-    }
 
     /** * @param resourceManager Resource Manager. */
     public void setResourceManager(ResourceManager resourceManager) {
@@ -44,19 +37,14 @@ public class RoleController extends BaseLongController<Role, RoleManager> {
      *
      * @throws Exception 异常
      */
-    public void selectResources() throws Exception {
-        // mv.setViewName("/admin/selectResources");
-        Long roleId = getLongParam("roleId", 0L);
+    public void getResources() throws Exception {
+        logger.info(params());
 
-        if (roleId != 0L) {
-            WebUtils.setSessionAttribute(request, "roleId", roleId);
-        }
+        long roleId = getLongParam("roleId", 0L);
+        Role role = getEntityDao().get(roleId);
+        logger.info(roleId);
 
-        Long id = (Long) WebUtils.getRequiredSessionAttribute(request,
-                "roleId");
         List<Resource> resources = resourceManager.getAll();
-
-        Role role = getEntityDao().get(id);
 
         if (role != null) {
             for (Resource resource : resources) {
@@ -66,9 +54,8 @@ public class RoleController extends BaseLongController<Role, RoleManager> {
             }
         }
 
-        mv.addObject("role", role);
-        mv.addObject("resources", resources);
-        mv.setViewName("/asecurity/role/selectResources");
+        JsonUtils.write(resources, response.getWriter(), getExcludes(),
+            getDatePattern());
     }
 
     /**
@@ -76,22 +63,18 @@ public class RoleController extends BaseLongController<Role, RoleManager> {
      *
      * @throws Exception 异常
      */
-    public void authResources() throws Exception {
-        mv.setViewName("forward:/role/selectResources.htm");
-
-        boolean auth = getBooleanParam("auth", false);
-
-        // String[] itemlist = StringUtils.split(getStrParam("itemlist", ""),
-        //         ",");
-        String[] itemlist = getStrParams("itemlist");
-
-        Long roleId = (Long) WebUtils.getRequiredSessionAttribute(request,
-                "roleId");
+    public void auth() throws Exception {
+        boolean isAuth = getBooleanParam("isAuth", false);
+        String ids = getStrParam("ids", "");
+        long roleId = getLongParam("roleId", 0L);
         Role role = getEntityDao().get(roleId);
+        String[] arrays = ids.split(",");
+        logger.info(roleId);
+        logger.info(ids);
 
         if (role != null) {
-            if (auth) {
-                for (String id : itemlist) {
+            if (isAuth) {
+                for (String id : arrays) {
                     Resource resource = resourceManager.get(Long.valueOf(
                                 id));
 
@@ -100,7 +83,7 @@ public class RoleController extends BaseLongController<Role, RoleManager> {
                     }
                 }
             } else {
-                for (String id : itemlist) {
+                for (String id : arrays) {
                     Resource resource = resourceManager.get(Long.valueOf(
                                 id));
 
@@ -114,9 +97,9 @@ public class RoleController extends BaseLongController<Role, RoleManager> {
             getEntityDao().flush();
 
             // 修改资源
-            for (String id : itemlist) {
+            for (String id : arrays) {
                 Resource resource = resourceManager.get(Long.valueOf(id));
-                logger.info(auth);
+
                 getEntityDao().saveRoleInCache(resource);
             }
         }
@@ -128,26 +111,10 @@ public class RoleController extends BaseLongController<Role, RoleManager> {
     }
 
     /**
-     * onInsert.
-     *
-     * @throws Exception 写入response可能发生异常
+     * @return excludes.
      */
     @Override
-    public void onInsert() throws Exception {
-        logger.info(params());
-        response.getWriter().print("{success:true,info:\"success\"}");
-        mv.setView(new StreamView("application/json"));
-    }
-
-    /**
-         * onUpdate.
-     *
-     * @throws Exception 写入response可能发生异常
-         */
-    @Override
-    public void onUpdate() throws Exception {
-        logger.info(params());
-        response.getWriter().print("{success:true,info:\"success\"}");
-        mv.setView(new StreamView("application/json"));
+    public String[] getExcludes() {
+        return new String[] {"resources", "menus", "users"};
     }
 }

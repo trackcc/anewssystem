@@ -7,7 +7,7 @@ import java.util.Set;
 import anni.asecurity.domain.Resource;
 import anni.asecurity.domain.Role;
 
-import anni.core.dao.ECHibernateEntityDao;
+import anni.core.dao.hibernate.HibernateEntityDao;
 
 import anni.core.security.AuthenticationHelper;
 import anni.core.security.cache.AcegiCacheManager;
@@ -27,7 +27,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Lingo.
  * @since 2007年08月18日 下午 20时19分00秒578
  */
-public class RoleManager extends ECHibernateEntityDao<Role> {
+public class RoleManager extends HibernateEntityDao<Role> {
     /** * logger. */
     private static Log logger = LogFactory.getLog(RoleManager.class);
 

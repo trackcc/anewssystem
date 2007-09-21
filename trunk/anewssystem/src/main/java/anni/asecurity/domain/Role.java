@@ -1,7 +1,5 @@
 package anni.asecurity.domain;
 
-import java.io.Serializable;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import anni.core.grid.LongGridBean;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -31,7 +31,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "A_SECURITY_ROLE")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Role implements Serializable {
+public class Role extends LongGridBean {
     /** * serial. */
     static final long serialVersionUID = 0L;
 

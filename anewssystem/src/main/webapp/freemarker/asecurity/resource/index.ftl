@@ -6,10 +6,6 @@
     <#include "/include/meta.ftl"/>
     <title>资源管理</title>
     <#include "/include/extjs.ftl"/>
-    <script type="text/javascript" src="${ctx}/widgets/lingo/Ext.form.VTypes.js"></script>
-    <script type="text/javascript" src="${ctx}/widgets/lingo/Ext.lingo.Theme.js"></script>
-    <script type="text/javascript" src="${ctx}/widgets/lingo/jsongrid/Ext.lingo.CheckRowSelectionGrid.js"></script>
-    <script type="text/javascript" src="${ctx}/widgets/lingo/jsongrid/Ext.lingo.JsonGrid.js"></script>
     <script type="text/javascript" src="${ctx}/widgets/asecurity/resource-20070920.js"></script>
   </head>
   <body>

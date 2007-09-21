@@ -419,114 +419,12 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
         }.createDelegate(this));
 
         this.menuData.load();
-    }, input : function(meta) {
-        var field = new Ext.form.TextField({
-            allowBlank : meta.allowBlank == undefined ? false : meta.allowBlank,
-            vType      : meta.vType,
-            cls        : meta.type == "password" ? meta.cls : null,
-            width      : meta.vWidth,
-            id         : meta.id,
-            name       : meta.id,
-            style      : (meta.vType == "integer" || meta.vType == "number" ? "text-align: right;" : ""),
-            readOnly   : meta.readOnly,
-            defValue   : meta.defValue,
-            alt        : meta.alt,
-            maxLength  : meta.maxlength ? meta.maxlength : Number.MAX_VALUE,
-            minLength  : meta.minlength ? meta.minlength : 0,
-            minValue   : meta.minvalue ? meta.minvalue : 0,
-            maxValue   : meta.maxvalue ? meta.maxvalue : Number.MAX_VALUE
-        });
-        if(meta.readOnly) {
-            field.style += "color:#656B86;";
-        }
-        //if(meta.value != "" && meta.format == "date") {
-        //    field.value = datagrids[0].date(meta.value);
-        //}
-        field.applyTo(meta.id);
-        if(meta.defValue) {
-            field.setValue(meta.defValue);
-        }
-        return field;
-    }, date : function(meta) {
-        var field = new Ext.form.DateField({
-            id          : meta.id,
-            name        : meta.id,
-            allowBlank  : meta.allowBlank == undefined ? false : eval(meta.allowBlank),
-            format      : meta.format ? meta.format : "Y年m月d日",
-            readOnly    : true,
-            width       : meta.vWidth,
-            defValue    : meta.defValue,
-            vType       : "date",
-            alt         : meta.alt,
-            setAllMonth : meta.setAllMonth ? el.setAllMonth : false
-        });
-        field.applyTo(meta.id);
-        if(meta.defValue) {
-            field.setValue(meta.defValue);
-        } else {
-            field.setValue(new Date());
-        }
-        return field;
-    }, createDlgContentDiv : function() {
-        // 内容
-        var dialogContent = document.getElementById(this.config.dialogContent);
-        var contentDiv = document.createElement("div");
-        contentDiv.id = this.id + "-content";
-        contentDiv.appendChild(dialogContent);
+    },
 
-        // 消息
-        var dialogMessage = document.createElement("div");
-        var waitMessage = document.createElement("div");
-        var waitText = document.createElement("div");
-        dialogMessage.id = "dlg-msg";
-        waitMessage.id = "post-wait";
-        waitMessage.className = "posting-msg";
-        waitText.className = "waitting";
-        waitText.innerHTML = "正在保存，请稍候...";
-        waitMessage.appendChild(waitText);
-        dialogMessage.appendChild(waitMessage);
-
-        //
-        var dialogDiv = document.createElement("div");
-        var dialog_head = document.createElement("div");
-        var dialog_body = document.createElement("div");
-        var dlg_tab = document.createElement("div");
-        var dlg_help = document.createElement("div");
-        var helpContent = document.createElement("div");
-        var dialog_foot = document.createElement("div");
-        dialogDiv.id = this.id + "-dialog-content";
-        dialogDiv.style.visibility = "hidden";
-        dialog_head.className = "x-dlg-hd";
-        dialog_body.className = "x-dlg-bd";
-        dialog_foot.className = "x-dlg-ft";
-        dlg_tab.className = "x-dlg-tab";
-        dlg_tab.title = " 详细配置 ";
-        dlg_help.className = "x-dlg-tab";
-        dlg_help.title = " 帮助 ";
-        helpContent.innerHTML = "<div id='help-content'><div id='standard-panel'>帮助...</div></div><div id='temp-content'></div>";
-        dlg_help.appendChild(helpContent);
-        dialog_body.appendChild(dlg_tab);
-        dialog_body.appendChild(dlg_help);
-        dialog_foot.appendChild(dialogMessage);
-        dialogDiv.appendChild(dialog_head);
-        dialogDiv.appendChild(dialog_body);
-        dialogDiv.appendChild(dialog_foot);
-
-        document.body.appendChild(dialogDiv);
-        document.body.appendChild(contentDiv);
-    }, createDialog : function() {
-        this.createDlgContentDiv();
-        this.dialog = new Ext.BasicDialog(this.id + "-dialog-content", {
-            modal     : false,
-            autoTabs  : true,
-            width     : (this.config.dlgWidth == undefined ? 600 : this.config.dlgWidth),
-            height    : (this.config.dlgHeight == undefined ? 400 : this.config.dlgHeight),
-            shadow    : false,
-            minWidth  : 200,
-            minHeight : 100,
-            closable  : true,
-            autoCreate : true
-        });
+    // 生成对话框
+    createDialog : function() {
+        Ext.lingo.FormUtils.createDialogContent({id:this.config.dialogContent});
+        this.dialog = Ext.lingo.FormUtils.createDialog({id:this.config.dialogContent + "-dialog-content"});
 
         this.dialog.addKeyListener(27, this.dialog.hide, this.dialog);
         this.yesBtn = this.dialog.addButton("确定", function() {
@@ -557,11 +455,14 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
             this.yesBtn.hide();
         }, this, true);
 
-        var dialogContent = Ext.get(this.id + "-content");
+        var dialogContent = Ext.get(this.config.dialogContent + "-content");
         this.tabs.getTab(0).setContent(dialogContent.dom.innerHTML);
         this.applyElements();
         this.noBtn = this.dialog.addButton("取消", this.dialog.hide, this.dialog);
-    }, applyElements : function() {
+    },
+
+    // 自动生成一切的地方
+    applyElements : function() {
         if (this.columns == null || this.headers == null) {
             this.columns = new Array();
             this.headers = new Array();
@@ -581,17 +482,20 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
                 var meta = this.config.metaData[i];
                 var field;
                 if (meta.vType == "date") {
-                    field = this.date(meta);
+                    field = Ext.lingo.FormUtils.createDateField(meta);
                 } else if (meta.vType == "comboBox") {
                 } else if (meta.vType == "textArea") {
                 } else if (meta.vType == "treeField") {
                 } else {
-                    field = this.input(meta);
+                    field = Ext.lingo.FormUtils.createTextField(meta);
                 }
                 this.columns[this.columns.length] = field;
             }
         }
-    }, getSelectedNode : function() {
+    },
+
+    // 返回当前选中的节点，可能为null
+    getSelectedNode : function() {
         var selectionModel = this.treePanel.getSelectionModel();
         var node = selectionModel.getSelectedNode();
         return node;

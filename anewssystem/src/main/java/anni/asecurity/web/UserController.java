@@ -13,8 +13,9 @@ import anni.asecurity.manager.DeptManager;
 import anni.asecurity.manager.RoleManager;
 import anni.asecurity.manager.UserManager;
 
-import anni.core.web.prototype.BaseLongController;
-import anni.core.web.prototype.StreamView;
+import anni.core.grid.LongGridController;
+
+import anni.core.json.JsonUtils;
 
 import org.acegisecurity.providers.encoding.Md5PasswordEncoder;
 import org.acegisecurity.providers.encoding.PasswordEncoder;
@@ -24,14 +25,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.util.WebUtils;
 
 
 /**
  * @author Lingo.
  * @since 2007年08月18日 下午 20时19分00秒578
  */
-public class UserController extends BaseLongController<User, UserManager> {
+public class UserController extends LongGridController<User, UserManager> {
     /** * logger. */
     private static Log logger = LogFactory.getLog(UserController.class);
 
@@ -45,8 +45,8 @@ public class UserController extends BaseLongController<User, UserManager> {
 
     /** * constructor. */
     public UserController() {
-        setEditView("/asecurity/user/editUser");
-        setListView("/asecurity/user/listUser");
+        //setEditView("/asecurity/user/editUser");
+        //setListView("/asecurity/user/listUser");
     }
 
     /**
@@ -66,7 +66,6 @@ public class UserController extends BaseLongController<User, UserManager> {
      *
      * @param model ModelAndView中的数据模型
      */
-    @Override
     protected void referenceData(Map model) {
         model.put("statusEnum", User.STATUS_ENUM);
     }
@@ -76,9 +75,8 @@ public class UserController extends BaseLongController<User, UserManager> {
      *
      * @throws Exception 异常
      */
-    @Override
     public void list() throws Exception {
-        super.list();
+        //super.list();
         mv.addObject("statusEnum", User.STATUS_ENUM);
     }
 
@@ -87,19 +85,11 @@ public class UserController extends BaseLongController<User, UserManager> {
      *
      * @throws Exception 异常
      */
-    public void selectRoles() throws Exception {
+    public void getRoles() throws Exception {
         // mv.setViewName("/admin/selectRoles");
-        Long userId = getLongParam("userId", 0L);
-
-        if (userId != 0) {
-            WebUtils.setSessionAttribute(request, "userId", userId);
-        }
-
-        Long id = (Long) WebUtils.getRequiredSessionAttribute(request,
-                "userId");
+        Long userId = getLongParam("id", 0L);
+        User user = getEntityDao().get(userId);
         List<Role> roles = roleManager.getAll();
-
-        User user = getEntityDao().get(id);
 
         for (Role role : roles) {
             if (user.getRoles().contains(role)) {
@@ -107,8 +97,8 @@ public class UserController extends BaseLongController<User, UserManager> {
             }
         }
 
-        mv.addObject("user", user);
-        mv.addObject("roles", roles);
+        JsonUtils.write(roles, response.getWriter(), getExcludes(),
+            getDatePattern());
     }
 
     /**
@@ -116,22 +106,17 @@ public class UserController extends BaseLongController<User, UserManager> {
      *
      * @throws Exception 异常
      */
-    public void authRoles() throws Exception {
-        mv.setViewName("forward:/user/selectRoles.htm");
-
-        boolean auth = getBooleanParam("auth", false);
-
-        // String[] itemlist = StringUtils.split(getStrParam("itemlist", ""),
-        //         ",");
-        String[] itemlist = getStrParams("itemlist");
-
-        Long userId = (Long) WebUtils.getRequiredSessionAttribute(request,
-                "userId");
+    public void auth() throws Exception {
+        boolean isAuth = getBooleanParam("isAuth", false);
+        String ids = getStrParam("ids", "");
+        long userId = getLongParam("userId", 0L);
         User user = getEntityDao().get(userId);
 
+        String[] arrays = ids.split(",");
+
         if (user != null) {
-            if (auth) {
-                for (String id : itemlist) {
+            if (isAuth) {
+                for (String id : arrays) {
                     Role role = roleManager.get(Long.valueOf(id));
 
                     if (!user.getRoles().contains(role)) {
@@ -139,7 +124,7 @@ public class UserController extends BaseLongController<User, UserManager> {
                     }
                 }
             } else {
-                for (String id : itemlist) {
+                for (String id : arrays) {
                     Role role = roleManager.get(Long.valueOf(id));
 
                     if (user.getRoles().contains(role)) {
@@ -160,7 +145,6 @@ public class UserController extends BaseLongController<User, UserManager> {
      * @param binder 绑定工具
      * @throws Exception 异常
      */
-    @Override
     protected void preBind(HttpServletRequest request, Object command,
         ServletRequestDataBinder binder) throws Exception {
         Long id = getLongParam("id", -1L);
@@ -218,11 +202,8 @@ public class UserController extends BaseLongController<User, UserManager> {
      *
      * @throws Exception 写入response可能出现异常
      */
-    @Override
     public void onInsert() throws Exception {
         logger.info(params());
-        response.getWriter().print("{success:true,info:\"success\"}");
-        mv.setView(new StreamView("application/json"));
     }
 
     /**
@@ -230,10 +211,13 @@ public class UserController extends BaseLongController<User, UserManager> {
      *
      * @throws Exception 写入response可能出现异常
      */
-    @Override
     public void onUpdate() throws Exception {
         logger.info(params());
-        response.getWriter().print("{success:true,info:\"success\"}");
-        mv.setView(new StreamView("application/json"));
+    }
+
+    /** * @return excludes. */
+    @Override
+    public String[] getExcludes() {
+        return new String[] {"roles"};
     }
 }

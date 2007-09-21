@@ -4,7 +4,7 @@ import java.util.List;
 
 import anni.asecurity.domain.User;
 
-import anni.core.dao.ECHibernateEntityDao;
+import anni.core.dao.hibernate.HibernateEntityDao;
 
 import anni.core.security.AuthenticationHelper;
 import anni.core.security.cache.AcegiCacheManager;
@@ -16,7 +16,7 @@ import org.acegisecurity.GrantedAuthority;
  * @author Lingo.
  * @since 2007年08月18日 下午 20时19分00秒578
  */
-public class UserManager extends ECHibernateEntityDao<User> {
+public class UserManager extends HibernateEntityDao<User> {
     /**
      * acegiCacheManager.
      */

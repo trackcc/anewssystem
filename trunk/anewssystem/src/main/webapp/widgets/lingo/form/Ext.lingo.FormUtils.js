@@ -20,8 +20,45 @@ Ext.namespace("Ext.lingo");
  */
 Ext.lingo.FormUtils = function() {
     var isApply = true;
+/*new Ext.form.TextField({
+                            fieldLabel: '密码',
+                            name: 'password',
+                            inputType: "password",
+                            width:150,
+                            allowBlank:false
+                        })
+var forms = new Ext.form.Form({
+        labelWidth: 40, // label settings here cascade unless overridden
+        url:'save-form.php'
+    });
 
+    //性别布局开始
+    forms.container();
+    forms.column({width:90},
+    new Ext.form.Radio({
+                                        fieldLabel: '性别',
+                                        name: 'sex',
+                                        boxLabel: '男',
+                    value:'male'
+                                })
+    );
+    forms.column({hideLabels :true,width:50},
+    new Ext.form.Radio({
+                                        fieldLabel: '性别',
+                                        name: 'sex',
+                                        boxLabel: '女',
+                    value:'female'
+                                })
+    );
+    forms.end();
+    //性别布局结束
+    forms.addButton('Save');
+    forms.addButton('Cancel');
+
+    forms.render('forms');
+*/
     return {
+        // 创建<input type="text">输入框
         createTextField : function(meta) {
             var field = new Ext.form.TextField({
                 allowBlank : meta.allowBlank == undefined ? false : meta.allowBlank,
@@ -52,7 +89,10 @@ Ext.lingo.FormUtils = function() {
                 field.setValue(meta.defValue);
             }
             return field;
-        }, createDateField : function(meta) {
+        },
+
+        // 创建日期选择框
+        createDateField : function(meta) {
             var field = new Ext.form.DateField({
                 id          : meta.id,
                 name        : meta.id,
@@ -65,6 +105,7 @@ Ext.lingo.FormUtils = function() {
                 alt         : meta.alt,
                 setAllMonth : meta.setAllMonth ? el.setAllMonth : false
             });
+			console.error(field.format);
             if (isApply) {
                 field.applyTo(meta.id);
             }
@@ -72,6 +113,72 @@ Ext.lingo.FormUtils = function() {
                 field.setValue(meta.defValue);
             } else {
                 field.setValue(new Date());
+            }
+            return field;
+        },
+
+        // 创建下拉框
+        createComboBox : function(meta) {
+            var field = new Ext.form.ComboBox({
+                id         : meta.id,
+                name       : meta.id,
+                allowBlank : meta.allowBlank == undefined ? false : eval(meta.allowBlank),
+                transform  : meta.id,
+                vType      : "comboBox",
+                width      : meta.vWidth
+            });
+            return field;
+        },
+
+        // 创建单选框
+        createRadio : function(meta) {
+            var fields = new Array();
+
+            for (var k = 0; k < meta.values.length; k++) {
+                var value = meta.values[k];
+
+                var field = new Ext.form.Radio({
+                    fieldLabel : meta.qtip,
+                    name       : meta.id,
+                    boxLabel   : value.name,
+                    value      : value.id,
+                    vType      : "radio"
+                });
+                if (meta.defValue && value.id == meta.defValue) {
+                    field.checked = true;
+                }
+                if (isApply) {
+                    field.applyTo(meta.id + value.id);
+                }
+                field.el.dom.parentNode.style.display = "inline";
+                fields[fields.length] = field;
+            }
+            return fields;
+        },
+
+        // 创建treeField
+        createTreeField : function(meta) {
+            var el = Ext.get(meta.id).dom;
+            var config = {
+                title        : meta.qtip,
+                rootId       : 0,
+                height       : 200,
+                dataTag      : meta.url,
+                treeHeight   : 150,
+                beforeSelect : function(){}
+            };
+            var field = new Ext.lingo.TreeField({
+                id         : el.id,
+                name       : el.id,
+                allowBlank : false,
+                width      : 200,
+                treeConfig : config
+            });
+            field.vType = "treeField";
+
+            //if(不是EditorGrid && 不是Form) object.applyTo(el.id);
+            if (isApply) {
+                field.applyTo(el.id);
             }
             return field;
         },

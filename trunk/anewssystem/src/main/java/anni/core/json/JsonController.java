@@ -119,7 +119,7 @@ public class JsonController<T, D> extends ExtendController {
      * @return 格式化日期类型的字符串
      */
     public String getDatePattern() {
-        return "yyyy-MM-dd";
+        return "yyyy年MM月dd日";
     }
 
     /** * @return encoding. */

@@ -33,7 +33,7 @@ public class JsonControllerTest extends TestCase {
     }
 
     public void testGetDatePattern() {
-        assertEquals("yyyy-MM-dd", controller.getDatePattern());
+        assertEquals("yyyy年MM月dd日", controller.getDatePattern());
     }
 
     public void testGetEntityClass() {

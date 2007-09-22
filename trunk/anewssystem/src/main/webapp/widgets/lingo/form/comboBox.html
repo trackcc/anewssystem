@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>ComboBox</title>
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/resources/css/yext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/resources/css/ytheme-aero.css" />
+    <link rel="stylesheet" type="text/css" href="../lingo.css" />
+    <script type="text/javascript" src="../../extjs/1.1/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../extjs/1.1/ext-all.js"></script>
+    <script type="text/javascript">
+Ext.BLANK_IMAGE_URL = '../../extjs/1.1/resources/images/default/s.gif';
+Ext.BLANK_ROOT = '../../extjs/1.1';
+    </script>
+    <script type="text/javascript" src="../Ext.form.VTypes.js"></script>
+    <script type="text/javascript" src="../form/Ext.lingo.FormUtils.js"></script>
+    <script type="text/javascript" src="../form/Ext.lingo.LoginDialog.js"></script>
+    <script type="text/javascript" src="Ext.lingo.CheckRowSelectionGrid.js"></script>
+    <script type="text/javascript" src="Ext.lingo.JsonGrid.js"></script>
+    <script type="text/javascript" src="MenuGrid.js" ></script>
+  </head>
+  <body>
+    <div class="x-box-tl"><div class="x-box-tr"><div class="x-box-tc"></div></div></div>
+    <div class="x-box-ml"><div class="x-box-mr"><div class="x-box-mc">
+
+
+    <form id="form2" method="post">
+      <h3>表单范例</h3>
+      <table>
+        <tr>
+          <td class="title">文字输入：</td>
+          <td style="font-family: verdana;"><input type="text" id="text2" name="text2" /></td>
+        </tr>
+        <tr>
+          <td class="title">下拉列表：</td>
+          <td style="font-family: verdana;">
+            <select id="st2" name="st2">
+              <option></option>
+              <option>Aeiou</option>
+              <option>Andy</option>
+              <option>Amy</option>
+              <option>Aloha</option>
+              <option>Apple</option>
+              <option>Application</option>
+              <option>Aprik</option>
+              <option>Backup</option>
+              <option>Book</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="title">日期选择：</td>
+          <td style="font-family: verdana;"><input type="text" id="dp2" name="dp2" /></td>
+        </tr>
+        <tr>
+          <td class="title">文本域：</td>
+          <td><textarea id="ta2" name="ta2" cols="50" rows="6"></textarea></td>
+        </tr>
+        <tr>
+          <td class="title"> </td>
+          <td>
+            <!--<input type="submit" id="bt2" name="bt2" value="按钮" />-->
+            <div id="newbutton"></div>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    </div></div></div>
+    <div class="x-box-bl"><div class="x-box-br"><div class="x-box-bc"></div></div></div>
+
+    <div id="error_message" style="display:block"></div>
+<script type="text/javascript">
+//DWREngine.setErrorHandler(errorHandler);
+function errorHandler(errorString, exception) {
+    console.error(errorString);
+    console.error(exception);
+}
+
+Ext.onReady(function(){
+    var fm2 = new Ext.form.BasicForm('form2');
+    fm2.add(new Ext.form.TextField().applyTo('text2'));
+    fm2.add(new Ext.form.ComboBox({transform:'st2'}));
+    fm2.add(new Ext.form.DateField().applyTo('dp2'));
+    fm2.add(new Ext.form.TextArea().applyTo('ta2'));
+
+    var newbutton = new Ext.Button('newbutton', {text: '按钮'});
+
+});
+
+</script>
+  </body>
+</html>
+
+
+
+
+
+
+
+

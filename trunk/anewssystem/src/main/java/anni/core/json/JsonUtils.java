@@ -7,6 +7,8 @@ import java.io.Writer;
 
 import java.lang.reflect.Method;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +19,10 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 
 /**
@@ -26,6 +32,9 @@ import net.sf.json.JsonConfig;
  * @since 2007-09-19
  */
 public class JsonUtils {
+    /** * logger. */
+    private static Log logger = LogFactory.getLog(JsonUtils.class);
+
     /** * 工具类需要的保护构造方法. */
     protected JsonUtils() {
     }
@@ -58,6 +67,7 @@ public class JsonUtils {
         JsonConfig jsonConfig = JsonConfig.getInstance();
         jsonConfig.setExcludes(excludes);
         jsonConfig.setIgnoreDefaultExcludes(false);
+        jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
         jsonConfig.registerJsonValueProcessor(Date.class,
             new DateJsonValueProcessor(datePattern));
     }
@@ -158,15 +168,36 @@ public class JsonUtils {
                         entity.getClass());
                 Class propertyType = propertyDescriptor.getPropertyType();
 
+                Method writeMethod = propertyDescriptor.getWriteMethod();
+
                 if (propertyType == String.class) {
-                    Method writeMethod = propertyDescriptor.getWriteMethod();
                     writeMethod.invoke(entity, propertyValue);
                 } else if (propertyType == Long.class) {
-                    Method writeMethod = propertyDescriptor.getWriteMethod();
                     writeMethod.invoke(entity,
                         Long.parseLong(propertyValue));
+                } else if (propertyType == Byte.class) {
+                    writeMethod.invoke(entity,
+                        Byte.parseByte(propertyValue));
+                } else if (propertyType == Integer.class) {
+                    writeMethod.invoke(entity,
+                        Integer.parseInt(propertyValue));
+                } else if (propertyType == Short.class) {
+                    writeMethod.invoke(entity,
+                        Short.parseShort(propertyValue));
+                } else if (propertyType == Float.class) {
+                    writeMethod.invoke(entity,
+                        Float.parseFloat(propertyValue));
+                } else if (propertyType == Double.class) {
+                    writeMethod.invoke(entity,
+                        Double.parseDouble(propertyValue));
+                } else if (propertyType == Date.class) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
+                    writeMethod.invoke(entity,
+                        dateFormat.parse(propertyValue));
                 }
             } catch (IntrospectionException ex) {
+                logger.info(ex);
+
                 continue;
             }
         }

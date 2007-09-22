@@ -17,6 +17,8 @@ import anni.core.grid.LongGridController;
 
 import anni.core.json.JsonUtils;
 
+import net.sf.json.JSONObject;
+
 import org.acegisecurity.providers.encoding.Md5PasswordEncoder;
 import org.acegisecurity.providers.encoding.PasswordEncoder;
 
@@ -215,9 +217,43 @@ public class UserController extends LongGridController<User, UserManager> {
         logger.info(params());
     }
 
+    /**
+     * 保存，新增或修改.
+     *
+     * @throws Exception 异常
+     */
+    @Override
+    public void save() throws Exception {
+        logger.info(params());
+
+        User entity = bindObject();
+        String data = getStrParam("data", "");
+
+        JSONObject jsonObject = JSONObject.fromString(data);
+
+        // 部门
+        try {
+            long deptId = jsonObject.getLong("dept");
+            Dept dept = deptManager.get(deptId);
+            entity.setDept(dept);
+        } catch (Exception ex) {
+            logger.info(ex);
+        }
+
+        logger.info(entity.getBirthday());
+
+        getEntityDao().save(entity);
+        response.getWriter().print("{success:true}");
+    }
+
     /** * @return excludes. */
     @Override
     public String[] getExcludes() {
-        return new String[] {"roles"};
+        return new String[] {
+            "roles", "users", "parent", "children",
+            "hibernateLazyInitializer", "parentId", "theSort", "text",
+            "allowChildren", "cls", "leaf", "root", "qtip", "allowDelete",
+            "allowEdit", "draggable"
+        };
     }
 }

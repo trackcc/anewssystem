@@ -46,7 +46,12 @@
         <td width="15%" align="right" style="font-size:12px;">性别：</td>
         <td width="35%">
           <div class="x-form-item">
-            <input id="sex" type="text" size="20">
+            <table border="0">
+              <tr>
+                <input id="sex0" name="sex" type="radio" value="0">
+                <input id="sex1" name="sex" type="radio" value="1">
+              </tr>
+            </table>
           </div>
         </td>
       </tr>
@@ -82,7 +87,7 @@
         <td width="15%" align="right" style="font-size:12px;">部门：</td>
         <td width="35%">
           <div class="x-form-item">
-            <input id="dept" type="text" size="20">
+            <input id="dept" type="text" size=""/>
           </div>
         </td>
         <td width="15%" align="right" style="font-size:12px;">职务：</td>

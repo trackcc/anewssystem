@@ -21,6 +21,13 @@ Ext.namespace("Ext.lingo");
  * @param config    需要的配置{}
  */
 Ext.lingo.JsonTree = function(container, config) {
+    // <div id="container"></div>没有找到
+    // 这个配置这里不是不清楚？是不是获得MenuTree.js中创建树形下的数据，为什么用了条件表达式
+    // by 250678089 死胖子 2007-09-16 22:13
+    //
+    // container是一个变量，值是一个div的id。
+    // 比如调用new Ext.lingo.JsonTree("jsonTree",{});
+    // html就会有一个<div id="jsonTree"></div>，这样container的值就是"jsonTree"
     this.container     = Ext.get(container);
     this.id            = this.container.id;
     this.config        = config;
@@ -31,12 +38,20 @@ Ext.lingo.JsonTree = function(container, config) {
     this.urlLoadData   = config.urlLoadData ? config.urlLoadData : "loadData.htm";
     this.urlUpdate     = config.urlUpdate ? config.urlUpdate : "updateTree.htm";
 
+    // 什么意思这句，作用？
+    // by 250678089 死胖子 2007-09-16 22:13
+    //
+    // 具体细节不明，猜想是调用父类的构造函数，进行初始化
     Ext.lingo.JsonTree.superclass.constructor.call(this);
 };
 
 Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
     init : function() {
-        // 生成代理
+        // 生成代理，具体的意思呢，是调用那个工具栏里的操作吗？
+        // Ext.util.Observable,Ext.lingo.JsonTree 自己写的吗？
+        // by 250678089 死胖子 2007-09-16 22:13
+        //
+        // Ext.util.Observable是Ext中一个基类，提供了事件绑定与监听的一些方法
         var createChild = this.createChild.createDelegate(this);
         var createBrother = this.createBrother.createDelegate(this);
         var updateNode = this.updateNode.createDelegate(this);
@@ -129,6 +144,12 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
                 blankText     : '请添写名称',
                 selectOnFocus : true
             });
+            // 这里不是很明白,什么意思?
+            // by 250678089 死胖子 2007-09-16 22:13
+            //
+            // 绑定before edit事件，就是在鼠标双击节点，打算编辑这个节点的文字之前做判断
+            // 1.如果这个节点的allowEdit属性不是true，就不让编辑这个节点
+            // 2.如果节点可以编辑，就把当前的text保存到oldText属性中，为了在之后判断这个节点的文字是否被修改了
             this.treeEditor.on('beforestartedit', function() {
                 var node = this.treeEditor.editNode;
                 if(!node.attributes.allowEdit) {
@@ -238,6 +259,23 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
               text     : n.text,
               parentId : e.target.id
             };
+
+            // 我用的连接不是这样的，用的或是,这里没有用Ajax，如果用你的Ext.lib.Ajax.request，用引是什么东西吗？
+            // by 250678089 死胖子 2007-09-16 22:13
+            //
+            // 没用过connection。估计跟ajax的功能差不多
+            /*
+            var url = 'rssreaderAction.do?method=reNameChannel';
+            var params = {data:Ext.util.JSON.encode({
+                channelName:channelName,
+                id:id,
+                channelUrl:channelUrl,
+                time_stamp:(new Date()).getTime()})
+            };
+            var connection = new Ext.data.Connection();
+            connection.request({url:url,method:'POST',params:params,callback:handle});
+            */
+
             this.treePanel.el.mask('提交数据，请稍候...', 'x-mask-loading');
             var hide = this.treePanel.el.unmask.createDelegate(this.treePanel.el);
             Ext.lib.Ajax.request(
@@ -258,7 +296,10 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
     }, render : function() {
         this.init();
 
-        // 创建根节点
+        // 创建根节点，下面比较乱，最好整理一下！你这里用一个右键处理我认为更好些！
+        // by 250678089 死胖子 2007-09-16 22:13
+        //
+        // 不知道具体是哪里乱，另外，这个里边是包含了右键功能的
         var root = new Ext.tree.AsyncTreeNode({
             text      : '分类',
             draggable : true,

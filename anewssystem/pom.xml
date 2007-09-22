@@ -17,7 +17,7 @@
   <groupId>anni.anews</groupId>
   <artifactId>anews</artifactId>
   <packaging>war</packaging>
-  <version>0.0.1</version>
+  <version>0.0.2-M1</version>
   <name>anews</name>
   <url>http://code.google.com/p/anewssystem/</url>
   <developers>

@@ -541,7 +541,7 @@ q:before,q:after{content:'';}
 
 .x-form-field{
     margin: 0 0 0 0;
-    font:normal 12px tahoma, arial, helvetica, sans-serif;
+    /*font:normal 12px tahoma, arial, helvetica, sans-serif;*/
 }
 
 

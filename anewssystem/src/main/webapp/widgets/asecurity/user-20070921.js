@@ -53,11 +53,14 @@ Ext.onReady(function(){
     // 其他随意定制
     var metaData = [
         {id : 'id',       qtip : "ID",   vType : "integer",  allowBlank : true,  defValue : -1},
-        {id : 'dept',     qtip : '部门', vType : 'integer'},
+        {id : 'dept',     qtip : '部门', vType : 'treeField', url : "../dept/getChildren.htm", mapping : "dept.name"},
         {id : 'username', qtip : "帐号", vType : "chn",      allowBlank : false},
-        {id : 'password', qtip : '密码', vType : "alphanum", allowBlank : false},
+        {id : 'password', qtip : '密码', vType : "password", allowBlank : false},
         {id : 'truename', qtip : '姓名', vType : "chn"},
-        {id : 'sex',      qtip : '性别', vType : "integer"},
+        {id : 'sex',      qtip : '性别', vType : "radio",
+            values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : 1, renderer : function(value) {
+                return value == '0' ? '<span style="font-weight:bold;color:red">男</span>' : '<span style="font-weight:bold;color:green;">女</span>';
+            }},
         {id : 'birthday', qtip : '生日', vType : "date"},
         {id : 'tel',      qtip : '电话', vType : "alphanum"},
         {id : 'mobile',   qtip : '手机', vType : "alphanum"},

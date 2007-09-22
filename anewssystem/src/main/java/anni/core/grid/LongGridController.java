@@ -86,11 +86,13 @@ public class LongGridController<T extends LongGridBean, D extends HibernateEntit
         T entity = getEntityDao().get(id);
 
         if (entity == null) {
+            logger.info("insert");
             // 新增
             entity = JsonUtils.json2Bean(jsonObject, getEntityClass(),
                     getExcludes(), getDatePattern());
             entity.setId(null);
         } else {
+            logger.info("update");
             // 修改
             JsonUtils.json2Bean(jsonObject, entity, getExcludes(),
                 getDatePattern());

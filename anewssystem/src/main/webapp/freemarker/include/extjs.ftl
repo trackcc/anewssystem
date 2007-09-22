@@ -14,8 +14,10 @@ Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
 <link rel="stylesheet" type="text/css" href="${ctx}/widgets/lingo/lingo.css" />
 <script type="text/javascript" src="${ctx}/widgets/lingo/Ext.form.VTypes.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/Ext.lingo.Theme.js"></script>
+<script type="text/javascript" src="${ctx}/widgets/lingo/Ext.data.JsonReader.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/form/Ext.lingo.FormUtils.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/form/Ext.lingo.LoginDialog.js"></script>
+<script type="text/javascript" src="${ctx}/widgets/lingo/form/Ext.lingo.TreeField.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/jsongrid/Ext.lingo.CheckRowSelectionGrid.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/jsongrid/Ext.lingo.JsonGrid.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/jsontree/Ext.lingo.JsonTree.js"></script>

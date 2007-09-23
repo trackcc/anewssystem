@@ -402,6 +402,10 @@
           <groupId>net.sf.jsr107cache</groupId>
           <artifactId>jsr107cache</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>backport-util-concurrent</groupId>
+          <artifactId>backport-util-concurrent</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <!--Hibernate end-->
@@ -465,9 +469,13 @@
     <dependency>
       <groupId>org.acegisecurity</groupId>
       <artifactId>acegi-security</artifactId>
-      <version>1.0.4</version>
+      <version>1.0.5</version>
       <scope>${use-scope}</scope>
       <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+        </exclusion>
         <exclusion>
           <groupId>org.springframework</groupId>
           <artifactId>spring-remoting</artifactId>

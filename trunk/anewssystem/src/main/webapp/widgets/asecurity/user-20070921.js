@@ -254,6 +254,7 @@ Ext.onReady(function(){
           layout.endUpdate();
         aAddInstanceDlg.show();
     }
+
     // 新建对话框
     function createNewDialog(dialogName) {
         var thisDialog = new Ext.LayoutDialog(dialogName, {

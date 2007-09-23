@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html debug="true">
+  <head>
+    <title>Tree with Checkbox Nodes</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/examples.css" />
+    <script type="text/javascript" src="../../extjs/1.1/adapter/yui/yui-utilities.js"></script>
+    <script type="text/javascript" src="../../extjs/1.1/adapter/yui/ext-yui-adapter.js"></script>
+    <script type="text/javascript" src="../../extjs/1.1/ext-all.js"></script>
+    <script type="text/javascript" src="TreeCheckNode.js"></script>
+    <link rel="stylesheet" type="text/css" href="TreeCheckNode.css" />
+    <script type="text/javascript">
+<!--
+Ext.BLANK_IMAGE_URL = "../../extjs/1.1/resources/images/default/s.gif";
+
+Ext.EventManager.onDocumentReady(function() {
+    tree = new Ext.tree.TreePanel('tree-div', {
+        animate : true,
+        loader  : new Ext.tree.CustomUITreeLoader({
+            dataUrl  : 'treesample.json',
+            baseAttr : {
+                uiProvider : Ext.tree.CheckboxNodeUI
+            }
+        }),
+        enableDD        : false,
+        containerScroll : true,
+        rootUIProvider  : Ext.tree.CheckboxNodeUI,
+        selModel        : new Ext.tree.CheckNodeMultiSelectionModel(),
+        rootVisible     : false
+    });
+
+    tree.on('check', function() {
+        Ext.get('cn').dom.value = this.getChecked().join(',');
+    }, tree);
+
+    // 设置根节点
+    root = new Ext.tree.AsyncTreeNode({
+        text       : 'root',
+        draggable  : false,
+        id         : 'source',
+        uiProvider : Ext.tree.CheckboxNodeUI
+    });
+    tree.setRootNode(root);
+
+    // 渲染树
+    tree.render();
+    root.expand(false, false, function() {
+        root.firstChild.expand(false);
+        Ext.get('cn').dom.value = tree.getChecked().join(',');
+        ser();
+    });
+
+    Ext.get('exp').on('click', function() {
+        tree.expandAll();
+    });
+
+    Ext.get('coll').on('click', function() {
+        tree.collapseAll();
+    });
+
+    Ext.get('ser').on('click', ser);
+});
+
+ser = function() {
+    var c = Ext.get('c');
+    c.dom.style.display='block';
+    c.dom.firstChild.innerHTML = tree.getChecked();
+};
+
+//-->
+    </script>
+    <style>
+    #c {
+        display:none;
+    }
+    </style>
+  </head>
+  <body scroll="no">
+    <p>
+      <b>Tree with CheckBox nodes</b><br />
+      An extension for Ext.tree.TreeNodeUI to allow nodes to be 'checked'.  Based on forum discussion and samples.   Includes basic (read: crude) serialization to retrieve all of the checked nodes.  It also extends Ext.tree.MultiSelectionModel to allow multiple nodes to be selected and then checked by pressing the space bar.  Checks cascade, so checking a child will check parents up the tree, and clearing a parent checkbox will clear all of it's children.
+    </p>
+    <p>
+      Additional changes include allowing CTRL+click to deselect a selected node and shift+click to select a contiguous range of nodes.  Shift+Click only works with nodes at the same depth beneath the same parent.  You can click Blue and shift+click on Orange to select both nodes and everything between, but you cannot shift+click Horse and Red.
+    <p>
+      For more information see <a href="TreeCheckNode.js">TreeCheckNode.js</a> and <a href="TreeCheckNode.css">TreeCheckNode.css</a>
+    </p>
+    <input type="button" id="exp" value="Expand All Nodes" />
+    <input type="button" id="coll" value="Collapse All Nodes" />
+    <input type="button" id="ser" value="Serialize Checked Nodes" />
+    <br />
+    <div id="c"><pre class="code"></pre></div>
+    <b>Checked Nodes: </b> <input type="text" id="cn" value="" size="40" autocomplete="off" /><br />
+    <br />
+    <div id="tree-div" style="overflow:auto; height:300px;width:300px;border:1px solid #c3daf9;"></div>
+  </body>
+</html>

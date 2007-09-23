@@ -164,13 +164,13 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
         this.filter.on('keypress', function(e) {
             if(e.getKey() == e.ENTER && this.filter.getValue().length > 0) {
-                this.dataStore.load({params:{start:0, limit:this.pageSize}});
+                this.dataStore.reload();
             }
         }.createDelegate(this));
 
         this.filter.on('keyup', function(e) {
             if(e.getKey() == e.BACKSPACE && this.filter.getValue().length === 0) {
-                this.dataStore.load({params:{start:0, limit:this.pageSize}});
+                this.dataStore.reload();
             }
         }.createDelegate(this));
 
@@ -275,7 +275,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             }
             this.dialog.show(Ext.get("edit"));
         }.createDelegate(this));
-        this.menuData.load();
+        this.menuData.reload();
     },
 
     // 删除记录
@@ -430,7 +430,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         });
 
         var selections = this.grid.getSelections();
-        console.error(selections);
+
         if (selections.length > 1) {
             updateMenu.disable();
         }
@@ -448,6 +448,6 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
     // 刷新表格数据
     refresh : function() {
-        this.dataStore.load({params:{start:0,limit:this.pageSize}});
+        this.dataStore.reload();
     }
 });

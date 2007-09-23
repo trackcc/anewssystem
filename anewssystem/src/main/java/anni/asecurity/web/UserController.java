@@ -93,9 +93,11 @@ public class UserController extends LongGridController<User, UserManager> {
         User user = getEntityDao().get(userId);
         List<Role> roles = roleManager.getAll();
 
-        for (Role role : roles) {
-            if (user.getRoles().contains(role)) {
-                role.setAuthorized(true);
+        if (user != null) {
+            for (Role role : roles) {
+                if (user.getRoles().contains(role)) {
+                    role.setAuthorized(true);
+                }
             }
         }
 

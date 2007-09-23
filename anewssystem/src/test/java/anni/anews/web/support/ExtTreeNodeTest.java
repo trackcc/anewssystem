@@ -61,20 +61,22 @@ public class ExtTreeNodeTest extends TestCase {
         assertEquals("[]", result);
     }
 
-    public void testWrite2() throws Exception {
-        List<NewsCategory> categoryList = new ArrayList<NewsCategory>();
-        NewsCategory category = new NewsCategory();
-        category.setId(1L);
-        category.setName("name");
-        categoryList.add(category);
-
-        StringWriter writer = new StringWriter();
-        ExtTreeNode.write(writer, categoryList);
-        writer.flush();
-
-        String result = writer.toString();
-        //assertEquals("", result);
-        assertEquals("[{\"text\":\"name\",\"allowChildren\":true,\"leaf\":false,\"cls\":\"\",\"qtip\":\"tooltip\",\"allowDelete\":true,\"draggable\":true,\"allowEdit\":true,\"id\":1}]",
-            result);
-    }
+    /*
+        public void testWrite2() throws Exception {
+            List<NewsCategory> categoryList = new ArrayList<NewsCategory>();
+            NewsCategory category = new NewsCategory();
+            category.setId(1L);
+            category.setName("name");
+            categoryList.add(category);
+    
+            StringWriter writer = new StringWriter();
+            ExtTreeNode.write(writer, categoryList);
+            writer.flush();
+    
+            String result = writer.toString();
+            //assertEquals("", result);
+            assertEquals("[{\"text\":\"name\",\"allowChildren\":true,\"leaf\":false,\"cls\":\"\",\"qtip\":\"tooltip\",\"allowDelete\":true,\"draggable\":true,\"allowEdit\":true,\"id\":1}]",
+                result);
+        }
+    */
 }

@@ -110,22 +110,24 @@ public class MenuControllerTest extends AbstractPrototypeControllerTest {
 
     public void testGetExcludesForAll() {
         MenuController target = (MenuController) controller;
-        assertEquals(5, target.getExcludesForAll().length);
+        assertEquals(6, target.getExcludesForAll().length);
         assertEquals("parent", target.getExcludesForAll()[0]);
         assertEquals("roles", target.getExcludesForAll()[1]);
         assertEquals("theSort", target.getExcludesForAll()[2]);
         assertEquals("class", target.getExcludesForAll()[3]);
         assertEquals("root", target.getExcludesForAll()[4]);
+        assertEquals("checked", target.getExcludesForAll()[5]);
     }
 
     public void testGetExcludesForChildren() {
         MenuController target = (MenuController) controller;
-        assertEquals(6, target.getExcludesForChildren().length);
+        assertEquals(7, target.getExcludesForChildren().length);
         assertEquals("parent", target.getExcludesForChildren()[0]);
         assertEquals("roles", target.getExcludesForChildren()[1]);
         assertEquals("theSort", target.getExcludesForChildren()[2]);
         assertEquals("class", target.getExcludesForChildren()[3]);
         assertEquals("root", target.getExcludesForChildren()[4]);
         assertEquals("children", target.getExcludesForChildren()[5]);
+        assertEquals("checked", target.getExcludesForChildren()[6]);
     }
 }

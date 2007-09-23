@@ -241,7 +241,9 @@ public class MenuController extends LongTreeController<Menu, MenuManager> {
      */
     @Override
     public String[] getExcludesForAll() {
-        return new String[] {"parent", "roles", "theSort", "class", "root"};
+        return new String[] {
+            "parent", "roles", "theSort", "class", "root", "checked"
+        };
     }
 
     /**
@@ -252,7 +254,8 @@ public class MenuController extends LongTreeController<Menu, MenuManager> {
     @Override
     public String[] getExcludesForChildren() {
         return new String[] {
-            "parent", "roles", "theSort", "class", "root", "children"
+            "parent", "roles", "theSort", "class", "root", "children",
+            "checked"
         };
     }
 }

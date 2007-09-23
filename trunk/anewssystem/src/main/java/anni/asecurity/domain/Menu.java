@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import anni.core.tree.LongTreeNode;
 
@@ -66,6 +67,9 @@ public class Menu extends LongTreeNode<Menu> {
 
     /** * roles. */
     private Set<Role> roles = new HashSet<Role>(0);
+
+    /** * checked. */
+    private boolean checked = false;
 
     /** * 构造方法. */
     public Menu() {
@@ -197,5 +201,16 @@ public class Menu extends LongTreeNode<Menu> {
     /** * @param roles roles. */
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    /** * @return isChecked. */
+    @Transient
+    public boolean isChecked() {
+        return checked;
+    }
+
+    /** * @param checked boolean. */
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

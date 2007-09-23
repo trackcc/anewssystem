@@ -68,26 +68,35 @@ Ext.onReady(function(){
 
     // ========================================================================
     // ========================================================================
-    // 在工具栏上添一个按钮
+    // 在工具栏上添加选择资源的按钮
     lightGrid.toolbar.insertButton(3, {
-        id      : 'config',
+        id      : 'selectResource',
         text    : '配置资源',
         cls     : 'add',
         tooltip : '配置资源',
-        handler : doAuth
+        handler : selectResource
     });
+    // 在工具栏上添加选择菜单的按钮
+    lightGrid.toolbar.insertButton(4, {
+        id      : 'selectMenu',
+        text    : '配置菜单',
+        cls     : 'add',
+        tooltip : '配置菜单',
+        handler : selectMenu
+    });
+
 
     // ========================================================================
     // ========================================================================
     // 渲染表格的方法
-    function renderResource(value, p, record){
-        if(record.data['authorized']==true){
+    function renderResource(value, p, record) {
+        if(record.data['authorized'] == true) {
             return String.format("<b><font color=green>已分配</font></b>");
-        }else{
+        } else {
             return String.format("<b><font color=red>未分配</font></b>");
         }
     }
-    function renderNamePlain(value){
+    function renderNamePlain(value) {
         return String.format('{0}', value);
     }
     // 建一个资源数据映射数组
@@ -189,11 +198,8 @@ Ext.onReady(function(){
                     'ids=' + ids.join(",") + "&roleId=" + roleId + "&isAuth=true"
                 );
             }
-            resStore.load({params:{
-                start  : 0,
-                limit  : 10,
-                roleId : mRole[0].get('id')
-            }});
+
+            resStore.reload();
         }
     }, '-', {
         pressed      : true,
@@ -221,41 +227,115 @@ Ext.onReady(function(){
                     'ids=' + ids.join(",") + "&roleId=" + roleId + "&isAuth=false"
                 );
             }
-            resStore.load({params:{
-                start  : 0,
-                limit  : 10,
-                roleId : mRole[0].get('id')
-            }});
+
+            resStore.reload();
         }
     });
 
     function end() {
         Ext.Msg.alert("提示", "操作成功");
-        resStore.load({params:{
-            start  : 0,
-            limit  : 10,
-            roleId : lightGrid.grid.getSelections()[0].get('id')
-        }});
+        resStore.reload();
     }
 
-    function doAuth() {
+    function selectResource() {
         var m = lightGrid.grid.getSelections();
         if(m.length <= 0) {
             Ext.MessageBox.alert('提示', '请选择需要配置的角色！');
             return;
         }
+        // 读取数据需要的参数
+        resStore.on('beforeload', function() {
+            resStore.baseParams = {
+                roleId : lightGrid.grid.getSelections()[0].get('id')
+            };
+        });
         resStore.load({params:{
             start  : 0,
-            limit  : 10,
-            roleId : m[0].get('id')
+            limit  : 10
         }});
         var aAddInstanceDlg = createNewDialog("resource-dlg");
         var layout = aAddInstanceDlg.getLayout();
         layout.beginUpdate();
-          layout.add('center', new Ext.ContentPanel('resource-inner', {title: '角色授权'}));
-          layout.endUpdate();
+            layout.add('center', new Ext.ContentPanel('resource-inner', {title: '角色授权'}));
+            layout.endUpdate();
         aAddInstanceDlg.show();
     }
+
+    function solveMenuResponse() {
+        Ext.Msg.alert("提示", "操作成功");
+        this.menuTree.root.reload();
+        this.menuTree.root.expand(false, false);
+    }
+
+    function selectMenu() {
+        var m = lightGrid.grid.getSelections();
+        if(m.length <= 0) {
+            Ext.MessageBox.alert('提示', '请选择需要配置的角色！');
+            return;
+        }
+        Ext.lingo.FormUtils.createDialogContent({id:'menuDialog',title:'选择菜单'});
+        var configMenuDialog = Ext.lingo.FormUtils.createDialog({id:'menuDialog' + "-dialog-content"});
+
+        configMenuDialog.addKeyListener(27, configMenuDialog.hide, configMenuDialog);
+        this.yesBtn = configMenuDialog.addButton("确定", function() {
+            Ext.lib.Ajax.request(
+                'POST',
+                'selectMenu.htm',
+                {success:solveMenuResponse.createDelegate(this),failure:solveMenuResponse.createDelegate(this)},
+                'ids=' + this.menuTree.getChecked().join(",") + "&roleId=" + lightGrid.grid.getSelections()[0].id
+            );
+        }.createDelegate(this), configMenuDialog);
+        this.tabs = configMenuDialog.getTabs();
+        this.tabs.getTab(0).on("activate", function() {
+            this.yesBtn.show();
+        }, this, true);
+        this.tabs.getTab(1).on("activate", function() {
+            this.yesBtn.hide();
+        }, this, true);
+
+
+        this.tabs.getTab(0).setContent("<div id='menuTree'></div>");
+        //this.tabs.getTab(0).setContent(Ext.get("tree-div").dom.innerHTML);
+
+        this.menuTree = new Ext.tree.TreePanel('menuTree', {
+            rootVisible : true,
+            animate     : true,
+            loader      : new Ext.tree.CustomUITreeLoader({
+                dataUrl  : 'getMenuByRole.htm?id=' + m[0].id,
+                baseAttr : {
+                    uiProvider : Ext.tree.CheckboxNodeUI
+                }
+            }),
+            enableDD        : false,
+            containerScroll : true,
+            rootUIProvider  : Ext.tree.CheckboxNodeUI,
+            selModel        : new Ext.tree.CheckNodeMultiSelectionModel(),
+            rootVisible     : false
+        });
+
+
+        //this.menuTree.on('check', function() {
+        //    Ext.get('cn').dom.value = this.getChecked().join(',');
+        //}, this.menuTree);
+
+        // 设置根节点
+        this.treeRoot = new Ext.tree.AsyncTreeNode({
+            text       : '选择菜单',
+            draggable  : false,
+            id         : '0',
+            uiProvider : Ext.tree.CheckboxNodeUI
+        });
+        this.menuTree.setRootNode(this.treeRoot);
+        // 渲染树
+        this.menuTree.render();
+
+        //var dialogContent = Ext.get(this.config.dialogContent + "-content");
+        //this.tabs.getTab(0).setContent(dialogContent.dom.innerHTML);
+        //this.applyElements();
+        this.noBtn = configMenuDialog.addButton("取消", configMenuDialog.hide, configMenuDialog);
+        configMenuDialog.show();
+    }
+
     // 新建对话框
     function createNewDialog(dialogName) {
         var thisDialog = new Ext.LayoutDialog(dialogName, {

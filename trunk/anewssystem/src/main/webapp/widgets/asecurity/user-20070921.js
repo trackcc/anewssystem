@@ -187,11 +187,7 @@ Ext.onReady(function(){
                     'ids=' + ids.join(",") + "&userId=" + roleId + "&isAuth=true"
                 );
             }
-            roleStore.load({params:{
-                start  : 0,
-                limit  : 10,
-                roleId : mRole[0].get('id')
-            }});
+            roleStore.reload();
         }
     }, '-', {
         pressed      : true,
@@ -219,21 +215,13 @@ Ext.onReady(function(){
                     'ids=' + ids.join(",") + "&userId=" + roleId + "&isAuth=false"
                 );
             }
-            roleStore.load({params:{
-                start  : 0,
-                limit  : 10,
-                roleId : mRole[0].get('id')
-            }});
+            roleStore.reload();
         }
     });
 
     function end() {
         Ext.Msg.alert("提示", "操作成功");
-        roleStore.load({params:{
-            start : 0,
-            limit : 10,
-            id    : lightGrid.grid.getSelections()[0].get('id')
-        }});
+        roleStore.reload();
     }
 
     function selectRole() {
@@ -242,10 +230,15 @@ Ext.onReady(function(){
             Ext.MessageBox.alert('提示', '请选择需要配置的用户！');
             return;
         }
+        // 读取数据需要的参数
+        roleStore.on('beforeload', function() {
+            roleStore.baseParams = {
+                id : lightGrid.grid.getSelections()[0].get('id')
+            };
+        });
         roleStore.load({params:{
             start : 0,
-            limit : 10,
-            id    : m[0].get('id')
+            limit : 10
         }});
         var aAddInstanceDlg = createNewDialog("role-dlg");
         var layout = aAddInstanceDlg.getLayout();

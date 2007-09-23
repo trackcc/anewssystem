@@ -105,7 +105,7 @@ var forms = new Ext.form.Form({
                 alt         : meta.alt,
                 setAllMonth : meta.setAllMonth ? el.setAllMonth : false
             });
-			console.error(field.format);
+            console.error(field.format);
             if (isApply) {
                 field.applyTo(meta.id);
             }
@@ -253,6 +253,29 @@ var forms = new Ext.form.Form({
                 autoCreate : true
             });
             return dialog;
+        },
+
+        // 新建可布局的对话框
+        createLayoutDialog : function(dialogName) {
+            var thisDialog = new Ext.LayoutDialog(dialogName, {
+                modal     : false,
+                autoTabs  : true,
+                proxyDrag : true,
+                resizable : true,
+                width     : 650,
+                height    : 500,
+                shadow    : true,
+                center: {
+                    autoScroll     : true,
+                    tabPosition    : 'top',
+                    closeOnTab     : true,
+                    alwaysShowTabs : false
+                }
+            });
+            thisDialog.addKeyListener(27, thisDialog.hide, thisDialog);
+            thisDialog.addButton('关闭', function() {thisDialog.hide();});
+
+            return thisDialog;
         }
     };
 }();

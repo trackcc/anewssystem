@@ -410,17 +410,32 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
     },
 
     // 弹出右键菜单
+    // 修改，和批量删除的功能
+    // 多选的时候，不允许修改就好了
     contextmenu : function(grid, rowIndex, e) {
         e.preventDefault();
         e.stopEvent();
-        var infoMenu = new Ext.menu.Item({
-            id      : 'infoMenu',
-            text    : 'infoMenu',
-            handler : function() {
-                Ext.MessageBox.alert("提示", Ext.util.JSON.encode(this.grid.dataSource.getAt(rowIndex).data));
-            }.createDelegate(this)
+
+        var updateMenu = new Ext.menu.Item({
+            icon    : '../widgets/lingo/list-items.gif',
+            id      : 'updateMenu',
+            text    : '修改',
+            handler : this.edit.createDelegate(this)
         });
-        var menuList = [infoMenu];
+        var removeMenu = new Ext.menu.Item({
+            icon    : '../widgets/lingo/list-items.gif',
+            id      : 'removeMenu',
+            text    : '删除',
+            handler :  this.del.createDelegate(this)
+        });
+
+        var selections = this.grid.getSelections();
+        console.error(selections);
+        if (selections.length > 1) {
+            updateMenu.disable();
+        }
+
+        var menuList = [updateMenu, removeMenu];
 
         grid_menu = new Ext.menu.Menu({
             id    : 'mainMenu',

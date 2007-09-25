@@ -1,0 +1,5 @@
+[
+    {id:1,name:'name1',description:'descn1',rating:1,text:'text1',draggable:true,allowDrop:true},
+    {id:2,name:'name2',description:'descn2',rating:2,text:'text2',draggable:true,allowDrop:true,leaf:true}
+]
+

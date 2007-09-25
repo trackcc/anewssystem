@@ -1,0 +1,24 @@
+===
+layout里面的高度能不能设成百分比
+
+initialSize: '30%'
+
+===
+有没有做过把layout中的nouth默认状态为收缩啊
+
+1:设置hidden: true;
+2:layout.collapse();
+3:layout.show();
+如果直接设置默认收缩,布局会乱
+
+south: {
+  initialSize: '25px',
+  autoScroll: false,
+  split: false,
+  hidden: true
+}
+
+formLayout = innerLayout.getRegion("south");
+formLayout.collapse();
+formLayout.show();
+

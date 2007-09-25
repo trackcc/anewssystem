@@ -32,8 +32,26 @@
     <repository>
       <id>local repository</id>
       <name>local repository</name>
-      <url>file://${basedir}/../repository/</url>
+      <url>file://${basedir}/repository</url>
     </repository>
+    <repository>
+      <id>local repository2</id>
+      <name>local repository2</name>
+      <url>file://C:/Documents and Settings/new/.m2/repository2</url>
+    </repository>
+    <repository>
+      <id>central</id>
+      <name>Internal Repository</name>
+      <url>http://mirrors.redv.com/maven2</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>central</id>
+      <name>Internal Repository</name>
+      <url>http://mirrors.redv.com/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
 <!--
     <repository>
       <id>down java</id>
@@ -98,32 +116,29 @@
       <name>jstester repo</name>
       <url>http://jstester.sourceforge.net/m2/repo/release/</url>
     </repository>
--->
-  </repositories>
-<!--
-  <pluginRepositories>
-    <pluginRepository>
-      <id>ibiblio</id>
-      <name>ibiblio plugin repo</name>
-      <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>Codehaus Snapshots</id>
-      <name>codehaus plugin repo</name>
-      <url>http://snapshots.repository.codehaus.org/</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </pluginRepository>
-    <pluginRepository>
-      <id>cica</id>
-      <name>1 plugin repo</name>
-      <url>http://ftp.cica.es/mirrors/maven2/</url>
-    </pluginRepository>
-  </pluginRepositories>
+    <pluginRepositories>
+      <pluginRepository>
+        <id>ibiblio</id>
+        <name>ibiblio plugin repo</name>
+        <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
+      </pluginRepository>
+      <pluginRepository>
+        <id>Codehaus Snapshots</id>
+        <name>codehaus plugin repo</name>
+        <url>http://snapshots.repository.codehaus.org/</url>
+        <snapshots>
+          <enabled>true</enabled>
+        </snapshots>
+        <releases>
+          <enabled>false</enabled>
+        </releases>
+      </pluginRepository>
+      <pluginRepository>
+        <id>cica</id>
+        <name>1 plugin repo</name>
+        <url>http://ftp.cica.es/mirrors/maven2/</url>
+      </pluginRepository>
+    </pluginRepositories>
 -->
 <!---->
   <mailingLists />

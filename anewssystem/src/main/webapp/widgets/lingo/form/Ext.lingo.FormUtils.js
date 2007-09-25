@@ -105,7 +105,7 @@ var forms = new Ext.form.Form({
                 alt         : meta.alt,
                 setAllMonth : meta.setAllMonth ? el.setAllMonth : false
             });
-            console.error(field.format);
+
             if (isApply) {
                 field.applyTo(meta.id);
             }

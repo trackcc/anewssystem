@@ -4,13 +4,13 @@ import java.util.List;
 
 import anni.asecurity.domain.Role;
 
-import anni.core.test.AbstractDaoTestCase;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class RoleManagerTest extends AbstractDaoTestCase {
+public class RoleManagerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(RoleManagerTest.class);
     private RoleManager roleManager;
 

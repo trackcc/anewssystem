@@ -1,13 +1,13 @@
-// vim: ts=2:sw=2:nu:fdc=4:nospell
+// vim: ts=4:sw=4:nu:fdc=4:nospell
 
 // Create user extensions namespace (Ext.ux)
 Ext.namespace('Ext.ux');
 
 /**
   * Ext.ux.InfoPanel Extension Class
-	*
-	* @author  Ing. Jozef Sakalos
-	* @version $Id: Ext.ux.InfoPanel.js 18 2007-06-13 17:55:16Z jozo $
+  *
+  * @author  Ing. Jozef Sakalos
+  * @version $Id: Ext.ux.InfoPanel.js 153 2007-08-24 10:46:19Z jozo $
   *
   * @class Ext.ux.InfoPanel
   * @extends Ext.ContentPanel
@@ -15,33 +15,37 @@ Ext.namespace('Ext.ux');
   * Creates new Ext.ux.InfoPanel
   * @param {String/HTMLElement/Element} el The container element for this panel
   * @param {String/Object} config A string to set only the title or a config object
-	* @param {String} content (optional) Set the HTML content for this panel
-	* @cfg {Boolean} animate false to switch animation of expand/collapse off (defaults to true)
-	* @cfg {String} bodyClass css class added to the body in addition to the default class(es)
+  * @param {String} content (optional) Set the HTML content for this panel
+  * @cfg {Boolean} animate set to true to switch animation of expand/collapse on (defaults to undefined)
+  * @cfg {String} bodyClass css class added to the body in addition to the default class(es)
   * @cfg {String/HTMLElement/Element} bodyEl This element is used as body of panel.
-	* @cfg {Boolean} collapsed false to start with the expanded body (defaults to true)
-	* @cfg {Boolean} collapseOnUnpin unpinned panel is collapsed when possible (defaults to true)
-	* @cfg {Boolean} collapsible false to disable collapsibility (defaults to true)
-	* @cfg {Boolean} draggable true to allow panel dragging (defaults to false)
-	* @cfg {Float} duration Duration of animation in seconds (defaults to 0.35)
-	* @cfg {String} easingCollapse Easing to use for collapse animation (e.g. 'backIn')
-	* @cfg {String} easingExpand Easing to use for expand animation (e.g. 'backOut')
-	* @cfg {String} icon Path for icon to display in the title
-	* @cfg {Integer} minWidth minimal width in pixels of the resizable panel (no default)
-	* @cfg {Integer} maxWidth maximal width in pixels of the resizable panel (no default)
-	* @cfg {Integer} minHeight minimal height in pixels of the resizable panel (no default)
-	* @cfg {Integer} maxHeight maximal height in pixels of the resizable panel (no default)
-	* @cfg {String} panelClass Set to override the default 'x-dock-panel' class.
-	* @cfg {Boolean} pinned true to start in pinned state (implies collapsed:false) (defaults to false)
-	* @cfg {Boolean} resizable true to allow use resize width of the panel. 
-	*  Handles are transparent. (defaults to false)
-	* @cfg {String} shadowMode defaults to 'sides'.
-	* @cfg {Boolean} showPin Show the pin button - makes sense only if panel is part of Accordion
-	* @cfg {String} trigger 'title' or 'button'. Click where expands/collapses the panel (defaults to 'title')
-	* @cfg {Boolean} useShadow Use shadows for undocked panels or panels w/o dock. (defaults to true)
+  * @cfg {String} buttonPosition set this to 'left' to place expand button to the left of titlebar
+  * @cfg {Boolean} collapsed false to start with the expanded body (defaults to true)
+  * @cfg {String} collapsedIcon Path for icon to display in the title when panel is collapsed
+  * @cfg {Boolean} collapseOnUnpin unpinned panel is collapsed when possible (defaults to true)
+  * @cfg {Boolean} collapsible false to disable collapsibility (defaults to true)
+  * @cfg {Boolean} draggable true to allow panel dragging (defaults to undefined)
+  * @cfg {Float} duration Duration of animation in seconds (defaults to 0.35)
+  * @cfg {String} easingCollapse Easing to use for collapse animation (e.g. 'backIn')
+  * @cfg {String} easingExpand Easing to use for expand animation (e.g. 'backOut')
+  * @cfg {String} expandedIcon Path for icon to display in the title when panel is expanded
+  * @cfg {String} icon Path for icon to display in the title
+  * @cfg {Integer} minWidth minimal width in pixels of the resizable panel (defaults to 0)
+  * @cfg {Integer} maxWidth maximal width in pixels of the resizable panel (defaults to 9999)
+  * @cfg {Integer} minHeight minimal height in pixels of the resizable panel (defaults to 50)
+  * @cfg {Integer} maxHeight maximal height in pixels of the resizable panel (defaults to 9999)
+  * @cfg {String} panelClass Set to override the default 'x-dock-panel' class.
+  * @cfg {Boolean} pinned true to start in pinned state (implies collapsed:false) (defaults to false)
+  * @cfg {Boolean} resizable true to allow use resize width of the panel. (defaults to undefined)
+  *  Handles are transparent. (defaults to false)
+  * @cfg {String} shadowMode defaults to 'sides'.
+  * @cfg {Boolean} showPin Show the pin button - makes sense only if panel is part of Accordion
+  * @cfg {String} trigger 'title' or 'button'. Click where expands/collapses the panel (defaults to 'title')
+  * @cfg {Boolean} useShadow Use shadows for undocked panels or panels w/o dock. (defaults to undefined = don't use)
   */
 Ext.ux.InfoPanel = function(el, config, content) {
 
+	config = config || el;
 	// {{{
 	// basic setup
 	var oldHtml = content || null;
@@ -54,6 +58,16 @@ Ext.ux.InfoPanel = function(el, config, content) {
 	if(config && config.autoScroll) {
 		this.bodyScroll = config.autoScroll;
 		delete(config.autoScroll);
+	}
+
+	var url;
+	if(el && el.url) {
+		url = el.url;
+		delete(el.url);
+	}
+	if(config && config.url) {
+		url = config.url;
+		delete(config.url);
 	}
 
 	// call parent constructor
@@ -96,24 +110,52 @@ Ext.ux.InfoPanel = function(el, config, content) {
 	// }}}
 	// {{{
 	// create title element
-	var create = {
-		tag:'div', unselectable:'on', cls:'x-unselectable x-layout-panel-hd x-dock-panel-title', children: [
-			{tag:'table', cellspacing:0, children: [
-				{tag:'tr', children: [
-					{tag:'td', width:'100%', children: [
-						{tag:'div', cls:'x-dock-panel x-layout-panel-hd-text x-dock-panel-title-text'}
-					]}
-					, {tag:'td', children:[
-						{tag:'div', cls:'x-dock-panel x-dock-panel-tools'}
+	var create;
+	if('left' === this.buttonPosition ) {
+		create = {
+			tag:'div', unselectable:'on', cls:'x-unselectable x-layout-panel-hd x-dock-panel-title', children: [
+				{tag:'table', cellspacing:0, children: [
+					{tag:'tr', children: [
+						{tag:'td', children:[
+							{tag:'div', cls:'x-dock-panel x-dock-panel-tools'}
+						]}
+						, {tag:'td', width:'100%', children: [
+							{tag:'div', cls:'x-dock-panel x-layout-panel-hd-text x-dock-panel-title-text'}
+						]}
+						, {tag:'td', cls:'x-dock-panel-title-icon-ct', children: [
+							{tag:'img', alt:'', cls:'x-dock-panel-title-icon'}
+						]}
 					]}
 				]}
-			]}
-		]};
+			]};
+	}
+	else {
+		create = {
+			tag:'div', unselectable:'on', cls:'x-unselectable x-layout-panel-hd x-dock-panel-title', children: [
+				{tag:'table', cellspacing:0, children: [
+					{tag:'tr', children: [
+						{tag:'td', cls:'x-dock-panel-title-icon-ct', children: [
+							{tag:'img', alt:'', cls:'x-dock-panel-title-icon'}
+						]}
+						, {tag:'td', width:'100%', children: [
+							{tag:'div', cls:'x-dock-panel x-layout-panel-hd-text x-dock-panel-title-text'}
+						]}
+						, {tag:'td', children:[
+							{tag:'div', cls:'x-dock-panel x-dock-panel-tools'}
+						]}
+					]}
+				]}
+			]};
+	}
 	this.titleEl = dh.insertFirst(this.el.dom, create, true);
+	this.iconImg = this.titleEl.select('img.x-dock-panel-title-icon').item(0);
 	this.titleEl.addClassOnOver('x-dock-panel-title-over');
 	this.titleEl.enableDisplayMode();
 	this.titleTextEl = Ext.get(this.titleEl.select('.x-dock-panel-title-text').elements[0]);
 	this.tools = Ext.get(this.titleEl.select('.x-dock-panel-tools').elements[0]);
+	if('right' === this.titleTextAlign) {
+		this.titleTextEl.addClass('x-dock-panel-title-right');
+	}
 
 	this.tm = Ext.util.TextMetrics.createInstance(this.titleTextEl);
 	// }}}
@@ -175,17 +217,37 @@ Ext.ux.InfoPanel = function(el, config, content) {
 	else if(this.pinned) {
 		this.body.show();
 		this.collapsed = false;
-		this.updateVisuals();
 	}
 	this.body.addClass(this.bodyClass);
 	this.body.addClass('x-dock-panel-body-undocked');
 
 	// bodyScroll
+
+	this.scrollEl = this.body;
+
 	// autoScroll -> bodyScroll is experimental due to IE bugs
-	if(!Ext.isIE) {
-		this.body.setStyle('overflow', this.bodyScroll === true ? 'auto' : 'hidden');
-	}
+	this.scrollEl.setStyle('overflow', 
+		this.bodyScroll === true && !this.collapsed ? 'auto' : 'hidden');
 	// }}}
+
+	if(this.fixedHeight) {
+		this.setHeight(this.fixedHeight);
+	}
+
+	if(url) {
+		this.setUrl(url, this.params, this.loadOnce);
+	}
+
+	// install hook for title context menu
+	if(this.titleMenu) {
+		this.setTitleMenu(this.titleMenu);
+	}
+
+	// install hook for icon menu
+	if(this.iconMenu) {
+		this.setIconMenu(this.iconMenu);
+	}
+
 	// {{{
 	// add events
 	this.addEvents({
@@ -258,19 +320,12 @@ Ext.ux.InfoPanel = function(el, config, content) {
 	this.setResizable(!this.collapsed);
 	this.setShadow(this.useShadow);
 
-	/*
-	// todo revise
-	if(this.minHeight && !this.docked) {
-		this.setHeight(this.minHeight);
-	}
-
-	if(this.minWidth && !this.docked) {
-		this.setWidth(this.minWidth);
-	}
-	*/
 	// }}}
 
-	this.id = this.el.id;
+	this.el.setStyle('z-index', this.zindex);
+	this.updateVisuals();
+
+	this.id = this.id || this.el.id;
 
 }; // end of constructor
 
@@ -279,17 +334,18 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 
 	// {{{
 	// defaults
-	collapsible: true
+	  adjustments: [0,0]
+	, collapsible: true
 	, collapsed: true
 	, collapseOnUnpin: true
 	, pinned: false
 	, trigger: 'title'
-	, animate: true
+	, animate: undefined
 	, duration: 0.35
-	, draggable: false
-	, resizable: false
+	, draggable: undefined
+	, resizable: undefined
 	, docked: false
-	, useShadow: false
+	, useShadow: undefined
 	, bodyClass: 'x-dock-panel-body'
 	, panelClass: 'x-dock-panel'
 	, shadowMode: 'sides'
@@ -301,7 +357,13 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 	}
 	, lastWidth: 0
 	, lastHeight: 0
+	, minWidth: 0
+	, maxWidth: 9999
+	, minHeight: 50
+	, maxHeight: 9999
 	, autoScroll: false
+	, fixedHeight: undefined
+	, zindex: 10000
 	// }}}
 	// {{{
 	/**
@@ -323,15 +385,70 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 	, setTitle: function(title) {
 		this.title = title;
 		this.titleTextEl.update(title);
-		if(this.icon) {
-			this.titleTextEl.set({
-				style: 
-					'background-image:url(' 
-					+ this.icon 
-					+ ');background-repeat:no-repeat;background-position:3px 50%;padding-left:23px;'
-			});
-		}
+		this.setIcon();
 		return this;
+	}
+	// }}}
+	// {{{
+	/**
+		* Set the icon to display in title
+		* @param {String} iconPath path to use for src property of icon img
+		*/
+	, setIcon: function(iconPath) {
+		iconPath = iconPath || (this.collapsed ? this.collapsedIcon : this.expandedIcon) || this.icon;
+		if(iconPath) {
+			this.iconImg.dom.src = iconPath;
+		}
+		else {
+			this.iconImg.dom.src = Ext.BLANK_IMAGE_URL;
+		}
+	}
+	// }}}
+	// {{{
+	/**
+		* Assigns menu to title icon
+		* @param {Ext.menu.Menu} menu menu to assign
+		*/
+	, setIconMenu: function(menu) {
+		if(this.iconMenu) {
+			this.iconImg.removeAllListeners();
+		}
+		menu.panel = this;
+		this.iconImg.on({
+			click: {
+				scope: this
+				, fn: function(e, target) {
+				e.stopEvent();
+				menu.showAt(e.xy);
+			}}
+		});
+		this.iconMenu = menu;
+	}
+	// }}}
+	// {{{
+	/**
+		* private - title menu click handler
+		* @param {Ext.Event} e event
+		* @param {Element} target target
+		*/
+	, onTitleMenu: function(e, target) {
+		e.stopEvent();
+		e.preventDefault();
+		this.titleMenu.showAt(e.xy);	
+	}
+	// }}}
+	// {{{
+	/**
+		* Assigns context menu (right click) to the title 
+		* @param {Ext.menu.Menu} menu menu to assign
+		*/
+	, setTitleMenu: function(menu) {
+		if(this.titleMenu) {
+			this.titleEl.un('contextmenu', this.onTitleMenu, this);
+		}
+		menu.panel = this;
+		this.titleEl.on('contextmenu', this.onTitleMenu, this);
+		this.titleMenu = menu;
 	}
 	// }}}
 	// {{{
@@ -355,6 +472,42 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 	// }}}
 	// {{{
 	/**
+		* Returns title height
+		* @return {Integer} title height
+		*/
+	, getTitleHeight: function() {
+		return this.titleEl.getComputedHeight();
+	}
+	// }}}
+	// {{{
+	/**
+		* Returns body height
+		* @return {Integer} body height
+		*/
+	, getBodyHeight: function() {
+		return this.body.getComputedHeight();
+	}
+	// }}}
+	// {{{
+	/**
+		* Returns panel height
+		* @return {Integer} panel height
+		*/
+	, getHeight: function() {
+		return this.getBodyHeight() + this.getTitleHeight();
+	}
+	// }}}
+	// {{{
+	/**
+		* Returns body client height
+		* @return {Integer} body client height
+		*/
+	, getBodyClientHeight: function() {
+		return this.body.getHeight(true);
+	}
+	// }}}
+	// {{{
+	/**
 		* Update the innerHTML of this element, optionally searching for and processing scripts
     * @param {String} html The new HTML
     * @param {Boolean} loadScripts (optional) true to look for and process scripts
@@ -368,10 +521,107 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 	// }}}
 	// {{{
 	/**
+	 * Updates this panel's element
+	 * @param {String} content The new content
+	 * @param {Boolean} loadScripts (optional) true to look for and process scripts
+	*/
+	, setContent: function(content, loadScripts) {
+			this.body.update(content, loadScripts);
+	}
+	// }}}
+	// {{{
+	/**
+	 * Get the {@link Ext.UpdateManager} for this panel. Enables you to perform Ajax updates.
+	 * @return {Ext.UpdateManager} The UpdateManager
+	 */
+	, getUpdateManager: function() {
+			return this.body.getUpdateManager();
+	}
+	// }}}
+	// {{{
+	/**
+	 * The only required property is url. The optional properties nocache, text and scripts 
+	 * are shorthand for disableCaching, indicatorText and loadScripts and are used to set their associated property on this panel UpdateManager instance.
+	 * @param {String/Object} params (optional) The parameters to pass as either a url encoded string "param1=1&amp;param2=2" or an object {param1: 1, param2: 2}
+	 * @param {Function} callback (optional) Callback when transaction is complete - called with signature (oElement, bSuccess, oResponse)
+	 * @param {Boolean} discardUrl (optional) By default when you execute an update the defaultUrl is changed to the last used url. If true, it will not store the url.
+	 * @return {Ext.ContentPanel} this
+	 */
+	, load: function() {
+			var um = this.getUpdateManager();
+			um.update.apply(um, arguments);
+			return this;
+	}
+	// }}}
+	// {{{
+	/**
+	 * Set a URL to be used to load the content for this panel. When this panel is activated, the content will be loaded from that URL.
+	 * @param {String/Function} url The url to load the content from or a function to call to get the url
+	 * @param {String/Object} params (optional) The string params for the update call or an object of the params. See {@link Ext.UpdateManager#update} for more details. (Defaults to null)
+	 * @param {Boolean} loadOnce (optional) Whether to only load the content once. If this is false it makes the Ajax call every time this panel is activated. (Defaults to false)
+	 * @return {Ext.UpdateManager} The UpdateManager
+	 */
+	, setUrl: function(url, params, loadOnce) {
+			if(this.refreshDelegate){
+					this.removeListener("expand", this.refreshDelegate);
+			}
+			this.refreshDelegate = this._handleRefresh.createDelegate(this, [url, params, loadOnce]);
+			this.on("expand", this.refreshDelegate);
+			this.on({
+				beforeexpand: {
+					scope: this
+					, single: this.loadOnce ? true : false
+					, fn: function() {
+						this.body.update('');
+				}}
+			});
+			return this.getUpdateManager();
+	}
+	// }}}
+	// {{{
+	, _handleRefresh: function(url, params, loadOnce) {
+			var updater;
+			if(!loadOnce || !this.loaded){
+					updater = this.getUpdateManager();
+					updater.on({
+						update: {
+							scope: this
+							, single: true
+							, fn: function() {
+								if(true === this.useShadow && this.shadow) {
+									this.shadow.show(this.el);
+								}
+						}}
+					});
+					updater.update(url, params, this._setLoaded.createDelegate(this));
+			}
+	}
+	// }}}
+	// {{{
+	, _setLoaded: function() {
+			this.loaded = true;
+	} 
+	// }}}
+  // {{{
+	/**
+	 *   Force a content refresh from the URL specified in the setUrl() method.
+	 *   Will fail silently if the setUrl method has not been called.
+	 *   This does not activate the panel, just updates its content.
+	 */
+	, refresh: function() {
+			if(this.refreshDelegate){
+				 this.loaded = false;
+				 this.refreshDelegate();
+			}
+	}
+	// }}}
+	// {{{
+	/**
 		* Expands the panel
+		* @param {Boolean} skipAnimation Set to true to skip animation
 		* @return {Ext.ux.InfoPanel} this
 		*/
-	, expand: function() {
+	, expand: function(skipAnimation) {
 
 		// do nothing if already expanded
 		if(!this.collapsed) {
@@ -383,8 +633,15 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 			return this;
 		}
 
+		if(Ext.isGecko) {
+			this.autoScrolls = this.body.select('{overflow=auto}');
+			this.autoScrolls.setStyle('overflow', 'hidden');
+		}
+
 		// reset collapsed flag
 		this.collapsed = false;
+
+		this.autoSize();
 
 		// hide shadow
 		if(!this.docked) {
@@ -396,8 +653,12 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 			this.setResizable(true);
 		}
 		
+		if(Ext.isIE) {
+			this.body.setWidth(this.el.getWidth());
+		}
+
 		// animate expand
-		if(this.animate) {
+		if(true === this.animate && true !== skipAnimation) {
 				this.body.slideIn('t', {
 					easing: this.easingExpand || null
 					, scope: this
@@ -423,14 +684,15 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 	// {{{
 	/**
 		* Toggles the expanded/collapsed states
+		* @param {Boolean} skipAnimation Set to true to skip animation
 		* @return {Ext.ux.InfoPanel} this
 		*/
-	, toggle: function() {
+	, toggle: function(skipAnimation) {
 			if(this.collapsed) {
-				this.expand();
+				this.expand(skipAnimation);
 			}
 			else {
-				this.collapse();
+				this.collapse(skipAnimation);
 			}
 			return this;
 	}
@@ -438,9 +700,10 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 	// {{{
 	/**
 		* Collapses the panel
+		* @param {Boolean} skipAnimation Set to true to skip animation
 		* @return {Ext.ux.InfoPanel} this
 		*/
-	, collapse: function() {
+	, collapse: function(skipAnimation) {
 
 		// do nothing if already collapsed or pinned
 		if(this.collapsed || this.pinned) {
@@ -452,8 +715,13 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 				return this;
 		}
 
+		if(Ext.isGecko) {
+			this.autoScrolls = this.body.select('{overflow=auto}');
+			this.autoScrolls.setStyle('overflow', 'hidden');
+		}
+
 		if(this.bodyScroll /*&& !Ext.isIE*/) {
-			this.body.setStyle('overflow','hidden');
+			this.scrollEl.setStyle('overflow','hidden');
 		}
 
 		// set collapsed flag
@@ -468,7 +736,7 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 		}
 
 		// animate collapse
-		if(this.animate) {
+		if(true === this.animate && true !== skipAnimation) {
 				this.body.slideOut('t', {
 					easing: this.easingCollapse || null
 					, scope: this
@@ -503,12 +771,18 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 			// handle collapsed state
 			if(this.collapsed) {
 				if(this.showPin) {
-					this.collapseBtn.show();
-					this.stickBtn.hide();
+					if(this.collapseBtn) {
+						this.collapseBtn.show();
+					}
+					if(this.stickBtn) {
+						this.stickBtn.hide();
+					}
 				}
-				Ext.fly(this.collapseBtn.dom.firstChild).replaceClass(
-					'x-layout-collapse-south', 'x-layout-collapse-east'
-				);
+				if(this.collapseBtn) {
+					Ext.fly(this.collapseBtn.dom.firstChild).replaceClass(
+						'x-layout-collapse-south', 'x-layout-collapse-east'
+					);
+				}
 				this.body.replaceClass('x-dock-panel-body-expanded', 'x-dock-panel-body-collapsed');
 				this.titleEl.replaceClass('x-dock-panel-title-expanded', 'x-dock-panel-title-collapsed');
 			}
@@ -517,20 +791,30 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 			else {
 				if(this.showPin) {
 					if(this.pinned) {	
-						Ext.fly(this.stickBtn.dom.firstChild).replaceClass('x-layout-stick', 'x-layout-stuck');
+						if(this.stickBtn) {
+							Ext.fly(this.stickBtn.dom.firstChild).replaceClass('x-layout-stick', 'x-layout-stuck');
+						}
 						this.titleEl.addClass('x-dock-panel-title-pinned');
 					}
 					else {
-						Ext.fly(this.stickBtn.dom.firstChild).replaceClass('x-layout-stuck', 'x-layout-stick');
+						if(this.stickBtn) {
+							Ext.fly(this.stickBtn.dom.firstChild).replaceClass('x-layout-stuck', 'x-layout-stick');
+						}
 						this.titleEl.removeClass('x-dock-panel-title-pinned');
 					}
-					this.collapseBtn.hide();
-					this.stickBtn.show();
+					if(this.collapseBtn) {
+						this.collapseBtn.hide();
+					}
+					if(this.stickBtn) {
+						this.stickBtn.show();
+					}
 				}
 				else {
-					Ext.fly(this.collapseBtn.dom.firstChild).replaceClass(
-						'x-layout-collapse-east', 'x-layout-collapse-south'
-					);
+					if(this.collapseBtn) {
+						Ext.fly(this.collapseBtn.dom.firstChild).replaceClass(
+							'x-layout-collapse-east', 'x-layout-collapse-south'
+						);
+					}
 				}
 				this.body.replaceClass('x-dock-panel-body-collapsed', 'x-dock-panel-body-expanded');
 				this.titleEl.replaceClass('x-dock-panel-title-collapsed', 'x-dock-panel-title-expanded');
@@ -541,8 +825,14 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 				this.setShadow(true);
 			}
 
+			if(this.autoScrolls) {
+				this.autoScrolls.setStyle('overflow', 'auto');
+			}
+
+			this.setIcon();
+
 			if(this.bodyScroll && !this.docked && !this.collapsed /*&& !Ext.isIE*/) {
-				this.body.setStyle('overflow', 'auto');
+				this.scrollEl.setStyle('overflow', 'auto');
 			}
 
 			this.constrainToDesktop();
@@ -552,12 +842,13 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 
 			// clear visibility style of body's children
 			var kids = this.body.select('div[className!=x-grid-viewport],input{visibility}');
-//			var kids = this.body.select('div,input{visibility}');
 			kids.setStyle.defer(1, kids, ['visibility','']);
 
-			// restore visibility of grid-viewport if any
-//			var gvp = this.body.select('div.x-grid-viewport');
-//			gvp.setStyle('visibility', this.collapsed ? 'hidden' : 'visible');
+			// restore body overflow
+			if(this.bodyScroll && !this.collapsed /*&& !Ext.isIE*/) {
+				this.setHeight(this.getHeight());
+				this.scrollEl.setStyle('overflow','auto');
+			}
 
 			return this;
 	}
@@ -570,18 +861,39 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 		* @return {Ext.Toolbar} Ext.Toolbar object
 		*/
 	, createToolbar: function(config, bottom) {
-			var create = {tag:'div'}, tbEl;
-			config = config || null;
-			if(bottom) {
-				tbEl = Ext.DomHelper.append(this.body, create, true);
-				tbEl.addClass('x-dock-panel-toolbar-bottom');
+
+		// we need clean body
+		this.body.clean();
+
+		// copy body to new container
+		this.scrollEl = Ext.DomHelper.append(document.body, {tag:'div'}, true);
+		var el;
+		while(el = this.body.down('*')) {
+			this.scrollEl.appendChild(el);
+		}
+
+		if(this.bodyScroll) {
+			this.body.setStyle('overflow', '');
+			if(!this.collapsed) {
+				this.scrollEl.setStyle('overflow', 'auto');
 			}
-			else {
-				tbEl = Ext.DomHelper.insertFirst(this.body, create, true);
-				tbEl.addClass('x-dock-panel-toolbar');
-			}
-			this.toolbar = new Ext.Toolbar(tbEl, config);
-			return this.toolbar;
+		}
+
+		var create = {tag:'div'}, tbEl;
+		config = config || null;
+		if(bottom) {
+			this.body.appendChild(this.scrollEl);
+			tbEl = Ext.DomHelper.append(this.body, create, true);
+			tbEl.addClass('x-dock-panel-toolbar-bottom');
+		}
+		else {
+			tbEl = Ext.DomHelper.insertFirst(this.body, create, true);
+			tbEl.addClass('x-dock-panel-toolbar');
+			this.body.appendChild(this.scrollEl);
+		}
+		this.toolbar = new Ext.Toolbar(tbEl, config);
+		this.setHeight(this.getHeight());
+		return this.toolbar;
 	}
 	// }}}
 	// {{{
@@ -593,7 +905,7 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 		*/
 	, setDraggable: function(enable) {
 
-		if(!this.draggable) {
+		if(true !== this.draggable) {
 			return this;
 		}
 
@@ -618,6 +930,7 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 			});
 			this.dd.scroll = false;
 			this.dd.afterDrag = function() {
+				this.panel.moveToViewport();
 				if(this.panel && this.panel.shadow && !this.panel.docked) {
 					this.panel.shadow.show(this.panel.el);
 				}
@@ -648,7 +961,7 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 		*/
 	, setResizable: function(enable) {
 
-		if(!this.resizable) {
+		if(true !== this.resizable) {
 			return this;
 		}
 
@@ -661,9 +974,9 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 			this.resizer = new Ext.Resizable(this.el, {
 				handles: 's w e sw se'
 				, minWidth: this.minWidth || this.tm.getWidth(this.getTitle()) + 56 || 48
-				, maxWidth: this.maxWidth || 9999
-				, minHeight: this.minHeight || 48
-				, maxHeight: this.maxHeight || 9999
+				, maxWidth: this.maxWidth
+				, minHeight: this.minHeight
+				, maxHeight: this.maxHeight
 				, transparent: true
 				, draggable: false
 			});
@@ -685,15 +998,19 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 						}
 
 						// down constraint
+						var maxH;
 						if(pos.match(/south/)) {
 							resizer.oldMaxHeight = resizer.maxHeight;
-							resizer.maxHeight = viewport.y + viewport.height - box.y - (this.dragPadding.bottom || 8);
+							maxH = viewport.y + viewport.height - box.y - (this.dragPadding.bottom || 8);
+							resizer.maxHeight = maxH < resizer.maxHeight ? maxH : resizer.maxHeight;
 						}
 
 						// right constraint
+						var maxW;
 						if(pos.match(/east/)) {
 							resizer.oldMaxWidth = resizer.maxWidth;
-							resizer.maxWidth = viewport.x + viewport.width - box.x - (this.dragPadding.right || 10);
+							maxW = viewport.x + viewport.width - box.x - (this.dragPadding.right || 10);
+							resizer.maxWidth = maxW < resizer.maxWidth ? maxW : resizer.maxWidth;
 						}
 				}}
 				, resize: {
@@ -705,6 +1022,8 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 						this.constrainToDesktop();
 						this.fireEvent('boxchange', this, this.el.getBox());
 						this.fireEvent('resize', this, width, height);
+						this.lastHeight = height;
+						this.lastWidth = width;
 				}}
 			});
 			// }}}
@@ -784,6 +1103,9 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 		var safeSize = this.safeSize(w, h);
 		this.setWidth(safeSize.width);
 		this.setHeight(safeSize.height);
+		if(Ext.isIE) {
+			this.body.setWidth(safeSize.width);
+		}
 
 		if(!this.docked) {
 			this.setShadow(true);
@@ -816,8 +1138,15 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 		* @return {Ext.ux.InfoPanel} this
 		*/
 	, setHeight: function(h) {
-		var newH = h - this.titleEl.getHeight();
-		if(0 < newH) {
+		var newH = h - this.getTitleHeight();
+		var scrollH = newH;
+		if(1 < newH) {
+			if(this.scrollEl !== this.body) {
+				scrollH -= this.toolbar ? this.toolbar.getEl().getHeight() : 0;
+//				scrollH -= 27;
+				scrollH -= this.adjustments[1] || 0;
+				this.scrollEl.setHeight(scrollH);
+			}
 			this.body.setHeight(newH);
 		}
 		else {
@@ -859,6 +1188,33 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 	}
 	// }}}
 	// {{{
+	, autoSize: function() {
+
+		var width = 0;
+		var height = this.fixedHeight || 0;
+		var dock = this.dock;
+
+		// docked
+		if(this.docked && this.dock) {
+			if(dock.fitHeight) {
+				height = dock.getPanelBodyHeight() + this.getTitleHeight();
+			}
+		}
+
+		// undocked
+		else {
+			// height logic
+			height = this.lastHeight || this.fixedHeight || 0;
+			height = height < this.maxHeight ? height : (this.maxHeight < 9999 ? this.maxHeight : 0);
+			height = (height && height < this.minHeight ) ? this.minHeight : height;
+			this.lastHeight = height ? height : this.lastHeight;
+		}
+
+		this.setHeight(height);
+
+	}
+	// }}}
+	// {{{
 	/**
 		* Turns shadow on/off
 		* Uses lazy creation of the shadow object
@@ -868,13 +1224,13 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 	, setShadow: function(shadow) {
 
 		// if I have shadow but shouldn't use it
-		if(this.shadow && !this.useShadow) {
+		if(this.shadow && true !== this.useShadow) {
 			this.shadow.hide();
 			return this;
 		}
 
 		// if I shouldn't use shadow
-		if(!this.useShadow) {
+		if(true !== this.useShadow) {
 			return this;
 		}
 
@@ -1007,8 +1363,8 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 
 		return this;
 	}
-// }}}
-
+	// }}}
+	// {{{
 	/**
 		* destroys the panel
 		*/
@@ -1032,6 +1388,9 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 			this.dd.unreg();
 			this.dd = null;
 		}
+		if(this.dock) {
+			this.dock.detach(this);
+		}
 
 		this.body.removeAllListeners();
 
@@ -1041,6 +1400,7 @@ Ext.extend(Ext.ux.InfoPanel, Ext.ContentPanel, {
 		this.fireEvent('destroy', this);
 
 	}
+	// }}}
 
 }); // end of extend
 

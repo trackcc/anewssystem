@@ -2,20 +2,20 @@ package anni.asecurity.web;
 
 import anni.asecurity.domain.User;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class UserControllerTest extends AbstractPrototypeControllerTest {
+public class UserControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(UserControllerTest.class);
 
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (UserController) ctx.getBean(
+        controller = (UserController) applicationContext.getBean(
                 "anni.asecurity.web.UserController");
     }
 

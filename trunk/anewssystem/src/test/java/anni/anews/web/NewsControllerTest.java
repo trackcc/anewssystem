@@ -5,13 +5,13 @@ import anni.anews.domain.NewsCategory;
 
 import anni.anews.manager.NewsCategoryManager;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class NewsControllerTest extends AbstractPrototypeControllerTest {
+public class NewsControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(NewsControllerTest.class);
     private NewsCategoryManager newsCategoryManager;
 
@@ -24,7 +24,7 @@ public class NewsControllerTest extends AbstractPrototypeControllerTest {
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (NewsController) ctx.getBean(
+        controller = (NewsController) applicationContext.getBean(
                 "anni.anews.web.NewsController");
     }
 

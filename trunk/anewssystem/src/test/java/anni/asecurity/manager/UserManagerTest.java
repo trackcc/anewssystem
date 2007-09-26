@@ -5,7 +5,7 @@ import java.util.List;
 import anni.asecurity.domain.Role;
 import anni.asecurity.domain.User;
 
-import anni.core.test.AbstractDaoTestCase;
+import anni.core.test.AbstractWebTests;
 
 import org.acegisecurity.providers.encoding.Md5PasswordEncoder;
 
@@ -13,7 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class UserManagerTest extends AbstractDaoTestCase {
+public class UserManagerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(UserManagerTest.class);
     private UserManager userManager;
     private RoleManager roleManager;

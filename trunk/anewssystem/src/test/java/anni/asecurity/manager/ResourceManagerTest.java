@@ -4,13 +4,13 @@ import java.util.List;
 
 import anni.asecurity.domain.Resource;
 
-import anni.core.test.AbstractDaoTestCase;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class ResourceManagerTest extends AbstractDaoTestCase {
+public class ResourceManagerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(ResourceManagerTest.class);
     private ResourceManager resourceManager;
 

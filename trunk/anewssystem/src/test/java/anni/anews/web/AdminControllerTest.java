@@ -1,19 +1,19 @@
 package anni.anews.web;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class AdminControllerTest extends AbstractPrototypeControllerTest {
+public class AdminControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(AdminControllerTest.class);
 
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (AdminController) ctx.getBean(
+        controller = (AdminController) applicationContext.getBean(
                 "anni.anews.web.AdminController");
     }
 

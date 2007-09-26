@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>accordion</title>
+<link rel="stylesheet" type="text/css" href="../ext/1.1/resources/css/yext-all.css" />
+<script type="text/javascript" src="../extjs/1.1/adapter/yui/yui-utilities.js"></script>
+<script type="text/javascript" src="../extjs/1.1/adapter/yui/ext-yui-adapter.js"></script>
+<script type="text/javascript" src="../extjs/1.1/ext-all-debug.js"></script>
+    <link rel="stylesheet" type="text/css" href="accordion.css" />
+    <script type='text/javascript' src='Ext.ux.Accordion.js'></script>
+    <script type='text/javascript' src='Ext.ux.InfoPanel.js'></script>
+<script type="text/javascript">
+Ext.BLANK_IMAGE_URL = '../extjs/1.1/resources/images/default/s.gif';
+Ext.onReady(function() {
+  // create accordion
+  var acc = new Ext.ux.Accordion('acc-ct', {
+    fitHeight: true
+  })
+
+  // create panel 1
+  var panel1 = acc.add(new Ext.ux.InfoPanel('panel-1', {
+    autoScroll:true
+  }));
+
+  // create panel 2
+  var panel2 = acc.add(new Ext.ux.InfoPanel('panel-2', {
+    autoScroll:true
+  }));
+});
+</script>
+  </head>
+  <body>
+    <div id="acc-ct" style="width:200px;height:300px">
+      <div id="panel-1">
+        <div>My first panel</div>
+        <div>
+          <div class="text-content">My first panel content</div>
+        </div>
+      </div>
+      <div id="panel-2">
+        <div>My second panel</div>
+        <div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content</div>
+          <div class="text-content">My second panel content1111</div>
+          <div class="text-content">My second panel content1111</div>
+          <div class="text-content">My second panel content1111</div>
+          <div class="text-content">My second panel content1111</div>
+          <div class="text-content">My second panel content1111</div>
+          <div class="text-content">My second panel content1111</div>
+          <div class="text-content">My second panel content1111</div>
+          <div class="text-content">My second panel content1111</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

@@ -2,20 +2,20 @@ package anni.asecurity.web;
 
 import anni.asecurity.domain.Role;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class RoleControllerTest extends AbstractPrototypeControllerTest {
+public class RoleControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(RoleControllerTest.class);
 
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (RoleController) ctx.getBean(
+        controller = (RoleController) applicationContext.getBean(
                 "anni.asecurity.web.RoleController");
     }
 

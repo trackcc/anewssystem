@@ -1,19 +1,19 @@
 package anni.asecurity.web;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class IndexControllerTest extends AbstractPrototypeControllerTest {
+public class IndexControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(IndexControllerTest.class);
 
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (IndexController) ctx.getBean(
+        controller = (IndexController) applicationContext.getBean(
                 "anni.asecurity.web.IndexController");
     }
 

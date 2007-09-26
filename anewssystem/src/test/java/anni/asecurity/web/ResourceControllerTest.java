@@ -2,20 +2,20 @@ package anni.asecurity.web;
 
 import anni.asecurity.domain.Resource;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class ResourceControllerTest extends AbstractPrototypeControllerTest {
+public class ResourceControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(ResourceControllerTest.class);
 
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (ResourceController) ctx.getBean(
+        controller = (ResourceController) applicationContext.getBean(
                 "anni.asecurity.web.ResourceController");
     }
 

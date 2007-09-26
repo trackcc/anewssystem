@@ -2,20 +2,20 @@ package anni.asecurity.web;
 
 import anni.asecurity.domain.Dept;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class DeptControllerTest extends AbstractPrototypeControllerTest {
+public class DeptControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(DeptControllerTest.class);
 
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (DeptController) ctx.getBean(
+        controller = (DeptController) applicationContext.getBean(
                 "anni.asecurity.web.DeptController");
     }
 

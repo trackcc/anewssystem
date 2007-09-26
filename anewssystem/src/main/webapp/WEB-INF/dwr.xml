@@ -45,6 +45,7 @@
     <convert converter="bean" match="anni.asecurity.domain.Menu">
       <param name="include" value="id,image,name,url,parent,children"/>
     </convert>
+    <convert converter="bean" match="anni.asecurity.helper.MenuHelper$MenuItem"/>
 <!--
     <create creator="spring" javascript="newsServiceClient">
       <param name="beanName" value="newsServiceClient"/>

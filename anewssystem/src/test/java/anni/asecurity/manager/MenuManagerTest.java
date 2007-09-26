@@ -4,13 +4,13 @@ import java.util.List;
 
 import anni.asecurity.domain.Menu;
 
-import anni.core.test.AbstractDaoTestCase;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class MenuManagerTest extends AbstractDaoTestCase {
+public class MenuManagerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(MenuManagerTest.class);
     private MenuManager menuManager;
 

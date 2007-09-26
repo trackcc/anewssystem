@@ -2,13 +2,13 @@ package anni.anews.manager;
 
 import anni.anews.domain.NewsComment;
 
-import anni.core.test.AbstractDaoTestCase;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class NewsCommentManagerTest extends AbstractDaoTestCase {
+public class NewsCommentManagerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(NewsCommentManagerTest.class);
     private NewsCommentManager newsCommentManager;
 

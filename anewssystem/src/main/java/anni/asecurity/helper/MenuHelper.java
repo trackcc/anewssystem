@@ -1,5 +1,7 @@
 package anni.asecurity.helper;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -133,5 +135,90 @@ public class MenuHelper {
 
         // msg = "您选择的菜单删除失败！";
         return msg;
+    }
+
+    /**
+     * 根据登录用户，生成需要的菜单数据.
+     *
+     * @return Map
+     */
+    public Map<String, List<MenuItem>> getMenus() {
+        List<Menu> list = menuManager.find(
+                "from Menu where parent is null order by theSort,id");
+        Map<String, List<MenuItem>> map = new LinkedHashMap<String, List<MenuItem>>();
+
+        for (Menu menu : list) {
+            List<MenuItem> menuList = new ArrayList<MenuItem>();
+            map.put(menu.getName(), menuList);
+
+            for (Menu child : menu.getChildren()) {
+                MenuItem menuItem = new MenuItem();
+                menuItem.setImage(child.getImage());
+                menuItem.setTitle(child.getName());
+                menuItem.setHref(child.getUrl());
+                menuItem.setParentImg(menu.getImage());
+                menuList.add(menuItem);
+            }
+        }
+
+        return map;
+    }
+
+    /**
+     * Accordion.js需要的数据结构.
+     *
+     */
+    public static class MenuItem {
+        /** * 图片. */
+        private String image;
+
+        /** * 标题. */
+        private String title;
+
+        /** * 链接. */
+        private String href;
+
+        /** * 上级菜单. */
+        private String parentImg;
+
+        /** * @return image. */
+        public String getImage() {
+            return image;
+        }
+
+        /** * @param image String. */
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        /** * @return title. */
+        public String getTitle() {
+            return title;
+        }
+
+        /** * @param title String. */
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        /** * @return href. */
+        public String getHref() {
+            return href;
+        }
+
+        /** * @param href String. */
+        public void setHref(String href) {
+            this.href = href;
+        }
+
+        /** * @return parentImg. */
+        public String getParentImg() {
+            return parentImg;
+        }
+
+        /** * @param parentImg String. */
+        public void setParentImg(String parentImg) {
+            this.parentImg = parentImg;
+        }
     }
 }

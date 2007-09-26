@@ -2,20 +2,20 @@ package anni.anews.web;
 
 import anni.anews.domain.NewsTag;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class NewsTagControllerTest extends AbstractPrototypeControllerTest {
+public class NewsTagControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(NewsTagControllerTest.class);
 
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (NewsTagController) ctx.getBean(
+        controller = (NewsTagController) applicationContext.getBean(
                 "anni.anews.web.NewsTagController");
     }
 

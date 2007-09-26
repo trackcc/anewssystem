@@ -4,13 +4,13 @@ import java.util.List;
 
 import anni.asecurity.domain.Dept;
 
-import anni.core.test.AbstractDaoTestCase;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class DeptManagerTest extends AbstractDaoTestCase {
+public class DeptManagerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(DeptManagerTest.class);
     private DeptManager deptManager;
 

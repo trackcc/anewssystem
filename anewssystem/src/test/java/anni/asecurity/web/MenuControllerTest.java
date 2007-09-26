@@ -4,13 +4,13 @@ import anni.asecurity.domain.Menu;
 
 import anni.asecurity.manager.*;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class MenuControllerTest extends AbstractPrototypeControllerTest {
+public class MenuControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(MenuControllerTest.class);
     private UserManager userManager = null;
 
@@ -22,7 +22,7 @@ public class MenuControllerTest extends AbstractPrototypeControllerTest {
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (MenuController) ctx.getBean(
+        controller = (MenuController) applicationContext.getBean(
                 "anni.asecurity.web.MenuController");
     }
 

@@ -2,21 +2,20 @@ package anni.anews.web;
 
 import anni.anews.domain.NewsComment;
 
-import anni.core.test.AbstractPrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class NewsCommentControllerTest
-    extends AbstractPrototypeControllerTest {
+public class NewsCommentControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(NewsCommentControllerTest.class);
 
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (NewsCommentController) ctx.getBean(
+        controller = (NewsCommentController) applicationContext.getBean(
                 "anni.anews.web.NewsCommentController");
     }
 

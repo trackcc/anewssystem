@@ -3,7 +3,7 @@
   * Ext.ux.InfoPanel Extension Class
 	*
 	* @author  Ing. Jozef Sakalos
-	* @version $Id: Ext.ux.InfoPanel.GoogleSearch.js 65 2007-06-23 22:30:06Z jozo $
+	* @version $Id: Ext.ux.InfoPanel.GoogleSearch.js 76 2007-06-28 11:35:41Z jozo $
   *
   * @class Ext.ux.InfoPanel
   * @extends Ext.ux.InfoPanel
@@ -15,21 +15,35 @@
 	*/
 Ext.ux.InfoPanel.GoogleSearch = function(el, config, content) {
 
-	if(Ext.isGecko) {
-		this.autoScroll = true;
-	}
-
 	// call parent constructor
 	Ext.ux.InfoPanel.GoogleSearch.superclass.constructor.call(this, el, config);
 
 	// create nicer Ext form
 	var gsForm = this.body.select('form').item(0);
 
+	// handle firefox cursor bug
+	if(Ext.isGecko) {
+		gsForm.setStyle('overflow', 'auto');
+
+		this.on('beforeexpand', function() {
+			gsForm.setStyle('overflow', 'hidden');
+		});
+
+		this.on('beforecollapse', function() {
+			gsForm.setStyle('overflow', 'hidden');
+		});
+
+		this.on('animationcompleted', function() {
+			gsForm.setStyle('overflow', 'auto');
+		});
+	}
+
+
 	// beautify search text input
 	var gsText = gsForm.select('input[type=text]').item(0);
 	gsText.addClass('x-form-text x-form-field');
 	gsText.dom.size = this.searchTextSize;
-	gsText.on('click', function(e) {e.stopEvent();});
+//	gsText.on('click', function(e) {e.stopEvent();});
 
 	// remove original google button
 	this.body.select('input[type=submit]').remove();

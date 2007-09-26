@@ -7,6 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+
+import org.springframework.context.ConfigurableApplicationContext;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -17,6 +20,7 @@ import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.orm.hibernate3.SessionHolder;
 
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import org.springframework.test.AbstractTransactionalSpringContextTests;
 
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
@@ -27,22 +31,14 @@ import org.springframework.web.servlet.mvc.Controller;
 
 
 /**
- * 为了支持PrototypeController写的对应测试类.
- * 包括：
- * 1.初始化可以使用WebApplicationContext的ctx，主要为了Struts-Menu不出错，但freemarker还是有警告
- * 2.支持dbunit对数据库数据进行初始化
- * 3.使用RequestContextListener支持request这种scope的bean
- * 4.使用ModelAndViewTestHelper提供对ModelAndView的简易测试方法
- * 5.使用OpenSessionInViewFilter的方法，避免出现lazy initialization exception
- * 6.另外使用了AbstractTransactionalDataSourceSpringContextTests，应该是可以控制数据库事务，但还没测试过
+ * 改造loadContext.
  *
- * @author Lingo
- * @since 2007-06-01
- * @version 1.0
+ * @since 2007-03-19
  */
-public class AbstractPrototypeControllerTest
-    extends AbstractTransactionalDataSourceSpringContextTests {
-    // static fields
+public class AbstractWebTests
+    extends AbstractTransactionalSpringContextTests {
+    ///////////////////////////////////////////////////////
+    // static
     //
     /** * dbunit helper. */
     protected static final DbunitHelper DBUNIT_HELPER = new DbunitHelper();
@@ -50,26 +46,22 @@ public class AbstractPrototypeControllerTest
     /** * listener. */
     protected static final RequestContextListener REQUEST_LISTENER = new RequestContextListener();
 
-    /** * mv helper. */
-    protected ModelAndViewTestHelper mvHelper = new ModelAndViewTestHelper();
+    /** * ServletContext. */
+    protected static MockServletContext SERVLET_CONTEXT = new MockServletContext(
+            "");
 
+    ///////////////////////////////////////////////////////
     // fields
     //
+    /** * HttpSession. */
+    protected MockHttpSession session = new MockHttpSession(SERVLET_CONTEXT);
+
     /** * controller. */
     protected Controller controller;
 
-    /** * ctx. */
-    protected XmlWebApplicationContext ctx;
-
-    /** * ServletContext. */
-    protected MockServletContext context = new MockServletContext("");
-
     /** * HttpServletRequest. */
-    protected MockHttpServletRequest request = new MockHttpServletRequest(context,
+    protected MockHttpServletRequest request = new MockHttpServletRequest(SERVLET_CONTEXT,
             "GET", "");
-
-    /** * HttpSession. */
-    protected MockHttpSession session = null;
 
     /** * HttpServletResponse. */
     protected MockHttpServletResponse response = new MockHttpServletResponse();
@@ -83,45 +75,45 @@ public class AbstractPrototypeControllerTest
     /** * sessionFactory. */
     protected SessionFactory sessionFactory = null;
 
-    /**
-     * 构造方法，在里边进行ctx的初始化.
-     */
-    public AbstractPrototypeControllerTest() {
-        /** * paths */
-        String[] paths = getConfigLocations();
-
-        ctx = new XmlWebApplicationContext();
-        ctx.setConfigLocations(paths);
-        ctx.setServletContext(context);
-        ctx.refresh();
-
-        ctx.getBeanFactory()
-           .autowireBeanProperties(this,
-            AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
-
-        session = new MockHttpSession(context);
-        request.setSession(session);
-    }
+    /** * mv helper. */
+    protected ModelAndViewTestHelper mvHelper = new ModelAndViewTestHelper();
 
     /**
      * spring测试时，获得xml的路径.
      *
-     * @return String[] spring读取xml的路径
+     * @return xml的路径数组
      * @see AbstractTransactionalDataSourceSpringContextTests#getConfigLocations()
      */
     @Override
     protected String[] getConfigLocations() {
-        setAutowireMode(AUTOWIRE_BY_TYPE);
+        setAutowireMode(AUTOWIRE_BY_NAME);
 
         return new String[] {
             "classpath*:spring/*.xml", "classpath*:test/*.xml"
         };
     }
 
-    /** * setter */
-    //public void setUserController(UserController userControllerIn) {
-    //    userController = userControllerIn;
-    //}
+    /**
+     * 重载生成ctx的方法.
+     * 让我们生成一个XmlWebApplicationContext
+     *
+     * @param locations spring配置文件
+     * @return ctx
+     */
+    @Override
+    protected ConfigurableApplicationContext createApplicationContext(
+        String[] locations) {
+        XmlWebApplicationContext context = new XmlWebApplicationContext();
+        context.setConfigLocations(locations);
+        context.setServletContext(AbstractWebTests.SERVLET_CONTEXT);
+
+        // GenericApplicationContext context = new GenericApplicationContext();
+        // customizeBeanFactory(context.getDefaultListableBeanFactory());
+        // new XmlBeanDefinitionReader(context).loadBeanDefinitions(locations);
+        context.refresh();
+
+        return context;
+    }
 
     /**
      * 事务之前的初始化.
@@ -147,16 +139,18 @@ public class AbstractPrototypeControllerTest
          *DBUNIT_HELPER.setXlsPath("src/test/resources/xls/export.xls");
          *DBUNIT_HELPER.setUp();
          */
-        event = new ServletRequestEvent(context, request);
+        request.setSession(session);
+        event = new ServletRequestEvent(SERVLET_CONTEXT, request);
         REQUEST_LISTENER.requestInitialized(event);
 
         /*
-         * controller = (UserController) ctx.getBean(
+         * controller = (UserController) applicationContext.getBean(
          *         "anni.cms.lag.web.UserController");
          */
 
         /** * open session in view */
-        sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");
+        sessionFactory = (SessionFactory) applicationContext.getBean(
+                "sessionFactory");
 
         Session hibernateSession = SessionFactoryUtils.getSession(sessionFactory,
                 true);
@@ -186,10 +180,4 @@ public class AbstractPrototypeControllerTest
             .unbindResource(sessionFactory);
         SessionFactoryUtils.closeSession(sessionHolder.getSession());
     }
-
-    /** * test one */
-    // public void testOne() {
-    //     assertTrue(true);
-    //     assertNotNull(controller);
-    // }
 }

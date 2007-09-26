@@ -6,20 +6,16 @@
     <#include "/include/meta.ftl">
     <title> 管理后台 </title>
     <#include "/include/extjs.ftl"/>
-    <script type='text/javascript' src='${ctx}/widgets/ux/Ext.Accordion.js'></script>
-    <script type='text/javascript' src='${ctx}/widgets/ux/Ext.InfoPanel.js'></script>
+    <script type='text/javascript' src='${ctx}/widgets/ux/Ext.ux.Accordion.js'></script>
+    <script type='text/javascript' src='${ctx}/widgets/ux/Ext.ux.InfoPanel.js'></script>
 
     <script type='text/javascript' src='${ctx}/dwr/interface/MenuHelper.js'></script>
     <script type='text/javascript' src='${ctx}/dwr/engine.js'></script>
     <script type='text/javascript' src='${ctx}/dwr/util.js'></script>
     <script type='text/javascript' src='${ctx}/widgets/ux/Ext.Common.js'></script>
-<#--
-    <script type='text/javascript' src='${ctx}/widgets/ux/Ext.DaoFactory.js'></script>
-    <script type='text/javascript' src='${ctx}/widgets/ux/Ext.DataGrid.js'></script>
-    <script type='text/javascript' src='${ctx}/widgets/ux/Ext.Forms.js'></script>
--->
     <script type='text/javascript' src='${ctx}/widgets/lingo/form/Ext.lingo.FormUtils.js'></script>
     <script type='text/javascript' src='${ctx}/widgets/sandbox/index.js'></script>
+    <link rel="stylesheet" type="text/css" href="${ctx}/widgets/ux/accordion.css" />
   </head>
   <body scroll='no' id='top'>
     <div id='loading'>
@@ -80,11 +76,3 @@
     </div>
   </body>
 </html>
-
-
-
-
-
-        </body>
-</html>
-

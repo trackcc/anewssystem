@@ -70,6 +70,7 @@ Ext.onReady(function(){
     // ========================================================================
     // 在工具栏上添加选择资源的按钮
     lightGrid.toolbar.insertButton(3, {
+        icon    : "../widgets/lingo/list-items.gif",
         id      : 'selectResource',
         text    : '配置资源',
         cls     : 'add',
@@ -78,6 +79,7 @@ Ext.onReady(function(){
     });
     // 在工具栏上添加选择菜单的按钮
     lightGrid.toolbar.insertButton(4, {
+        icon    : "../widgets/lingo/list-items.gif",
         id      : 'selectMenu',
         text    : '配置菜单',
         cls     : 'add',

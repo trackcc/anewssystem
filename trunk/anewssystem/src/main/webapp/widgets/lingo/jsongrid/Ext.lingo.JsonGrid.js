@@ -24,6 +24,7 @@ Ext.lingo.JsonGrid = function(container, config) {
     this.container = Ext.get(container);
     this.id        = container;
     this.config    = config;
+    this.metaData  = config.metaData;
     this.pageSize  = config.pageSize ? config.pageSize : 15;
     this.urlPagedQuery = config.urlPagedQuery ? config.urlPagedQuery : "pagedQuery.htm";
     this.urlLoadData   = config.urlLoadData   ? config.urlLoadData   : "loadData.htm";
@@ -41,15 +42,15 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         // 根据this.headers生成columnModel
         if (!this.columnModel) {
             var columnHeaders = new Array();
-            for (var i = 0; i < this.config.metaData.length; i++) {
+            for (var i = 0; i < this.metaData.length; i++) {
                 var item = {};
-                item.header    = this.config.metaData[i].qtip;
-                item.dataIndex = this.config.metaData[i].id;
+                item.header    = this.metaData[i].qtip;
+                item.dataIndex = this.metaData[i].id;
                 item.width     = 110;
                 item.defaultValue = "";
                 // item.hidden = false;
-                if (this.config.metaData[i].renderer) {
-                    item.renderer = this.config.metaData[i].renderer;
+                if (this.metaData[i].renderer) {
+                    item.renderer = this.metaData[i].renderer;
                 }
                 columnHeaders[columnHeaders.length] = item;
             }
@@ -60,8 +61,8 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         // 生成data record
         if (!this.dataRecord) {
             var recordHeaders = new Array();
-            for (var i = 0; i < this.config.metaData.length; i++) {
-                var meta = this.config.metaData[i];
+            for (var i = 0; i < this.metaData.length; i++) {
+                var meta = this.metaData[i];
                 var item = {};
                 item.name       = meta.id;
                 item.type       = "string";
@@ -99,6 +100,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                 enableColLock:false,
                 loadMask : true
             });
+            this.grid.on('rowdblclick', this.edit.createDelegate(this));
         }
 
         //右键菜单
@@ -114,10 +116,10 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         var gridHeader = this.grid.getView().getHeaderPanel(true);
         this.toolbar = new Ext.Toolbar(gridHeader);
         var checkItems = new Array();
-        for (var i = 0; i < this.config.metaData.length; i++) {
+        for (var i = 0; i < this.metaData.length; i++) {
             var item = new Ext.menu.CheckItem({
-                text         : this.config.metaData[i].qtip,
-                value        : this.config.metaData[i].id,
+                text         : this.metaData[i].qtip,
+                value        : this.metaData[i].id,
                 checked      : true,
                 group        : "filter",
                 checkHandler : this.onItemCheck.createDelegate(this)
@@ -134,22 +136,25 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             minWidth : 105
         });
         this.toolbar.add({
+            icon     : "../widgets/lingo/list-items.gif",
             id      : 'add',
             text    : '新增',
             cls     : 'add',
             tooltip : '新增',
             handler : this.add.createDelegate(this)
         }, {
+            icon     : "../widgets/lingo/list-items.gif",
             id      : 'edit',
             text    : '修改',
             cls     : 'edit',
             tooltip : '修改',
             handler : this.edit.createDelegate(this)
         }, {
+            icon     : "../widgets/lingo/list-items.gif",
             id      : 'del',
             text    : '删除',
             cls     : 'del',
-            tooltip : '新增',
+            tooltip : '删除',
             handler : this.del.createDelegate(this)
         }, '->', this.filterButton);
 
@@ -237,11 +242,17 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         });
 
         this.menuData.on('load', function() {
-            for (var i = 0; i < this.config.metaData.length; i++) {
-                var meta = this.config.metaData[i];
+            for (var i = 0; i < this.metaData.length; i++) {
+                var meta = this.metaData[i];
 
                 var id = meta.id;
                 var value = this.menuData.getAt(0).data[id];
+                if (meta.mapping) {
+                    try {
+                        value = eval("this.menuData.getAt(0).data." + meta.mapping);
+                    } catch (e) {
+                    }
+                }
 
                 if (meta.vType == "radio") {
                     for (var j = 0; j < meta.values.length; j++) {
@@ -255,12 +266,6 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                             this.columns[id + theId].checked = false;
                             this.columns[id + theId].el.dom.checked = false;
                         }
-                    }
-                } else if (meta.mapping) {
-                    try {
-                        this.columns[id].setValue(eval("this.menuData.getAt(0).data." + meta.mapping));
-                    } catch (e) {
-                        this.columns[id].setValue("");
                     }
                 } else if (meta.vType == "date") {
                     if (value == null ) {
@@ -309,10 +314,8 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
     // 创建弹出式对话框
     createDialog : function() {
-        Ext.lingo.FormUtils.createDialogContent({id:this.config.dialogContent});
-        this.dialog = Ext.lingo.FormUtils.createDialog({id:this.config.dialogContent + "-dialog-content"});
+        this.dialog = Ext.lingo.FormUtils.createTabedDialog('dialog', ['详细配置','帮助']);
 
-        this.dialog.addKeyListener(27, this.dialog.hide, this.dialog);
         this.yesBtn = this.dialog.addButton("确定", function() {
             var item = {};
             for (var i in this.columns) {
@@ -328,7 +331,6 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                 }
             }
             this.dialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
-            // var hide = this.dialog.el.unmask.createDelegate(this.dialog.el);
             var hide = function() {
                 this.dialog.el.unmask();
                 this.dialog.hide();
@@ -351,8 +353,9 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             this.yesBtn.hide();
         }, this, true);
 
-        var dialogContent = Ext.get(this.config.dialogContent + "-content");
+        var dialogContent = Ext.get(this.config.dialogContent);
         this.tabs.getTab(0).setContent(dialogContent.dom.innerHTML);
+        document.body.removeChild(document.getElementById(this.config.dialogContent));
         this.applyElements();
         this.noBtn = this.dialog.addButton("取消", this.dialog.hide, this.dialog);
     },
@@ -361,10 +364,9 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
     applyElements : function() {
 
         if (this.columns == null || this.headers == null) {
-            this.columns = {};
             this.headers = new Array();
-            for (var i = 0; i < this.config.metaData.length; i++) {
-                this.headers[this.headers.length] = this.config.metaData[i].id;
+            for (var i = 0; i < this.metaData.length; i++) {
+                this.headers[this.headers.length] = this.metaData[i].id;
             }
 
             // 打开验证功能
@@ -374,30 +376,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             //Ext.form.Field.prototype.focusClass = 'text-field-focus';
             //Ext.form.Field.prototype.invalidClass = 'text-field-invalid';
 
-            var dialogContent = Ext.get(this.config.dialogContent);
-            for (var i = 0; i < this.config.metaData.length; i++) {
-                var meta = this.config.metaData[i];
-
-                if (meta.vType == "date") {
-                    var field = Ext.lingo.FormUtils.createDateField(meta);
-                    this.columns[meta.id] = field;
-                } else if (meta.vType == "comboBox") {
-                    var field = Ext.lingo.FormUtils.createComboBox(meta);
-                    this.columns[meta.id] = field;
-                } else if (meta.vType == "textArea") {
-                } else if (meta.vType == "treeField") {
-                    var field = Ext.lingo.FormUtils.createTreeField(meta);
-                    this.columns[meta.id] = field;
-                } else if (meta.vType == "radio") {
-                    var fields = Ext.lingo.FormUtils.createRadio(meta);
-                    for (var j = 0; j < fields.length; j++) {
-                        this.columns[meta.id + fields[j].el.dom.value] = fields[j];
-                    }
-                } else {
-                    var field = Ext.lingo.FormUtils.createTextField(meta);
-                    this.columns[meta.id] = field;
-                }
-            }
+            this.columns = Ext.lingo.FormUtils.createAll(this.metaData);
         }
     },
 

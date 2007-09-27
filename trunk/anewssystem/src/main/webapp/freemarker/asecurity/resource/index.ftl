@@ -20,7 +20,8 @@
       <div id="tab2"></div>
     </div>
     <!-- 增加、修改、查看 弹出框内容-->
-    <table id='content' width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
+    <div id="content">
+    <table width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
       <tr height="50%"><td>&nbsp;</td></tr>
       <tr>
         <td align="right" width="15%" style="font-size:12px;">资源内容：</td>
@@ -62,6 +63,7 @@
       </tr>
       <tr height="50%"><td>&nbsp;</td></tr>
     </table>
+    </div>
     <div id="resource-dlg" style="visibility:hidden;">
       <div class="x-dlg-hd">角色授权</div>
       <div class="x-dlg-bd">

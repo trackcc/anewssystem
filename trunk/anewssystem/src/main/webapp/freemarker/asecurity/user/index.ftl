@@ -19,20 +19,29 @@
       </div>
       <div id="tab2"></div>
     </div>
-    <!-- 增加、修改、查看 弹出框内容-->
-    <table id='content' width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
+    <!-- 新增 -->
+    <div id="add-content">
+    <table width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
       <tr height="50%"><td>&nbsp;</td></tr>
       <tr>
         <td width="15%" align="right" style="font-size:12px;">帐号：</td>
-        <td width="35%">
+        <td width="85%" colspan="3">
           <div class="x-form-item">
             <input id="username" type="text" size="20">
           </div>
         </td>
-        <td width="15%" align="right" style="font-size:12px;">密码：</td>
+      </tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">输入密码：</td>
         <td width="35%">
           <div class="x-form-item">
-            <input id="password" type="text" size="20">
+            <input id="password" type="password" size="20">
+          </div>
+        </td>
+        <td width="15%" align="right" style="font-size:12px;">确认密码：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="confirmpassword" type="password" size="20">
           </div>
         </td>
       </tr>
@@ -48,8 +57,12 @@
           <div class="x-form-item">
             <table border="0">
               <tr>
-                <input id="sex0" name="sex" type="radio" value="0">
-                <input id="sex1" name="sex" type="radio" value="1">
+                <td style="font-size:12px;">
+                  <input id="sex0" name="sex" type="radio" value="0">
+                </td>
+                <td style="font-size:12px;">
+                  <input id="sex1" name="sex" type="radio" value="1">
+                </td>
               </tr>
             </table>
           </div>
@@ -105,16 +118,138 @@
           </div>
         </td>
       </tr>
+      <tr height="50%"><td>&nbsp;</td></tr>
+    </table>
+    </div>
+    <!-- 更新base部分-->
+    <div id="edit-base-content">
+    <table width="60%" border="0" align="left" valign="middlen" cellpadding="0" cellspacing="10">
+      <tr height="50%"><td colspan="2">&nbsp;</td></tr>
       <tr>
-        <td align="right" width="15%">id：</td>
-        <td width="85%" colspan="3">
+        <td width="40%" align="right" style="font-size:12px;">帐号：</td>
+        <td width="60%" colspan="3">
           <div class="x-form-item">
-            <input id="id" type="text" size="60" readonly>
+            <input id="username2" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="40%" align="right" style="font-size:12px;">旧密码：</td>
+        <td width="60%" colspan="3">
+          <div class="x-form-item">
+            <input id="oldpassword2" type="password" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="40%" align="right" style="font-size:12px;">新密码：</td>
+        <td width="60%" colspan="3">
+          <div class="x-form-item">
+            <input id="password2" type="password" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="40%" align="right" style="font-size:12px;">确认密码：</td>
+        <td width="60%" colspan="3">
+          <div class="x-form-item">
+            <input id="confirmpassword2" type="password" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="40%" align="right" style="font-size:12px;">姓名：</td>
+        <td width="60%">
+          <div class="x-form-item">
+            <input id="truename2" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="40%" align="right" style="font-size:12px;">性别：</td>
+        <td width="60%">
+          <div class="x-form-item">
+            <table border="0">
+              <tr>
+                <td style="font-size:12px;">
+                  <input id="sex20" name="sex2" type="radio" value="0">
+                </td>
+                <td style="font-size:12px;">
+                  <input id="sex21" name="sex2" type="radio" value="1">
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td align="right" width="40%">id：</td>
+        <td width="60%" colspan="3">
+          <div class="x-form-item">
+            <input id="id2" type="text" size="20" readonly>
           </div>
         </td>
       </tr>
       <tr height="50%"><td>&nbsp;</td></tr>
     </table>
+    </div>
+    <!--修改detail部分-->
+    <div id="edit-detail-content">
+    <table width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
+      <tr height="50%"><td>&nbsp;</td></tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">生日：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="birthday2" type="text" size="20">
+          </div>
+        </td>
+        <td width="15%" align="right" style="font-size:12px;">电话：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="tel2" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">手机：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="mobile2" type="text" size="20">
+          </div>
+        </td>
+        <td width="15%" align="right" style="font-size:12px;">邮箱：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="email2" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">部门：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="dept2" type="text" size=""/>
+          </div>
+        </td>
+        <td width="15%" align="right" style="font-size:12px;">职务：</td>
+        <td width="35%">
+          <div class="x-form-item">
+            <input id="duty2" type="text" size="20">
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="15%" align="right" style="font-size:12px;">备注：</td>
+        <td width="85%" colspan="3">
+          <div class="x-form-item">
+            <input id="descn2" type="text" size="60">
+          </div>
+        </td>
+      </tr>
+      <tr height="50%"><td>&nbsp;</td></tr>
+    </table>
+    </div>
     <div id="role-dlg" style="visibility:hidden;">
       <div class="x-dlg-hd">选择角色</div>
       <div class="x-dlg-bd">

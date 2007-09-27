@@ -35,11 +35,6 @@
       <url>file://${basedir}/repository</url>
     </repository>
     <repository>
-      <id>local repository2</id>
-      <name>local repository2</name>
-      <url>file://C:/Documents and Settings/new/.m2/repository2</url>
-    </repository>
-    <repository>
       <id>central</id>
       <name>Internal Repository</name>
       <url>http://mirrors.redv.com/maven2</url>
@@ -53,6 +48,18 @@
     </pluginRepository>
   </pluginRepositories>
 <!--
+    <repository>
+      <id>openqa</id>
+      <name>selenium repo</name>
+      <url>http://maven.openqa.org</url>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
     <repository>
       <id>down java</id>
       <name>down java</name>
@@ -97,18 +104,6 @@
       </snapshots>
       <releases>
         <enabled>false</enabled>
-      </releases>
-    </repository>
-    <repository>
-      <id>openqa</id>
-      <name>selenium repo</name>
-      <url>http://maven.openqa.org</url>
-      <layout>default</layout>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
       </releases>
     </repository>
     <repository>
@@ -186,13 +181,13 @@
     <dependency>
       <groupId>org.openqa.selenium.client-drivers</groupId>
       <artifactId>selenium-java-client-driver</artifactId>
-      <version>0.9.0</version>
+      <version>0.9.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.openqa.selenium.server</groupId>
       <artifactId>selenium-server</artifactId>
-      <version>0.9.0</version>
+      <version>0.9.2</version>
       <scope>test</scope>
     </dependency>
     <!-- ¹¦ÄÜ²âÊÔ end -->

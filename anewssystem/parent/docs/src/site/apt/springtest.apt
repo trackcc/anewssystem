@@ -1,0 +1,75 @@
+ ---
+ 解析Spring提供的测试帮助类
+ ---
+ Lingo
+ ---
+ 2007-09-26
+
+
+前言
+
+       Spring提供了几个单元测试的帮助类，能极大地提高编写测试用例的效率，下面剖析一下这几个类的功能。
+ConditionalTestCase
+
+        扩展TestCase类，重写了runBare方法，在执行每个测试方法前调用isDisabledInThisEnvironment判断是否需要继续执行此测试方法。子类可以重写isDisabledInThisEnvironment方法确定是否需要禁止某些测试方法。
+AbstractSpringContextTests
+
+       内部使用一个静态的Map缓存ApplicationContext，如果初始化上下文很费时，通过缓存可以极大的提高性能。
+
+通常不需要直接扩展这个类，而是扩展这个类的子类，其子类必须实现loadContext方法负责上下文加载逻辑。
+AbstractSingleSpringContextTests
+
+       内部保存单个上下文实例。通过重写超类的loadContext方法，从getConfigLocations方法返回的Spring配置文件中加载上下文来实现。除非调用setDirty方法，否则上下文不会进行重加载，这在上下文初始化比较慢时可以显著提升性能，比如使用Hibernate时。
+
+       通常情况下子类只需要重写getConfigLocations方法提供需要的配置文件名称，配置文件名称是相对于类路径的。
+
+       如果不希望从一个配置文件数组中加载上下文，可以重写contextKey和loadContext方法。
+
+       此类将setUp和tearDown方法改写为final的模板方法，在setUp方法里加载上下文，tearDown方法销毁上下文。子类只能通过重写onSetUp和onTearDown方法提供自定义的初始化和销毁逻辑。
+AbstractDependencyInjectionSpringContextTests
+
+       这是一个依赖上下文的便利超类，测试实例本身是通过依赖注入的。
+
+       支持两种模式操纵测试实例，一种是经过设值方式注入，此时是通过类型自动绑定的，另一种是经过字段注入，此时是通过名称自动绑定的，将上下文中的Bean名称和测试实例的保护类型进行绑定。
+
+       缺省采用设值方法注入，如果需要采用字段注入，需要在构造函数中设置populateProtectedVariables属性为true。
+AbstractTransactionalSpringContextTests
+
+       这是一个针对需要在事务环境下执行测试的便利超类，通常会在每个测试完成时执行事务回滚。许多情况下，这是非常有用的，比如：
+
+l         可以在不影响别的测试的情况下在数据库中插入或删除任何数据。
+
+l         为任何要求事务的代码提供事务上下文。
+
+       如果数据应该保留在数据库中，需要在测试方法中调用setComplete方法。
+
+       可以调用startNewTransaction方法创建一个新的事务，前提是必须先调用endTransaction方法终止旧的事务。
+
+       事务行为要求在上下文中有一个实现PlatformTransactionManager接口的Bean实例，这将通过其超类的依赖注入机制自动注入，如果需要使用超类的字段注入机制，那么Bean实例必须命名为transactionManager，这种机制允许上下文配置中存在一个或多个事务管理器实例的情况。
+
+       如果没有配置事务管理器，将不会使用事务管理，需要当心的是这可能会造成数据更改,一旦关闭超类的信赖检测将会启动此模式。
+
+       此类主要是通过重写AbstractSingleSpringContextTests超类提供的onSetUp和onTearDown方法，在相应的方法中创建和关闭事务来实现的。
+AbstractTransactionalDataSourceSpringContextTests
+
+       此类给其超类添加了一些针对JDBC操作的便利方法，要求有一个javax.sql.DataSource实例定义在上下文中，此类会暴露一个org.springframework.jdbc.core.JdbcTemplate实例，并提供了一些便利方法，如删除某个表中的数据，计算某个表的行数，执行数据库脚本等。
+范例
+
+       Springside框架就充分利用spring提供的工具类，简化测试工作量。比如springside提供一个DaoTestCase子类用于Hibernate的测试，该类继承自AbstractTransactionalDataSourceSpringContextTests，只需要重写如下方法：
+
+
+
+
+java 代码
+
+   1. protected String[] getConfigLocations() {
+   2.
+   3.        setAutowireMode(AUTOWIRE_BY_NAME);
+   4.
+   5.        return new String[]{Constants.DEFAULT_CONTEXT, Constants.DEFAULT_TEST_CONTEXT};  }
+
+
+
+       以上实现中将源上下文配置及测试上下文配置作为AbstractSingleSpringContextTests
+
+超类的上下文来源，而AbstractDependencyInjectionSpringContextTests提供了自动依赖注入功能，极大简化测试工作量。

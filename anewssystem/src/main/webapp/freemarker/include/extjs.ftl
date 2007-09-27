@@ -22,3 +22,6 @@ Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
 <script type="text/javascript" src="${ctx}/widgets/lingo/jsongrid/Ext.lingo.JsonGrid.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/jsontree/Ext.lingo.JsonTree.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/checkboxtree/TreeCheckNode.js"></script>
+
+<script type="text/javascript" src="${ctx}/widgets/ux/Ext.ux.PasswordMeter.js"></script>
+<link rel="stylesheet" type="text/css" href="${ctx}/widgets/ux/passwordmeter.css" />

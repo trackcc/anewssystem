@@ -89,21 +89,21 @@ var forms = new Ext.form.Form({
                 field.setValue(meta.defValue);
             }
             return field;
-        },
+        }
 
         // 创建日期选择框
-        createDateField : function(meta) {
+        , createDateField : function(meta) {
             var field = new Ext.form.DateField({
-                id          : meta.id,
-                name        : meta.id,
-                allowBlank  : meta.allowBlank == undefined ? false : eval(meta.allowBlank),
-                format      : meta.format ? meta.format : "Y年m月d日",
-                readOnly    : true,
-                width       : meta.vWidth,
-                defValue    : meta.defValue,
-                vType       : "date",
-                alt         : meta.alt,
-                setAllMonth : meta.setAllMonth ? el.setAllMonth : false
+                id            : meta.id
+                , name        : meta.id
+                , allowBlank  : meta.allowBlank == undefined ? false : eval(meta.allowBlank)
+                , format      : meta.format ? meta.format : "Y年m月d日"
+                , readOnly    : true
+                , width       : meta.vWidth
+                , defValue    : meta.defValue
+                , vType       : "date"
+                , alt         : meta.alt
+                , setAllMonth : meta.setAllMonth ? el.setAllMonth : false
             });
 
             if (isApply) {
@@ -115,34 +115,34 @@ var forms = new Ext.form.Form({
                 field.setValue(new Date());
             }
             return field;
-        },
+        }
 
         // 创建下拉框
-        createComboBox : function(meta) {
+        , createComboBox : function(meta) {
             var field = new Ext.form.ComboBox({
-                id         : meta.id,
-                name       : meta.id,
-                allowBlank : meta.allowBlank == undefined ? false : eval(meta.allowBlank),
-                transform  : meta.id,
-                vType      : "comboBox",
-                width      : meta.vWidth
+                id           : meta.id
+                , name       : meta.id
+                , allowBlank : meta.allowBlank == undefined ? false : eval(meta.allowBlank)
+                , transform  : meta.id
+                , vType      : "comboBox"
+                , width      : meta.vWidth
             });
             return field;
-        },
+        }
 
         // 创建单选框
-        createRadio : function(meta) {
+        , createRadio : function(meta) {
             var fields = new Array();
 
             for (var k = 0; k < meta.values.length; k++) {
                 var value = meta.values[k];
 
                 var field = new Ext.form.Radio({
-                    fieldLabel : meta.qtip,
-                    name       : meta.id,
-                    boxLabel   : value.name,
-                    value      : value.id,
-                    vType      : "radio"
+                    fieldLabel : meta.qtip
+                    , name     : meta.id
+                    , boxLabel : value.name
+                    , value    : value.id
+                    , vType    : "radio"
                 });
                 if (meta.defValue && value.id == meta.defValue) {
                     field.checked = true;
@@ -154,25 +154,24 @@ var forms = new Ext.form.Form({
                 fields[fields.length] = field;
             }
             return fields;
-        },
+        }
 
         // 创建treeField
-        createTreeField : function(meta) {
+        , createTreeField : function(meta) {
             var el = Ext.get(meta.id).dom;
             var config = {
-                title        : meta.qtip,
-                rootId       : 0,
-                height       : 200,
-                dataTag      : meta.url,
-                treeHeight   : 150,
-                beforeSelect : function(){}
+                title          : meta.qtip
+                , rootId       : 0
+                , height       : 200
+                , dataTag      : meta.url
+                , treeHeight   : 150
+                , beforeSelect : function(){}
             };
             var field = new Ext.lingo.TreeField({
-                id         : el.id,
-                name       : el.id,
-                allowBlank : false,
-                width      : 200,
-                treeConfig : config
+                id           : el.id
+                , name       : el.id
+                , allowBlank : false
+                , treeConfig : config
             });
             field.vType = "treeField";
 
@@ -181,10 +180,75 @@ var forms = new Ext.form.Form({
                 field.applyTo(el.id);
             }
             return field;
-        },
+        }
+
+        // 生成密码框
+        , createPasswordField : function(meta) {
+            var field = new Ext.form.TextField({
+                id           : meta.id
+                , allowBlank : meta.allowBlank == undefined ? false : meta.allowBlank
+                , cls        : 'password'
+                , name       : meta.id
+            });
+            field.vType = "password";
+            if (isApply) {
+                field.applyTo(meta.id);
+            }
+            return field;
+        }
+
+        // 生成检测密码强度的密码框
+        , createPasswordFieldMeta : function(meta) {
+            var field = new Ext.ux.PasswordMeter({
+                id           : meta.id
+                , allowBlank : meta.allowBlank == undefined ? false : meta.allowBlank
+                , cls        : 'password'
+                , name       : meta.id
+            });
+            field.vType = "password";
+            if (isApply) {
+                field.applyTo(meta.id);
+            }
+            return field;
+        }
+
+        // 根据输入的数组，生成所有的表单字段
+        , createAll : function(metaArray) {
+            var columns = {};
+            for (var i = 0; i < metaArray.length; i++) {
+                var meta = metaArray[i];
+
+                if (meta.vType == "date") {
+                    var field = Ext.lingo.FormUtils.createDateField(meta);
+                    columns[meta.id] = field;
+                } else if (meta.vType == "comboBox") {
+                    var field = Ext.lingo.FormUtils.createComboBox(meta);
+                    columns[meta.id] = field;
+                } else if (meta.vType == "textArea") {
+                } else if (meta.vType == "password") {
+                    var field = Ext.lingo.FormUtils.createPasswordField(meta);
+                    columns[meta.id] = field;
+                } else if (meta.vType == "passwordmeta") {
+                    var field = Ext.lingo.FormUtils.createPasswordFieldMeta(meta);
+                    columns[meta.id] = field;
+                } else if (meta.vType == "treeField") {
+                    var field = Ext.lingo.FormUtils.createTreeField(meta);
+                    columns[meta.id] = field;
+                } else if (meta.vType == "radio") {
+                    var fields = Ext.lingo.FormUtils.createRadio(meta);
+                    for (var j = 0; j < fields.length; j++) {
+                        columns[meta.id + fields[j].el.dom.value] = fields[j];
+                    }
+                } else {
+                    var field = Ext.lingo.FormUtils.createTextField(meta);
+                    columns[meta.id] = field;
+                }
+            }
+            return columns;
+        }
 
         // 为对话框，生成div结构
-        createDialogContent : function(meta) {
+        , createDialogContent : function(meta) {
             var id = meta.id;
             var title = meta.title ? meta.title : " 详细配置 ";
 
@@ -234,42 +298,97 @@ var forms = new Ext.form.Form({
 
             document.body.appendChild(dialogDiv);
             document.body.appendChild(contentDiv);
-        },
+        }
+
+        // 生成一个有指定tab的对话框，各自对话框的标题与id都被分别指定了
+        // id = id
+        // titles = ['title1','title2']
+        , createTabedDialog : function(id, titles) {
+            // 消息
+            var dialogMessage = document.createElement("div");
+            var waitMessage = document.createElement("div");
+            var waitText = document.createElement("div");
+            dialogMessage.id = "dlg-msg";
+            waitMessage.id = "post-wait";
+            waitMessage.className = "posting-msg";
+            waitText.className = "waitting";
+            waitText.innerHTML = "正在保存，请稍候...";
+            waitMessage.appendChild(waitText);
+            dialogMessage.appendChild(waitMessage);
+
+            // 对话框
+            var dialogDiv = document.createElement("div");
+            dialogDiv.id = id;
+            dialogDiv.style.visibility = "hidden";
+            var dialog_head = document.createElement("div"); // 页头
+            dialog_head.className = "x-dlg-hd";
+            var dialog_body = document.createElement("div"); // 内容
+            dialog_body.className = "x-dlg-bd";
+            var dialog_foot = document.createElement("div"); // 页脚
+            dialog_foot.className = "x-dlg-ft";
+            for (var i = 0; i < titles.length; i++) {
+                var tab = document.createElement("div");
+                tab.className = "x-dlg-tab";
+                tab.title = titles[i];
+                dialog_body.appendChild(tab);
+            }
+            dialogDiv.appendChild(dialog_head);
+            dialogDiv.appendChild(dialog_body);
+            dialogDiv.appendChild(dialog_foot);
+            document.body.appendChild(dialogDiv);
+
+            var dialog = new Ext.BasicDialog(id, {
+                modal        : false
+                , autoTabs   : true
+                , width      : 600
+                , height     : 400
+                , shadow     : false
+                , minWidth   : 200
+                , minHeight  : 100
+                , closable   : true
+                , autoCreate : true
+            });
+
+            // ESC键关闭对话框
+            dialog.addKeyListener(27, dialog.hide, dialog);
+
+            return dialog;
+        }
 
         // 生成一个modal为true的对话框
-        createDialog : function(meta) {
+        , createDialog : function(meta) {
             var id = meta.id;
             var width = meta.width ? meta.width : 600;
             var height = meta.height ? meta.height : 400;
             var dialog = new Ext.BasicDialog(id, {
-                modal     : false,
-                autoTabs  : true,
-                width     : width,
-                height    : height,
-                shadow    : false,
-                minWidth  : 200,
-                minHeight : 100,
-                closable  : true,
-                autoCreate : true
+                modal        : false
+                , autoTabs   : true
+                , width      : width
+                , height     : height
+                , shadow     : false
+                , minWidth   : 200
+                , minHeight  : 100
+                , closable   : true
+                , autoCreate : true
             });
             return dialog;
-        },
+        }
 
         // 新建可布局的对话框
-        createLayoutDialog : function(dialogName) {
+        , createLayoutDialog : function(dialogName) {
             var thisDialog = new Ext.LayoutDialog(dialogName, {
-                modal     : false,
-                autoTabs  : true,
-                proxyDrag : true,
-                resizable : true,
-                width     : 650,
-                height    : 500,
-                shadow    : true,
-                center: {
-                    autoScroll     : true,
-                    tabPosition    : 'top',
-                    closeOnTab     : true,
-                    alwaysShowTabs : false
+                modal       : false
+                , autoTabs  : true
+                , proxyDrag : true
+                , resizable : true
+                , width     : 650
+                , height    : 500
+                , shadow    : true
+                , center    : {
+                    autoScroll       : true
+                    , tabPosition    : 'top'
+                    , closeOnTab     : true
+                    , alwaysShowTabs : false
                 }
             });
             thisDialog.addKeyListener(27, thisDialog.hide, thisDialog);

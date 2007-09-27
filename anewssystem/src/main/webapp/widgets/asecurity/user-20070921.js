@@ -9,6 +9,189 @@
  * @since 2007-09-21
  * http://code.google.com/p/anewssystem/
  */
+
+
+UserGridPanel = function(container, config) {
+    UserGridPanel.superclass.constructor.call(this, container, config);
+    this.addMetaData = [
+        {id : 'dept',     qtip : '部门', vType : 'treeField', url : "../dept/getChildren.htm", mapping : "dept.name"},
+        {id : 'username', qtip : "帐号", vType : "chn",       allowBlank : false},
+        {id : 'password', qtip : '密码', vType : "passwordmeta",  allowBlank : false},
+        {id : 'confirmpassword', qtip : '确认密码', vType : "password",  allowBlank : false},
+        {id : 'truename', qtip : '姓名', vType : "chn"},
+        {id : 'sex',      qtip : '性别', vType : "radio",
+            values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : 1, renderer : function(value) {
+                return value == '0' ? '<span style="font-weight:bold;color:red">男</span>' : '<span style="font-weight:bold;color:green;">女</span>';
+            }},
+        {id : 'birthday', qtip : '生日', vType : "date"},
+        {id : 'tel',      qtip : '电话', vType : "alphanum"},
+        {id : 'mobile',   qtip : '手机', vType : "alphanum"},
+        {id : 'email',    qtip : '邮箱', vType : "email"},
+        {id : 'duty',     qtip : '职务', vType : "chn"},
+        {id : 'descn',    qtip : "备注", vType : "chn"}
+    ];
+    this.editMetaData = [
+        {id : 'id2',       qtip : "ID",   vType : "integer",   allowBlank : true,  defValue : -1, mapping : "id"},
+        {id : 'dept2',     qtip : '部门', vType : 'treeField', url : "../dept/getChildren.htm", mapping : "dept.name"},
+        {id : 'username2', qtip : "帐号", vType : "chn",       allowBlank : false, mapping : "username"},
+        {id : 'oldpassword2', qtip : '密码', vType : "password",  allowBlank : false, mapping : "none"},
+        {id : 'password2', qtip : '密码', vType : "passwordmeta",  allowBlank : false, mapping : "none"},
+        {id : 'confirmpassword2', qtip : '确认密码', vType : "password",  allowBlank : false, mapping : "none"},
+        {id : 'truename2', qtip : '姓名', vType : "chn", mapping : "truename"},
+        {id : 'sex2',      qtip : '性别', vType : "radio",
+            values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : 1, renderer : function(value) {
+                return value == '0' ? '<span style="font-weight:bold;color:red">男</span>' : '<span style="font-weight:bold;color:green;">女</span>';
+            }, mapping : "sex"},
+        {id : 'birthday2', qtip : '生日', vType : "date", mapping : "birthday"},
+        {id : 'tel2',      qtip : '电话', vType : "alphanum", mapping : "tel"},
+        {id : 'mobile2',   qtip : '手机', vType : "alphanum", mapping : "mobile"},
+        {id : 'email2',    qtip : '邮箱', vType : "email", mapping : "email"},
+        {id : 'duty2',     qtip : '职务', vType : "chn", mapping : "duty"},
+        {id : 'descn2',    qtip : "备注", vType : "chn", mapping : "descn"}
+    ];
+    this.headers = ['id','dept','username','password','truename','sex','birthday','tel','mobile','email','duty','descn'];
+};
+
+Ext.extend(UserGridPanel, Ext.lingo.JsonGrid, {
+
+    // 添加
+    add : function() {
+        this.createAddDialog();
+        this.columns = this.addcolumns;
+        this.dialog = this.adddialog;
+        this.metaData = this.addMetaData;
+        UserGridPanel.superclass.add.call(this);
+    }
+
+    // 修改
+    , edit : function() {
+        this.createEditDialog();
+        this.columns = this.editcolumns;
+        this.dialog = this.editdialog;
+        this.metaData = this.editMetaData;
+        UserGridPanel.superclass.edit.call(this);
+    }
+
+    // 创建弹出式对话框
+    , createAddDialog : function() {
+        if (this.adddialog) {
+            return;
+        }
+        ///////////////////////////////////////////////////
+        // add
+        //
+        this.adddialog = Ext.lingo.FormUtils.createTabedDialog('add-dialog', ['添加信息','帮助']);
+
+        this.addyesBtn = this.adddialog.addButton("确定", function() {
+            var item = {};
+            for (var i in this.addcolumns) {
+                var obj = this.addcolumns[i];
+                if (obj.vType == "radio" && obj.checked) {
+                    item[obj.name] = obj.el.dom.value;
+                } else if (obj.vType == "treeField") {
+                    item[obj.id] = obj.selectedId;
+                } else if (obj.vType == "date") {
+                    item[obj.id] = obj.getRawValue();
+                } else {
+                    item[obj.id] = obj.getValue();
+                }
+            }
+            this.adddialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
+            // var hide = this.dialog.el.unmask.createDelegate(this.dialog.el);
+            var addhide = function() {
+                this.adddialog.el.unmask();
+                this.adddialog.hide();
+                this.refresh.apply(this);
+            }.createDelegate(this);
+            Ext.lib.Ajax.request(
+                'POST',
+                this.urlSave,
+                {success:addhide,failure:addhide},
+                'data=' + encodeURIComponent(Ext.encode(item))
+            );
+        }.createDelegate(this), this.adddialog);
+
+        // 设置两个tab
+        var addtabs = this.adddialog.getTabs();
+        addtabs.getTab(0).on("activate", function() {
+            this.addyesBtn.show();
+        }, this, true);
+        addtabs.getTab(1).on("activate", function(){
+            this.addyesBtn.hide();
+        }, this, true);
+
+        addtabs.getTab(0).setContent(Ext.get("add-content").dom.innerHTML);
+        document.body.removeChild(document.getElementById("add-content"));
+
+        this.addcolumns = Ext.lingo.FormUtils.createAll(this.addMetaData);
+        this.addnoBtn = this.adddialog.addButton("取消", this.adddialog.hide, this.adddialog);
+    }
+
+    , createEditDialog : function() {
+        if (this.editdialog) {
+            return;
+        }
+        ///////////////////////////////////////////////////
+        // edit
+        //
+        this.editdialog = Ext.lingo.FormUtils.createTabedDialog('edit-dialog', ['基本信息','详细信息','帮助']);
+
+        this.edityesBtn = this.editdialog.addButton("确定", function() {
+            var item = {};
+            for (var i in this.editcolumns) {
+                var obj = this.editcolumns[i];
+                if (obj.vType == "radio" && obj.checked) {
+                    item[obj.name] = obj.el.dom.value;
+                } else if (obj.vType == "treeField") {
+                    item[obj.id] = obj.selectedId;
+                } else if (obj.vType == "date") {
+                    item[obj.id] = obj.getRawValue();
+                } else {
+                    item[obj.id] = obj.getValue();
+                }
+            }
+            this.editdialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
+            var edithide = function() {
+                this.editdialog.el.unmask();
+                this.editdialog.hide();
+                this.refresh.apply(this);
+            }.createDelegate(this);
+            Ext.lib.Ajax.request(
+                'POST',
+                this.urlSave,
+                {success:edithide,failure:edithide},
+                'data=' + encodeURIComponent(Ext.encode(item))
+            );
+        }.createDelegate(this), this.editdialog);
+
+        // 设置三个tab
+        var edittabs = this.editdialog.getTabs();
+        edittabs.getTab(0).on("activate", function() {
+            this.edityesBtn.show();
+        }, this, true);
+        edittabs.getTab(1).on("activate", function() {
+            this.edityesBtn.show();
+        }, this, true);
+        edittabs.getTab(2).on("activate", function(){
+            this.edityesBtn.hide();
+        }, this, true);
+
+        edittabs.getTab(0).setContent(Ext.get("edit-base-content").dom.innerHTML);
+        edittabs.getTab(1).setContent(Ext.get("edit-detail-content").dom.innerHTML);
+        document.body.removeChild(document.getElementById("edit-base-content"));
+        document.body.removeChild(document.getElementById("edit-detail-content"));
+
+        this.editcolumns = Ext.lingo.FormUtils.createAll(this.editMetaData);
+        this.editnoBtn = this.editdialog.addButton("取消", this.editdialog.hide, this.editdialog);
+    }
+
+    // 超级重要的一个方法，自动生成表头，自动生成form，都是在这里进行的
+    , applyElements : function() {
+        // 重载父类方法，手工制作form
+    }
+});
+
+
 Ext.onReady(function(){
 
     // 开启提示功能
@@ -52,10 +235,10 @@ Ext.onReady(function(){
     // 默认需要id, name, theSort, parent, children
     // 其他随意定制
     var metaData = [
-        {id : 'id',       qtip : "ID",   vType : "integer",  allowBlank : true,  defValue : -1},
+        {id : 'id',       qtip : "ID",   vType : "integer",   allowBlank : true,  defValue : -1},
         {id : 'dept',     qtip : '部门', vType : 'treeField', url : "../dept/getChildren.htm", mapping : "dept.name"},
-        {id : 'username', qtip : "帐号", vType : "chn",      allowBlank : false},
-        {id : 'password', qtip : '密码', vType : "password", allowBlank : false},
+        {id : 'username', qtip : "帐号", vType : "chn",       allowBlank : false},
+        {id : 'password', qtip : '密码', vType : "password",  allowBlank : false},
         {id : 'truename', qtip : '姓名', vType : "chn"},
         {id : 'sex',      qtip : '性别', vType : "radio",
             values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : 1, renderer : function(value) {
@@ -70,7 +253,7 @@ Ext.onReady(function(){
     ];
 
     // 创建表格
-    var lightGrid = new Ext.lingo.JsonGrid("lightgrid", {
+    var lightGrid = new UserGridPanel("lightgrid", {
         metaData      : metaData,
         dialogContent : "content"
     });
@@ -82,6 +265,7 @@ Ext.onReady(function(){
     // ========================================================================
     // 在工具栏上添一个按钮
     lightGrid.toolbar.insertButton(3, {
+        icon    : "../widgets/lingo/list-items.gif",
         id      : 'config',
         text    : '选择角色',
         cls     : 'add',
@@ -272,3 +456,5 @@ Ext.onReady(function(){
     };
 
 });
+
+

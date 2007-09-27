@@ -9,6 +9,7 @@ import anni.core.dao.support.Page;
 import anni.core.json.JsonController;
 import anni.core.json.JsonUtils;
 
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
@@ -82,8 +83,14 @@ public class LongGridController<T extends LongGridBean, D extends HibernateEntit
     protected T bindObject() throws Exception {
         String data = getStrParam("data", null);
         JSONObject jsonObject = JSONObject.fromString(data);
-        long id = jsonObject.getLong("id");
-        T entity = getEntityDao().get(id);
+        T entity = null;
+
+        try {
+            long id = jsonObject.getLong("id");
+            entity = getEntityDao().get(id);
+        } catch (JSONException ex) {
+            logger.info(ex);
+        }
 
         if (entity == null) {
             logger.info("insert");

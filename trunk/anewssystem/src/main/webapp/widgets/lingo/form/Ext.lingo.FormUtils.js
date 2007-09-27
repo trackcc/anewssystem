@@ -61,20 +61,21 @@ var forms = new Ext.form.Form({
         // 创建<input type="text">输入框
         createTextField : function(meta) {
             var field = new Ext.form.TextField({
-                allowBlank : meta.allowBlank == undefined ? false : meta.allowBlank,
-                vType      : meta.vType,
-                cls        : meta.type == "password" ? meta.cls : null,
-                width      : meta.vWidth,
-                id         : meta.id,
-                name       : meta.id,
-                style      : (meta.vType == "integer" || meta.vType == "number" ? "text-align: right;" : ""),
-                readOnly   : meta.readOnly,
-                defValue   : meta.defValue,
-                alt        : meta.alt,
-                maxLength  : meta.maxlength ? meta.maxlength : Number.MAX_VALUE,
-                minLength  : meta.minlength ? meta.minlength : 0,
-                minValue   : meta.minvalue ? meta.minvalue : 0,
-                maxValue   : meta.maxvalue ? meta.maxvalue : Number.MAX_VALUE
+                allowBlank  : meta.allowBlank == undefined ? false : meta.allowBlank
+                , vType     : meta.vType
+                , cls       : meta.type == "password" ? meta.cls : null
+                , width     : meta.vWidth
+                , id        : meta.id
+                , name      : meta.id
+                , style     : (meta.vType == "integer" || meta.vType == "number" ? "text-align: right;" : "")
+                , readOnly  : meta.readOnly
+                , defValue  : meta.defValue
+                , alt       : meta.alt
+                , maxLength : meta.maxlength ? meta.maxlength : Number.MAX_VALUE
+                , minLength : meta.minlength ? meta.minlength : 0
+                , minValue  : meta.minvalue ? meta.minvalue : 0
+                , maxValue  : meta.maxvalue ? meta.maxvalue : Number.MAX_VALUE
+                , mapping   : meta.mapping
             });
             if(meta.readOnly) {
                 field.style += "color:#656B86;";
@@ -104,6 +105,7 @@ var forms = new Ext.form.Form({
                 , vType       : "date"
                 , alt         : meta.alt
                 , setAllMonth : meta.setAllMonth ? el.setAllMonth : false
+                , mapping    : meta.mapping
             });
 
             if (isApply) {
@@ -126,6 +128,7 @@ var forms = new Ext.form.Form({
                 , transform  : meta.id
                 , vType      : "comboBox"
                 , width      : meta.vWidth
+                , mapping    : meta.mapping
             });
             return field;
         }
@@ -143,6 +146,7 @@ var forms = new Ext.form.Form({
                     , boxLabel : value.name
                     , value    : value.id
                     , vType    : "radio"
+                    , mapping  : meta.mapping
                 });
                 if (meta.defValue && value.id == meta.defValue) {
                     field.checked = true;
@@ -150,6 +154,7 @@ var forms = new Ext.form.Form({
                 if (isApply) {
                     field.applyTo(meta.id + value.id);
                 }
+                // 横向排列
                 field.el.dom.parentNode.style.display = "inline";
                 fields[fields.length] = field;
             }
@@ -172,6 +177,7 @@ var forms = new Ext.form.Form({
                 , name       : el.id
                 , allowBlank : false
                 , treeConfig : config
+                , mapping    : meta.mapping
             });
             field.vType = "treeField";
 
@@ -189,6 +195,7 @@ var forms = new Ext.form.Form({
                 , allowBlank : meta.allowBlank == undefined ? false : meta.allowBlank
                 , cls        : 'password'
                 , name       : meta.id
+                , mapping    : meta.mapping
             });
             field.vType = "password";
             if (isApply) {
@@ -204,6 +211,7 @@ var forms = new Ext.form.Form({
                 , allowBlank : meta.allowBlank == undefined ? false : meta.allowBlank
                 , cls        : 'password'
                 , name       : meta.id
+                , mapping    : meta.mapping
             });
             field.vType = "password";
             if (isApply) {
@@ -245,6 +253,36 @@ var forms = new Ext.form.Form({
                 }
             }
             return columns;
+        }
+
+        // 根据field数组，生成一组用来发送到服务器端的json
+        // columns = [TextField, TreeField, Radio, CheckBox, ComboBox, DateField]
+        , serialFields : function(columns) {
+            var item = {};
+            for (var i in columns) {
+                var obj = columns[i];
+                if(!obj.isValid()) {
+                    Ext.suggest.msg('错误：', String.format(obj.invalidText, obj.id));
+                    obj.focus();
+                    return false;
+                }
+
+                var key = obj.mapping ? obj.mapping : obj.id;
+
+                if (obj.vType == "radio") {
+                    key = key ? key : obj.name;
+                    if (obj.el.dom.checked) {
+                        item[key] = obj.el.dom.value;
+                    }
+                } else if (obj.vType == "treeField") {
+                    item[key] = obj.selectedId;
+                } else if (obj.vType == "date") {
+                    item[key] = obj.getRawValue();
+                } else {
+                    item[key] = obj.getValue();
+                }
+            }
+            return item;
         }
 
         // 为对话框，生成div结构
@@ -395,6 +433,11 @@ var forms = new Ext.form.Form({
             thisDialog.addButton('关闭', function() {thisDialog.hide();});
 
             return thisDialog;
+        }
+
+        // 为grid渲染性别
+        , renderSex : function(value) {
+            return value == '0' ? '<span style="font-weight:bold;color:red">男</span>' : '<span style="font-weight:bold;color:green;">女</span>';
         }
     };
 }();

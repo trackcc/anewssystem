@@ -235,17 +235,66 @@ public class UserController extends LongGridController<User, UserManager> {
 
         // 部门
         try {
-            long deptId = jsonObject.getLong("dept");
+            long deptId = jsonObject.getLong("dept.name");
             Dept dept = deptManager.get(deptId);
             entity.setDept(dept);
         } catch (Exception ex) {
             logger.info(ex);
         }
 
-        logger.info(entity.getBirthday());
+        String resultMessage = null;
 
-        getEntityDao().save(entity);
-        response.getWriter().print("{success:true}");
+        if (entity.getId() == null) {
+            // id为null说明是新增
+            String password = jsonObject.getString("password");
+            String confirmpassword = jsonObject.getString(
+                    "confirmpassword");
+
+            if ((password == null) || "".equals(password.trim())) {
+                resultMessage = "{success:false,info:'密码不能空'}";
+            } else if (!password.equals(confirmpassword)) {
+                resultMessage = "{success:false,info:'两次输入的密码不同'}";
+            } else {
+                PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+                entity.setPassword(passwordEncoder.encodePassword(
+                        password.trim(), null));
+            }
+        } else {
+            // id不为null说明是更新
+            String oldpassword2 = jsonObject.getString("oldpassword2");
+            String password2 = jsonObject.getString("password2");
+            String confirmpassword2 = jsonObject.getString(
+                    "confirmpassword2");
+
+            if ("".equals(oldpassword2) && "".equals(password2)
+                    && "".equals(confirmpassword2)) {
+                // 三个密码框都没有输入，说明不会修改密码
+            } else {
+                PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+                String oldpassword2AfterEncode = passwordEncoder
+                    .encodePassword(oldpassword2, null);
+
+                if (!oldpassword2AfterEncode.equals(entity.getPassword())) {
+                    resultMessage = "{success.false,info:'旧密码输入错误'}";
+                } else if ((password2 == null)
+                        || "".equals(password2.trim())) {
+                    resultMessage = "{success:false,info:'密码不能空'}";
+                } else if ((password2 != null)
+                        && !password2.trim().equals(confirmpassword2.trim())) {
+                    resultMessage = "{success:false,info:'两次输入的密码不同'}";
+                } else {
+                    entity.setPassword(passwordEncoder.encodePassword(
+                            password2.trim(), null));
+                }
+            }
+        }
+
+        if (resultMessage == null) {
+            getEntityDao().save(entity);
+            resultMessage = "{success:true}";
+        }
+
+        response.getWriter().print(resultMessage);
     }
 
     /** * @return excludes. */

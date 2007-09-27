@@ -31,6 +31,7 @@ Ext.lingo.JsonTree = function(container, config) {
     this.container     = Ext.get(container);
     this.id            = this.container.id;
     this.config        = config;
+    this.metaData      = config.metaData;
     this.urlGetAll     = config.urlGetAll ? config.urlGetAll : "getAllTree.htm";
     this.urlInsertTree = config.urlInsertTree ? config.urlInsertTree : "insertTree.htm";
     this.urlRemoveTree = config.urlRemoveTree ? config.urlRemoveTree : "removeTree.htm";
@@ -452,30 +453,59 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
         });
 
         this.menuData.on('load', function() {
-            for (var i = 0; i < this.headers.length; i++) {
-                var id = this.headers[i];
-                this.columns[i].setValue(this.menuData.getAt(0).data[id]);
+            for (var i = 0; i < this.metaData.length; i++) {
+                var meta = this.metaData[i];
+
+                var id = meta.id;
+                var value = this.menuData.getAt(0).data[id];
+                if (meta.mapping) {
+                    try {
+                        value = eval("this.menuData.getAt(0).data." + meta.mapping);
+                    } catch (e) {
+                    }
+                }
+
+                if (meta.vType == "radio") {
+                    for (var j = 0; j < meta.values.length; j++) {
+                        var theId = meta.values[j].id;
+                        var theName = meta.values[j].name;
+
+                        if (value == theId) {
+                            this.columns[id + theId].checked = true;
+                            this.columns[id + theId].el.dom.checked = true;
+                        } else {
+                            this.columns[id + theId].checked = false;
+                            this.columns[id + theId].el.dom.checked = false;
+                        }
+                    }
+                } else if (meta.vType == "date") {
+                    if (value == null ) {
+                        this.columns[id].setValue(new Date());
+                    } else {
+                        this.columns[id].setValue(value);
+                    }
+                } else {
+                    this.columns[id].setValue(value);
+                }
+
             }
             this.dialog.show(this.treePanel.getSelectionModel().getSelectedNode().ui.textNode);
         }.createDelegate(this));
 
         this.menuData.load();
-    },
+    }
 
     // 生成对话框
-    createDialog : function() {
-        Ext.lingo.FormUtils.createDialogContent({id:this.config.dialogContent});
-        this.dialog = Ext.lingo.FormUtils.createDialog({id:this.config.dialogContent + "-dialog-content"});
+    , createDialog : function() {
+        this.dialog = Ext.lingo.FormUtils.createTabedDialog(this.config.dialogContent + "-dialog", ['详细配置','帮助']);
 
-        this.dialog.addKeyListener(27, this.dialog.hide, this.dialog);
         this.yesBtn = this.dialog.addButton("确定", function() {
-            var item = {};
-            for (var i = 0; i < this.columns.length; i++) {
-                var obj = this.columns[i];
-                item[obj.id] = obj.getValue();
+            var item = Ext.lingo.FormUtils.serialFields(this.columns);
+            if (!item) {
+                return;
             }
+
             this.dialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
-            // var hide = this.dialog.el.unmask.createDelegate(this.dialog.el);
             var hide = function() {
                 this.dialog.el.unmask();
                 this.dialog.hide();
@@ -496,16 +526,16 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
             this.yesBtn.hide();
         }, this, true);
 
-        var dialogContent = Ext.get(this.config.dialogContent + "-content");
+        var dialogContent = Ext.get(this.config.dialogContent);
         this.tabs.getTab(0).setContent(dialogContent.dom.innerHTML);
+        document.body.removeChild(document.getElementById(this.config.dialogContent));
         this.applyElements();
         this.noBtn = this.dialog.addButton("取消", this.dialog.hide, this.dialog);
-    },
+    }
 
     // 自动生成一切的地方
-    applyElements : function() {
+    , applyElements : function() {
         if (this.columns == null || this.headers == null) {
-            this.columns = new Array();
             this.headers = new Array();
             for (var i = 0; i < this.config.metaData.length; i++) {
                 this.headers[this.headers.length] = this.config.metaData[i].id;
@@ -518,25 +548,12 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
             //Ext.form.Field.prototype.focusClass = 'text-field-focus';
             //Ext.form.Field.prototype.invalidClass = 'text-field-invalid';
 
-            var dialogContent = Ext.get(this.config.dialogContent);
-            for (var i = 0; i < this.config.metaData.length; i++) {
-                var meta = this.config.metaData[i];
-                var field;
-                if (meta.vType == "date") {
-                    field = Ext.lingo.FormUtils.createDateField(meta);
-                } else if (meta.vType == "comboBox") {
-                } else if (meta.vType == "textArea") {
-                } else if (meta.vType == "treeField") {
-                } else {
-                    field = Ext.lingo.FormUtils.createTextField(meta);
-                }
-                this.columns[this.columns.length] = field;
-            }
+            this.columns = Ext.lingo.FormUtils.createAll(this.metaData);
         }
-    },
+    }
 
     // 返回当前选中的节点，可能为null
-    getSelectedNode : function() {
+    , getSelectedNode : function() {
         var selectionModel = this.treePanel.getSelectionModel();
         var node = selectionModel.getSelectedNode();
         return node;

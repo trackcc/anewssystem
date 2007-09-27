@@ -13,6 +13,7 @@ Ext.BLANK_IMAGE_URL = '../../extjs/1.1/resources/images/default/s.gif';
 Ext.BLANK_ROOT = '../../extjs/1.1';
     </script>
     <script type="text/javascript" src="../Ext.form.VTypes.js"></script>
+    <script type="text/javascript" src="../Ext.lingo.Theme.js"></script>
     <script type="text/javascript" src="../form/Ext.lingo.FormUtils.js"></script>
     <script type="text/javascript" src="Ext.lingo.JsonTree.js"></script>
     <script type="text/javascript" src="MenuTree.js" ></script>
@@ -29,7 +30,8 @@ Ext.BLANK_ROOT = '../../extjs/1.1';
       <div id="tab2"></div>
     </div>
     <!-- 增加、修改、查看 弹出框内容-->
-    <table id='content' width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
+    <div id="content">
+    <table width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
       <tr height="50%"><td>&nbsp;</td></tr>
       <tr>
         <td align="right" width="15%">访问路径：</td>
@@ -85,6 +87,7 @@ Ext.BLANK_ROOT = '../../extjs/1.1';
       </tr>
       <tr height="50%"><td>&nbsp;</td></tr>
     </table>
+    </div>
     <div id="error_message" style="display:block"></div>
 <script type="text/javascript">
 //DWREngine.setErrorHandler(errorHandler);

@@ -137,6 +137,15 @@ public class LongGridControllerTest extends TestCase {
         assertEquals("{success:true}", response.getContentAsString());
     }
 
+    public void testSave3WithoutId() throws Exception {
+        request.setRequestURI("/grid/save.htm");
+        request.addParameter("data",
+            "{name:'admin',resType:'URL',resString:'/admin/**',descn:''}");
+        mv = controller.handleRequest(request, response);
+        response.getWriter().flush();
+        assertEquals("{success:true}", response.getContentAsString());
+    }
+
     public void testLoadData() throws Exception {
         request.setRequestURI("/grid/loadData.htm");
         request.addParameter("id", "1");

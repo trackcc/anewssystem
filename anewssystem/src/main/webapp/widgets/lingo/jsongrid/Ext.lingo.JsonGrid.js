@@ -105,10 +105,10 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
         //右键菜单
         this.grid.addListener('rowcontextmenu', this.contextmenu.createDelegate(this));
-    },
+    }
 
     // 进行渲染
-    render : function() {
+    , render : function() {
         this.init();
         this.grid.render();
 
@@ -200,10 +200,10 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         this.dataStore.load({
             params:{start:0, limit:this.pageSize}
         });
-    },
+    }
 
     // 弹出添加对话框，添加一条新记录
-    add : function() {
+    , add : function() {
         if (!this.dialog) {
             this.createDialog();
         }
@@ -218,10 +218,10 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             }
         }
         this.dialog.show(Ext.get("add"));
-    },
+    }
 
     // 弹出修改对话框
-    edit : function() {
+    , edit : function() {
         if (!this.dialog) {
             this.createDialog();
         }
@@ -281,10 +281,10 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             this.dialog.show(Ext.get("edit"));
         }.createDelegate(this));
         this.menuData.reload();
-    },
+    }
 
     // 删除记录
-    del : function() {
+    , del : function() {
         var selections = this.grid.getSelections();
         if (selections.length == 0) {
             Ext.MessageBox.alert("提示", "请选择希望修改的记录！");
@@ -301,7 +301,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                     }
                     Ext.Ajax.request({
                         url     : this.urlRemove + '?id=' + ids,
-                        success : function(){
+                        success : function() {
                             Ext.MessageBox.alert(' 提示', '删除成功！');
                             this.refresh();
                         }.createDelegate(this),
@@ -310,26 +310,18 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                 }
             }.createDelegate(this));
         }
-    },
+    }
 
     // 创建弹出式对话框
-    createDialog : function() {
+    , createDialog : function() {
         this.dialog = Ext.lingo.FormUtils.createTabedDialog('dialog', ['详细配置','帮助']);
 
         this.yesBtn = this.dialog.addButton("确定", function() {
-            var item = {};
-            for (var i in this.columns) {
-                var obj = this.columns[i];
-                if (obj.vType == "radio" && obj.checked) {
-                    item[obj.name] = obj.el.dom.value;
-                } else if (obj.vType == "treeField") {
-                    item[obj.id] = obj.selectedId;
-                } else if (obj.vType == "date") {
-                    item[obj.id] = obj.getRawValue();
-                } else {
-                    item[obj.id] = obj.getValue();
-                }
+            var item = Ext.lingo.FormUtils.serialFields(this.columns);
+            if (!item) {
+                return;
             }
+
             this.dialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
             var hide = function() {
                 this.dialog.el.unmask();
@@ -358,10 +350,10 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         document.body.removeChild(document.getElementById(this.config.dialogContent));
         this.applyElements();
         this.noBtn = this.dialog.addButton("取消", this.dialog.hide, this.dialog);
-    },
+    }
 
     // 超级重要的一个方法，自动生成表头，自动生成form，都是在这里进行的
-    applyElements : function() {
+    , applyElements : function() {
 
         if (this.columns == null || this.headers == null) {
             this.headers = new Array();
@@ -378,34 +370,34 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
             this.columns = Ext.lingo.FormUtils.createAll(this.metaData);
         }
-    },
+    }
 
     // 选中搜索属性选项时
-    onItemCheck : function(item, checked) {
+    , onItemCheck : function(item, checked) {
         if(checked) {
             this.filterButton.setText(item.text + ':');
             this.filterTxt = item.value;
         }
-    },
+    }
 
     // 弹出右键菜单
     // 修改，和批量删除的功能
     // 多选的时候，不允许修改就好了
-    contextmenu : function(grid, rowIndex, e) {
+    , contextmenu : function(grid, rowIndex, e) {
         e.preventDefault();
         e.stopEvent();
 
         var updateMenu = new Ext.menu.Item({
-            icon    : '../widgets/lingo/list-items.gif',
-            id      : 'updateMenu',
-            text    : '修改',
-            handler : this.edit.createDelegate(this)
+            icon      : '../widgets/lingo/list-items.gif'
+            , id      : 'updateMenu'
+            , text    : '修改'
+            , handler : this.edit.createDelegate(this)
         });
         var removeMenu = new Ext.menu.Item({
-            icon    : '../widgets/lingo/list-items.gif',
-            id      : 'removeMenu',
-            text    : '删除',
-            handler :  this.del.createDelegate(this)
+            icon      : '../widgets/lingo/list-items.gif'
+            , id      : 'removeMenu'
+            , text    : '删除'
+            , handler :  this.del.createDelegate(this)
         });
 
         var selections = this.grid.getSelections();
@@ -417,16 +409,16 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         var menuList = [updateMenu, removeMenu];
 
         grid_menu = new Ext.menu.Menu({
-            id    : 'mainMenu',
-            items : menuList
+            id      : 'mainMenu'
+            , items : menuList
         });
 
         var coords = e.getXY();
         grid_menu.showAt([coords[0], coords[1]]);
-    },
+    }
 
     // 刷新表格数据
-    refresh : function() {
+    , refresh : function() {
         this.dataStore.reload();
     }
 });

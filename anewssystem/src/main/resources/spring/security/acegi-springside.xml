@@ -92,15 +92,15 @@
     <bean id="authenticationProcessingFilter"
        class="anni.asecurity.web.filter.UserAuthenticationProcessingFilter">
         <property name="authenticationManager" ref="authenticationManager" />
-        <property name="authenticationFailureUrl" value="/login.jsp?login_error=1" />
-        <property name="defaultTargetUrl" value="/admin/index.htm" />
+        <property name="authenticationFailureUrl" value="/login/authenticationFailure.htm" />
+        <property name="defaultTargetUrl" value="/login/defaultTarget.htm" />
         <property name="filterProcessesUrl" value="/j_acegi_security_check" />
         <property name="userManager" ref="userManager" />
         <property name="rememberMeServices" ref="rememberMeServices" />
         <property name="exceptionMappings">
             <value>
-                org.acegisecurity.AuthenticationException=/login.jsp?login_error=user_psw_error
-                org.acegisecurity.concurrent.ConcurrentLoginException=/login.jsp?login_error=too_many_user_error
+                org.acegisecurity.AuthenticationException=/login/userPasswordError.htm
+                org.acegisecurity.concurrent.ConcurrentLoginException=/login/tooManyUserError.htm
             </value>
         </property>
     </bean>

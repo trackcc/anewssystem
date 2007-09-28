@@ -149,7 +149,9 @@ var forms = new Ext.form.Form({
                     , mapping  : meta.mapping
                 });
                 if (meta.defValue && value.id == meta.defValue) {
+                    field.fireEvent("check");
                     field.checked = true;
+                    document.getElementById(meta.id + value.id).checked = true;;
                 }
                 if (isApply) {
                     field.applyTo(meta.id + value.id);

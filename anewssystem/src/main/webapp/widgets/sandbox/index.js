@@ -13,6 +13,10 @@ var index = function() {
     var layout;
     return {
         init : function() {
+            this.loginSuccessDelegate = this.loginSuccess.createDelegate(this);
+            this.prepareLoginDelegate = this.prepareLogin.createDelegate(this);
+            this.setLoginNameDelegate = this.setLoginName.createDelegate(this);
+
             // 使用cookie保存状态
             //Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
             // 创建主面板
@@ -30,7 +34,8 @@ var index = function() {
                     collapsible : true,
                     animate     : true,
                     useShim     : true,
-                    cmargins    : {top:2,bottom:2,right:2,left:2}
+                    cmargins    : {top:2,bottom:2,right:2,left:2},
+                    collapsed: true
                 }, center: {
                     titlebar   : false,
                     title      : '',
@@ -68,14 +73,52 @@ var index = function() {
             this.menuLayout.id = 'menuLayout';
             this.iframe = Ext.get('main').dom;
             this.loadMain('./welcome.htm');
-            this.setLoginName('尖叫的土豆 监制');
-            // MenuHelper.init(this.render);
-            MenuHelper.getMenus(this.render);
 
-            Ext.lingo.LoginDialog.init();
-        },
+            // 如果已经登录，就显示菜单
+            // 如果还未登录，就弹出对话框
+            Ext.lib.Ajax.request(
+                'POST',
+                "../login/isLogin.htm",
+                {success:this.loginSuccessDelegate,failure:this.prepareLoginDelegate},
+                ''
+            );
+        }
 
-        createToolbar : function() {
+        // 准备登录，包括隐藏菜单，弹出对话框
+        , prepareLogin : function() {
+            this.menuLayout.collapse();
+            Ext.lingo.LoginDialog.init(this.loginSuccessDelegate);
+        }
+
+        // 注销
+        , logout : function() {
+            Ext.lib.Ajax.request(
+                'POST',
+                "../j_acegi_logout",
+                {success:this.prepareLoginDelegate,failure:this.prepareLoginDelegate},
+                ''
+            );
+        }
+
+        // 登录成功后执行的函数
+        , loginSuccess : function(data) {
+            eval("var json=" + data.responseText + ";");
+            if (json.success) {
+                this.setLoginName(json.response);
+                //Ext.lib.Ajax.request(
+                //    'POST',
+                //    "../login/getLoginName.htm",
+                //    {success:this.setLoginNameDelegate,failure:this.setLoginNameDelegate},
+                //    ''
+                //);
+                MenuHelper.getMenus(this.render);
+            } else {
+                this.prepareLogin();
+            }
+        }
+
+        // 创建更换主题的菜单
+        , createToolbar : function() {
             var theme = Cookies.get('xrinsurtheme') || 'aero'
             var menu = new Ext.menu.Menu({
                 id: 'mainMenu',
@@ -111,25 +154,36 @@ var index = function() {
                 ]
             });
             var tb = new Ext.Toolbar('toolbar');
-            tb.add({cls: 'theme', text:'系统风格', menu: menu});
-        },
+            tb.add({
+                cls    : 'theme'
+                , text : '系统风格'
+                , menu : menu
+            }, '-', {
+                cls       : 'add'
+                , text    : '注销'
+                , handler : this.logout.createDelegate(this)
+            });
+        }
 
-        getLayout : function() {
+        // 获得layout
+        , getLayout : function() {
             return layout;
-        },
+        }
 
-        setLoginName : function(user) {
+        // 设置登录名
+        , setLoginName : function(user) {
             user = user == null ? '' : user;
             this.menuLayout.updateTitle(user);
-        },
+        }
 
-        loadMain : function(url) {
+        // 点左边，链接，右边的iframe更新
+        , loadMain : function(url) {
             this.iframe.src = url;
             Cookies.set('xrinsurMainSrc', url);
-        },
+        }
 
         // 渲染accordion菜单
-        render : function(data) {
+        , render : function(data) {
             var menuList = data;
 
             Ext.get('menu-tree').update('');
@@ -175,6 +229,7 @@ var index = function() {
                     item.addClassOnOver('dl-selection-over');
                 }
             }
+            layout.getRegion("west").expand();
         }
     }
 }();

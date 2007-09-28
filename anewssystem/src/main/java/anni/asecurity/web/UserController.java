@@ -19,7 +19,6 @@ import anni.core.json.JsonUtils;
 
 import net.sf.json.JSONObject;
 
-import org.acegisecurity.providers.encoding.Md5PasswordEncoder;
 import org.acegisecurity.providers.encoding.PasswordEncoder;
 
 import org.apache.commons.lang.StringUtils;
@@ -45,6 +44,9 @@ public class UserController extends LongGridController<User, UserManager> {
     /** * deptManager. */
     private DeptManager deptManager = null;
 
+    /** * passwordEncoder. */
+    private PasswordEncoder passwordEncoder = null;
+
     /** * constructor. */
     public UserController() {
         //setEditView("/asecurity/user/editUser");
@@ -61,6 +63,11 @@ public class UserController extends LongGridController<User, UserManager> {
     /** * @param deptManager DeptManager. */
     public void setDeptManager(DeptManager deptManager) {
         this.deptManager = deptManager;
+    }
+
+    /** * @param passwordEncoder PasswordEncoder. */
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -168,7 +175,6 @@ public class UserController extends LongGridController<User, UserManager> {
                         new Object[0], "");
                 } else {
                     if (StringUtils.isNotEmpty(pswd)) {
-                        PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
                         user.setPassword(passwordEncoder.encodePassword(
                                 pswd, null));
                     }
@@ -179,7 +185,6 @@ public class UserController extends LongGridController<User, UserManager> {
             String password = getStrParam("password", null);
 
             if (StringUtils.isNotEmpty(password)) {
-                PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
                 user.setPassword(passwordEncoder.encodePassword(password,
                         null));
             }
@@ -242,22 +247,32 @@ public class UserController extends LongGridController<User, UserManager> {
             logger.info(ex);
         }
 
+        // 设置为可用
+        entity.setStatus((byte) 1);
+
         String resultMessage = null;
 
         if (entity.getId() == null) {
             // id为null说明是新增
-            String password = jsonObject.getString("password");
-            String confirmpassword = jsonObject.getString(
-                    "confirmpassword");
+            List<User> userList = getEntityDao()
+                                      .findBy("username",
+                    entity.getUsername());
 
-            if ((password == null) || "".equals(password.trim())) {
-                resultMessage = "{success:false,info:'密码不能空'}";
-            } else if (!password.equals(confirmpassword)) {
-                resultMessage = "{success:false,info:'两次输入的密码不同'}";
+            if (userList.size() > 0) {
+                resultMessage = "{success:false,info:'此帐号已被别人注册过了'}";
             } else {
-                PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
-                entity.setPassword(passwordEncoder.encodePassword(
-                        password.trim(), null));
+                String password = jsonObject.getString("password");
+                String confirmpassword = jsonObject.getString(
+                        "confirmpassword");
+
+                if ((password == null) || "".equals(password.trim())) {
+                    resultMessage = "{success:false,info:'密码不能空'}";
+                } else if (!password.equals(confirmpassword)) {
+                    resultMessage = "{success:false,info:'两次输入的密码不同'}";
+                } else {
+                    entity.setPassword(passwordEncoder.encodePassword(
+                            password.trim(), null));
+                }
             }
         } else {
             // id不为null说明是更新
@@ -270,7 +285,6 @@ public class UserController extends LongGridController<User, UserManager> {
                     && "".equals(confirmpassword2)) {
                 // 三个密码框都没有输入，说明不会修改密码
             } else {
-                PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
                 String oldpassword2AfterEncode = passwordEncoder
                     .encodePassword(oldpassword2, null);
 

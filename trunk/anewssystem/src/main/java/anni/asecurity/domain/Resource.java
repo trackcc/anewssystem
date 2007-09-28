@@ -140,7 +140,9 @@ public class Resource extends LongGridBean {
     }
 
     /** * @return roles. */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade =  {
+        CascadeType.PERSIST, CascadeType.MERGE}
+    , fetch = FetchType.LAZY)
     @JoinTable(name = "A_SECURITY_RESOURCE_ROLE", joinColumns =  {
         @JoinColumn(name = "RESOURCE_ID")
     }

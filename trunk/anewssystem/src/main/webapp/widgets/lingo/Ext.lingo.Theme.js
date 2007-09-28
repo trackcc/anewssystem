@@ -98,3 +98,30 @@ Ext.suggest = function() {
     }
 }();
 
+Ext.theme = function() {
+    return{
+        apply:function(themeName) {
+            themeName = themeName.id ? themeName.id : themeName;
+            Cookies.set("xrinsurtheme", themeName);
+            Ext.util.CSS.swapStyleSheet("theme", getSitePath() + "/widgets/extjs/1.1/resources/css/ytheme-" + themeName + ".css");
+            //var iframe = Ext.isGecko ? document.getElementById("main").contentWindow : parent.frames["main"];
+            var iframe = document.getElementById("main").contentWindow;
+            iframe.Ext.util.CSS.swapStyleSheet("theme", getSitePath() + "/widgets/extjs/1.1/resources/css/ytheme-" + themeName + ".css");
+            iframe.Ext.util.CSS.swapStyleSheet("theme-iframeLayout", getSitePath() + "/widgets/extjs/1.1/resources/css/layout.css")
+        }
+    }
+} ();
+var path = getSitePath();
+
+function getSitePath() {
+    var protocol = document.location.protocol;
+    var host = document.location.host;
+    var pathname = document.location.pathname;
+    var search = document.location.search;
+    var sitePath = protocol + "//" + host + "/" + (pathname.split("/"))[1];
+    return sitePath;
+}
+
+function setSitePath(query) {
+    return path + "/" + query;
+}

@@ -21,7 +21,10 @@ Ext.namespace("Ext.lingo");
 Ext.lingo.LoginDialog = function() {
     var loginDialog, loginBtn, resetBtn, tabs, userAccount, userPwd;
     return {
-        init : function() {
+        // 初始化对话框
+        init : function(callback) {
+            this.callback = callback;
+
             userAccount = new Ext.lingo.FormUtils.createTextField({
                 id         : 'userAccount',
                 type       : 'text',
@@ -38,9 +41,10 @@ Ext.lingo.LoginDialog = function() {
                 cls        : 'x-form-text'
             });
             this.showLoginDialog();
-        },
+        }
 
-        showLoginDialog : function() {
+        // 显示对话框
+        , showLoginDialog : function() {
             if(!loginDialog) {
                 loginDialog = new Ext.BasicDialog("login-dlg", {
                         title     : '&nbsp;',
@@ -68,13 +72,15 @@ Ext.lingo.LoginDialog = function() {
                 }, this, true);
             }
             loginDialog.show();
-        },
+        }
 
-        hideLoginDialog : function() {
+        // 隐藏对话框
+        , hideLoginDialog : function() {
             loginDialog.hide();
-        },
+        }
 
-        showHideBtns : function(f) {
+        // 显示按钮
+        , showHideBtns : function(f) {
             var msg = Ext.get('post-wait');
             if (f) {
                 tabs.getTab(1).enable();
@@ -87,11 +93,12 @@ Ext.lingo.LoginDialog = function() {
                 loginBtn.disable();
                 msg.radioClass('active-msg');
             }
-        },
+        }
 
-        checkInput : function() {
+        // 验证输入的数据
+        , checkInput : function() {
             if(userAccount.isValid() == false) {
-                Msg.suggest('错误：', String.format(userAccount.invalidText, userAccount.el.dom.alt));
+                Ext.suggest('错误：', String.format(userAccount.invalidText, userAccount.el.dom.alt));
                 userAccount.focus();
                 return false;
             }
@@ -101,20 +108,47 @@ Ext.lingo.LoginDialog = function() {
                 return false;
             }
             return true;
-        },
+        }
 
-        loginReset : function() {
+        // 重置
+        , loginReset : function() {
             userAccount.setValue("");
             userPwd.setValue("");
-        },
+        }
 
-        logIn : function() {
+        // 进行登录
+        , logIn : function() {
             if(this.checkInput()) {
                 this.showHideBtns(false);
-                alert('login...');
-                this.showHideBtns(true);
-                this.hideLoginDialog();
+
+                var data = "j_username=" + userAccount.getValue() + "&j_password=" + userPwd.getValue();
+
+                Ext.lib.Ajax.request(
+                    'POST',
+                    "../j_acegi_security_check",
+                    {success:this.loginSuccess.createDelegate(this),failure:this.loginFailure.createDelegate(this)},
+                    data
+                );
             }
+        }
+
+        // 登录成功
+        , loginSuccess : function(data) {
+            eval("var json=" + data.responseText + ";");
+            if (json.success) {
+                this.callback(data);
+                this.showHideBtns(true);
+                this.hideLoginDialog(true);
+            } else {
+                this.loginFailure(data);
+            }
+        }
+
+        // 登录失败
+        , loginFailure : function(data) {
+            eval("var json=" + data.responseText + ";");
+            Msg.suggest('错误：', json.response);
+            this.showHideBtns(true);
         }
     };
 }();

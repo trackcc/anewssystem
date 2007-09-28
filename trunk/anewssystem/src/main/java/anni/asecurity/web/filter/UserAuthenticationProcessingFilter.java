@@ -64,17 +64,9 @@ public class UserAuthenticationProcessingFilter
         HttpServletResponse response) {
         boolean requiresAuth = super.requiresAuthentication(request,
                 response);
-        HttpSession httpSession = null;
+        HttpSession httpSession = request.getSession(true);
 
-        try {
-            httpSession = request.getSession(false);
-        } catch (IllegalStateException ignored) {
-            logger.debug(ignored);
-        }
-
-        if ((httpSession != null)
-                && (httpSession.getAttribute(USER_IN_SESSION) == null)
-                && !requiresAuth) {
+        if (!requiresAuth) {
             SecurityContext sc = SecurityContextHolder.getContext();
             Authentication auth = sc.getAuthentication();
 

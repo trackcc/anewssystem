@@ -19,7 +19,7 @@ UserGridPanel = function(container, config) {
         {id : 'password', qtip : '密码', vType : "passwordmeta",  allowBlank : false},
         {id : 'confirmpassword', qtip : '确认密码', vType : "password",  allowBlank : false},
         {id : 'truename', qtip : '姓名', vType : "chn"},
-        {id : 'sex',      qtip : '性别', vType : "radio", values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : 0, renderer : Ext.lingo.FormUtils.renderSex},
+        {id : 'sex',      qtip : '性别', vType : "radio", values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : '0', renderer : Ext.lingo.FormUtils.renderSex},
         {id : 'birthday', qtip : '生日', vType : "date"},
         {id : 'tel',      qtip : '电话', vType : "alphanum"},
         {id : 'mobile',   qtip : '手机', vType : "alphanum"},
@@ -35,7 +35,7 @@ UserGridPanel = function(container, config) {
         {id : 'password2', qtip : '密码', vType : "passwordmeta",  allowBlank : true, mapping : "password2"},
         {id : 'confirmpassword2', qtip : '确认密码', vType : "password",  allowBlank : true, mapping : "confirmpassword2"},
         {id : 'truename2', qtip : '姓名', vType : "chn", mapping : "truename"},
-        {id : 'sex2',      qtip : '性别', vType : "radio", values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : 0, renderer : Ext.lingo.FormUtils.renderSex, mapping : "sex"},
+        {id : 'sex2',      qtip : '性别', vType : "radio", values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : '0', renderer : Ext.lingo.FormUtils.renderSex, mapping : "sex"},
         {id : 'birthday2', qtip : '生日', vType : "date", mapping : "birthday"},
         {id : 'tel2',      qtip : '电话', vType : "alphanum", mapping : "tel"},
         {id : 'mobile2',   qtip : '手机', vType : "alphanum", mapping : "mobile"},
@@ -77,7 +77,15 @@ Ext.extend(UserGridPanel, Ext.lingo.JsonGrid, {
         this.adddialog = Ext.lingo.FormUtils.createTabedDialog('add-dialog', ['添加信息','帮助']);
 
         this.addyesBtn = this.adddialog.addButton("确定", function() {
+            if (this.addcolumns.password.getValue() != this.addcolumns.confirmpassword.getValue()) {
+                Ext.suggest.msg("错误", "两次输入的密码不一样");
+                this.addcolumns.confirmpassword.focus();
+                return;
+            }
             var item = Ext.lingo.FormUtils.serialFields(this.addcolumns);
+            if (!item) {
+                return;
+            }
 
             this.adddialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
             var addhide = function() {
@@ -119,7 +127,16 @@ Ext.extend(UserGridPanel, Ext.lingo.JsonGrid, {
         this.editdialog = Ext.lingo.FormUtils.createTabedDialog('edit-dialog', ['基本信息','详细信息','帮助']);
 
         this.edityesBtn = this.editdialog.addButton("确定", function() {
+            if (this.editcolumns.oldpassword2.getValue() != "" &&
+                    this.editcolumns.password2.getValue() != this.editcolumns.confirmpassword2.getValue()) {
+                Ext.suggest.msg("错误", "两次输入的密码不一样");
+                this.editcolumns.confirmpassword2.focus();
+                return;
+            }
             var item = Ext.lingo.FormUtils.serialFields(this.editcolumns);
+            if (!item) {
+                return
+            }
 
             this.editdialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
             var edithide = function() {
@@ -211,7 +228,7 @@ Ext.onReady(function(){
         {id : 'username', qtip : "帐号", vType : "chn",       allowBlank : false},
         {id : 'password', qtip : '密码', vType : "password",  allowBlank : false},
         {id : 'truename', qtip : '姓名', vType : "chn"},
-        {id : 'sex',      qtip : '性别', vType : "radio", values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : 0, renderer : Ext.lingo.FormUtils.renderSex},
+        {id : 'sex',      qtip : '性别', vType : "radio", values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : '0', renderer : Ext.lingo.FormUtils.renderSex},
         {id : 'birthday', qtip : '生日', vType : "date"},
         {id : 'tel',      qtip : '电话', vType : "alphanum"},
         {id : 'mobile',   qtip : '手机', vType : "alphanum"},

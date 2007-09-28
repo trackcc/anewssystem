@@ -18,7 +18,7 @@ public class MenuManager extends LongTreeHibernateDao<Menu> {
      * @param userId 用户id
      * @return menu id list
      */
-    public List<Integer> loadUserMenus(Long userId) {
+    public List<Long> loadUserMenus(Long userId) {
         String hql = "select distinct menu.id from Menu menu "
             + "inner join menu.roles as role "
             + "inner join role.users as user " + "where user.id=?";

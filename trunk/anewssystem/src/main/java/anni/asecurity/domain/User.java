@@ -272,7 +272,9 @@ public class User extends LongGridBean {
     }
 
     /** * @return roles. */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade =  {
+        CascadeType.PERSIST, CascadeType.MERGE}
+    , fetch = FetchType.LAZY)
     @JoinTable(name = "A_SECURITY_ROLE_USER", joinColumns =  {
         @JoinColumn(name = "USER_ID")
     }

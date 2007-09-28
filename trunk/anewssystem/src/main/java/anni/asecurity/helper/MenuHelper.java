@@ -5,9 +5,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import anni.asecurity.domain.Menu;
+import anni.asecurity.domain.User;
 
 import anni.asecurity.manager.MenuManager;
+import anni.asecurity.manager.UserManager;
 
 import anni.core.dao.support.Page;
 
@@ -30,9 +34,17 @@ public class MenuHelper {
     /** * menuManager. */
     private MenuManager menuManager = null;
 
+    /** * userManager. */
+    private UserManager userManager = null;
+
     /** * @param menuManager MenuManager. */
     public void setMenuManager(MenuManager menuManager) {
         this.menuManager = menuManager;
+    }
+
+    /** * @param userManager UserManager. */
+    public void setUserManager(UserManager userManager) {
+        this.userManager = userManager;
     }
 
     /**
@@ -140,18 +152,34 @@ public class MenuHelper {
     /**
      * 根据登录用户，生成需要的菜单数据.
      *
+     * @param session 需要从HttpSession里获得的登录用户的id
      * @return Map
      */
-    public Map<String, List<MenuItem>> getMenus() {
+    public Map<String, List<MenuItem>> getMenus(HttpSession session) {
         List<Menu> list = menuManager.find(
                 "from Menu where parent is null order by theSort,id");
         Map<String, List<MenuItem>> map = new LinkedHashMap<String, List<MenuItem>>();
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            return map;
+        }
+
+        List userMenus = menuManager.loadUserMenus(loginUser.getId());
 
         for (Menu menu : list) {
+            if (!userMenus.contains(menu.getId())) {
+                continue;
+            }
+
             List<MenuItem> menuList = new ArrayList<MenuItem>();
             map.put(menu.getName(), menuList);
 
             for (Menu child : menu.getChildren()) {
+                if (!userMenus.contains(child.getId())) {
+                    continue;
+                }
+
                 MenuItem menuItem = new MenuItem();
                 menuItem.setImage(child.getImage());
                 menuItem.setTitle(child.getName());

@@ -186,7 +186,9 @@ public class Menu extends LongTreeNode<Menu> {
     }
 
     /** * @return roles. */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade =  {
+        CascadeType.PERSIST, CascadeType.MERGE}
+    , fetch = FetchType.LAZY)
     @JoinTable(name = "A_SECURITY_MENU_ROLE", joinColumns =  {
         @JoinColumn(name = "MENU_ID")
     }

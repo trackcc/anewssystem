@@ -129,7 +129,7 @@
         <td width="40%" align="right" style="font-size:12px;">帐号：</td>
         <td width="60%" colspan="3">
           <div class="x-form-item">
-            <input id="username2" type="text" size="20">
+            <input id="username2" type="text" size="20" disabled>
           </div>
         </td>
       </tr>

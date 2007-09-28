@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>switch</title>
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/resources/css/yext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/resources/css/ytheme-aero.css" />
+    <link rel="stylesheet" type="text/css" href="../lingo.css" />
+    <script type="text/javascript" src="../../extjs/1.1/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../extjs/1.1/ext-all-debug.js"></script>
+    <script type="text/javascript">
+Ext.BLANK_IMAGE_URL = '../../extjs/1.1/resources/images/default/s.gif';
+Ext.BLANK_ROOT = '../../extjs/1.1';
+    </script>
+    <script type="text/javascript" src="../Ext.form.VTypes.js"></script>
+    <script type="text/javascript" src="../form/Ext.lingo.FormUtils.js"></script>
+    <script type="text/javascript" src="../form/Ext.lingo.LoginDialog.js"></script>
+    <script type="text/javascript" src="Ext.lingo.CheckRowSelectionGrid.js"></script>
+    <script type="text/javascript" src="Ext.lingo.JsonGrid.js"></script>
+    <script type="text/javascript" src="MenuGrid.js" ></script>
+  </head>
+  <body>
+    <input id="text2">
+    <select id="st2">
+      <option value="1">1</option>
+      <option value="2">2</option>
+    </select>
+    <input id="dp2">
+    <textarea id="ta2"></textarea>
+
+    <select onchange="switchField(this.value)">
+      <option value="TextField">TextField</option>
+      <option value="ComboBox">ComboBox</option>
+      <option value="DateField">DateField</option>
+    </select>
+    <div id="alter"></div>
+
+    <div id="error_message" style="display:block"></div>
+<script type="text/javascript">
+//DWREngine.setErrorHandler(errorHandler);
+function errorHandler(errorString, exception) {
+    console.error(errorString);
+    console.error(exception);
+}
+
+function switchField(value) {
+    var alter = Ext.get("alter");
+
+    if (value == "TextField") {
+        alter.update("<input id='tmp'>");
+        var field = new Ext.form.TextField({id:"tmp"});
+        field.applyTo("tmp");
+    } else if (value == "ComboBox") {
+        alter.update("<select id='tmp'><option value='1'>1</option><option value='2'>2</option></select>");
+        var field = new Ext.form.ComboBox({id:"tmp",transform:"tmp"});
+    } else if (value == "DateField") {
+        alter.update("<input id='tmp'>");
+        var field = new Ext.form.DateField({id:"tmp"});
+        field.applyTo("tmp");
+    }
+}
+
+Ext.onReady(function() {
+    columns = {};
+
+    columns.text2 = new Ext.form.TextField().applyTo('text2');
+    columns.st2 = new Ext.form.ComboBox({transform:'st2'});
+    columns.dp2 = new Ext.form.DateField().applyTo('dp2');
+    columns.ta2 = new Ext.form.TextArea().applyTo('ta2');
+
+});
+
+</script>
+  </body>
+</html>
+
+
+
+
+
+
+
+

@@ -100,7 +100,9 @@ public class Role extends LongGridBean {
     }
 
     /** * @return users. */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade =  {
+        CascadeType.PERSIST, CascadeType.MERGE}
+    , fetch = FetchType.LAZY)
     @JoinTable(name = "A_SECURITY_ROLE_USER", joinColumns =  {
         @JoinColumn(name = "ROLE_ID")
     }
@@ -118,7 +120,9 @@ public class Role extends LongGridBean {
     }
 
     /** * @return resources. */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade =  {
+        CascadeType.PERSIST, CascadeType.MERGE}
+    , fetch = FetchType.LAZY)
     @JoinTable(name = "A_SECURITY_RESOURCE_ROLE", joinColumns =  {
         @JoinColumn(name = "ROLE_ID")
     }
@@ -136,7 +140,9 @@ public class Role extends LongGridBean {
     }
 
     /** * @return menus. */
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade =  {
+        CascadeType.PERSIST, CascadeType.MERGE}
+    , fetch = FetchType.LAZY)
     @JoinTable(name = "A_SECURITY_MENU_ROLE", joinColumns =  {
         @JoinColumn(name = "ROLE_ID")
     }

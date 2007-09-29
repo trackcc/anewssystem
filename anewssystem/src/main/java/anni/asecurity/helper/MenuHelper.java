@@ -11,7 +11,6 @@ import anni.asecurity.domain.Menu;
 import anni.asecurity.domain.User;
 
 import anni.asecurity.manager.MenuManager;
-import anni.asecurity.manager.UserManager;
 
 import anni.core.dao.support.Page;
 
@@ -34,17 +33,9 @@ public class MenuHelper {
     /** * menuManager. */
     private MenuManager menuManager = null;
 
-    /** * userManager. */
-    private UserManager userManager = null;
-
     /** * @param menuManager MenuManager. */
     public void setMenuManager(MenuManager menuManager) {
         this.menuManager = menuManager;
-    }
-
-    /** * @param userManager UserManager. */
-    public void setUserManager(UserManager userManager) {
-        this.userManager = userManager;
     }
 
     /**

@@ -38,12 +38,12 @@ public class MenuManagerTest extends AbstractWebTests {
     }
 
     public void testAdminMenus() {
-        List<Integer> list = menuManager.loadUserMenus(1L);
+        List<Long> list = menuManager.loadUserMenus(1L);
         assertEquals(0, list.size());
     }
 
     public void testEmployeeMenus() {
-        List<Integer> list = menuManager.loadUserMenus(2L);
+        List<Long> list = menuManager.loadUserMenus(2L);
         assertEquals(0, list.size());
     }
 }

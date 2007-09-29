@@ -20,7 +20,7 @@ public class UserAuthenticationProcessingFilterTest extends TestCase {
 
         expect(request.getRequestURI()).andReturn("/");
         expect(request.getContextPath()).andReturn("/").anyTimes();
-        expect(request.getSession(false)).andReturn(session);
+        expect(request.getSession(true)).andReturn(session);
         expect(session.getAttribute("loginUser")).andReturn(null);
 
         replay(request);

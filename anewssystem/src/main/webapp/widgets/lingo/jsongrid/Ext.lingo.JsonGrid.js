@@ -46,7 +46,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                 var item = {};
                 item.header    = this.metaData[i].qtip;
                 item.dataIndex = this.metaData[i].id;
-                item.width     = 110;
+                item.width     = this.metaData[i].w ? this.metaData[i].w : 110;
                 item.defaultValue = "";
                 // item.hidden = false;
                 if (this.metaData[i].renderer) {
@@ -287,7 +287,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
     , del : function() {
         var selections = this.grid.getSelections();
         if (selections.length == 0) {
-            Ext.MessageBox.alert("提示", "请选择希望修改的记录！");
+            Ext.MessageBox.alert("提示", "请选择希望删除的记录！");
             return;
         } else {
             Ext.Msg.confirm("提示", "是否确定删除？", function(btn, text) {
@@ -300,7 +300,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                         this.dataStore.remove(selections[i]);//从表格中删除
                     }
                     Ext.Ajax.request({
-                        url     : this.urlRemove + '?id=' + ids,
+                        url     : this.urlRemove + '?ids=' + ids,
                         success : function() {
                             Ext.MessageBox.alert(' 提示', '删除成功！');
                             this.refresh();

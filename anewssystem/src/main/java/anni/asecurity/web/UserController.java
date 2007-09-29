@@ -284,6 +284,7 @@ public class UserController extends LongGridController<User, UserManager> {
             if ("".equals(oldpassword2) && "".equals(password2)
                     && "".equals(confirmpassword2)) {
                 // 三个密码框都没有输入，说明不会修改密码
+                logger.debug("不修改密码");
             } else {
                 String oldpassword2AfterEncode = passwordEncoder
                     .encodePassword(oldpassword2, null);
@@ -293,8 +294,7 @@ public class UserController extends LongGridController<User, UserManager> {
                 } else if ((password2 == null)
                         || "".equals(password2.trim())) {
                     resultMessage = "{success:false,info:'密码不能空'}";
-                } else if ((password2 != null)
-                        && !password2.trim().equals(confirmpassword2.trim())) {
+                } else if (!password2.trim().equals(confirmpassword2.trim())) {
                     resultMessage = "{success:false,info:'两次输入的密码不同'}";
                 } else {
                     entity.setPassword(passwordEncoder.encodePassword(
@@ -309,6 +309,54 @@ public class UserController extends LongGridController<User, UserManager> {
         }
 
         response.getWriter().print(resultMessage);
+    }
+
+    /**
+     * 开通用户.
+     *
+     * @throws Exception 异常
+     */
+    public void openUser() throws Exception {
+        logger.info(params());
+
+        String ids = getStrParam("ids", "");
+
+        for (String str : ids.split(",")) {
+            try {
+                long id = Long.parseLong(str);
+                User user = getEntityDao().get(id);
+                user.setStatus((byte) 1);
+                getEntityDao().save(user);
+            } catch (NumberFormatException ex) {
+                continue;
+            }
+        }
+
+        response.getWriter().print("{success:true}");
+    }
+
+    /**
+     * 关闭用户.
+     *
+     * @throws Exception 异常
+     */
+    public void closeUser() throws Exception {
+        logger.info(params());
+
+        String ids = getStrParam("ids", "");
+
+        for (String str : ids.split(",")) {
+            try {
+                long id = Long.parseLong(str);
+                User user = getEntityDao().get(id);
+                user.setStatus((byte) 0);
+                getEntityDao().save(user);
+            } catch (NumberFormatException ex) {
+                continue;
+            }
+        }
+
+        response.getWriter().print("{success:true}");
     }
 
     /** * @return excludes. */

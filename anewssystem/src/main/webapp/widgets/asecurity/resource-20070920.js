@@ -52,11 +52,11 @@ Ext.onReady(function(){
     // 默认需要id, name, theSort, parent, children
     // 其他随意定制
     var metaData = [
-        {id : 'id',         qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1},
-        {id : 'name',       qtip : "资源名称", vType : "chn",      allowBlank : false},
-        {id : 'resType',    qtip : "资源类型", vType : "chn",      allowBlank : false},
-        {id : 'resString',  qtip : "资源内容", vType : "chn",      allowBlank : false},
-        {id : 'descn',      qtip : "描述",     vType : "chn",      allowBlank : true}
+        {id : 'id',         qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1, w:150},
+        {id : 'name',       qtip : "资源名称", vType : "chn",      allowBlank : false, w:150},
+        {id : 'resType',    qtip : "资源类型", vType : "chn",      allowBlank : false, w:150},
+        {id : 'resString',  qtip : "资源内容", vType : "chn",      allowBlank : false, w:150},
+        {id : 'descn',      qtip : "描述",     vType : "chn",      allowBlank : true, w:170}
     ];
 
     // 创建表格

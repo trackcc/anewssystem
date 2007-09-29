@@ -62,8 +62,11 @@ public class UserAuthenticationProcessingFilter
      */
     protected boolean requiresAuthentication(HttpServletRequest request,
         HttpServletResponse response) {
+        logger.info("start");
+
         boolean requiresAuth = super.requiresAuthentication(request,
                 response);
+
         HttpSession httpSession = request.getSession(true);
 
         if (!requiresAuth) {

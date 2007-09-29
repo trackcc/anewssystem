@@ -223,17 +223,18 @@ Ext.onReady(function(){
     // 默认需要id, name, theSort, parent, children
     // 其他随意定制
     var metaData = [
-        {id : 'id',       qtip : "ID",   vType : "integer",   allowBlank : true,  defValue : -1},
-        {id : 'dept',     qtip : '部门', vType : 'treeField', url : "../dept/getChildren.htm", mapping : "dept.name"},
-        {id : 'username', qtip : "帐号", vType : "chn",       allowBlank : false},
-        {id : 'password', qtip : '密码', vType : "password",  allowBlank : false},
-        {id : 'truename', qtip : '姓名', vType : "chn"},
-        {id : 'sex',      qtip : '性别', vType : "radio", values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : '0', renderer : Ext.lingo.FormUtils.renderSex},
-        {id : 'birthday', qtip : '生日', vType : "date"},
-        {id : 'tel',      qtip : '电话', vType : "alphanum"},
-        {id : 'mobile',   qtip : '手机', vType : "alphanum"},
+        {id : 'id',       qtip : "ID",   vType : "integer",   allowBlank : true,  defValue : -1, w:30},
+        {id : 'dept',     qtip : '部门', vType : 'treeField', url : "../dept/getChildren.htm", mapping : "dept.name", w:60},
+        {id : 'username', qtip : "帐号", vType : "chn",       allowBlank : false, w:60},
+        {id : 'password', qtip : '密码', vType : "password",  allowBlank : false, w:60},
+        {id : 'truename', qtip : '姓名', vType : "chn", w:60},
+        {id : 'sex',      qtip : '性别', vType : "radio", values : [{id : '0', name : '男'}, {id : '1', name : '女'}], defValue : '0', renderer : Ext.lingo.FormUtils.renderSex, w:30},
+        {id : 'birthday', qtip : '生日', vType : "date", w:60},
+        {id : 'tel',      qtip : '电话', vType : "alphanum", w:60},
+        {id : 'mobile',   qtip : '手机', vType : "alphanum", w:60},
         {id : 'email',    qtip : '邮箱', vType : "email"},
-        {id : 'duty',     qtip : '职务', vType : "chn"},
+        {id : 'duty',     qtip : '职务', vType : "chn", w:50},
+        {id : 'status',   qtip : '状态', vType : "integer", renderer : renderStatus, w:40},
         {id : 'descn',    qtip : "备注", vType : "chn"}
     ];
 
@@ -248,8 +249,25 @@ Ext.onReady(function(){
 
     // ========================================================================
     // ========================================================================
-    // 在工具栏上添一个按钮
+    // 在工具栏上添两个按钮，开通和关闭用户
     lightGrid.toolbar.insertButton(3, {
+        icon    : "../widgets/lingo/list-items.gif",
+        id      : 'openUser',
+        text    : '开通',
+        cls     : 'add',
+        tooltip : '开通',
+        handler : openUser
+    });
+    lightGrid.toolbar.insertButton(4, {
+        icon    : "../widgets/lingo/list-items.gif",
+        id      : 'closeUser',
+        text    : '关闭',
+        cls     : 'add',
+        tooltip : '关闭',
+        handler : closeUser
+    });
+    // 在工具栏上添一个按钮，选择角色
+    lightGrid.toolbar.insertButton(5, {
         icon    : "../widgets/lingo/list-items.gif",
         id      : 'config',
         text    : '选择角色',
@@ -257,6 +275,48 @@ Ext.onReady(function(){
         tooltip : '选择角色',
         handler : selectRole
     });
+
+    // 开通和关闭
+    function openUser() {
+        var selections = lightGrid.grid.getSelections();
+        if (selections.length == 0) {
+            Ext.MessageBox.alert("提示", "请选择希望开通的用户！");
+            return;
+        } else {
+            var ids = new Array();
+            for(var i = 0, len = selections.length; i < len; i++){
+                selections[i].get("id");
+                ids[i] = selections[i].get("id");
+            }
+            Ext.Ajax.request({
+                url     : 'openUser.htm?ids=' + ids,
+                success : function() {
+                    lightGrid.refresh();
+                },
+                failure : function(){Ext.MessageBox.alert('提示', '操作失败！');}
+            });
+        }
+    }
+    function closeUser() {
+        var selections = lightGrid.grid.getSelections();
+        if (selections.length == 0) {
+            Ext.MessageBox.alert("提示", "请选择希望关闭的用户！");
+            return;
+        } else {
+            var ids = new Array();
+            for(var i = 0, len = selections.length; i < len; i++){
+                selections[i].get("id");
+                ids[i] = selections[i].get("id");
+            }
+            Ext.Ajax.request({
+                url     : 'closeUser.htm?ids=' + ids,
+                success : function() {
+                    lightGrid.refresh();
+                },
+                failure : function(){Ext.MessageBox.alert('提示', '操作失败！');}
+            });
+        }
+    }
 
     // ========================================================================
     // ========================================================================
@@ -271,6 +331,14 @@ Ext.onReady(function(){
     function renderNamePlain(value){
         return String.format('{0}', value);
     }
+    function renderStatus(value) {
+        if(value == 1){
+            return String.format("<b><font color=green>开通</font></b>");
+        }else{
+            return String.format("<b><font color=red>关闭</font></b>");
+        }
+    }
+
     // 建一个资源数据映射数组
     var roleRecord = Ext.data.Record.create([
         {name: "id",         mapping:"id",         type: "int"},

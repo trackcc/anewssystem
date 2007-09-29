@@ -20,7 +20,7 @@
       <div id="tab2"></div>
     </div>
     <!-- 新增 -->
-    <div id="add-content">
+    <div id="add-content" style="display:none">
     <table width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
       <tr height="50%"><td>&nbsp;</td></tr>
       <tr>
@@ -122,7 +122,7 @@
     </table>
     </div>
     <!-- 更新base部分-->
-    <div id="edit-base-content">
+    <div id="edit-base-content" style="display:none">
     <table width="60%" border="0" align="left" valign="middlen" cellpadding="0" cellspacing="10">
       <tr height="50%"><td colspan="2">&nbsp;</td></tr>
       <tr>
@@ -194,7 +194,7 @@
     </table>
     </div>
     <!--修改detail部分-->
-    <div id="edit-detail-content">
+    <div id="edit-detail-content" style="display:none">
     <table width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
       <tr height="50%"><td>&nbsp;</td></tr>
       <tr>

@@ -98,7 +98,7 @@ Ext.lingo.LoginDialog = function() {
         // 验证输入的数据
         , checkInput : function() {
             if(userAccount.isValid() == false) {
-                Ext.suggest('错误：', String.format(userAccount.invalidText, userAccount.el.dom.alt));
+                Msg.suggest('错误：', String.format(userAccount.invalidText, userAccount.el.dom.alt));
                 userAccount.focus();
                 return false;
             }
@@ -134,13 +134,17 @@ Ext.lingo.LoginDialog = function() {
 
         // 登录成功
         , loginSuccess : function(data) {
-            eval("var json=" + data.responseText + ";");
-            if (json.success) {
-                this.callback(data);
-                this.showHideBtns(true);
-                this.hideLoginDialog(true);
-            } else {
-                this.loginFailure(data);
+            try {
+                eval("var json=" + data.responseText + ";");
+                if (json.success) {
+                    this.callback(data);
+                    this.showHideBtns(true);
+                    this.hideLoginDialog(true);
+                } else {
+                    this.loginFailure(data);
+                }
+            } catch (e) {
+                this.loginFailure("{response:'服务器错误，请刷新页面重新进入'}");
             }
         }
 

@@ -52,13 +52,13 @@ Ext.onReady(function(){
     // 默认需要id, name, theSort, parent, children
     // 其他随意定制
     var metaData = [
-        {id : 'id',         qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1},
-        {id : 'name',       qtip : "菜单名称", vType : "chn",      allowBlank : false},
-        {id : 'qtip',       qtip : "提示",     vType : "chn",      allowBlank : true},
-        {id : 'url',        qtip : "访问路径", vType : "url",      allowBlank : true},
-        {id : 'image',      qtip : "图片",     vType : "alphanum", allowBlank : true,  defValue : "user.gif"},
-        {id : 'updateDate', qtip : "更新时间", vType : "date",     allowBlank : false},
-        {id : 'descn',      qtip : "描述",     vType : "chn",      allowBlank : true}
+        {id : 'id',         qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1, w:50},
+        {id : 'name',       qtip : "菜单名称", vType : "chn",      allowBlank : false, w:100},
+        {id : 'qtip',       qtip : "提示",     vType : "chn",      allowBlank : true, w:100},
+        {id : 'url',        qtip : "访问路径", vType : "url",      allowBlank : true, w:100},
+        {id : 'image',      qtip : "图片",     vType : "alphanum", allowBlank : true,  defValue : "user.gif", w:100},
+        {id : 'updateDate', qtip : "更新时间", vType : "date",     allowBlank : false, w:120},
+        {id : 'descn',      qtip : "描述",     vType : "chn",      allowBlank : true, w:150}
     ];
 
     // 创建表格

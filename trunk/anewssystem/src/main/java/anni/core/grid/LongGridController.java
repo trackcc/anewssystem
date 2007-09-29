@@ -149,7 +149,7 @@ public class LongGridController<T extends LongGridBean, D extends HibernateEntit
     public void remove() throws Exception {
         logger.info(params());
 
-        String ids = getStrParam("id", "");
+        String ids = getStrParam("ids", "");
 
         for (String str : ids.split(",")) {
             try {

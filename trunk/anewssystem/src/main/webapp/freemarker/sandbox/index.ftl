@@ -6,6 +6,11 @@
     <#include "/include/meta.ftl">
     <title> 管理后台 </title>
     <#include "/include/extjs.ftl"/>
+    <SCRIPT type="text/javascript" language="javascript">
+        if (window.top != window) {
+            window.top.location = window.location;
+        }
+    </script>
     <script type='text/javascript' src='${ctx}/widgets/ux/Ext.ux.Accordion.js'></script>
     <script type='text/javascript' src='${ctx}/widgets/ux/Ext.ux.InfoPanel.js'></script>
 
@@ -24,7 +29,7 @@
     <div id='header' class='ylayout-inactive-content'>
       <div id='logo'></div>
       <div style='padding-top:4px;'>
-        <img src="${ctx}/images/banner.jpg">
+        <!--<img src="${ctx}/images/banner.jpg">--><span style="font-size:24px;">新闻发布</span>
       </div>
     </div>
     <div id='south'>
@@ -57,6 +62,23 @@
                   <div class='x-form-item'>
                     <input id='userPassword' name='userPassword' type='password' size='30' autocomplete='off' alt='登陆密码'>
                   </div>
+                </td>
+              </tr>
+              <tr>
+                <td align='right'>保存我的信息：</td>
+                <td>
+                  <div class='x-form-item'>
+                    <input id='_acegi_security_remember_me' name='_acegi_security_remember_me' type='checkbox' size='30'  alt='保存我的信息'>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td align='right'>验证码：</td>
+                <td align="left"><input id="j_captcha_response" name="j_captcha_response" style="width:60px" autocomplete="off"/>&#160;&#160;[<A onclick="$('captcha').src='../captcha.jpg?' + new Date().getTime();this.blur();" href="#">刷新图片</A>]</TD>
+              </tr>
+              <tr>
+                <td align="center" colSpan="2">
+                  <img id="captcha" src="../captcha.jpg" align="top" alt="" />
                 </td>
               </tr>
             </table>

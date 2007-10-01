@@ -19,7 +19,8 @@ Ext.namespace("Ext.lingo");
  *
  */
 Ext.lingo.LoginDialog = function() {
-    var loginDialog, loginBtn, resetBtn, tabs, userAccount, userPwd;
+    var loginDialog, loginBtn, resetBtn, tabs;
+    var userAccount, userPwd, rememberMe, j_captcha_response;
     return {
         // 初始化对话框
         init : function(callback) {
@@ -39,6 +40,20 @@ Ext.lingo.LoginDialog = function() {
                 allowBlank : false,
                 maxLength  : 18,
                 cls        : 'x-form-text'
+            });
+            rememberMe = new Ext.lingo.FormUtils.createCheckBox({
+                id         : '_acegi_security_remember_me',
+                type       : 'checkbox',
+                vType      : 'integer',
+                allowBlank : 'true',
+                cls        : 'x-form-text'
+            });
+            j_captcha_response = new Ext.lingo.FormUtils.createTextField({
+                id         : 'j_captcha_response',
+                type       : 'text',
+                vType      : 'alphanum',
+                allowBlank : false,
+                maxLength  : 18
             });
             this.showLoginDialog();
         }
@@ -107,6 +122,11 @@ Ext.lingo.LoginDialog = function() {
                 userPwd.focus();
                 return false;
             }
+            if(j_captcha_response.isValid() == false) {
+                Msg.suggest('错误：', String.format(j_captcha_response.invalidText, j_captcha_response.el.dom.alt));
+                j_captcha_response.focus();
+                return false;
+            }
             return true;
         }
 
@@ -114,6 +134,8 @@ Ext.lingo.LoginDialog = function() {
         , loginReset : function() {
             userAccount.setValue("");
             userPwd.setValue("");
+            rememberMe.setValue(false);
+            j_captcha_response.setValue("");
         }
 
         // 进行登录
@@ -121,7 +143,10 @@ Ext.lingo.LoginDialog = function() {
             if(this.checkInput()) {
                 this.showHideBtns(false);
 
-                var data = "j_username=" + userAccount.getValue() + "&j_password=" + userPwd.getValue();
+                var data = "j_username=" + userAccount.getValue() +
+                    "&j_password=" + userPwd.getValue() +
+                    "&_acegi_security_remember_me=" + rememberMe.getValue() +
+                    "&j_captcha_response=" + j_captcha_response.getValue();
 
                 Ext.lib.Ajax.request(
                     'POST',
@@ -150,8 +175,11 @@ Ext.lingo.LoginDialog = function() {
 
         // 登录失败
         , loginFailure : function(data) {
-            eval("var json=" + data.responseText + ";");
-            Msg.suggest('错误：', json.response);
+            try {
+                eval("var json=" + data.responseText + ";");
+                Msg.suggest('错误：', json.response);
+            } catch (e) {
+            }
             this.showHideBtns(true);
         }
     };

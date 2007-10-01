@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appendix id="history">
+    <title>修改日志</title>
+
+    <revhistory>
+        <revision>
+            <revnumber>0.0.1</revnumber>
+            <date>2007-09-29</date>
+            <revdescription>
+                <orderedlist>
+                    <listitem><para>初稿完成。<xref linkend="preface"/></para></listitem>
+                </orderedlist>
+            </revdescription>
+        </revision>
+    </revhistory>
+</appendix>

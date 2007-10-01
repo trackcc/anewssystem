@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="anews-ch-01">
+    <title>技术选型</title>
+
+    <sect1>
+        <title><anchor id="anchor.01.01"/>选择哪些工具包做整合</title>
+        <orderedlist>
+            <listitem>
+                <para><ulink url="http://www.springframework.org">spring</ulink></para>
+                <para>我们需要它的pi依赖注入作为胶水，把其他工具包粘在一起</para>
+                <para>还需要它的aop，进行事务配置，权限管理</para>
+                <para>mvc使用<ulink url="http://www.springframework.org">springmvc</ulink>，因为<ulink url="http://extjs.com">extjs</ulink>使得mvc这一层变得不必要了。</para>
+            </listitem>
+            <listitem>
+                <para><ulink url="http://www.hibernate.org">hibernate</ulink></para>
+                <para>作为ORM方案，使用<ulink url="http://www.hibernate.org">hibernate3</ulink>对JPA的支持，使用annotation简化配置。</para>
+            </listitem>
+            <listitem>
+                <para><ulink url="http://acegisecurity.org">acegisecurity</ulink></para>
+                <para>与<ulink url="http://www.springframework.org">spring</ulink>结合，控制权限</para>
+            </listitem>
+            <listitem>
+                <para><ulink url="http://extjs.com">extjs</ulink></para>
+                <para>提供js控件，实现富客户端</para>
+                <para><ulink url="http://extjs.com">extjs</ulink>与服务器之间交互采用json格式传递数据，目前采用的<ulink url="http://json-lib.sourceforge.net">json-lib-2.0</ulink>在多线程环境下会有同步问题，2.1-snapshot已经解决了这个问题，但正式版尚未发布。<ulink url="http://json-lib.sourceforge.net">json-lib</ulink>在处理循环引用的时候也有很大的问题，处理<ulink url="http://www.hibernate.org">hibernate</ulink>双向关联的时候100%出错。</para>
+                <para>考虑自己写一个json实现，参考<ulink url="http://www.getahead.ltd.uk/dwr/">dwr</ulink>中生成s1={};s2={};s1.s2=s2;的方式。</para>
+            </listitem>
+            <listitem>
+                <para><ulink url="http://www.getahead.ltd.uk/dwr/">dwr</ulink></para>
+                <para>使用<ulink url="http://www.getahead.ltd.uk/dwr/">dwr</ulink>和 <ulink url="http://commons.apache.org">commmons-fileupload</ulink>制作上传文件的进度条。</para>
+                <para>考虑使用<ulink url="http://www.getahead.ltd.uk/dwr/">dwr-2</ulink>的服务器推，制作在线聊天。</para>
+            </listitem>
+        </orderedlist>
+    </sect1>
+    <sect1>
+        <title>待选方案</title>
+        <para>（以后可能用上，也可能用不上的工具包）：</para>
+        <orderedlist>
+            <listitem>
+                <para>Web Service</para>
+                <para><ulink url="http://incubator.apache.org/cxf/">CXF</ulink>是由Objectweb Celtix和Codehaus XFire合并成立的。与<ulink url="http://ws.apache.org/axis/">axis1</ulink>~<ulink url="http://ws.apache.org/axis2/">2</ulink>比较，更易于整合到<ulink url="http://www.springframework.org">spring</ulink>中。如果以后需要用到Web Service的话，它一定是首选。</para>
+            </listitem>
+            <listitem>
+                <para>JMS</para>
+                <para><ulink url="http://activemq.apache.org/">activeMQ</ulink>，根据<ulink url="http://www.springside.org.cn">springside</ulink>的推荐，使用<ulink url="http://activemq.apache.org/">activeMQ</ulink>作为jms的实现方式。</para>
+            </listitem>
+            <listitem>
+                <para>全文搜索</para>
+                <para><ulink url="http://opensymphony.com/compass/">compass</ulink>同另外一个<ulink url="http://hibernate.org/410.html">hibernate-search</ulink>都是基于 <ulink url="http://lucene.apache.org/">lucence</ulink>，对数据库的全文搜索引擎。</para>
+                <para>之前使用过<ulink url="http://opensymphony.com/compass/">compass</ulink>，在单元测试的时候会出现内存溢出的问题。</para>
+            </listitem>
+            <listitem>
+                <para>定时调度</para>
+                <para><ulink url="http://opensymphony.com/quartz/">quartz</ulink>，被<ulink url="http://www.springside.org.cn">springside</ulink>称为唯一免费的选择。</para>
+            </listitem>
+            <listitem>
+                <para>报表</para>
+                <para><ulink url="http://jasperforge.org/sf/projects/jasperreports">JasperReport</ulink>负责文本报表，<ulink url="www.jfree.org/jfreechart/">JFreeChat</ulink>图形报表。</para>
+            </listitem>
+            <listitem>
+                <para>工作流</para>
+                <para><ulink url="http://jboss.org">jbpm</ulink>，目前仅用过的工作流引擎。<ulink url="http://opensymphony.com/osworkflow/">osworkflow</ulink>，号称最灵活的工作流引擎。两者都支持<ulink url="http://www.hibernate.org">hibernate</ulink>。</para>
+            </listitem>
+        </orderedlist>
+    </sect1>
+    <sect1>
+        <title>运行环境</title>
+        <orderedlist>
+            <listitem>
+                <para>jdk5</para>
+                <para>支持范型generic和注释annotation，可大大减少配置提高抽象程度。</para>
+                <para>考虑用<ulink url="http://retrotranslator.sourceforge.net/">Retrotranslator</ulink>使项目可以在JDK1.4上运行</para>
+            </listitem>
+            <listitem>
+                <para>servlet容器：<ulink url="http://tomcat.apache.org">tomcat-5.5</ulink></para>
+                <para>应用甚广的服务器，基本用到jsp的人都会有。</para>
+                <para><ulink url="http://maven.apache.org">maven2</ulink>可以使用 <ulink url="http://jetty.mortbay.com/">jetty-6</ulink>作为插件进行运行和测试，单独使用jetty的人不多。</para>
+            </listitem>
+            <listitem>
+                <para>数据库</para>
+                <para>采用<ulink url="http://hsqldb.org">hsqldb</ulink>作为嵌入式数据库，可与工程绑定发布，用户下载体验版后不需要额外安装数据库，减少了配置出错的机会。</para>
+                <para>hibernate本身支持多数据库，包括mysql,sqlserver,oracle等，未来替换成企业数据库也不是问题。</para>
+            </listitem>
+            <listitem>
+                <para>数据部署</para>
+                <para><ulink url="http://dbdeploy.com">DBDeploy</ulink>让数据库脚本也可以实现版本控制。</para>
+            </listitem>
+        </orderedlist>
+    </sect1>
+    <sect1>
+        <title>测试</title>
+        <orderedlist>
+            <listitem>
+                <para>单元测试</para>
+                <para><ulink url="http://junit.org/">junit</ulink>。经典单元测试工具，基本所有工具都支持。</para>
+                <para>js的单元测试工具 <ulink url="http://www.jsunit.net">jsunit</ulink>不知如何应用。</para>
+            </listitem>
+            <listitem>
+                <para>mock</para>
+                <para><ulink url="www.easymock.org/">easymock</ulink>使用烦琐，但有的时候还必须依靠它制作mock进行测试。更多时候使用<ulink url="http://www.springframework.org">spring-mock</ulink>对servlet进行测试，<ulink url="http://www.springframework.org">spring-mock</ulink>还提供了几个常用的测试基类，可以缓存xml配置，支持事务。</para>
+            </listitem>
+            <listitem>
+                <para>测试覆盖率</para>
+                <para><ulink url="http://cobertura.sourceforge.net/">cobertura</ulink>，免费的测试覆盖率检测工具，1.9版本已经慢慢追上<ulink url="http://www.atlassian.com/software/clover/">clover</ulink>的效果了，从<ulink url="http://maven.apache.org">maven2</ulink>的角度来看，配置比<ulink url="http://www.atlassian.com/software/clover/">clover</ulink>更简便，而且不需要像<ulink url="http://www.atlassian.com/software/clover/">clover</ulink>那样每月去申请授权。</para>
+            </listitem>
+            <listitem>
+                <para>集成测试</para>
+                <para><ulink url="http://openqa.org/selenium/">selenium</ulink>被众口称赞的集成测试工具，不过想灵活应用还需要一定的时间。</para>
+                <para>同类产品还有<ulink url="httpunit.sourceforge.net/">httpunit</ulink>和<ulink url="http://jwebunit.sourceforge.net/">jwebunit</ulink>。</para>
+                <para>使用<ulink url="http://maven.apache.org">maven2</ulink>做集成测试时，可以搭配<ulink url="http://cargo.codehaus.org/">cargo</ulink>控制服务器的启动与停止。</para>
+            </listitem>
+            <listitem>
+                <para>压力测试</para>
+                <para><ulink url="http://jakarta.apache.org/jmeter/index.html">jmeter</ulink>听过但是没用过。</para>
+            </listitem>
+        </orderedlist>
+    </sect1>
+    <sect1>
+        <title>项目管理</title>
+        <para>使用<ulink url="http://maven.apache.org">maven2</ulink>进行项目管理，配置了<ulink url="http://jalopy.sourceforge.net/">jalopy</ulink>对java代码进行美化，支持多种插件，进行自动打包，测试，代码分析，生成报表。</para>
+        <orderedlist>
+            <listitem>
+                <para><ulink url="http://checkstyle.sourceforge.net">checkstyle</ulink>进行源代码格式分析。</para>
+            </listitem>
+            <listitem>
+                <para><ulink url="http://pmd.sourceforge.net">pmd, cpd</ulink>检查重复代码。</para>
+            </listitem>
+            <listitem>
+                <para><ulink url="http://findbugs.sourceforge.net">findbugs</ulink>检查程序漏洞。</para>
+            </listitem>
+        </orderedlist>
+    </sect1>
+
+</chapter>

@@ -72,8 +72,13 @@ var index = function() {
             this.menuLayout = layout.getRegion("west");
             this.menuLayout.id = 'menuLayout';
             this.iframe = Ext.get('main').dom;
-            this.loadMain('./welcome.htm');
+            this.loadMain('./needLogin.htm');
 
+            //checkLogin();
+        }
+
+        // 检测用户是否已经登录
+        , checkLogin : function() {
             // 如果已经登录，就显示菜单
             // 如果还未登录，就弹出对话框
             Ext.lib.Ajax.request(
@@ -98,6 +103,7 @@ var index = function() {
                 {success:this.prepareLoginDelegate,failure:this.prepareLoginDelegate},
                 ''
             );
+            this.loadMain('./needLogin.htm');
         }
 
         // 登录成功后执行的函数
@@ -112,6 +118,11 @@ var index = function() {
                 //    ''
                 //);
                 MenuHelper.getMenus(this.render);
+                if (!json.callback) {
+                    this.loadMain("./welcome.htm");
+                } else {
+                    this.loadMain(json.callback);
+                }
             } else {
                 this.prepareLogin();
             }

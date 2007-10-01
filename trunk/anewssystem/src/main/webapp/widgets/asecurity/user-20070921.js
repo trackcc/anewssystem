@@ -24,8 +24,8 @@ UserGridPanel = function(container, config) {
         {id : 'tel',      qtip : '电话', vType : "alphanum"},
         {id : 'mobile',   qtip : '手机', vType : "alphanum"},
         {id : 'email',    qtip : '邮箱', vType : "email"},
-        {id : 'duty',     qtip : '职务', vType : "chn"},
-        {id : 'descn',    qtip : "备注", vType : "chn"}
+        {id : 'duty',     qtip : '职务', vType : "chn", allowBlank : true},
+        {id : 'descn',    qtip : "备注", vType : "chn", allowBlank : true}
     ];
     this.editMetaData = [
         {id : 'id2',       qtip : "ID",   vType : "integer",  defValue : -1, mapping : "id"},
@@ -40,8 +40,8 @@ UserGridPanel = function(container, config) {
         {id : 'tel2',      qtip : '电话', vType : "alphanum", mapping : "tel"},
         {id : 'mobile2',   qtip : '手机', vType : "alphanum", mapping : "mobile"},
         {id : 'email2',    qtip : '邮箱', vType : "email", mapping : "email"},
-        {id : 'duty2',     qtip : '职务', vType : "chn", mapping : "duty"},
-        {id : 'descn2',    qtip : "备注", vType : "chn", mapping : "descn"}
+        {id : 'duty2',     qtip : '职务', vType : "chn", mapping : "duty", allowBlank : true},
+        {id : 'descn2',    qtip : "备注", vType : "chn", mapping : "descn", allowBlank : true}
     ];
     this.headers = ['id','dept','username','password','truename','sex','birthday','tel','mobile','email','duty','descn'];
 };
@@ -88,10 +88,21 @@ Ext.extend(UserGridPanel, Ext.lingo.JsonGrid, {
             }
 
             this.adddialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
-            var addhide = function() {
-                this.adddialog.el.unmask();
-                this.adddialog.hide();
-                this.refresh.apply(this);
+            var addhide = function(data) {
+                var json;
+                try {
+                    json = Ext.decode(data.responseText);
+                } catch (e) {
+                    json = {success:false,info:"服务器错误，请刷新页面。"};
+                }
+                if (json.success) {
+                    this.adddialog.el.unmask();
+                    this.adddialog.hide();
+                    this.refresh.apply(this);
+                } else {
+                    Ext.MessageBox.alert("错误", json.info);
+                    this.adddialog.el.unmask();
+                }
             }.createDelegate(this);
             Ext.lib.Ajax.request(
                 'POST',
@@ -115,6 +126,30 @@ Ext.extend(UserGridPanel, Ext.lingo.JsonGrid, {
 
         this.addcolumns = Ext.lingo.FormUtils.createAll(this.addMetaData);
         this.addnoBtn = this.adddialog.addButton("取消", this.adddialog.hide, this.adddialog);
+
+        // 修改帐号后，监听blur事件，与后台交互，检测帐号是否已被其他人注册
+        this.addcolumns.username.on("blur", function() {
+            var isUsernameValid = function(data) {
+                var json = Ext.decode(data.responseText);
+                try {
+                    json = Ext.decode(data.responseText);
+                } catch (e) {
+                    json = {success:false};
+                }
+                if (json.success) {
+                    document.getElementById("isUsernameValid").innerHTML = "<span style='font-weight:bold;color:green'>帐号可用。</span>";
+                } else {
+                    document.getElementById("isUsernameValid").innerHTML = "<span style='font-weight:bold;color:red'>帐号已被注册，请更换。</span>";
+                    Ext.getCmp("username").focus();
+                }
+            };
+            Ext.lib.Ajax.request(
+                'POST',
+                "checkUsername.htm",
+                {success:isUsernameValid,failure:isUsernameValid},
+                'username=' + this.addcolumns.username.getValue()
+            );
+        }.createDelegate(this));
     }
 
     , createEditDialog : function() {
@@ -173,7 +208,6 @@ Ext.extend(UserGridPanel, Ext.lingo.JsonGrid, {
         this.editnoBtn = this.editdialog.addButton("取消", this.editdialog.hide, this.editdialog);
     }
 
-    // 超级重要的一个方法，自动生成表头，自动生成form，都是在这里进行的
     , applyElements : function() {
         // 重载父类方法，手工制作form
     }

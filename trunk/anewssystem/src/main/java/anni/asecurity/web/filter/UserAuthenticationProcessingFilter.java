@@ -1,5 +1,9 @@
 package anni.asecurity.web.filter;
 
+import java.io.IOException;
+
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,9 +13,12 @@ import anni.asecurity.domain.User;
 import anni.asecurity.manager.UserManager;
 
 import org.acegisecurity.Authentication;
+import org.acegisecurity.AuthenticationException;
 
 import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
+
+import org.acegisecurity.event.authentication.InteractiveAuthenticationSuccessEvent;
 
 import org.acegisecurity.ui.webapp.AuthenticationProcessingFilter;
 
@@ -69,7 +76,8 @@ public class UserAuthenticationProcessingFilter
 
         HttpSession httpSession = request.getSession(true);
 
-        if (!requiresAuth) {
+        if (!requiresAuth && (httpSession != null)
+                && (httpSession.getAttribute(USER_IN_SESSION) == null)) {
             SecurityContext sc = SecurityContextHolder.getContext();
             Authentication auth = sc.getAuthentication();
 
@@ -83,5 +91,53 @@ public class UserAuthenticationProcessingFilter
         }
 
         return requiresAuth;
+    }
+
+    // 验证成功，返回json消息
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request,
+        HttpServletResponse response, Authentication authResult)
+        throws IOException {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Authentication success: "
+                + authResult.toString());
+        }
+
+        SecurityContextHolder.getContext().setAuthentication(authResult);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug(
+                "Updated SecurityContextHolder to contain the following Authentication: '"
+                + authResult + "'");
+        }
+
+        String targetUrl = determineTargetUrl(request);
+
+        if (logger.isDebugEnabled()) {
+            logger.debug(
+                "Redirecting to target URL from HTTP Session (or default): "
+                + targetUrl);
+        }
+
+        onSuccessfulAuthentication(request, response, authResult);
+
+        getRememberMeServices().loginSuccess(request, response, authResult);
+
+        // Fire event
+        if (this.eventPublisher != null) {
+            eventPublisher.publishEvent(new InteractiveAuthenticationSuccessEvent(
+                    authResult, this.getClass()));
+        }
+
+        // 本来程序里是直接跳转的。但这里我们使用ajax发送登录信息，直接跳转就不行了。
+        // sendRedirect(request, response, targetUrl);
+        // 所以我们需要发送json数据，包括数据1，登录成功，2，已登录的用户真实姓名，3，默认跳转过去的页面。
+        if (!targetUrl.startsWith("http")) {
+            targetUrl = request.getContextPath() + targetUrl;
+        }
+
+        sendRedirect(request, response,
+            "/login/loginSuccess.htm?callback="
+            + URLEncoder.encode(targetUrl, "UTF-8"));
     }
 }

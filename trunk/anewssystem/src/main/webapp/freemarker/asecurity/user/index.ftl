@@ -27,7 +27,7 @@
         <td width="15%" align="right" style="font-size:12px;">帐号：</td>
         <td width="85%" colspan="3">
           <div class="x-form-item">
-            <input id="username" type="text" size="20">
+            <input id="username" type="text" size="20"><span id="isUsernameValid"></span>
           </div>
         </td>
       </tr>

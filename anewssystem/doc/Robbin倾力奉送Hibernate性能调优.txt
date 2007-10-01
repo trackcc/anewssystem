@@ -1,0 +1,44 @@
+二、Robbin倾力奉送Hibernate性能调优
+
+     个人认为这个绝对是Robbin压箱底的作品（因为很激动能邀请到Gavin参加他主办的活动），但是Robbin还是很谦虚的首先声明：在Gavin面前谈Hibernate真是班门弄斧，所以是拿出来和大家探讨，而当晚就有针对其演讲中如何避免N+1问题的讨论（http: //www.javaeye.com/post/266972），足见Robbin演讲受欢迎的程度。
+
+     由于Robbin为了抢时间，所以他讲的比较快，我也是急急忙忙的记笔记，但是他所总结的东西已经让我了解到了很多东西，原来我对Hibernate的了解还是那么少：（。
+
+Robbin总结的Hibernate性能优化要点：
+
+1.尽量使用many-to-one，避免使用单项one-to-many
+2.灵活使用单向one-to-many
+3.不用一对一，使用多对一代替一对一
+4.配置对象缓存，不使用集合缓存
+5.一对多使用Bag 多对一使用Set
+6.继承使用显示多态  HQL:from object  polymorphism="exlicit" 避免查处所有对象
+7.消除大表，使用二级缓存
+    对于上面这些，Robbin进行了详细的讲解。
+one-to-many：
+     使用inverse=false(default)，对象的关联关系是由parent对象来维护的
+     而inverse=true的情况下，一般用户双向多对多关联，由子对象维护关联关系，增加子对象的时候需要显示：child.setParent(child)
+     为了提高性能，应该尽量使用双向one-to-many inverse=true，在MVC结构中的DAO接口中应该直接用Session持久化对象，避免通过关联关系（这句话有点不理解），而在单项关系中正确使用二级缓存，则可以大幅提高以查询为主的应用。
+     多对一性能问题比较少，但是要避免经典N+1问题。
+     通过主键进行关联，相当于大表拆分小表。（这个是区分面向对象设计和面向过程设计的一个关键点）
+list、bag、set的正确运用
+     one-to-many：
+     A、使用list 需要维护Index Column字段，不能被用于双向关联，而且必须使用inverse=false，需要谨慎使用在某些稀有场合（基本上是不予考虑使用）
+     B、bag/set在one-to-many中语义基本相同，推荐使用bag
+     many-to-one：
+     A、bag和set不同，bag允许重复插入，建议使用set
+在庞大的集合分页中应该使用session.createFilter
+    session.createFilter(parent.getChildren(),""),setFirstResult(0),setMaxResult(10))
+避免N+1 参考（http://www.javaeye.com/post/266972）
+    在多对一的情况下，查询child对象，当在页面上显示每个子类的父类对象的时候会导致N+1次查询，需要采用下面的方法避免：many-to-one fetch="join|select"（该方法可能有问题）
+inverse=true 无法维护集合缓存（还不是很理解集合缓存和对象缓存）
+OLTP类型的web应用，可以群集水平扩展，不可避免的出现数据库瓶颈
+    框架能降低访问数据库的压力，采用缓存是衡量一个框架是否优秀的重要标准，从缓存方面看Hibernate
+    A、对象缓存，细颗粒度，是针对表的级别，透明化访问，因为有不改变代码的好处，所以是ORM提高性能的法宝
+    B、Hibernate是目前ORM框架中缓存性能最好的框架
+    C、查询缓存
+最后Robbin还针对大家经常出现的Hibernate vs iBatis的讨论进行了一个总结：
+   对于OLTP应用，使用ORM框架 而OLEB应用（不确定是什么应用）最好采用JDBC或者其他方法处理
+   Hibernate倾向于细颗粒度设计，面向对象，将大表拆分为多个小表，消除冗余字段，通过二级缓存提升性能。
+  iBatis倾向于粗颗粒度设计，面向关系，尽量把表合并，通过Column冗余，消除关联关系，但是iBatis没有有效的缓存手段。
+
+   可以说Robbin的性能总结对于使用Hibernate的开发人员有着很重要的点拨作用。非常感谢他无私奉献自己的经验。

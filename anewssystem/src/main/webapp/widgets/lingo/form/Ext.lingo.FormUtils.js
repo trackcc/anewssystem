@@ -163,6 +163,20 @@ var forms = new Ext.form.Form({
             return fields;
         }
 
+        // 创建复选框
+        , createCheckBox : function(meta) {
+            var field = new Ext.form.Checkbox({
+                id        : meta.id
+                , name    : meta.id
+                , vType   : 'checkbox'
+                , mapping : meta.mapping
+            });
+            if (isApply) {
+                field.applyTo(meta.id);
+            }
+            return field;
+        }
+
         // 创建treeField
         , createTreeField : function(meta) {
             var el = Ext.get(meta.id).dom;

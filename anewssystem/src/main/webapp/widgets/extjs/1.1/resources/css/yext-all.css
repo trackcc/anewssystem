@@ -107,7 +107,7 @@ label.chosen {
 }
 
 #logo {
-    background-image: url(../images/default/user/index/logo.gif);
+    /*background-image: url(../images/default/user/index/logo.gif);*/
     position:absolute;
     right: 1px;
     top: 2px;

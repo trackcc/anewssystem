@@ -57,7 +57,7 @@
 
     <bean id="captchaEntryPoint"
           class="org.acegisecurity.captcha.CaptchaEntryPoint">
-        <property name="captchaFormUrl" value="/login.jsp?login_error=code_error"/>
+        <property name="captchaFormUrl" value="/login/captchaError.htm"/>
         <property name="includeOriginalRequest" value="false"/>
         <property name="includeOriginalParameters" value="false"/>
     </bean>

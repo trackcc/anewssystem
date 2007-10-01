@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+               "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[
+    <!ENTITY preface SYSTEM "modules/preface.xml">
+    <!ENTITY chapter01 SYSTEM "modules/chapter01.xml">
+    <!ENTITY chapter02 SYSTEM "modules/chapter02.xml">
+    <!ENTITY chapter03 SYSTEM "modules/chapter03.xml">
+    <!ENTITY chapter04 SYSTEM "modules/chapter04.xml">
+    <!ENTITY history SYSTEM "modules/history.xml">
+]>
+
+<!--
+  | 索引页
+  -->
+<book lang="zh_cn">
+    <bookinfo>
+        <title>a news publish system - personal notebook</title>
+        <subtitle>一个新闻发布系统 - 个人笔记</subtitle>
+        <releaseinfo>初始版本：0.0.1</releaseinfo>
+        <copyright>
+            <year>2007</year>
+            <holder>Lingo</holder>
+        </copyright>
+        <legalnotice>
+            <para> 首页: <ulink url="http://code.google.com/p/anewssystem/"/></para>
+            <para>EMAIL: echo_o@163.com</para>
+            <para> Q Q : 416529445</para>
+            <para> QQ群: 3038490</para>
+        </legalnotice>
+        <pubdate>2007-09-29 15:57:08</pubdate>
+    </bookinfo>
+
+    <toc/>
+
+    &preface;
+    &chapter01;
+    &chapter02;
+    &chapter03;
+    &chapter04;
+    &history;
+</book>

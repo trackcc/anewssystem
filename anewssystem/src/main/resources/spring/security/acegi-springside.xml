@@ -66,12 +66,13 @@
      -->
     <bean id="logoutFilter"
        class="org.acegisecurity.ui.logout.LogoutFilter">
-        <constructor-arg value="/login.jsp" />
+        <constructor-arg value="/sandbox/needLogin.htm" />
         <!-- URL redirected to after logout -->
         <constructor-arg>
             <list>
                 <ref bean="rememberMeServices" />
                 <bean class="org.acegisecurity.ui.logout.SecurityContextLogoutHandler" />
+                <bean class="anni.asecurity.web.filter.UserLogoutHandler" />
             </list>
         </constructor-arg>
     </bean>
@@ -93,7 +94,7 @@
        class="anni.asecurity.web.filter.UserAuthenticationProcessingFilter">
         <property name="authenticationManager" ref="authenticationManager" />
         <property name="authenticationFailureUrl" value="/login/authenticationFailure.htm" />
-        <property name="defaultTargetUrl" value="/login/defaultTarget.htm" />
+        <property name="defaultTargetUrl" value="/sandbox/welcome.htm" />
         <property name="filterProcessesUrl" value="/j_acegi_security_check" />
         <property name="userManager" ref="userManager" />
         <property name="rememberMeServices" ref="rememberMeServices" />
@@ -170,7 +171,7 @@
        class="org.acegisecurity.ui.ExceptionTranslationFilter">
         <property name="authenticationEntryPoint">
             <bean class="org.acegisecurity.ui.webapp.AuthenticationProcessingFilterEntryPoint">
-                <property name="loginFormUrl" value="/login.jsp" />
+                <property name="loginFormUrl" value="/sandbox/needLogin.htm" />
                 <property name="forceHttps" value="false" />
             </bean>
         </property>
@@ -363,6 +364,7 @@
         </property>
         <property name="beanNames">
             <list>
+                <idref bean="deptManager"/>
                 <idref bean="userManager"/>
                 <idref bean="roleManager"/>
                 <idref bean="resourceManager"/>

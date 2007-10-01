@@ -25,6 +25,14 @@ public class SandboxController extends ExtendController {
      * welcome.
      */
     public void welcome() {
+        logger.info("start");
+    }
+
+    /**
+     * needLogin.
+     */
+    public void needLogin() {
+        logger.info("start");
     }
 
     /**

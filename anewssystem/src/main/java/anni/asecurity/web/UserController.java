@@ -359,6 +359,18 @@ public class UserController extends LongGridController<User, UserManager> {
         response.getWriter().print("{success:true}");
     }
 
+    /**
+     * 检测帐号是否重复.
+     *
+     * @throws Exception 写入json可能出现异常
+     */
+    public void checkUsername() throws Exception {
+        String username = getStrParam("username", "");
+        List<User> list = getEntityDao().findBy("username", username);
+        boolean isValid = (list.size() == 0);
+        response.getWriter().print("{success:" + isValid + "}");
+    }
+
     /** * @return excludes. */
     @Override
     public String[] getExcludes() {

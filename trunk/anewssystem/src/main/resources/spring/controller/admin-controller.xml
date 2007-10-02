@@ -9,4 +9,5 @@
     <bean class="anni.asecurity.web.IndexController" scope="request"/>
     <bean class="anni.anews.web.SandboxController" scope="request"/>
     <bean class="anni.asecurity.web.LoginController" scope="request"/>
+    <bean class="anni.anews.web.NewsTag2Controller" scope="request"/>
 </beans>

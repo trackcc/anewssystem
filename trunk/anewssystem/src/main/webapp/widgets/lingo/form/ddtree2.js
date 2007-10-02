@@ -152,10 +152,10 @@ var Example = {
             }*/
         });
         skillsTree.on('nodedragover', function(e) {
-            console.error("tree");
+            //console.error("tree");
         });
         skillsTree.on('beforenodedrop', function(e){
-            console.error(e);
+            //console.error(e);
 		});
         // Set the root node
         var skillsTreeRoot = new Ext.tree.AsyncTreeNode({

@@ -27,9 +27,9 @@ public class NewsTagControllerTest extends AbstractWebTests {
 
     public void testDefault() throws Exception {
         assertNotNull(controller);
-        request.setRequestURI("/newstag/list.htm");
+        request.setRequestURI("/newstag/index.htm");
         mv = controller.handleRequest(request, response);
-        mvHelper.assertModelAttributeAvailable(mv, "page");
-        mvHelper.assertViewName(mv, "/anews/newstag/listNewsTag");
+        //mvHelper.assertModelAttributeAvailable(mv, "page");
+        mvHelper.assertViewName(mv, "anews/newstag/index");
     }
 }

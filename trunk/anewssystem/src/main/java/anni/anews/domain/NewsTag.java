@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import anni.core.domain.NamedEntityBean;
 
+import anni.core.grid.LongGridBean;
+
 import org.hibernate.annotations.GenericGenerator;
 
 
@@ -27,7 +29,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "A_NEWS_TAG")
-public class NewsTag implements NamedEntityBean {
+public class NewsTag extends LongGridBean implements NamedEntityBean {
     /** * serial. */
     static final long serialVersionUID = 0L;
 
@@ -62,7 +64,7 @@ public class NewsTag implements NamedEntityBean {
     }
 
     /** * @return name. */
-    @Column(name = "NAME", length = 50)
+    @Column(name = "NAME", length = 50, unique = true, nullable = false)
     public String getName() {
         return name;
     }

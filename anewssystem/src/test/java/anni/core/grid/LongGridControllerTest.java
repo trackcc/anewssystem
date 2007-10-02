@@ -165,7 +165,7 @@ public class LongGridControllerTest extends TestCase {
 
     public void testRemove() throws Exception {
         request.setRequestURI("/grid/remove.htm");
-        request.addParameter("id", "0");
+        request.addParameter("ids", "0");
         mv = controller.handleRequest(request, response);
         response.getWriter().flush();
         assertEquals("{success:true}", response.getContentAsString());
@@ -173,7 +173,7 @@ public class LongGridControllerTest extends TestCase {
 
     public void testRemove2() throws Exception {
         request.setRequestURI("/grid/remove.htm");
-        request.addParameter("id", "a");
+        request.addParameter("ids", "a");
         mv = controller.handleRequest(request, response);
         response.getWriter().flush();
         assertEquals("{success:true}", response.getContentAsString());

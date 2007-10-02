@@ -78,7 +78,7 @@ public class Role extends LongGridBean {
     }
 
     /** * @return name. */
-    @Column(name = "NAME", length = 50)
+    @Column(name = "NAME", length = 50, unique = true, nullable = false)
     public String getName() {
         return name;
     }

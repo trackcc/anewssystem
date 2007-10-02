@@ -9,15 +9,17 @@ Ext.onReady (function() {
   };
 
   deleteRow = function(){
-    alert('确定要删除?');
-    var sm = grid.getSelectionModel();
-    var cell = sm.getSelectedCell();
-    var ds = grid.getDataSource();
-    var record = ds.getAt(cell[0]);
-    var doSuccess = function() {
-      ds.remove(record);
-    };
-    NewsTagHelper.removeRow(record.id, doSuccess);
+    if (confirm('确定要删除?')) {
+        var sm = grid.getSelectionModel();
+        var cell = sm.getSelectedCell();
+        var ds = grid.getDataSource();
+
+        var record = ds.getAt(cell[0]);
+        var doSuccess = function() {
+          ds.remove(record);
+        };
+        NewsTagHelper.removeRow(record.id, doSuccess);
+    }
   }
 
   function deleteRowRender(value){

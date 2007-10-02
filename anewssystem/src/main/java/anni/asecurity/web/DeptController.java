@@ -24,6 +24,14 @@ public class DeptController extends LongTreeController<Dept, DeptManager> {
         mv.setViewName("asecurity/dept/index");
     }
 
+    /** * orgmap. */
+    public void orgmap() {
+        // 组织结构
+        logger.info("start");
+        mv.addObject("deptList", getEntityDao().loadTops());
+        mv.setViewName("asecurity/dept/orgmap");
+    }
+
     /**
      * all.
      *

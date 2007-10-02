@@ -35,14 +35,14 @@
       <url>file://${basedir}/repository</url>
     </repository>
     <repository>
-      <id>central</id>
+      <id>redv</id>
       <name>Internal Repository</name>
       <url>http://mirrors.redv.com/maven2</url>
     </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
-      <id>central</id>
+      <id>redv</id>
       <name>Internal Repository</name>
       <url>http://mirrors.redv.com/maven2</url>
     </pluginRepository>
@@ -165,7 +165,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-mock</artifactId>
-      <version>2.0.6</version>
+      <version>2.0.7</version>
       <scope>test</scope>
     </dependency>
 
@@ -286,7 +286,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring</artifactId>
-      <version>2.0.6</version>
+      <version>2.0.7</version>
       <scope>${use-scope}</scope>
     </dependency>
 
@@ -1132,6 +1132,63 @@
           </componentProperties>
         </configuration>
       </plugin>
+
+<!--
+      <plugin>
+        <groupId>com.agilejava.docbkx</groupId>
+        <artifactId>docbkx-maven-plugin</artifactId>
+        <version>2.0.6</version>
+        <executions>
+          <execution>
+            <id>build-singlehtml-doc</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>generate-html</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory>${docbook.source}</sourceDirectory>
+              <targetDirectory>${docbook.target}</targetDirectory>
+              <inputs>master.xml</inputs>
+              <chunkedOutput>t</chunkedOutput>
+              <htmlStylesheet>${docbook.source}/resources/html.css</htmlStylesheet>
+              <htmlCustomization>${docbook.source}/resources/xsl/docbook-html.xsl</htmlCustomization>
+              <postProcess>
+                <copy todir="${docbook.target}/images">
+                  <fileset dir="${docbook.source}/images">
+                    <include name="*.png"/>
+                    <include name="*.gif"/>
+                    <include name="*.jpg"/>
+                  </fileset>
+                </copy>
+              </postProcess>
+            </configuration>
+          </execution>
+          <execution>
+            <id>build-pdf-doc</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>generate-pdf</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory>${docbook.source}</sourceDirectory>
+              <targetDirectory>${docbook.target}</targetDirectory>
+              <inputs>springsecurity.xml</inputs>
+              <imgSrcPath>${docbook.source}/</imgSrcPath>
+              <admonGraphicsPath>${docbook.source}/resources/images/admons/</admonGraphicsPath>
+              <foCustomization>${docbook.source}/resources/xsl/docbook-fopdf.xsl</foCustomization>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.docbook</groupId>
+            <artifactId>docbook-xml</artifactId>
+            <version>4.4</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+      </plugin>
+-->
     </plugins>
     <extensions>
       <extension>

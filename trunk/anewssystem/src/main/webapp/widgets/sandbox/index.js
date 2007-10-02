@@ -184,7 +184,7 @@ var index = function() {
         // 设置登录名
         , setLoginName : function(user) {
             user = user == null ? '' : user;
-            this.menuLayout.updateTitle(user);
+            this.menuLayout.updateTitle("登录用户：" + user);
         }
 
         // 点左边，链接，右边的iframe更新

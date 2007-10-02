@@ -11,8 +11,6 @@ import anni.core.json.JsonUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.springframework.web.servlet.ModelAndView;
-
 
 /**
  * 执行acegi登录成功，或失败之后的转发任务，兼顾测试是否已登录的判断.

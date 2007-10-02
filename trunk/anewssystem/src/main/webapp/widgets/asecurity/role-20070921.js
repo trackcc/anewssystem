@@ -239,6 +239,7 @@ Ext.onReady(function(){
         resStore.reload();
     }
 
+    // 选择资源
     function selectResource() {
         var m = lightGrid.grid.getSelections();
         if(m.length <= 0) {
@@ -263,12 +264,14 @@ Ext.onReady(function(){
         aAddInstanceDlg.show();
     }
 
+    // 选择菜单成功
     function solveMenuResponse() {
         Ext.Msg.alert("提示", "操作成功");
         this.menuTree.root.reload();
         this.menuTree.root.expand(false, false);
     }
 
+    // 选择菜单
     function selectMenu() {
         var m = lightGrid.grid.getSelections();
         if(m.length <= 0) {
@@ -280,6 +283,8 @@ Ext.onReady(function(){
 
         configMenuDialog.addKeyListener(27, configMenuDialog.hide, configMenuDialog);
         this.yesBtn = configMenuDialog.addButton("确定", function() {
+            // 如果不全部展开，那么未展开的部分，无法取得数据。
+            this.menuTree.root.expand(true, false);
             Ext.lib.Ajax.request(
                 'POST',
                 'selectMenu.htm',

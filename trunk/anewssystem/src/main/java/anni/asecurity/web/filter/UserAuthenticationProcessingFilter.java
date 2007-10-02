@@ -13,7 +13,6 @@ import anni.asecurity.domain.User;
 import anni.asecurity.manager.UserManager;
 
 import org.acegisecurity.Authentication;
-import org.acegisecurity.AuthenticationException;
 
 import org.acegisecurity.context.SecurityContext;
 import org.acegisecurity.context.SecurityContextHolder;
@@ -94,6 +93,14 @@ public class UserAuthenticationProcessingFilter
     }
 
     // 验证成功，返回json消息
+    /**
+     * 覆盖超类的方法，在验证成功的时候返回json消息，而不是跳转.
+     *
+     * @param request 请求
+     * @param response 响应
+     * @param authResult 验证结果
+     * @throws IOException 异常
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
         HttpServletResponse response, Authentication authResult)

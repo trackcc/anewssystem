@@ -1,5 +1,5 @@
 新闻发布0.0.2-M2发布
-（milestone里程碑）
+（milestone里程碑2）
 
 后台是java的，ms平台的用不了。请使用jdk-1.5以上版本，和tomcat-5.5以上版本。
 

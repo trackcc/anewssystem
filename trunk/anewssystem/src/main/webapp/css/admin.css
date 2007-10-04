@@ -1,7 +1,7 @@
 
-body {
+/*body {
     text-align: center;
-}
+}*/
 
 table {
     font-size: 12px;
@@ -170,13 +170,13 @@ A:hover {
 }
 
 span.fieldError {
-	color: maroon !important;
+    color: maroon !important;
 }
 
 /* Messages */
 div.message {
-	border: 1px solid black;
-	padding: 4px;
+    border: 1px solid black;
+    padding: 4px;
 }
 
 /* Errors */

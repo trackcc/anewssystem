@@ -45,7 +45,7 @@
         <div class='x-dlg-tab' title='用户登陆'>
           <div id='standard-panel'>
             <table width='100%' border='0' align='center' valign='middlen' cellpadding='0' cellspacing='3'>
-              <tr height='40'>
+              <tr height='20'>
                 <td colspan='2'></td>
               </tr>
               <tr>
@@ -74,12 +74,7 @@
               </tr>
               <tr>
                 <td align='right'>验证码：</td>
-                <td align="left"><input id="j_captcha_response" name="j_captcha_response" style="width:60px" autocomplete="off"/>&#160;&#160;[<A onclick="$('captcha').src='../captcha.jpg?' + new Date().getTime();this.blur();" href="#">刷新图片</A>]</TD>
-              </tr>
-              <tr>
-                <td align="center" colSpan="2">
-                  <img id="captcha" src="../captcha.jpg" align="top" alt="" />
-                </td>
+                <td align="left"><input id="j_captcha_response" name="j_captcha_response" style="width:60px" autocomplete="off"/>&#160;&#160;<img id="captcha" src="../captcha.jpg" align="top" title="点击刷新图片" alt="点击刷新图片" onclick="$('captcha').src='../captcha.jpg?' + new Date().getTime();this.blur();" style="cursor:pointer;border:0px black solid;"/>[<A onclick="$('captcha').src='../captcha.jpg?' + new Date().getTime();this.blur();" href="#">刷新图片</A>]</TD>
               </tr>
             </table>
           </div>

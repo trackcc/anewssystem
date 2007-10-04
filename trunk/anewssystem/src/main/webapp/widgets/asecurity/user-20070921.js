@@ -516,7 +516,7 @@ Ext.onReady(function(){
         layout.beginUpdate();
           layout.add('center', new Ext.ContentPanel('role-inner', {title: '选择角色'}));
           layout.endUpdate();
-        aAddInstanceDlg.show();
+        aAddInstanceDlg.show(Ext.get("config"));
     }
 
     // 新建对话框

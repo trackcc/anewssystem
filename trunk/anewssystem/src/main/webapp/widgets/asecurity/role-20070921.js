@@ -208,7 +208,7 @@ Ext.onReady(function(){
         enableToggle : true,
         text         : '取消',
         cls          : '',
-        toggleHandler: function(){
+        toggleHandler: function() {
             //取消授权事件
             var mRole = lightGrid.grid.getSelections();
             var mResc = resourceGrid.getSelections();
@@ -261,14 +261,14 @@ Ext.onReady(function(){
         layout.beginUpdate();
             layout.add('center', new Ext.ContentPanel('resource-inner', {title: '角色授权'}));
             layout.endUpdate();
-        aAddInstanceDlg.show();
+        aAddInstanceDlg.show(Ext.get("selectResource"));
     }
 
     // 选择菜单成功
     function solveMenuResponse() {
         Ext.Msg.alert("提示", "操作成功");
         this.menuTree.root.reload();
-        this.menuTree.root.expand(false, false);
+        this.menuTree.root.expand(true, false);
     }
 
     // 选择菜单
@@ -335,12 +335,14 @@ Ext.onReady(function(){
         this.menuTree.setRootNode(this.treeRoot);
         // 渲染树
         this.menuTree.render();
+        this.menuTree.root.expand(true, false);
 
         //var dialogContent = Ext.get(this.config.dialogContent + "-content");
         //this.tabs.getTab(0).setContent(dialogContent.dom.innerHTML);
         //this.applyElements();
         this.noBtn = configMenuDialog.addButton("取消", configMenuDialog.hide, configMenuDialog);
-        configMenuDialog.show();
+
+        configMenuDialog.show(Ext.get("selectMenu"));
     }
 
     // 新建对话框

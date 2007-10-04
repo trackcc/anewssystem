@@ -4,9 +4,6 @@
 <html>
   <head>
     <#include "/include/meta.ftl"/>
-<#--
-    <#include "/include/calendar.ftl"/>
--->
     <TITLE>新闻</TITLE>
     <link type="text/css" href="${ctx}/css/admin.css" rel="stylesheet"/>
     <script type="text/javascript" src="${ctx}/inc/validation.jsp"></script>
@@ -38,19 +35,7 @@
       <td class="right">
         <input type="hidden" id="category_id" name="category_id" <#if action=="update">value="${news.newsCategory.id}"</#if> />
         <input type="text" id="category_field" name="category_field" <#if action=="update">value="${news.newsCategory.name}"</#if> />
-<#--
-        <select id="category_id" name="category_id">
-          <option value="">请选择</option>
-<#list categoryList! as item>
-  <#if news??>
-    <@m.treeSelect item 0 news.category.id/>
-  <#else>
-    <@m.treeSelect item 0/>
-  </#if>
-</#list>
-        </select>
--->
-        [<a href="${ctx}/newscategory/tree.htm">修改分类信息</a>]
+        [<a href="${ctx}/newscategory/index.htm">修改分类信息</a>]
         <label class="star">*</label>
 <#if (categoryList?size<1)>
 <font color="red" style="font-weight:bold;">尚未添加分类信息，请首先添加分类信息。</font>

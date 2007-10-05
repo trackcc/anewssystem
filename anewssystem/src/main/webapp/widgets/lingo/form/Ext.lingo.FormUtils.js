@@ -20,43 +20,6 @@ Ext.namespace("Ext.lingo");
  */
 Ext.lingo.FormUtils = function() {
     var isApply = true;
-/*new Ext.form.TextField({
-                            fieldLabel: '密码',
-                            name: 'password',
-                            inputType: "password",
-                            width:150,
-                            allowBlank:false
-                        })
-var forms = new Ext.form.Form({
-        labelWidth: 40, // label settings here cascade unless overridden
-        url:'save-form.php'
-    });
-
-    //性别布局开始
-    forms.container();
-    forms.column({width:90},
-    new Ext.form.Radio({
-                                        fieldLabel: '性别',
-                                        name: 'sex',
-                                        boxLabel: '男',
-                    value:'male'
-                                })
-    );
-    forms.column({hideLabels :true,width:50},
-    new Ext.form.Radio({
-                                        fieldLabel: '性别',
-                                        name: 'sex',
-                                        boxLabel: '女',
-                    value:'female'
-                                })
-    );
-    forms.end();
-    //性别布局结束
-    forms.addButton('Save');
-    forms.addButton('Cancel');
-
-    forms.render('forms');
-*/
     return {
         // 创建<input type="text">输入框
         createTextField : function(meta) {
@@ -429,14 +392,14 @@ var forms = new Ext.form.Form({
         }
 
         // 新建可布局的对话框
-        , createLayoutDialog : function(dialogName) {
+        , createLayoutDialog : function(dialogName, width, height) {
             var thisDialog = new Ext.LayoutDialog(dialogName, {
                 modal       : false
                 , autoTabs  : true
                 , proxyDrag : true
                 , resizable : true
-                , width     : 650
-                , height    : 500
+                , width     : width ? width : 650
+                , height    : height ? height : 500
                 , shadow    : true
                 , center    : {
                     autoScroll       : true

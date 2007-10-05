@@ -20,7 +20,8 @@
       <div id="tab2"></div>
     </div>
     <!-- 弹出框内容 -->
-    <table id='content' width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
+	<div id="content">
+    <table width="95%" border="0" align="center" valign="middlen" cellpadding="0" cellspacing="10">
       <tr height="50%"><td>&nbsp;</td></tr>
       <tr>
         <td width="20%" align="right"><label for="name" style="font-size:12px;">分类名称：</label></td>
@@ -48,6 +49,7 @@
       </tr>
       <tr height="50%"><td>&nbsp;</td></tr>
     </table>
+	</div>
     <div id="error_message" style="display:block"></div>
 <script type="text/javascript">
 //DWREngine.setErrorHandler(errorHandler);

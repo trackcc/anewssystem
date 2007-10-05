@@ -437,58 +437,46 @@ Ext.onReady(function(){
         enableToggle  : true,
         text          : '授权',
         cls           : '',
-        toggleHandler : function(){
-            //授权事件
-            var mRole = lightGrid.grid.getSelections();
-            var mResc = roleGrid.getSelections();
-            if(mResc.length <= 0) {
-                Ext.MessageBox.alert('提示', '请选择至少一行纪录进行操作！');
-                return;
-            } else {
-                var ids = new Array();
-                for (var i = 0; i < mResc.length; i++) {
-                    var rescId = mResc[i].get('id');
-                    ids[ids.length] = rescId;
-                }
-                var roleId = mRole[0].get('id');
-                Ext.lib.Ajax.request(
-                    'POST',
-                    'auth.htm',
-                    {success:end,failure:end},
-                    'ids=' + ids.join(",") + "&userId=" + roleId + "&isAuth=true"
-                );
-            }
-            roleStore.reload();
-        }
+        toggleHandler : roleAuth
     }, '-', {
         pressed      : true,
         enableToggle : true,
         text         : '取消',
         cls          : '',
-        toggleHandler: function(){
-            //取消授权事件
-            var mRole = lightGrid.grid.getSelections();
-            var mResc = roleGrid.getSelections();
-            if(mResc.length <= 0) {
-                Ext.MessageBox.alert('提示', '请选择至少一行纪录进行操作！');
-                return;
-            } else {
-                var ids = new Array();
-                for (var i = 0; i < mResc.length; i++) {
-                    var rescId = mResc[i].get('id');
-                    ids[ids.length] = rescId;
-                }
-                var roleId = mRole[0].get('id');
-                Ext.lib.Ajax.request(
-                    'POST',
-                    'auth.htm',
-                    {success:end,failure:end},
-                    'ids=' + ids.join(",") + "&userId=" + roleId + "&isAuth=false"
-                );
-            }
-            roleStore.reload();
-        }
+        toggleHandler: roleCancel
     });
+
+    function roleAuth() {
+        roleAuthDo(true);
+    }
+
+    function roleCancel() {
+        roleAuthDo(false);
+    }
+
+    function roleAuthDo(isAuth) {
+        //授权事件
+        var mRole = lightGrid.grid.getSelections();
+        var mResc = roleGrid.getSelections();
+        if(mResc.length <= 0) {
+            Ext.MessageBox.alert('提示', '请选择至少一行纪录进行操作！');
+            return;
+        } else {
+            var ids = new Array();
+            for (var i = 0; i < mResc.length; i++) {
+                var rescId = mResc[i].get('id');
+                ids[ids.length] = rescId;
+            }
+            var roleId = mRole[0].get('id');
+            Ext.lib.Ajax.request(
+                'POST',
+                'auth.htm',
+                {success:end,failure:end},
+                'ids=' + ids.join(",") + "&userId=" + roleId + "&isAuth=" + isAuth
+            );
+        }
+        roleStore.reload();
+    }
 
     function end() {
         Ext.Msg.alert("提示", "操作成功");
@@ -511,37 +499,13 @@ Ext.onReady(function(){
             start : 0,
             limit : 10
         }});
-        var aAddInstanceDlg = createNewDialog("role-dlg");
-        var layout = aAddInstanceDlg.getLayout();
+        var roleDialog = Ext.lingo.FormUtils.createLayoutDialog("role-dlg");
+        var layout = roleDialog.getLayout();
         layout.beginUpdate();
           layout.add('center', new Ext.ContentPanel('role-inner', {title: '选择角色'}));
-          layout.endUpdate();
-        aAddInstanceDlg.show(Ext.get("config"));
+        layout.endUpdate();
+        roleDialog.show(Ext.get("config"));
     }
 
-    // 新建对话框
-    function createNewDialog(dialogName) {
-        var thisDialog = new Ext.LayoutDialog(dialogName, {
-            modal     : false,
-            autoTabs  : true,
-            proxyDrag : true,
-            resizable : true,
-            width     : 650,
-            height    : 500,
-            shadow    : true,
-            center: {
-                autoScroll     : true,
-                tabPosition    : 'top',
-                closeOnTab     : true,
-                alwaysShowTabs : false
-            }
-        });
-        thisDialog.addKeyListener(27, thisDialog.hide, thisDialog);
-        thisDialog.addButton('关闭', function() {thisDialog.hide();});
-
-        return thisDialog;
-    };
-
 });
-
 

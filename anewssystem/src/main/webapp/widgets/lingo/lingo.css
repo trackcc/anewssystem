@@ -16,4 +16,8 @@ body {
   font-size:12px;
 }.x-toolbar td, .x-toolbar span, .x-toolbar input, .x-toolbar div, .x-toolbar select, .x-toolbar label {
   font-size:12px;
+}.x-form fieldset legend {
+  font-size:12px;
+}.x-layout-panel-hd-text {
+  font-size:12px;
 }

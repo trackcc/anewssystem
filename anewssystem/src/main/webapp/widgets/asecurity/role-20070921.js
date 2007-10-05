@@ -52,9 +52,9 @@ Ext.onReady(function(){
     // 默认需要id, name, theSort, parent, children
     // 其他随意定制
     var metaData = [
-        {id : 'id',         qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1, w:260},
-        {id : 'name',       qtip : "角色名称", vType : "chn",      allowBlank : false, w:260},
-        {id : 'descn',      qtip : "描述",     vType : "chn",      allowBlank : true, w:260}
+        {id : 'id',    qtip : "ID",       vType : "integer", allowBlank : true,  defValue : -1, w:260},
+        {id : 'name',  qtip : "角色名称", vType : "chn",     allowBlank : false, w:260},
+        {id : 'descn', qtip : "描述",     vType : "chn",     allowBlank : true, w:260}
     ];
 
     // 创建表格
@@ -103,12 +103,12 @@ Ext.onReady(function(){
     }
     // 建一个资源数据映射数组
     var resourceRecord = Ext.data.Record.create([
-        {name: "id",         mapping:"id",         type: "int"},
-        {name: "resType",    mapping:"resType",    type: "string"},
-        {name: "name",       mapping:"name",       type: "string"},
-        {name: "resString",  mapping:"resString",  type: "string"},
-        {name: "descn",      mapping:"descn",      type: "string"},
-        {name: "authorized", mapping:"authorized", type: "boolean"}
+        {name: "id",         mapping: "id",         type: "int"},
+        {name: "resType",    mapping: "resType",    type: "string"},
+        {name: "name",       mapping: "name",       type: "string"},
+        {name: "resString",  mapping: "resString",  type: "string"},
+        {name: "descn",      mapping: "descn",      type: "string"},
+        {name: "authorized", mapping: "authorized", type: "boolean"}
     ]);
     // 配置资源
     var resStore = new Ext.data.Store({
@@ -179,60 +179,47 @@ Ext.onReady(function(){
         enableToggle  : true,
         text          : '授权',
         cls           : '',
-        toggleHandler : function(){
-            //授权事件
-            var mRole = lightGrid.grid.getSelections();
-            var mResc = resourceGrid.getSelections();
-            if(mResc.length <= 0) {
-                Ext.MessageBox.alert('提示', '请选择至少一行纪录进行操作！');
-                return;
-            } else {
-                var ids = new Array();
-                for (var i = 0; i < mResc.length; i++) {
-                    var rescId = mResc[i].get('id');
-                    ids[ids.length] = rescId;
-                }
-                var roleId = mRole[0].get('id');
-                Ext.lib.Ajax.request(
-                    'POST',
-                    'auth.htm',
-                    {success:end,failure:end},
-                    'ids=' + ids.join(",") + "&roleId=" + roleId + "&isAuth=true"
-                );
-            }
-
-            resStore.reload();
-        }
+        toggleHandler : resourceAuth
     }, '-', {
         pressed      : true,
         enableToggle : true,
         text         : '取消',
         cls          : '',
-        toggleHandler: function() {
-            //取消授权事件
-            var mRole = lightGrid.grid.getSelections();
-            var mResc = resourceGrid.getSelections();
-            if(mResc.length <= 0) {
-                Ext.MessageBox.alert('提示', '请选择至少一行纪录进行操作！');
-                return;
-            } else {
-                var ids = new Array();
-                for (var i = 0; i < mResc.length; i++) {
-                    var rescId = mResc[i].get('id');
-                    ids[ids.length] = rescId;
-                }
-                var roleId = mRole[0].get('id');
-                Ext.lib.Ajax.request(
-                    'POST',
-                    'auth.htm',
-                    {success:end,failure:end},
-                    'ids=' + ids.join(",") + "&roleId=" + roleId + "&isAuth=false"
-                );
-            }
-
-            resStore.reload();
-        }
+        toggleHandler: resourceCancel
     });
+
+    function resourceAuth() {
+        resourceAuthDo(true);
+    }
+
+    function resourceCancel() {
+        resourceAuthDo(false);
+    }
+
+    function resourceAuthDo(isAuth) {
+        //授权事件
+        var mRole = lightGrid.grid.getSelections();
+        var mResc = resourceGrid.getSelections();
+        if(mResc.length <= 0) {
+            Ext.MessageBox.alert('提示', '请选择至少一行纪录进行操作！');
+            return;
+        } else {
+            var ids = new Array();
+            for (var i = 0; i < mResc.length; i++) {
+                var rescId = mResc[i].get('id');
+                ids[ids.length] = rescId;
+            }
+            var roleId = mRole[0].get('id');
+            Ext.lib.Ajax.request(
+                'POST',
+                'auth.htm',
+                {success:end,failure:end},
+                'ids=' + ids.join(",") + "&roleId=" + roleId + "&isAuth=" + isAuth
+            );
+        }
+
+        resStore.reload();
+    }
 
     function end() {
         Ext.Msg.alert("提示", "操作成功");
@@ -256,12 +243,12 @@ Ext.onReady(function(){
             start  : 0,
             limit  : 10
         }});
-        var aAddInstanceDlg = createNewDialog("resource-dlg");
-        var layout = aAddInstanceDlg.getLayout();
+        var resourceDialog = Ext.lingo.FormUtils.createLayoutDialog("resource-dlg");
+        var layout = resourceDialog.getLayout();
         layout.beginUpdate();
             layout.add('center', new Ext.ContentPanel('resource-inner', {title: '角色授权'}));
-            layout.endUpdate();
-        aAddInstanceDlg.show(Ext.get("selectResource"));
+        layout.endUpdate();
+        resourceDialog.show(Ext.get("selectResource"));
     }
 
     // 选择菜单成功
@@ -278,13 +265,14 @@ Ext.onReady(function(){
             Ext.MessageBox.alert('提示', '请选择需要配置的角色！');
             return;
         }
-        Ext.lingo.FormUtils.createDialogContent({id:'menuDialog',title:'选择菜单'});
-        var configMenuDialog = Ext.lingo.FormUtils.createDialog({id:'menuDialog' + "-dialog-content"});
+        //Ext.lingo.FormUtils.createDialogContent({id:'menuDialog',title:'选择菜单'});
+        //var configMenuDialog = Ext.lingo.FormUtils.createDialog({id:'menuDialog' + "-dialog-content"});
 
-        configMenuDialog.addKeyListener(27, configMenuDialog.hide, configMenuDialog);
+        var configMenuDialog = Ext.lingo.FormUtils.createTabedDialog('menuDialog', ['选择菜单','帮助']);
+
         this.yesBtn = configMenuDialog.addButton("确定", function() {
             // 如果不全部展开，那么未展开的部分，无法取得数据。
-            this.menuTree.root.expand(true, false);
+            //this.menuTree.root.expand(true, false);
             Ext.lib.Ajax.request(
                 'POST',
                 'selectMenu.htm',
@@ -299,7 +287,6 @@ Ext.onReady(function(){
         this.tabs.getTab(1).on("activate", function() {
             this.yesBtn.hide();
         }, this, true);
-
 
         this.tabs.getTab(0).setContent("<div id='menuTree'></div>");
         //this.tabs.getTab(0).setContent(Ext.get("tree-div").dom.innerHTML);
@@ -320,11 +307,6 @@ Ext.onReady(function(){
             rootVisible     : false
         });
 
-
-        //this.menuTree.on('check', function() {
-        //    Ext.get('cn').dom.value = this.getChecked().join(',');
-        //}, this.menuTree);
-
         // 设置根节点
         this.treeRoot = new Ext.tree.AsyncTreeNode({
             text       : '选择菜单',
@@ -344,28 +326,5 @@ Ext.onReady(function(){
 
         configMenuDialog.show(Ext.get("selectMenu"));
     }
-
-    // 新建对话框
-    function createNewDialog(dialogName) {
-        var thisDialog = new Ext.LayoutDialog(dialogName, {
-            modal     : false,
-            autoTabs  : true,
-            proxyDrag : true,
-            resizable : true,
-            width     : 650,
-            height    : 500,
-            shadow    : true,
-            center: {
-                autoScroll     : true,
-                tabPosition    : 'top',
-                closeOnTab     : true,
-                alwaysShowTabs : false
-            }
-        });
-        thisDialog.addKeyListener(27, thisDialog.hide, thisDialog);
-        thisDialog.addButton('关闭', function() {thisDialog.hide();});
-
-        return thisDialog;
-    };
 
 });

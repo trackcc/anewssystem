@@ -11,6 +11,7 @@ import anni.anews.manager.NewsCategoryManager;
 import anni.anews.manager.NewsConfigManager;
 
 import anni.core.web.prototype.BaseLongController;
+import anni.core.web.prototype.StreamView;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -82,5 +83,47 @@ public class NewsConfigController extends BaseLongController<NewsConfig, NewsCon
         for (NewsCategory newsCategory : newsCategoryList) {
             newsCategoryManager.save(newsCategory);
         }
+    }
+
+    /**
+     * index.
+     */
+    public void index() {
+        logger.info("start");
+
+        NewsConfig config = getEntityDao().getDefaultConfig();
+        mv.addObject("config", config);
+        mv.setViewName("anews/newsconfig/index");
+    }
+
+    /**
+     * onSubmit.
+     *
+     * @throws Exception 写入response可能出现异常
+     */
+    public void onSubmit() throws Exception {
+        logger.info("start");
+        logger.info(params());
+
+        int commentNeedAudit = getIntParam("commentNeedAudit", 0);
+        int newsNeedAudit = getIntParam("newsNeedAudit", 0);
+        int couldComment = getIntParam("couldComment", 0);
+        int categoryStrategy = getIntParam("categoryStrategy",
+                NewsCategory.STRATEGY_BIT_CODE);
+        String templateName = getStrParam("templateName",
+                NewsConfig.DEFAULT_TEMPLATE_NAME);
+
+        NewsConfig config = getEntityDao().getDefaultConfig();
+        config.setCommentNeedAudit(commentNeedAudit);
+        config.setNewsNeedAudit(newsNeedAudit);
+        config.setCouldComment(couldComment);
+        config.setCategoryStrategy(categoryStrategy);
+        config.setTemplateName(templateName);
+
+        getEntityDao().save(config);
+
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().print("{success:true}");
+        mv.setView(new StreamView("application/json"));
     }
 }

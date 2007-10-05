@@ -186,7 +186,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         var paging = new Ext.PagingToolbar(gridFooter, this.dataStore, {
             pageSize    : this.pageSize,
             displayInfo : true,
-            displayMsg  : '显示: {0} - {1} 共 {2}',
+            displayMsg  : '显示: {0} - {1} 共 {2} 条记录',
             emptyMsg    : "没有找到相关数据"
         });
 

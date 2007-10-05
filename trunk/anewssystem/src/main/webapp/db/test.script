@@ -42,7 +42,7 @@ INSERT INTO A_SECURITY_MENU VALUES(49,'','../news/create.htm','user.gif','\u6dfb
 INSERT INTO A_SECURITY_MENU VALUES(50,'','../news/list.htm','user.gif','\u7ba1\u7406\u65b0\u95fb',9,'',47,NULL)
 INSERT INTO A_SECURITY_MENU VALUES(51,'','../news/search.htm','user.gif','\u65b0\u95fb\u641c\u7d22',10,'',47,NULL)
 INSERT INTO A_SECURITY_MENU VALUES(52,'','../newstag/index.htm','user.gif','\u7ba1\u7406\u5173\u952e\u5b57',11,'',47,NULL)
-INSERT INTO A_SECURITY_MENU VALUES(53,'','../newsconfig/manage.htm','user.gif','\u65b0\u95fb\u5c5e\u6027\u8bbe\u7f6e',12,'',47,NULL)
+INSERT INTO A_SECURITY_MENU VALUES(53,'\u65b0\u95fb\u5c5e\u6027\u8bbe\u7f6e','../newsconfig/index.htm','user.gif','\u65b0\u95fb\u5c5e\u6027\u8bbe\u7f6e',12,'\u65b0\u95fb\u5c5e\u6027\u8bbe\u7f6e',47,NULL)
 INSERT INTO A_SECURITY_MENU VALUES(54,'','../template/dd.htm','user.gif','\u8bbe\u7f6e\u6a21\u677f',9,'',44,NULL)
 INSERT INTO A_SECURITY_MENU VALUES(56,'','./','set.gif','\u6743\u9650\u8bbe\u7f6e',0,'',NULL,NULL)
 INSERT INTO A_SECURITY_MENU VALUES(57,'','../user/index.htm','user.gif','\u7ba1\u7406\u7528\u6237',6,'',56,NULL)

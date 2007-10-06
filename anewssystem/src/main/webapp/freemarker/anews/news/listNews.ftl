@@ -33,7 +33,7 @@
   <#if status==item_index?string>
       <span class="selected">${item}</span>
   <#else>
-      <span class="unselected"><a href="${ctx}/news/list.htm?status=${item_index}">${item}</a></span>
+      <span class="unselected"><a href="list.htm?status=${item_index}">${item}</a></span>
   </#if>
 </#list><div>
       <form action="${ctx}/news/list.htm">

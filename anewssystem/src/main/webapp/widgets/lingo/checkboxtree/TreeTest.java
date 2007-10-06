@@ -218,14 +218,35 @@ public class TreeTest extends TestCase {
         assertEquals("none", node11.getClassName());
         assertEquals("none", node12.getClassName());
 
-        System.out.println(tree);
+        //System.out.println(tree);
         tree.check();
-        System.out.println(tree);
+        //System.out.println(tree);
 
         assertEquals("all", tree.getClassName());
         assertEquals("some", node1.getClassName());
         assertEquals("all", node2.getClassName());
         assertEquals("none", node11.getClassName());
         assertEquals("none", node12.getClassName());
+    }
+
+    // 如果下级已经是all了，上级还是some的情况
+    // 点一下上级some -> all，下级不应该变成some，应该保持all状态
+    public void testCheckNode11() {
+        assertEquals("some", tree.getClassName());
+        assertEquals("some", node1.getClassName());
+        assertEquals("none", node2.getClassName());
+        assertEquals("none", node11.getClassName());
+        assertEquals("none", node12.getClassName());
+
+        System.out.println(tree);
+        node1.check();
+        tree.check();
+        System.out.println(tree);
+
+        assertEquals("all", tree.getClassName());
+        assertEquals("all", node1.getClassName());
+        assertEquals("all", node2.getClassName());
+        assertEquals("all", node11.getClassName());
+        assertEquals("all", node12.getClassName());
     }
 }

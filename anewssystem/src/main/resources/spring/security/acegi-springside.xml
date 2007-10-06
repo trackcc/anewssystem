@@ -15,7 +15,7 @@
             <value>
                 CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
                 PATTERN_TYPE_APACHE_ANT
-                /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,exceptionTranslationFilter,filterInvocationInterceptor
+                /**=httpSessionContextIntegrationFilter,logoutFilter,authenticationProcessingFilter,basicProcessingFilter,securityContextHolderAwareRequestFilter,rememberMeProcessingFilter,anonymousProcessingFilter,concurrentSessionFilter,exceptionTranslationFilter,filterInvocationInterceptor
             </value>
         </property>
     </bean>
@@ -162,6 +162,25 @@
         <property name="key" value="changeThis" />
         <property name="userAttribute" value="anonymousUser,ROLE_ANONYMOUS" />
     </bean>
+
+    <!--
+      | 1.在filterChainProxy里面加上concurrentSessionFilter
+      | 2.配置concurrentSessionFilter 和concurrentSessionController
+      -->
+    <bean id="concurrentSessionFilter" class="org.acegisecurity.concurrent.ConcurrentSessionFilter">
+        <property name="sessionRegistry" ref="sessionRegistry"/>
+        <property name="expiredUrl" value="/login.action?status=expired"/>
+    </bean>
+
+    <!--
+      | 可以阻止某个用户名在已经成功登录进web应用的同时再进行一次成功的登录
+      -->
+    <bean id="concurrentSessionController" class="org.acegisecurity.concurrent.ConcurrentSessionControllerImpl">
+        <property name="maximumSessions" value="1"/>
+        <property name="sessionRegistry" ref="sessionRegistry"/>
+        <!-- property name="exceptionIfMaximumExceeded" value="true"  /-->
+    </bean>
+    <bean id="sessionRegistry" class="org.acegisecurity.concurrent.SessionRegistryImpl" />
 
     <!--
          exceptionTranslationFilter异常转换过滤器，主要是处理AccessDeniedException

@@ -1,7 +1,5 @@
 package anni.anews.domain;
 
-import java.io.Serializable;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +17,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import anni.core.grid.LongGridBean;
 
 /*
  *import org.compass.annotations.Searchable;
@@ -38,7 +38,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 //@Searchable(alias = "a_news")
 @Table(name = "A_NEWS")
-public class News implements Serializable {
+public class News extends LongGridBean {
     /** * serial. */
     static final long serialVersionUID = 0L;
 

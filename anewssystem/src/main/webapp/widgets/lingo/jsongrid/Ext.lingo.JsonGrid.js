@@ -25,7 +25,10 @@ Ext.lingo.JsonGrid = function(container, config) {
     this.id        = container;
     this.config    = config;
     this.metaData  = config.metaData;
+    this.genHeader = config.genHeader !== false;
     this.pageSize  = config.pageSize ? config.pageSize : 15;
+    this.dialogWidth  = config.dialogWidth;
+    this.dialogHeight = config.dialogHeight;
     this.urlPagedQuery = config.urlPagedQuery ? config.urlPagedQuery : "pagedQuery.htm";
     this.urlLoadData   = config.urlLoadData   ? config.urlLoadData   : "loadData.htm";
     this.urlSave       = config.urlSave       ? config.urlSave       : "save.htm";
@@ -41,21 +44,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
     init : function() {
         // 根据this.headers生成columnModel
         if (!this.columnModel) {
-            var columnHeaders = new Array();
-            for (var i = 0; i < this.metaData.length; i++) {
-                var item = {};
-                item.header    = this.metaData[i].qtip;
-                item.dataIndex = this.metaData[i].id;
-                item.width     = this.metaData[i].w ? this.metaData[i].w : 110;
-                item.defaultValue = "";
-                // item.hidden = false;
-                if (this.metaData[i].renderer) {
-                    item.renderer = this.metaData[i].renderer;
-                }
-                columnHeaders[columnHeaders.length] = item;
-            }
-            this.columnModel = new Ext.grid.ColumnModel(columnHeaders);
-            this.columnModel.defaultSortable = false;
+            this.initColumnModel();
         }
 
         // 生成data record
@@ -107,77 +96,106 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         this.grid.addListener('rowcontextmenu', this.contextmenu.createDelegate(this));
     }
 
-    // 进行渲染
-    , render : function() {
-        this.init();
-        this.grid.render();
-
-        // header
-        var gridHeader = this.grid.getView().getHeaderPanel(true);
-        this.toolbar = new Ext.Toolbar(gridHeader);
-        var checkItems = new Array();
+    // 初始化ColumnModel
+    , initColumnModel : function() {
+        var columnHeaders = new Array();
         for (var i = 0; i < this.metaData.length; i++) {
-            var item = new Ext.menu.CheckItem({
-                text         : this.metaData[i].qtip,
-                value        : this.metaData[i].id,
-                checked      : true,
-                group        : "filter",
-                checkHandler : this.onItemCheck.createDelegate(this)
-            });
-            checkItems[checkItems.length] = item;
+            if (this.metaData[i].showInGrid === false) {
+                continue;
+            }
+            var item = {};
+            item.header    = this.metaData[i].qtip;
+            item.dataIndex = this.metaData[i].id;
+            item.width     = this.metaData[i].w ? this.metaData[i].w : 110;
+            item.defaultValue = "";
+            // item.hidden = false;
+            if (this.metaData[i].renderer) {
+                item.renderer = this.metaData[i].renderer;
+            }
+            columnHeaders[columnHeaders.length] = item;
         }
+        this.columnModel = new Ext.grid.ColumnModel(columnHeaders);
+        this.columnModel.defaultSortable = false;
+    }
 
-        this.filterButton = new Ext.Toolbar.MenuButton({
-            icon     : "../widgets/lingo/list-items.gif",
-            cls      : "x-btn-text-icon",
-            text     : "请选择",
-            tooltip  : "选择搜索的字段",
-            menu     : checkItems,
-            minWidth : 105
-        });
-        this.toolbar.add({
-            icon     : "../widgets/lingo/list-items.gif",
-            id      : 'add',
-            text    : '新增',
-            cls     : 'add',
-            tooltip : '新增',
-            handler : this.add.createDelegate(this)
-        }, {
-            icon     : "../widgets/lingo/list-items.gif",
-            id      : 'edit',
-            text    : '修改',
-            cls     : 'edit',
-            tooltip : '修改',
-            handler : this.edit.createDelegate(this)
-        }, {
-            icon     : "../widgets/lingo/list-items.gif",
-            id      : 'del',
-            text    : '删除',
-            cls     : 'del',
-            tooltip : '删除',
-            handler : this.del.createDelegate(this)
-        }, '->', this.filterButton);
-
-        // 输入框
-        this.filter = Ext.get(this.toolbar.addDom({
-             tag   : 'input',
-             type  : 'text',
-             size  : '20',
-             value : '',
-             style : 'background: #F0F0F9;'
-        }).el);
-
-        this.filter.on('keypress', function(e) {
-            if(e.getKey() == e.ENTER && this.filter.getValue().length > 0) {
-                this.dataStore.reload();
+    // 渲染
+    , postRender : function() {
+        // 生成头部工具栏
+        if (this.genHeader) {
+            var gridHeader = this.grid.getView().getHeaderPanel(true);
+            this.toolbar = new Ext.Toolbar(gridHeader);
+            var checkItems = new Array();
+            for (var i = 0; i < this.metaData.length; i++) {
+                var item = new Ext.menu.CheckItem({
+                    text         : this.metaData[i].qtip,
+                    value        : this.metaData[i].id,
+                    checked      : true,
+                    group        : "filter",
+                    checkHandler : this.onItemCheck.createDelegate(this)
+                });
+                checkItems[checkItems.length] = item;
             }
-        }.createDelegate(this));
 
-        this.filter.on('keyup', function(e) {
-            if(e.getKey() == e.BACKSPACE && this.filter.getValue().length === 0) {
-                this.dataStore.reload();
-            }
-        }.createDelegate(this));
+            this.filterButton = new Ext.Toolbar.MenuButton({
+                icon     : "../widgets/lingo/list-items.gif",
+                cls      : "x-btn-text-icon",
+                text     : "请选择",
+                tooltip  : "选择搜索的字段",
+                menu     : checkItems,
+                minWidth : 105
+            });
+            this.toolbar.add({
+                icon     : "../widgets/lingo/list-items.gif",
+                id      : 'add',
+                text    : '新增',
+                cls     : 'add',
+                tooltip : '新增',
+                handler : this.add.createDelegate(this)
+            }, {
+                icon     : "../widgets/lingo/list-items.gif",
+                id      : 'edit',
+                text    : '修改',
+                cls     : 'edit',
+                tooltip : '修改',
+                handler : this.edit.createDelegate(this)
+            }, {
+                icon     : "../widgets/lingo/list-items.gif",
+                id      : 'del',
+                text    : '删除',
+                cls     : 'del',
+                tooltip : '删除',
+                handler : this.del.createDelegate(this)
+            }, '->', this.filterButton);
+
+            // 输入框
+            this.filter = Ext.get(this.toolbar.addDom({
+                 tag   : 'input',
+                 type  : 'text',
+                 size  : '20',
+                 value : '',
+                 style : 'background: #F0F0F9;'
+            }).el);
+
+            this.filter.on('keypress', function(e) {
+                if(e.getKey() == e.ENTER && this.filter.getValue().length > 0) {
+                    this.dataStore.reload();
+                }
+            }.createDelegate(this));
+
+            this.filter.on('keyup', function(e) {
+                if(e.getKey() == e.BACKSPACE && this.filter.getValue().length === 0) {
+                    this.dataStore.reload();
+                }
+            }.createDelegate(this));
+
+            // 读取数据
+            this.dataStore.on('beforeload', function() {
+                this.dataStore.baseParams = {
+                    filterValue : this.filter.getValue(),
+                    filterTxt   : this.filterTxt
+                };
+            }.createDelegate(this));
+        }
 
         // 页脚
         var gridFooter = this.grid.getView().getFooterPanel(true);
@@ -190,16 +208,16 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             emptyMsg    : "没有找到相关数据"
         });
 
-        // 读取数据
-        this.dataStore.on('beforeload', function() {
-            this.dataStore.baseParams = {
-                filterValue : this.filter.getValue(),
-                filterTxt   : this.filterTxt
-            };
-        }.createDelegate(this));
         this.dataStore.load({
             params:{start:0, limit:this.pageSize}
         });
+    }
+
+    // 进行渲染
+    , render : function() {
+        this.init();
+        this.grid.render();
+        this.postRender();
     }
 
     // 弹出添加对话框，添加一条新记录
@@ -314,7 +332,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
     // 创建弹出式对话框
     , createDialog : function() {
-        this.dialog = Ext.lingo.FormUtils.createTabedDialog('dialog', ['详细配置','帮助']);
+        this.dialog = Ext.lingo.FormUtils.createTabedDialog('dialog', ['详细配置','帮助'], this.dialogWidth, this.dialogHeight);
 
         this.yesBtn = this.dialog.addButton("确定", function() {
             var item = Ext.lingo.FormUtils.serialFields(this.columns);
@@ -369,6 +387,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             //Ext.form.Field.prototype.invalidClass = 'text-field-invalid';
 
             this.columns = Ext.lingo.FormUtils.createAll(this.metaData);
+
         }
     }
 

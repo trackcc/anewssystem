@@ -162,7 +162,7 @@ Ext.extend(Ext.tree.CheckboxNodeUI, Ext.tree.TreeNodeUI, {
             // modification: 添加handlers，避免修改Ext.tree.TreeNodeUI
             Ext.fly(this.checkbox).on('click', this.check.createDelegate(this, [null]));
             n.on('dblclick', function(e) {
-                if( this.isLeaf() ) {
+                if (this.isLeaf()) {
                     this.getUI().toggleCheck();
                 }
             });
@@ -261,8 +261,22 @@ Ext.extend(Ext.tree.CheckboxNodeUI, Ext.tree.TreeNodeUI, {
         }
     }
 
+    , onDblClick : function(e){
+        e.preventDefault();
+        if(this.disabled){
+            return;
+        }
+        if(this.checkbox){
+            this.toggleCheck();
+        }
+        //if(!this.animating && this.node.hasChildNodes()){
+        //    this.node.toggle();
+        //}
+        this.fireEvent("dblclick", this.node, e);
+    }
+
     , toggleCheck : function(state) {
-        this.check(!this.checkbox.checked, true);
+        this.check();
     }
 
     // 是否为叶子节点
@@ -370,11 +384,15 @@ Ext.extend(Ext.tree.CheckboxNodeUI, Ext.tree.TreeNodeUI, {
             this.node.attributes.checked = "x-tree-node-checkbox-none" != this.checkboxImg.className;
         } else {
             if (isCheck) {
-                this.checkboxImg.className = "x-tree-node-checkbox-some";
-                this.node.attributes.checked = "x-tree-node-checkbox-none" != this.checkboxImg.className;
+                // 只当下面节点没选中的时候，才强制改变成some
+                // 否则保持some或all状态
+                if (this.checkboxImg.className == "x-tree-node-checkbox-none") {
+                    this.checkboxImg.className = "x-tree-node-checkbox-some";
+                }
+                this.node.attributes.checked = true;
             } else {
                 this.checkboxImg.className = "x-tree-node-checkbox-none";
-                this.node.attributes.checked = !"x-tree-node-checkbox-none" != this.checkboxImg.className;
+                this.node.attributes.checked = false;
                 this.node.expand(false, false);
                 var children = this.node.childNodes;
                 for (var i = 0; i < children.length; i++) {

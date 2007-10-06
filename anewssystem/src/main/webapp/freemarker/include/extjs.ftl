@@ -15,6 +15,7 @@ Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
 <script type="text/javascript" src="${ctx}/widgets/lingo/Ext.form.VTypes.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/Ext.lingo.Theme.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/Ext.data.JsonReader.js"></script>
+<script type="text/javascript" src="${ctx}/widgets/lingo/form/HtmlEditor.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/form/Ext.lingo.FormUtils.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/form/Ext.lingo.LoginDialog.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/form/Ext.lingo.TreeField.js"></script>
@@ -26,3 +27,5 @@ Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
 
 <script type="text/javascript" src="${ctx}/widgets/ux/Ext.ux.PasswordMeter.js"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/widgets/ux/passwordmeter.css" />
+<link rel="stylesheet" type="text/css" href="${ext}/resources/css/editor.css" />
+

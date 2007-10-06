@@ -20,4 +20,6 @@ body {
   font-size:12px;
 }.x-layout-panel-hd-text {
   font-size:12px;
+}.x-html-editor-wrap iframe {
+  width:100%;
 }

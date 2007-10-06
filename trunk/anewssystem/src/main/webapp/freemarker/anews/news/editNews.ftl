@@ -25,7 +25,7 @@
 <#include "/include/messages.ftl"/>
 <form name="news"
     enctype="multipart/form-data"
-    action="${ctx}/news/${action}.htm"
+    action="${action}.htm"
     method="post" onsubmit="return validateNews(this)">
   <@jodd.form beans="news" scopes="request">
       <input type="hidden" name="id">

@@ -1,5 +1,7 @@
 package anni.anews.web;
 
+import java.io.Serializable;
+
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
@@ -21,34 +23,28 @@ import anni.anews.web.support.FreemarkerGenerator;
 
 import anni.core.dao.support.Page;
 
-import anni.core.grid.LongGridController;
-
-import anni.core.json.JsonUtils;
-
+import anni.core.web.prototype.BaseLongController;
 import anni.core.web.prototype.ExtremeTablePage;
 import anni.core.web.prototype.SimpleDateEditor;
-
-import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.extremecomponents.table.limit.Limit;
 
-import org.hibernate.Criteria;
-
-import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
  * @author Lingo.
  * @since 2007年08月16日 下午 23时13分12秒765
  */
-public class NewsController extends LongGridController<News, NewsManager> {
+public class News2Controller extends BaseLongController<News, NewsManager> {
     /** * logger. */
-    private static Log logger = LogFactory.getLog(NewsController.class);
+    private static Log logger = LogFactory.getLog(News2Controller.class);
 
     /** * newsCategoryManager. */
     private NewsCategoryManager newsCategoryManager = null;
@@ -63,9 +59,9 @@ public class NewsController extends LongGridController<News, NewsManager> {
     private FreemarkerGenerator freemarkerGenerator = null;
 
     /** * constructor. */
-    public NewsController() {
-        //setEditView("/anews/news/editNews");
-        //setListView("/anews/news/listNews");
+    public News2Controller() {
+        setEditView("/anews/news/editNews");
+        setListView("/anews/news/listNews");
     }
 
     /** * @param newsCategoryManager NewsCategoryManager. */
@@ -95,6 +91,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
      *
      * @param model ModelAndView中的数据模型
      */
+    @Override
     protected void referenceData(Map model) {
         model.put("categoryList", newsCategoryManager.loadTops());
         model.put("tagList", newsTagManager.getAll());
@@ -109,6 +106,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
      * @param binder 绑定工具
      * @throws Exception 异常
      */
+    @Override
     protected void preBind(HttpServletRequest request, Object command,
         ServletRequestDataBinder binder) throws Exception {
         binder.setDisallowedFields(new String[] {
@@ -172,6 +170,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
      *
      * @throws Exception 异常
      */
+    @Override
     public void onInsert() throws Exception {
         postEdit();
     }
@@ -181,6 +180,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
      *
      * @throws Exception 异常
      */
+    @Override
     public void onUpdate() throws Exception {
         postEdit();
     }
@@ -232,7 +232,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
 
         generateHtml(news);
 
-        //mv.setViewName(successView + "?status=" + news.getStatus());
+        mv.setViewName(successView + "?status=" + news.getStatus());
     }
 
     /**
@@ -240,27 +240,26 @@ public class NewsController extends LongGridController<News, NewsManager> {
      *
      * @param entity 新闻
      */
-
-    /*
-        private void generateHtml(News entity) {
-            // 0 不分页 1 手工分页 2 自动分页
-            int page = getIntParam("page", 0);
-            int pageSize = getIntParam("pagesize", 1000);
-            String root = request.getRealPath("/");
-            String ctx = request.getContextPath();
-            NewsConfig newsConfig = newsConfigManager.getDefaultConfig();
-            freemarkerGenerator.genNews(entity, page, pageSize, root, ctx,
-                newsConfig.getTemplateName());
-        }
-    */
+    private void generateHtml(News entity) {
+        // 0 不分页 1 手工分页 2 自动分页
+        int page = getIntParam("page", 0);
+        int pageSize = getIntParam("pagesize", 1000);
+        String root = request.getRealPath("/");
+        String ctx = request.getContextPath();
+        NewsConfig newsConfig = newsConfigManager.getDefaultConfig();
+        freemarkerGenerator.genNews(entity, page, pageSize, root, ctx,
+            newsConfig.getTemplateName());
+    }
 
     /**
      * 按状态查询新闻记录.
      *
      * @throws Exception 异常
      */
+    @Override
     public void list() throws Exception {
-        //mv = new ModelAndView(listView);
+        mv = new ModelAndView(listView);
+
         Limit limit = ExtremeTablePage.getLimit(request,
                 Page.DEFAULT_PAGE_SIZE);
         int status = getIntParam("status", 0);
@@ -312,44 +311,48 @@ public class NewsController extends LongGridController<News, NewsManager> {
         mv.addObject("totalRows",
             Integer.valueOf((int) page.getTotalCount()));
         referenceData(mv.getModel());
-
-        //onList();
+        onList();
     }
 
     /**
      * 修改新闻状态.
      */
+    public void changeStatus() {
+        logger.info("start");
 
-    /*
-        public void changeStatus() {
-            logger.info("start");
-            int status = getIntParam("status", -1);
-            if ((status == -1) || (status > 6)) {
-                //mv.setViewName(successView);
-                return;
-            }
-            //Serializable[] ids = getPrimaryKeys();
-            Serializable[] ids = null;
-            int success = 0;
-            if (ids != null) {
-                for (Serializable id : ids) {
-                    try {
-                        News entity = getEntityDao().get(id);
-                        if (entity == null) {
-                            continue;
-                        }
-                        entity.setStatus(status);
-                        getEntityDao().save(entity);
-                        success++;
-                    } catch (DataIntegrityViolationException e) {
-                        //saveMessage(onRemoveSelectedFailure(id));
-                    }
-                }
-                saveMessage("成功处理" + success + "条纪录!");
-            }
-            //mv.setViewName(successView + "?status=" + status);
+        int status = getIntParam("status", -1);
+
+        if ((status == -1) || (status > 6)) {
+            mv.setViewName(successView);
+
+            return;
         }
-    */
+
+        Serializable[] ids = getPrimaryKeys();
+        int success = 0;
+
+        if (ids != null) {
+            for (Serializable id : ids) {
+                try {
+                    News entity = getEntityDao().get(id);
+
+                    if (entity == null) {
+                        continue;
+                    }
+
+                    entity.setStatus(status);
+                    getEntityDao().save(entity);
+                    success++;
+                } catch (DataIntegrityViolationException e) {
+                    saveMessage(onRemoveSelectedFailure(id));
+                }
+            }
+
+            saveMessage("成功处理" + success + "条纪录!");
+        }
+
+        mv.setViewName(successView + "?status=" + status);
+    }
 
     /**
      * 模糊查询，限于name,subtitle,summary和content.
@@ -407,237 +410,11 @@ public class NewsController extends LongGridController<News, NewsManager> {
         mv.setViewName("/anews/template/" + templateName + "/detail");
     }
 
-    // ====================================================
     /**
      * index.
      */
     public void index() {
         logger.info("start");
-        mv.addObject("tagList", newsTagManager.getAll());
-        mv.addObject("config", newsConfigManager.getDefaultConfig());
         mv.setViewName("anews/news/index");
-    }
-
-    /**
-     * 修改新闻状态.
-     *
-     * @throws Exception 异常
-     */
-    public void changeStatus() throws Exception {
-        logger.info("start");
-        logger.info(params());
-
-        int status = getIntParam("status", -1);
-
-        if ((status == -1) || (status > 6)) {
-            response.getWriter().print("{success:false}");
-
-            return;
-        }
-
-        String ids = getStrParam("ids", "");
-        int success = 0;
-
-        for (String str : ids.split(",")) {
-            try {
-                long id = Long.parseLong(str);
-                News entity = getEntityDao().get(id);
-
-                if (entity == null) {
-                    continue;
-                }
-
-                entity.setStatus(status);
-                getEntityDao().save(entity);
-            } catch (NumberFormatException ex) {
-                continue;
-            }
-        }
-
-        response.getWriter()
-                .print("{success:true,info:'成功处理" + success + "条记录!'}");
-    }
-
-    /**
-     * 分页浏览记录.
-     *
-     * @throws Exception 异常
-     */
-    @Override
-    public void pagedQuery() throws Exception {
-        logger.info(params());
-
-        // 分页
-        int pageSize = getIntParam("limit", 1);
-        int start = getIntParam("start", 0);
-        int pageNo = (start / pageSize) + 1;
-
-        // 排序
-        String sort = getStrParam("sort", null);
-        String dir = getStrParam("dir", "asc");
-
-        // 状态
-        int status = getIntParam("status", 0);
-
-        // 搜索
-        String filterTxt = getStrParam("filterTxt", "").trim();
-        String filterValue = getStrParam("filterValue", "").trim();
-
-        Criteria criteria;
-
-        if (sort != null) {
-            boolean isAsc = dir.equalsIgnoreCase("asc");
-            criteria = getEntityDao().createCriteria(sort, isAsc);
-        } else {
-            criteria = getEntityDao().createCriteria();
-        }
-
-        if ((!filterTxt.equals("")) && (!filterValue.equals(""))) {
-            criteria = criteria.add(Restrictions.like(filterTxt,
-                        "%" + filterValue + "%"));
-        }
-
-        criteria = criteria.add(Restrictions.eq("status", status));
-
-        Page page = getEntityDao().pagedQuery(criteria, pageNo, pageSize);
-
-        JsonUtils.write(page, response.getWriter(), getExcludes(),
-            getDatePattern());
-    }
-
-    /**
-     * 保存，新增或修改.
-     *
-     * @throws Exception 异常
-     */
-    @Override
-    public void save() throws Exception {
-        logger.info(params());
-
-        News entity = bindObject();
-        String data = getStrParam("data", "");
-
-        JSONObject jsonObject = JSONObject.fromString(data);
-
-        // ================================================
-        // 修改时，不会更新发布时间
-        long updateDate;
-
-        if (entity.getUpdateDate() == null) {
-            updateDate = System.currentTimeMillis();
-        } else {
-            updateDate = entity.getUpdateDate().getTime();
-        }
-
-        entity.setUpdateDate(new SimpleDateEditor.ExtDate(updateDate));
-
-        // ================================================
-        // 绑定新闻分类
-        long categoryId = jsonObject.getLong("newsCategory.name");
-        NewsCategory newsCategory = newsCategoryManager.get(categoryId);
-        entity.setNewsCategory(newsCategory);
-
-        // ================================================
-        // 确定新闻状态
-        String enter = getStrParam("enter", "");
-
-        if (enter.equals("存为草稿")) {
-            entity.setStatus(News.STATUS_DRAFT);
-        } else {
-            // 是否立即发布
-            int quick = getIntParam("quick", 0);
-
-            if (quick == 0) {
-                // 如果需要审核
-                entity.setStatus(News.STATUS_WAIT);
-            } else {
-                // 直接发布状态
-                entity.setStatus(News.STATUS_NORMAL);
-            }
-        }
-
-        getEntityDao().save(entity);
-        postEdit(entity);
-        response.getWriter().print("{success:true}");
-    }
-
-    /**
-     * 插入或更新后的操作.
-     *
-     * @param news 用于生成静态页面的news
-     */
-    private void postEdit(News news) {
-        // FIXME: 如果是添加新闻，这步是不需要的
-        if (!news.getNewsTags().isEmpty()) {
-            news.getNewsTags().removeAll(news.getNewsTags());
-        }
-
-        if (news.getUpdateDate() == null) {
-            news.setUpdateDate(new Date());
-        }
-
-        // 如果不是链接新闻，则根据updateDate生成指向静态页面的路径
-        if ((news.getLink() == null) || news.getLink().equals("")) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-            news.setLink(request.getContextPath() + "/html/"
-                + news.getNewsCategory().getId() + "/"
-                + sdf.format(news.getUpdateDate()) + "/" + news.getId()
-                + ".html");
-        }
-
-        String tags = getStrParam("tags", "");
-        logger.info(tags);
-
-        if (!tags.equals("")) {
-            String[] array = tags.split(",");
-
-            for (String tagName : array) {
-                NewsTag tag = newsTagManager.createOrGet(tagName);
-                logger.info(tag);
-
-                //if (!news.getTags().contains(tag)) {
-                news.getNewsTags().add(tag);
-                getEntityDao().save(news);
-
-                //tag.getNewses().add(news);
-                //}
-            }
-        }
-
-        getEntityDao().save(news);
-
-        generateHtml(news);
-
-        //mv.setViewName(successView + "?status=" + news.getStatus());
-    }
-
-    /**
-     * 生成html静态页面.
-     *
-     * @param entity 新闻
-     */
-    private void generateHtml(News entity) {
-        // 0 不分页 1 手工分页 2 自动分页
-        int page = getIntParam("page", 0);
-        int pageSize = getIntParam("pagesize", 1000);
-        String root = request.getRealPath("/");
-        String ctx = request.getContextPath();
-        NewsConfig newsConfig = newsConfigManager.getDefaultConfig();
-        freemarkerGenerator.genNews(entity, page, pageSize, root, ctx,
-            newsConfig.getTemplateName());
-    }
-
-    /**
-     * @return excludes.
-     */
-    @Override
-    public String[] getExcludes() {
-        return new String[] {
-            "hibernateLazyInitializer", "parent", "children", "roles",
-            "newsComments", "newses", "level", "levelByRecursion",
-            "bitCode", "parentId", "theSort", "charCode", "cls", "leaf",
-            "qtip", "allowDelete", "allowEdit", "draggable",
-            "levelByCharCode", "levelByBitCode", "allowChildren", "root"
-        };
     }
 }

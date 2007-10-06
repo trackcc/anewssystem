@@ -6,7 +6,13 @@
     <language>zh-cn</language>
     <description >A news publishing system</description>
     <webMaster>xyz20003@gmail.com(Lingo)</webMaster>
-    <lastBuildDate>2007-9-17</lastBuildDate>
+    <lastBuildDate>2007-10-6</lastBuildDate>
+    <item>
+      <title>tt</title>
+      <link>http://localhost:8080/anews//anews/html/2/2007/10/06/2.html</link>
+      <pubDate>2007-10-6 21:17:41</pubDate>
+      <description><![CDATA[sadf]]></description>
+    </item>
     <item>
       <title>dd</title>
       <link>http://localhost:8080/anews//anews/html/3/2007/09/17/1.html</link>

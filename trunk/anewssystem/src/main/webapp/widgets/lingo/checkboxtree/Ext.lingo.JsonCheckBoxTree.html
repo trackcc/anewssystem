@@ -47,7 +47,6 @@ Ext.EventManager.onDocumentReady(function() {
     tree.render();
     root.expand(false, false, function() {
         root.firstChild.expand(false);
-        Ext.get('cn').dom.value = tree.getChecked().join(',');
         ser();
     });
 
@@ -66,6 +65,7 @@ ser = function() {
     var c = Ext.get('c');
     c.dom.style.display='block';
     c.dom.firstChild.innerHTML = tree.getChecked();
+    Ext.get('cn').dom.value = tree.getChecked().join(',');
 };
 
 //-->

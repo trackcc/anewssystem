@@ -9,5 +9,10 @@
     <bean class="anni.asecurity.web.IndexController" scope="request"/>
     <bean class="anni.anews.web.SandboxController" scope="request"/>
     <bean class="anni.asecurity.web.LoginController" scope="request"/>
-    <bean class="anni.anews.web.NewsTag2Controller" scope="request"/>
+    <bean class="anni.anews.web.NewsTag2Controller" scope="request">
+        <property name="entityDao" ref="newsTagManager"/>
+    </bean>
+    <bean class="anni.anews.web.News2Controller" scope="request">
+        <property name="entityDao" ref="newsManager"/>
+    </bean>
 </beans>

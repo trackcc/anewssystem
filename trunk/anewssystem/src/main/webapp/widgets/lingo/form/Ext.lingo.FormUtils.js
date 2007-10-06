@@ -55,6 +55,37 @@ Ext.lingo.FormUtils = function() {
             return field;
         }
 
+        // 创建textarea文本框
+        , createTextArea : function(meta) {
+
+            var field = new Ext.form.TextArea({
+                allowBlank  : meta.allowBlank == undefined ? false : meta.allowBlank
+                , vType     : meta.vType
+                , width     : meta.vWidth
+                , id        : meta.id
+                , name      : meta.id
+                , readOnly  : meta.readOnly
+                , defValue  : meta.defValue
+                , alt       : meta.alt
+                , maxLength : meta.maxlength ? meta.maxlength : Number.MAX_VALUE
+                , minLength : meta.minlength ? meta.minlength : 0
+                , minValue  : meta.minvalue ? meta.minvalue : 0
+                , maxValue  : meta.maxvalue ? meta.maxvalue : Number.MAX_VALUE
+                , mapping   : meta.mapping
+            });
+            if(meta.readOnly) {
+                field.style += "color:#656B86;";
+            }
+            if (isApply) {
+                field.applyTo(meta.id);
+            }
+            if(meta.defValue) {
+                field.setValue(meta.defValue);
+            }
+
+            return field;
+        }
+
         // 创建日期选择框
         , createDateField : function(meta) {
             var field = new Ext.form.DateField({
@@ -199,36 +230,65 @@ Ext.lingo.FormUtils = function() {
             return field;
         }
 
+        // 生成在线编辑器
+        , createHtmlEditor : function(meta) {
+
+            var field = new Ext.form.HtmlEditor({
+                id        : meta.id
+                , name    : meta.name
+                , mapping : meta.mapping
+                , width   : '100%'
+                , height  : '40%'
+            });
+            field.vType = "editor";
+            if (isApply) {
+                //field.render(body);
+                field.applyTo(meta.id);
+            }
+
+            return field;
+        }
+
         // 根据输入的数组，生成所有的表单字段
         , createAll : function(metaArray) {
             var columns = {};
             for (var i = 0; i < metaArray.length; i++) {
                 var meta = metaArray[i];
 
-                if (meta.vType == "date") {
-                    var field = Ext.lingo.FormUtils.createDateField(meta);
-                    columns[meta.id] = field;
-                } else if (meta.vType == "comboBox") {
-                    var field = Ext.lingo.FormUtils.createComboBox(meta);
-                    columns[meta.id] = field;
-                } else if (meta.vType == "textArea") {
-                } else if (meta.vType == "password") {
-                    var field = Ext.lingo.FormUtils.createPasswordField(meta);
-                    columns[meta.id] = field;
-                } else if (meta.vType == "passwordmeta") {
-                    var field = Ext.lingo.FormUtils.createPasswordFieldMeta(meta);
-                    columns[meta.id] = field;
-                } else if (meta.vType == "treeField") {
-                    var field = Ext.lingo.FormUtils.createTreeField(meta);
-                    columns[meta.id] = field;
-                } else if (meta.vType == "radio") {
-                    var fields = Ext.lingo.FormUtils.createRadio(meta);
-                    for (var j = 0; j < fields.length; j++) {
-                        columns[meta.id + fields[j].el.dom.value] = fields[j];
+                try {
+                    if (meta.vType == "date") {
+                        var field = Ext.lingo.FormUtils.createDateField(meta);
+                        columns[meta.id] = field;
+                    } else if (meta.vType == "comboBox") {
+                        var field = Ext.lingo.FormUtils.createComboBox(meta);
+                        columns[meta.id] = field;
+                    } else if (meta.vType == "textArea") {
+                        var field = Ext.lingo.FormUtils.createTextArea(meta);
+                        columns[meta.id] = field;
+                    } else if (meta.vType == "password") {
+                        var field = Ext.lingo.FormUtils.createPasswordField(meta);
+                        columns[meta.id] = field;
+                    } else if (meta.vType == "passwordmeta") {
+                        var field = Ext.lingo.FormUtils.createPasswordFieldMeta(meta);
+                        columns[meta.id] = field;
+                    } else if (meta.vType == "treeField") {
+                        var field = Ext.lingo.FormUtils.createTreeField(meta);
+                        columns[meta.id] = field;
+                    } else if (meta.vType == "radio") {
+                        var fields = Ext.lingo.FormUtils.createRadio(meta);
+                        for (var j = 0; j < fields.length; j++) {
+                            columns[meta.id + fields[j].el.dom.value] = fields[j];
+                        }
+                    } else if (meta.vType == "editor") {
+                        var field = Ext.lingo.FormUtils.createHtmlEditor(meta);
+                        columns[meta.id] = field;
+                    } else {
+                        var field = Ext.lingo.FormUtils.createTextField(meta);
+                        columns[meta.id] = field;
                     }
-                } else {
-                    var field = Ext.lingo.FormUtils.createTextField(meta);
-                    columns[meta.id] = field;
+                } catch (e) {
+                    console.error(e);
+                    console.error(meta);
                 }
             }
             return columns;
@@ -320,7 +380,8 @@ Ext.lingo.FormUtils = function() {
         // 生成一个有指定tab的对话框，各自对话框的标题与id都被分别指定了
         // id = id
         // titles = ['title1','title2']
-        , createTabedDialog : function(id, titles) {
+        , createTabedDialog : function(id, titles, width, height) {
+
             // 消息
             var dialogMessage = document.createElement("div");
             var waitMessage = document.createElement("div");
@@ -357,8 +418,8 @@ Ext.lingo.FormUtils = function() {
             var dialog = new Ext.BasicDialog(id, {
                 modal        : false
                 , autoTabs   : true
-                , width      : 600
-                , height     : 400
+                , width      : width ? width : 600
+                , height     : height ? height : 400
                 , shadow     : false
                 , minWidth   : 200
                 , minHeight  : 100

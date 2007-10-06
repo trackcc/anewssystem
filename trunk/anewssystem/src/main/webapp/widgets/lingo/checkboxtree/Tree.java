@@ -138,8 +138,10 @@ public class Tree {
             checked = !"none".equals(className);
         } else {
             if (isCheck) {
-                className = "some";
-                checked = !"none".equals(className);
+                if (className.equals("none")) {
+                    className = "some";
+                }
+                checked = true;
             } else {
                 className = "none";
                 checked = !"none".equals(className);

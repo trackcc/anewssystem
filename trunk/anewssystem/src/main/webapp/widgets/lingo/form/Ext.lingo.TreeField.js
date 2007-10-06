@@ -18,42 +18,25 @@ Ext.namespace("Ext.lingo");
  * 下拉树形.
  *
  */
-function createXmlTree(el, url, callback) {
-    var Tree = Ext.tree;
-    // id
-    var tree = new Tree.TreePanel(el, {
-        animate         : true,
-        loader          : new Tree.TreeLoader({dataUrl:url}), // c.dataTag
-        enableDD        : false,
-        containerScroll : true
-    });
-    // 设置根节点
-    var root = new Tree.AsyncTreeNode({
-        text      : '部门', // c.title
-        draggable : false,
-        id        :'source' // c.rootId
-    });
-    tree.setRootNode(root);
-    // 渲染
-    tree.render();
-    root.expand();
-    return tree;
-/*
-    var tree = new Ext.tree.TreePanel(el,{containerScroll: true});
-    var p = new Ext.data.HttpProxy({url:url});
-    p.on("loadexception", function(o, response, e) {
-        if (e) throw e;
-    });
-    p.load(null, {
-        read: function(response) {
-            var doc = response.responseXML;
-            tree.setRootNode(rpTreeNodeFromXml(doc.documentElement || doc));
-        }
-    }, callback || tree.render, tree);
-    return tree;
-*/
-}
+//
+//    var tree = new Ext.tree.TreePanel(el,{containerScroll: true});
+//    var p = new Ext.data.HttpProxy({url:url});
+//    p.on("loadexception", function(o, response, e) {
+//        if (e) throw e;
+//    });
+//    p.load(null, {
+//        read: function(response) {
+//            var doc = response.responseXML;
+//            tree.setRootNode(rpTreeNodeFromXml(doc.documentElement || doc));
+//        }
+//    }, callback || tree.render, tree);
+//    return tree;
+//
+//}
+
+
 // 从xml中创建树
+/*
 function rpTreeNodeFromXml(XmlEl) {
     // 如果是text节点，就取节点值，如果不是text节点，就取tagName
     var t = ((XmlEl.nodeType == 3) ? XmlEl.nodeValue : XmlEl.tagName);
@@ -98,7 +81,7 @@ function rpTreeNodeFromXml(XmlEl) {
     }
     return result;
 }
-
+*/
 
 Ext.lingo.TreeField = function(config) {
     config.readOnly = true;
@@ -147,7 +130,7 @@ Ext.extend(Ext.lingo.TreeField, Ext.form.TriggerField, {
             return;
         }
         if(this.menu == null){
-            this.menu = new Ext.menu.TreeMenu();
+            this.menu = new Ext.menu.TreeMenu(this.initialConfig);
         }
 
         Ext.apply(this.menu.picker,  {
@@ -165,6 +148,7 @@ Ext.extend(Ext.lingo.TreeField, Ext.form.TriggerField, {
 
 
 Ext.menu.TreeMenu = function(config) {
+
     Ext.menu.TreeMenu.superclass.constructor.call(this, config);
     this.plain = true;
     var di = new Ext.menu.TreeItem(config);
@@ -224,7 +208,7 @@ Ext.extend(Ext.TreePicker, Ext.Component, {
         this.el = eo;
         container.dom.appendChild(el);
 
-        var tree = createXmlTree(el, me.url, function() {
+        var tree = this.createTree(el, me.url, function() {
             var tree = this;
             tree.render();
             tree.selectPath(me.getValue(), 'text');
@@ -233,6 +217,29 @@ Ext.extend(Ext.TreePicker, Ext.Component, {
             me.fireEvent("select", me, node);
         });
         this.tree=tree;
+    }
+
+    , createTree : function(el, url, callback) {
+        var Tree = Ext.tree;
+        // id
+        var tree = new Tree.TreePanel(el, {
+            animate         : true,
+            loader          : new Tree.TreeLoader({dataUrl:url}), // c.dataTag
+            enableDD        : false,
+            containerScroll : true
+        });
+
+        // 设置根节点
+        var root = new Tree.AsyncTreeNode({
+            text      : this.initialConfig.treeConfig.title, // c.title
+            draggable : false,
+            id        : 'source'
+        });
+        tree.setRootNode(root);
+        // 渲染
+        tree.render();
+        root.expand();
+        return tree;
     }
 });
 

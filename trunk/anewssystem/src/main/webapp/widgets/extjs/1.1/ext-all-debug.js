@@ -21091,7 +21091,7 @@ Ext.extend(Ext.form.TextField, Ext.form.Field,  {
 
     validateValue : function(value){
         if(value.length < 1 || value === this.emptyText){
-			if(this.allowBlank){
+            if(this.allowBlank){
                  this.clearInvalid();
                  return true;
              }else{

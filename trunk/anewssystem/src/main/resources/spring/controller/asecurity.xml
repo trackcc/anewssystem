@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<!-- 权限 -->
+<beans default-lazy-init="false" default-autowire="byName">
+    <bean class="anni.asecurity.web.DeptController" parent="baseController" scope="request">
+        <property name="entityDao" ref="deptManager"/>
+    </bean>
+    <bean class="anni.asecurity.web.UserController" parent="baseController" scope="request">
+        <property name="entityDao" ref="userManager"/>
+    </bean>
+    <bean class="anni.asecurity.web.RoleController" parent="baseController" scope="request">
+        <property name="entityDao" ref="roleManager"/>
+    </bean>
+    <bean class="anni.asecurity.web.ResourceController" parent="baseController" scope="request">
+        <property name="entityDao" ref="resourceManager"/>
+    </bean>
+    <bean class="anni.asecurity.web.MenuController" parent="baseController" scope="request">
+        <property name="entityDao" ref="menuManager"/>
+    </bean>
+</beans>

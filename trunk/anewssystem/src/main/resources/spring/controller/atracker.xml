@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<!-- 项目跟踪 -->
+<beans default-lazy-init="false" default-autowire="byName">
+    <bean class="anni.atracker.web.TrackerProjectController" parent="baseController" scope="request">
+        <property name="entityDao" ref="trackerProjectManager"/>
+    </bean>
+    <bean class="anni.atracker.web.TrackerIssueController" parent="baseController" scope="request">
+        <property name="entityDao" ref="trackerIssueManager"/>
+    </bean>
+    <bean class="anni.atracker.web.TrackerController" parent="baseController" scope="request"/>
+</beans>

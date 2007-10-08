@@ -188,13 +188,8 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                 }
             }.createDelegate(this));
 
-            // 读取数据
-            this.dataStore.on('beforeload', function() {
-                this.dataStore.baseParams = {
-                    filterValue : this.filter.getValue(),
-                    filterTxt   : this.filterTxt
-                };
-            }.createDelegate(this));
+            // 设置baseParams
+            this.setBaseParams();
         }
 
         // 页脚
@@ -211,6 +206,17 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         this.dataStore.load({
             params:{start:0, limit:this.pageSize}
         });
+    }
+
+    // 设置baseParams
+    , setBaseParams : function() {
+        // 读取数据
+        this.dataStore.on('beforeload', function() {
+            this.dataStore.baseParams = {
+                filterValue : this.filter.getValue(),
+                filterTxt   : this.filterTxt
+            };
+        }.createDelegate(this));
     }
 
     // 进行渲染
@@ -264,12 +270,15 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                 var meta = this.metaData[i];
 
                 var id = meta.id;
-                var value = this.menuData.getAt(0).data[id];
+                var value;
                 if (meta.mapping) {
                     try {
                         value = eval("this.menuData.getAt(0).data." + meta.mapping);
                     } catch (e) {
+                        value = this.menuData.getAt(0).data[meta.mapping];
                     }
+                } else {
+                    value = this.menuData.getAt(0).data[id];
                 }
 
                 if (meta.vType == "radio") {
@@ -336,22 +345,11 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
         this.yesBtn = this.dialog.addButton("确定", function() {
             var item = Ext.lingo.FormUtils.serialFields(this.columns);
+
             if (!item) {
                 return;
             }
-
-            this.dialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
-            var hide = function() {
-                this.dialog.el.unmask();
-                this.dialog.hide();
-                this.refresh.apply(this);
-            }.createDelegate(this);
-            Ext.lib.Ajax.request(
-                'POST',
-                this.urlSave,
-                {success:hide,failure:hide},
-                'data=' + encodeURIComponent(Ext.encode(item))
-            );
+            this.submitForm(item);
         }.createDelegate(this), this.dialog);
 
         // 设置两个tab
@@ -370,13 +368,33 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         this.noBtn = this.dialog.addButton("取消", this.dialog.hide, this.dialog);
     }
 
+    // 提交添加，修改表单
+    , submitForm : function(item) {
+        this.dialog.el.mask('提交数据，请稍候...', 'x-mask-loading');
+        var hide = function() {
+            this.dialog.el.unmask();
+            this.dialog.hide();
+            this.refresh.apply(this);
+        }.createDelegate(this);
+        Ext.lib.Ajax.request(
+            'POST',
+            this.urlSave,
+            {success:hide,failure:hide},
+            'data=' + encodeURIComponent(Ext.encode(item))
+        );
+    }
+
     // 超级重要的一个方法，自动生成表头，自动生成form，都是在这里进行的
     , applyElements : function() {
 
         if (this.columns == null || this.headers == null) {
             this.headers = new Array();
             for (var i = 0; i < this.metaData.length; i++) {
-                this.headers[this.headers.length] = this.metaData[i].id;
+                if (this.metaData[i].mapping) {
+                    this.headers[this.headers.length] = this.metaData[i].mapping;
+                } else {
+                    this.headers[this.headers.length] = this.metaData[i].id;
+                }
             }
 
             // 打开验证功能

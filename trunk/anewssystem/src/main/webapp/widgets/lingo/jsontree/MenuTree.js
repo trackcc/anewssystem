@@ -65,12 +65,12 @@ Ext.onReady(function(){
     var lightTree = new Ext.lingo.JsonTree("lighttree", {
         metaData      : metaData,
         dialogContent : "content",
-        urlGetAll     : "getAll.json",
+        urlGetAllTree : "getAll.json",
         urlInsertTree : "success.json",
         urlRemoveTree : "success.json",
         urlSortTree   : "success.json",
         urlLoadData   : "loadData.json",
-        urlUpdate     : "success.json"
+        urlUpdateTree : "success.json"
     });
 
     // 渲染树形

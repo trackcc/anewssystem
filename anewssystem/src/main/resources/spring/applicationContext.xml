@@ -25,6 +25,8 @@
         <property name="basenames">
             <list>
                 <value>i18n/anews</value>
+                <value>i18n/asecurity</value>
+                <value>i18n/atracker</value>
                 <value>i18n/message</value>
             </list>
         </property>
@@ -39,7 +41,8 @@
     <!-- 以AspectJ方式 定义 AOP -->
     <aop:config proxy-target-class="true">
         <aop:advisor pointcut="execution(* anni.anews.manager..*Manager.*(..))" advice-ref="txAdvice"/>
-        <aop:advisor pointcut="execution(* anni.anews.dao..*Dao.*(..))" advice-ref="txAdvice"/>
+        <aop:advisor pointcut="execution(* anni.asecurity.manager..*Manager.*(..))" advice-ref="txAdvice"/>
+        <aop:advisor pointcut="execution(* anni.atracker.manager..*Manager.*(..))" advice-ref="txAdvice"/>
         <aop:advisor pointcut="execution(* anni.core.dao..*Dao.*(..))" advice-ref="txAdvice"/>
     </aop:config>
 

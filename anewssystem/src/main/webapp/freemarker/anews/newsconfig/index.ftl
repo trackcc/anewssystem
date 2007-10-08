@@ -80,6 +80,13 @@ Ext.onReady(function(){
             name:'templateName',
             width:'auto',
             inputValue:'default'
+        }),
+        new Ext.form.Radio({
+            id:'extjsTemplate',
+            boxLabel:'EXTJS模板',
+            name:'templateName',
+            width:'auto',
+            inputValue:'extjs'
         })
     );
 

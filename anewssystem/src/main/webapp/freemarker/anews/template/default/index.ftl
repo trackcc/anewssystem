@@ -13,7 +13,7 @@ p {
     </style>
   </head>
   <body>
-    <h1>A News System</h1><a href="${ctx}/admin/">[测试后台]</a>
+    <h1>A News System</h1><a href="${ctx}/sandbox/index.htm">[测试后台]</a>
     <hr/>
 <#list newsCategoryList! as category>
     <div class="category">

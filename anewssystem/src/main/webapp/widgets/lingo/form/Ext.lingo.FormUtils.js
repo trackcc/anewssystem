@@ -116,13 +116,15 @@ Ext.lingo.FormUtils = function() {
         // 创建下拉框
         , createComboBox : function(meta) {
             var field = new Ext.form.ComboBox({
-                id           : meta.id
-                , name       : meta.id
-                , allowBlank : meta.allowBlank == undefined ? false : eval(meta.allowBlank)
-                , transform  : meta.id
-                , vType      : "comboBox"
-                , width      : meta.vWidth
-                , mapping    : meta.mapping
+                id              : meta.id
+                , name          : meta.id
+                , readOnly      : meta.readOnly !== false
+                , triggerAction : "all"
+                , allowBlank    : meta.allowBlank == undefined ? false : eval(meta.allowBlank)
+                , transform     : meta.id
+                , vType         : "comboBox"
+                , width         : meta.vWidth
+                , mapping       : meta.mapping
             });
             return field;
         }

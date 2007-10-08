@@ -48,11 +48,15 @@
                 <value>anni.anews.domain.News</value>
                 <value>anni.anews.domain.NewsComment</value>
                 <value>anni.anews.domain.NewsTag</value>
+
                 <value>anni.asecurity.domain.Dept</value>
                 <value>anni.asecurity.domain.User</value>
                 <value>anni.asecurity.domain.Role</value>
                 <value>anni.asecurity.domain.Resource</value>
                 <value>anni.asecurity.domain.Menu</value>
+
+                <value>anni.atracker.domain.TrackerProject</value>
+                <value>anni.atracker.domain.TrackerIssue</value>
             </list>
         </property>
         <property name="hibernateProperties">

@@ -32,12 +32,12 @@ Ext.lingo.JsonTree = function(container, config) {
     this.id            = this.container.id;
     this.config        = config;
     this.metaData      = config.metaData;
-    this.urlGetAll     = config.urlGetAll ? config.urlGetAll : "getAllTree.htm";
+    this.urlGetAllTree = config.urlGetAllTree ? config.urlGetAllTree : "getAllTree.htm";
     this.urlInsertTree = config.urlInsertTree ? config.urlInsertTree : "insertTree.htm";
     this.urlRemoveTree = config.urlRemoveTree ? config.urlRemoveTree : "removeTree.htm";
     this.urlSortTree   = config.urlSortTree ? config.urlSortTree : "sortTree.htm";
     this.urlLoadData   = config.urlLoadData ? config.urlLoadData : "loadData.htm";
-    this.urlUpdate     = config.urlUpdate ? config.urlUpdate : "updateTree.htm";
+    this.urlUpdateTree = config.urlUpdateTree ? config.urlUpdateTree : "updateTree.htm";
 
     // 什么意思这句，作用？
     // by 250678089 死胖子 2007-09-16 22:13
@@ -66,7 +66,7 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
 
         // 创建树形
         if (this.treePanel == null) {
-            var treeLoader = new Ext.tree.TreeLoader({dataUrl:this.urlGetAll});
+            var treeLoader = new Ext.tree.TreeLoader({dataUrl:this.urlGetAllTree});
             this.treePanel = new Ext.tree.TreePanel(this.id, {
                 animate         : true,
                 containerScroll : true,
@@ -85,57 +85,7 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
         }
         // 生成工具条
         if (this.toolbar == null) {
-            this.toolbar = new Ext.Toolbar(this.treePanel.el.createChild({tag:'div'}));
-
-            this.toolbar.add({
-                text    : '新增下级分类',
-                icon    : '../widgets/lingo/list-items.gif',
-                cls     : 'x-btn-text-icon album-btn',
-                tooltip : '添加选中节点的下级分类',
-                handler : createChild
-            }, {
-                text    : '新增同级分类',
-                icon    : '../widgets/lingo/list-items.gif',
-                cls     : 'x-btn-text-icon album-btn',
-                tooltip : '添加选中节点的同级分类',
-                handler : createBrother
-            }, {
-                text    : '修改分类',
-                icon    : '../widgets/lingo/list-items.gif',
-                cls     : 'x-btn-text-icon album-btn',
-                tooltip : '修改选中分类',
-                handler : updateNode
-            }, {
-                text    : '删除分类',
-                icon    : '../widgets/lingo/list-items.gif',
-                cls     : 'x-btn-text-icon album-btn',
-                tooltip : '删除一个分类',
-                handler : removeNode
-            }, '-', {
-                text    : '保存排序',
-                icon    : '../widgets/lingo/list-items.gif',
-                cls     : 'x-btn-text-icon album-btn',
-                tooltip : '保存排序结果',
-                handler : save
-            }, '-', {
-                text    : '展开',
-                icon    : '../widgets/lingo/list-items.gif',
-                cls     : 'x-btn-text-icon album-btn',
-                tooltip : '展开所有分类',
-                handler : expandAll
-            }, {
-                text    : '合拢',
-                icon    : '../widgets/lingo/list-items.gif',
-                cls     : 'x-btn-text-icon album-btn',
-                tooltip : '合拢所有分类',
-                handler : collapseAll
-            }, {
-                text    : '刷新',
-                icon    : '../widgets/lingo/list-items.gif',
-                cls     : 'x-btn-text-icon album-btn',
-                tooltip : '刷新所有节点',
-                handler : refresh
-            });
+            this.buildToolbar();
         }
 
         // 设置编辑器
@@ -190,57 +140,9 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
 
         // 右键菜单
         this.treePanel.on('contextmenu', prepareContext);
-        this.contextMenu = new Ext.menu.Menu({
-            id    : 'copyCtx',
-            items : [{
-                    id      : 'createChild',
-                    icon    : '../widgets/lingo/list-items.gif',
-                    handler : createChild,
-                    cls     : 'create-mi',
-                    text    : '新增下级节点'
-                },{
-                    id      : 'createBrother',
-                    icon    : '../widgets/lingo/list-items.gif',
-                    handler : createBrother,
-                    cls     : 'create-mi',
-                    text    : '新增同级节点'
-                },{
-                    id      : 'updateNode',
-                    icon    : '../widgets/lingo/list-items.gif',
-                    handler : updateNode,
-                    cls     : 'update-mi',
-                    text    : '修改节点'
-                },{
-                    id      : 'remove',
-                    icon    : '../widgets/lingo/list-items.gif',
-                    handler : removeNode,
-                    cls     : 'remove-mi',
-                    text    : '删除节点'
-                },'-',{
-                    id      : 'expand',
-                    icon    : '../widgets/lingo/list-items.gif',
-                    handler : expandAll,
-                    cls     : 'expand-all',
-                    text    : '展开'
-                },{
-                    id      : 'collapse',
-                    icon    : '../widgets/lingo/list-items.gif',
-                    handler : collapseAll,
-                    cls     : 'collapse-all',
-                    text    : '合拢'
-                },{
-                    id      : 'refresh',
-                    icon    : '../widgets/lingo/list-items.gif',
-                    handler : refresh,
-                    cls     : 'refresh',
-                    text    : '刷新'
-                },{
-                    id      : 'config',
-                    icon    : '../widgets/lingo/list-items.gif',
-                    handler : configInfo,
-                    text    : '详细配置'
-            }]
-        });
+        if (this.contextMenu == null) {
+            this.buildContextMenu();
+        }
 
         // 拖拽判断
         this.treePanel.on("nodedragover", function(e){
@@ -294,7 +196,120 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
             n.ui.textNode.style.border = "1px red dotted";
           });
         }
-    }, render : function() {
+    }
+
+    // 生成工具条
+    , buildToolbar : function() {
+        this.toolbar = new Ext.Toolbar(this.treePanel.el.createChild({tag:'div'}));
+
+        this.toolbar.add({
+            text    : '新增下级分类',
+            icon    : '../widgets/lingo/list-items.gif',
+            cls     : 'x-btn-text-icon album-btn',
+            tooltip : '添加选中节点的下级分类',
+            handler : this.createChild.createDelegate(this)
+        }, {
+            text    : '新增同级分类',
+            icon    : '../widgets/lingo/list-items.gif',
+            cls     : 'x-btn-text-icon album-btn',
+            tooltip : '添加选中节点的同级分类',
+            handler : this.createBrother.createDelegate(this)
+        }, {
+            text    : '修改分类',
+            icon    : '../widgets/lingo/list-items.gif',
+            cls     : 'x-btn-text-icon album-btn',
+            tooltip : '修改选中分类',
+            handler : this.updateNode.createDelegate(this)
+        }, {
+            text    : '删除分类',
+            icon    : '../widgets/lingo/list-items.gif',
+            cls     : 'x-btn-text-icon album-btn',
+            tooltip : '删除一个分类',
+            handler : this.removeNode.createDelegate(this)
+        }, '-', {
+            text    : '保存排序',
+            icon    : '../widgets/lingo/list-items.gif',
+            cls     : 'x-btn-text-icon album-btn',
+            tooltip : '保存排序结果',
+            handler : this.save.createDelegate(this)
+        }, '-', {
+            text    : '展开',
+            icon    : '../widgets/lingo/list-items.gif',
+            cls     : 'x-btn-text-icon album-btn',
+            tooltip : '展开所有分类',
+            handler : this.expandAll.createDelegate(this)
+        }, {
+            text    : '合拢',
+            icon    : '../widgets/lingo/list-items.gif',
+            cls     : 'x-btn-text-icon album-btn',
+            tooltip : '合拢所有分类',
+            handler : this.collapseAll.createDelegate(this)
+        }, {
+            text    : '刷新',
+            icon    : '../widgets/lingo/list-items.gif',
+            cls     : 'x-btn-text-icon album-btn',
+            tooltip : '刷新所有节点',
+            handler : this.refresh.createDelegate(this)
+        });
+    }
+
+    // 生成右键菜单
+    , buildContextMenu : function() {
+        this.contextMenu = new Ext.menu.Menu({
+            id    : 'copyCtx',
+            items : [{
+                    id      : 'createChild',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : this.createChild.createDelegate(this),
+                    cls     : 'create-mi',
+                    text    : '新增下级节点'
+                },{
+                    id      : 'createBrother',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : this.createBrother.createDelegate(this),
+                    cls     : 'create-mi',
+                    text    : '新增同级节点'
+                },{
+                    id      : 'updateNode',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : this.updateNode.createDelegate(this),
+                    cls     : 'update-mi',
+                    text    : '修改节点'
+                },{
+                    id      : 'remove',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : this.removeNode.createDelegate(this),
+                    cls     : 'remove-mi',
+                    text    : '删除节点'
+                },'-',{
+                    id      : 'expand',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : this.expandAll.createDelegate(this),
+                    cls     : 'expand-all',
+                    text    : '展开'
+                },{
+                    id      : 'collapse',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : this.collapseAll.createDelegate(this),
+                    cls     : 'collapse-all',
+                    text    : '合拢'
+                },{
+                    id      : 'refresh',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : refresh,
+                    cls     : 'refresh',
+                    text    : '刷新'
+                },{
+                    id      : 'config',
+                    icon    : '../widgets/lingo/list-items.gif',
+                    handler : configInfo,
+                    text    : '详细配置'
+            }]
+        });
+    }
+
+    // 渲染树形
+    , render : function() {
         this.init();
 
         // 创建根节点，下面比较乱，最好整理一下！你这里用一个右键处理我认为更好些！
@@ -457,12 +472,15 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
                 var meta = this.metaData[i];
 
                 var id = meta.id;
-                var value = this.menuData.getAt(0).data[id];
+                var value;
                 if (meta.mapping) {
                     try {
                         value = eval("this.menuData.getAt(0).data." + meta.mapping);
                     } catch (e) {
+                        value = this.menuData.getAt(0).data[meta.mapping];
                     }
+                } else {
+                    value = this.menuData.getAt(0).data[id];
                 }
 
                 if (meta.vType == "radio") {
@@ -513,7 +531,7 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
             }.createDelegate(this);
             Ext.lib.Ajax.request(
                 'POST',
-                this.urlUpdate,
+                this.urlUpdateTree,
                 {success:hide,failure:hide},
                 'data=' + encodeURIComponent(Ext.encode(item))
             );
@@ -538,7 +556,11 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
         if (this.columns == null || this.headers == null) {
             this.headers = new Array();
             for (var i = 0; i < this.config.metaData.length; i++) {
-                this.headers[this.headers.length] = this.config.metaData[i].id;
+                if (this.metaData[i].mapping) {
+                    this.headers[this.headers.length] = this.metaData[i].mapping;
+                } else {
+                    this.headers[this.headers.length] = this.metaData[i].id;
+                }
             }
 
             // 打开验证功能

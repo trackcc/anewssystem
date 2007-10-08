@@ -1,4 +1,6 @@
-package anni.asecurity.web;
+package anni.atracker.web;
+
+import anni.atracker.domain.TrackerProject;
 
 import anni.core.test.AbstractWebTests;
 
@@ -6,15 +8,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 
-public class IndexControllerTest extends AbstractWebTests {
-    protected static Log logger = LogFactory.getLog(IndexControllerTest.class);
+public class TrackerProjectControllerTest extends AbstractWebTests {
+    protected static Log logger = LogFactory.getLog(TrackerProjectControllerTest.class);
 
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (IndexController) applicationContext.getBean(
-                "anni.asecurity.web.IndexController");
+        controller = (TrackerProjectController) applicationContext.getBean(
+                "anni.atracker.web.TrackerProjectController");
     }
 
     /** * tearDown */
@@ -25,9 +27,5 @@ public class IndexControllerTest extends AbstractWebTests {
 
     public void testDefault() throws Exception {
         assertNotNull(controller);
-        request.setRequestURI("/index/index.htm");
-        mv = controller.handleRequest(request, response);
-        // mvHelper.assertModelAttributeAvailable(mv, "page");
-        mvHelper.assertViewName(mv, null);
     }
 }

@@ -6,8 +6,6 @@ import java.util.List;
 import anni.core.json.JsonController;
 import anni.core.json.JsonUtils;
 
-import anni.core.web.prototype.StreamView;
-
 import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
@@ -40,12 +38,8 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
 
         List<T> list = getEntityDao().find(hql);
 
-        response.setCharacterEncoding("UTF-8");
         JsonUtils.write(list, response.getWriter(), getExcludesForAll(),
             getDatePattern());
-
-        StreamView view = new StreamView("application/json");
-        mv.setView(view);
     }
 
     /**

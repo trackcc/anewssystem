@@ -2,18 +2,25 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 
 <beans default-lazy-init="true" default-autowire="byName">
+  <!--anews-->
   <bean id="newsCategoryManager" class="anni.anews.manager.NewsCategoryManager"/>
   <bean id="newsConfigManager" class="anni.anews.manager.NewsConfigManager"/>
   <bean id="newsManager" class="anni.anews.manager.NewsManager"/>
   <bean id="newsCommentManager" class="anni.anews.manager.NewsCommentManager"/>
   <bean id="newsTagManager" class="anni.anews.manager.NewsTagManager"/>
 
+  <!--asecurity-->
   <bean id="deptManager" class="anni.asecurity.manager.DeptManager"/>
   <bean id="userManager" class="anni.asecurity.manager.UserManager"/>
   <bean id="roleManager" class="anni.asecurity.manager.RoleManager"/>
   <bean id="resourceManager" class="anni.asecurity.manager.ResourceManager"/>
   <bean id="menuManager" class="anni.asecurity.manager.MenuManager"/>
 
+  <!--atracker-->
+  <bean id="trackerProjectManager" class="anni.atracker.manager.TrackerProjectManager"/>
+  <bean id="trackerIssueManager" class="anni.atracker.manager.TrackerIssueManager"/>
+
+  <!--etc-->
   <bean id="newsTagHelper" class="anni.anews.helper.NewsTagHelper"/>
   <bean id="resourceHelper" class="anni.asecurity.helper.ResourceHelper"/>
   <bean id="roleHelper" class="anni.asecurity.helper.RoleHelper"/>

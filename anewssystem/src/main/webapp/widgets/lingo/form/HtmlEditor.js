@@ -447,7 +447,7 @@ Ext.form.HtmlEditor = Ext.extend(Ext.form.Field, {
     // modify by 2007-10-06
     // I want image
     createImg : function() {
-        var url = prompt(this.createLinkText, this.defaultLinkValue);
+        var url = prompt("输入图片的url", this.defaultLinkValue);
         if (url && url != 'http:/' + '/') {
             this.insertAtCursor("<img src='" + url + "' />");
         }

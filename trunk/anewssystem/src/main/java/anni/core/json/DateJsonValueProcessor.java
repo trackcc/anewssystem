@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
+import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
 
 import org.apache.commons.logging.Log;
@@ -45,7 +46,7 @@ public class DateJsonValueProcessor implements JsonValueProcessor {
      * @param value Object
      * @return Object
      */
-    public Object processArrayValue(Object value) {
+    public Object processArrayValue(Object value, JsonConfig jsonConfig) {
         return process(value);
     }
 
@@ -54,9 +55,11 @@ public class DateJsonValueProcessor implements JsonValueProcessor {
      *
      * @param key String
      * @param value Object
+     * @param jsonConfig 配置
      * @return Object
      */
-    public Object processObjectValue(String key, Object value) {
+    public Object processObjectValue(String key, Object value,
+        JsonConfig jsonConfig) {
         return process(value);
     }
 
@@ -64,6 +67,7 @@ public class DateJsonValueProcessor implements JsonValueProcessor {
      * 格式化日期.
      *
      * @param value Object
+     * @param jsonConfig 配置
      * @return Object
      */
     private Object process(Object value) {

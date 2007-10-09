@@ -236,7 +236,7 @@ public class UserController extends LongGridController<User, UserManager> {
         User entity = bindObject();
         String data = getStrParam("data", "");
 
-        JSONObject jsonObject = JSONObject.fromString(data);
+        JSONObject jsonObject = JSONObject.fromObject(data);
 
         // 部门
         try {

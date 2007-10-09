@@ -517,7 +517,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
         News entity = bindObject();
         String data = getStrParam("data", "");
 
-        JSONObject jsonObject = JSONObject.fromString(data);
+        JSONObject jsonObject = JSONObject.fromObject(data);
 
         // ================================================
         // 修改时，不会更新发布时间

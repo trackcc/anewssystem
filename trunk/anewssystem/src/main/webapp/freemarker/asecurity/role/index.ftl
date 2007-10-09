@@ -58,7 +58,6 @@
         </div>
       </div>
     </div>
-    <div id="menuDialog"></div>
     <div id="error_message" style="display:block"></div>
 <script type="text/javascript">
 //DWREngine.setErrorHandler(errorHandler);

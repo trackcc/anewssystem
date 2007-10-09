@@ -281,6 +281,7 @@ Ext.onReady(function(){
             );
         }.createDelegate(this), configMenuDialog);
         this.tabs = configMenuDialog.getTabs();
+
         this.tabs.getTab(0).on("activate", function() {
             this.yesBtn.show();
         }, this, true);

@@ -170,7 +170,7 @@ public class LongTreeController<T extends LongTreeNode<T>, D extends LongTreeHib
      */
     public void updateTree() throws Exception {
         String data = getStrParam("data", "");
-        JSONObject jsonObject = JSONObject.fromString(data);
+        JSONObject jsonObject = JSONObject.fromObject(data);
 
         T entity = getEntityDao().get(jsonObject.getLong("id"));
         JsonUtils.json2Bean(jsonObject, entity, getExcludesForChildren(),

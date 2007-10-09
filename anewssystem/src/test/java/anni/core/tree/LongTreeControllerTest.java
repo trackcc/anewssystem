@@ -85,7 +85,7 @@ public class LongTreeControllerTest extends TestCase {
         mv = controller.handleRequest(request, response);
         assertNull(mv.getViewName());
         response.getWriter().flush();
-        assertEquals("[{\"text\":\"\",\"parentId\":0,\"theSort\":0,\"allowChildren\":true,\"leaf\":false,\"cls\":\"\",\"qtip\":\"\",\"allowDelete\":true,\"name\":\"\",\"draggable\":true,\"allowEdit\":true,\"id\":0}]",
+        assertEquals("[{\"parentId\":0,\"text\":\"\",\"theSort\":0,\"allowChildren\":true,\"cls\":\"\",\"leaf\":false,\"qtip\":\"\",\"allowDelete\":true,\"allowEdit\":true,\"draggable\":true,\"name\":\"\",\"id\":0}]",
             response.getContentAsString());
     }
 
@@ -96,7 +96,7 @@ public class LongTreeControllerTest extends TestCase {
         mv = controller.handleRequest(request, response);
         assertNull(mv.getViewName());
         response.getWriter().flush();
-        assertEquals("[{\"text\":\"\",\"parentId\":0,\"theSort\":0,\"allowChildren\":true,\"leaf\":true,\"cls\":\"\",\"qtip\":\"\",\"allowDelete\":true,\"name\":\"\",\"draggable\":true,\"allowEdit\":true,\"id\":1}]",
+        assertEquals("[{\"parentId\":0,\"text\":\"\",\"theSort\":0,\"allowChildren\":true,\"cls\":\"\",\"leaf\":true,\"qtip\":\"\",\"allowDelete\":true,\"allowEdit\":true,\"draggable\":true,\"name\":\"\",\"id\":1}]",
             response.getContentAsString());
     }
 
@@ -107,7 +107,7 @@ public class LongTreeControllerTest extends TestCase {
         mv = controller.handleRequest(request, response);
         assertNull(mv.getViewName());
         response.getWriter().flush();
-        assertEquals("[{\"text\":\"\",\"parentId\":0,\"theSort\":0,\"allowChildren\":true,\"leaf\":true,\"cls\":\"\",\"qtip\":\"\",\"allowDelete\":true,\"name\":\"\",\"draggable\":true,\"allowEdit\":true,\"id\":1}]",
+        assertEquals("[{\"parentId\":0,\"text\":\"\",\"theSort\":0,\"allowChildren\":true,\"cls\":\"\",\"leaf\":true,\"qtip\":\"\",\"allowDelete\":true,\"allowEdit\":true,\"draggable\":true,\"name\":\"\",\"id\":1}]",
             response.getContentAsString());
     }
 

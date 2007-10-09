@@ -82,7 +82,7 @@ public class LongGridController<T extends LongGridBean, D extends HibernateEntit
      */
     protected T bindObject() throws Exception {
         String data = getStrParam("data", null);
-        JSONObject jsonObject = JSONObject.fromString(data);
+        JSONObject jsonObject = JSONObject.fromObject(data);
         T entity = null;
 
         try {

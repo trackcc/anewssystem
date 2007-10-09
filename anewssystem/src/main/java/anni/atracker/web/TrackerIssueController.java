@@ -45,7 +45,7 @@ public class TrackerIssueController extends LongGridController<TrackerIssue, Tra
         logger.info(params());
 
         String data = getStrParam("data", "");
-        JSONObject jsonObject = JSONObject.fromString(data);
+        JSONObject jsonObject = JSONObject.fromObject(data);
         long projectId = jsonObject.getLong("trackerProject.id");
         TrackerProject trackerProject = trackerProjectManager.get(projectId);
 

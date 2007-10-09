@@ -101,13 +101,13 @@ public class JsonView extends AbstractView {
      * Creates a JSON [JSONObject,JSONArray,JSONNUll] from the model values.
      */
     protected final JSON defaultCreateJSON(Map model) {
-        JsonConfig jsonConfig = JsonConfig.getInstance();
+        JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.setExcludes(getExcludedProperties());
         jsonConfig.setIgnoreDefaultExcludes(isIgnoreDefaultExcludes());
         jsonConfig.registerJsonValueProcessor(Date.class,
             new DateJsonValueProcessor(datePattern));
 
-        return JSONSerializer.toJSON(model);
+        return JSONSerializer.toJSON(model, jsonConfig);
     }
 
     /**

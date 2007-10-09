@@ -35,16 +35,17 @@ public class DateJsonValueProcessorTest extends TestCase {
     public void testProcessArrayValue() {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        assertEquals(sdf.format(date), proc.processArrayValue(date));
+        assertEquals(sdf.format(date), proc.processArrayValue(date, null));
     }
 
     public void testProcessObjectValue() {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        assertEquals(sdf.format(date), proc.processObjectValue("key", date));
+        assertEquals(sdf.format(date),
+            proc.processObjectValue("key", date, null));
     }
 
     public void testProcessObjectValueForNull() {
-        assertNull(proc.processObjectValue("key", null));
+        assertNull(proc.processObjectValue("key", null, null));
     }
 }

@@ -102,7 +102,7 @@ public class TrackerProjectController extends JsonController<TrackerProject, Tra
     /** * @throws Exception for json. */
     public void updateTree() throws Exception {
         String data = getStrParam("data", "");
-        JSONObject jsonObject = JSONObject.fromString(data);
+        JSONObject jsonObject = JSONObject.fromObject(data);
 
         TrackerProject entity = getEntityDao().get(jsonObject.getLong("id"));
         JsonUtils.json2Bean(jsonObject, entity, getExcludes(), "yyyy-MM-dd");

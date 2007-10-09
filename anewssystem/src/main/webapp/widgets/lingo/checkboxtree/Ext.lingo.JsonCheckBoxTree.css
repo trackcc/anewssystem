@@ -24,7 +24,7 @@
     vertical-align:middle;
     background-position:center;
     background-repeat:no-repeat;
-    background-image:url(../../extjs/1.1/resources/images/default/user/checkbox/radiochecked.gif);
+    background-image:url(../../extjs/1.1/resources/images/default/user/checkbox/checkboxsomechecked.gif);
 }
 
 /* tree checkbox, height/width needed b/c of IE spacing weirdly, breaks lines */

@@ -50,9 +50,9 @@ public class JsonUtils {
      */
     public static void write(Object bean, Writer writer,
         String[] excludes, String datePattern) throws Exception {
-        configJson(excludes, datePattern);
+        JsonConfig jsonConfig = configJson(excludes, datePattern);
 
-        JSON json = JSONSerializer.toJSON(bean);
+        JSON json = JSONSerializer.toJSON(bean, jsonConfig);
 
         json.write(writer);
     }
@@ -62,14 +62,18 @@ public class JsonUtils {
      *
      * @param excludes 不需要转换的属性数组
      * @param datePattern 日期转换模式
+     * @return JsonConfig 根据excludes和dataPattern生成的jsonConfig，用于write
      */
-    public static void configJson(String[] excludes, String datePattern) {
-        JsonConfig jsonConfig = JsonConfig.getInstance();
+    public static JsonConfig configJson(String[] excludes,
+        String datePattern) {
+        JsonConfig jsonConfig = new JsonConfig();
         jsonConfig.setExcludes(excludes);
         jsonConfig.setIgnoreDefaultExcludes(false);
         jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
         jsonConfig.registerJsonValueProcessor(Date.class,
             new DateJsonValueProcessor(datePattern));
+
+        return jsonConfig;
     }
 
     /**
@@ -88,8 +92,7 @@ public class JsonUtils {
     public static <T extends Object> T json2Bean(String data,
         Class<T> clazz, String[] excludes, String datePattern)
         throws Exception {
-        JsonUtils.configJson(excludes, datePattern);
-
+        // JsonUtils.configJson(excludes, datePattern);
         T entity = clazz.newInstance();
 
         return json2Bean(data, entity, excludes, datePattern);
@@ -110,9 +113,8 @@ public class JsonUtils {
      */
     public static <T extends Object> T json2Bean(String data, T entity,
         String[] excludes, String datePattern) throws Exception {
-        JsonUtils.configJson(excludes, datePattern);
-
-        JSONObject jsonObject = JSONObject.fromString(data);
+        // JsonUtils.configJson(excludes, datePattern);
+        JSONObject jsonObject = JSONObject.fromObject(data);
 
         return json2Bean(jsonObject, entity, excludes, datePattern);
     }
@@ -133,8 +135,7 @@ public class JsonUtils {
     public static <T extends Object> T json2Bean(JSONObject jsonObject,
         Class<T> clazz, String[] excludes, String datePattern)
         throws Exception {
-        JsonUtils.configJson(excludes, datePattern);
-
+        // JsonUtils.configJson(excludes, datePattern);
         T entity = clazz.newInstance();
 
         return json2Bean(jsonObject, entity, excludes, datePattern);
@@ -156,8 +157,7 @@ public class JsonUtils {
     public static <T extends Object> T json2Bean(JSONObject jsonObject,
         T entity, String[] excludes, String datePattern)
         throws Exception {
-        JsonUtils.configJson(excludes, datePattern);
-
+        // JsonUtils.configJson(excludes, datePattern);
         for (Object object : jsonObject.entrySet()) {
             Map.Entry entry = (Map.Entry) object;
             String propertyName = entry.getKey().toString();
@@ -221,12 +221,11 @@ public class JsonUtils {
     public static <T extends Object> List<T> json2List(String data,
         Class<T> clazz, String[] excludes, String datePattern)
         throws Exception {
-        JsonUtils.configJson(excludes, datePattern);
-
+        // JsonUtils.configJson(excludes, datePattern);
         List<T> list = new ArrayList<T>();
-        JSONArray jsonArray = JSONArray.fromString(data);
+        JSONArray jsonArray = JSONArray.fromObject(data);
 
-        for (int i = 0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             T node = json2Bean(jsonObject, clazz, excludes, datePattern);
             list.add(node);

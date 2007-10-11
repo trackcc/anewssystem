@@ -326,6 +326,24 @@ Ext.lingo.FormUtils = function() {
             return item;
         }
 
+        // 传入field数组，全部reset，为添加信息做准备
+        , resetFields : function(columns) {
+            for (var i in columns) {
+                var obj = columns[i];
+                if (obj.vType == "integer") {
+                    obj.setValue(0);
+                } else if(obj.vType == "date") {
+                    if(obj.defValue) {
+                        obj.setValue(obj.defValue);
+                    } else {
+                        obj.setValue(new Date());
+                    }
+                } else {
+                    obj.reset();
+                }
+            }
+        }
+
         // 为对话框，生成div结构
         , createDialogContent : function(meta) {
             var id = meta.id;

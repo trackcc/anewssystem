@@ -43,6 +43,9 @@ public class TrackerProject implements Serializable {
     /** * summary. */
     private String summary;
 
+    /** * founder. */
+    private String founder;
+
     /** * trackerIssues. */
     private Set<TrackerIssue> trackerIssues = new HashSet<TrackerIssue>(0);
 
@@ -84,6 +87,17 @@ public class TrackerProject implements Serializable {
     /** * @param theSort Integer. */
     public void setTheSort(Integer theSort) {
         this.theSort = theSort;
+    }
+
+    /** * @return founder. */
+    @Column(name = "FOUNDER", length = 50)
+    public String getFounder() {
+        return founder;
+    }
+
+    /** * @param founder String. */
+    public void setFounder(String founder) {
+        this.founder = founder;
     }
 
     /** * @return summary. */

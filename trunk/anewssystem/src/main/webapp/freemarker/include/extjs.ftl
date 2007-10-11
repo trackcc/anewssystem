@@ -20,6 +20,7 @@ Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
 <script type="text/javascript" src="${ctx}/widgets/lingo/form/Ext.lingo.LoginDialog.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/form/Ext.lingo.TreeField.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/jsongrid/Ext.lingo.CheckRowSelectionGrid.js"></script>
+<script type="text/javascript" src="${ctx}/widgets/lingo/jsongrid/Ext.ux.PageSizePlugin.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/jsongrid/Ext.lingo.JsonGrid.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/jsontree/Ext.lingo.JsonTree.js"></script>
 <script type="text/javascript" src="${ctx}/widgets/lingo/checkboxtree/Ext.lingo.JsonCheckBoxTree.js"></script>

@@ -44,6 +44,7 @@ public class DateJsonValueProcessor implements JsonValueProcessor {
      * 转换数组？.
      *
      * @param value Object
+     * @param jsonConfig 配置
      * @return Object
      */
     public Object processArrayValue(Object value, JsonConfig jsonConfig) {
@@ -67,7 +68,6 @@ public class DateJsonValueProcessor implements JsonValueProcessor {
      * 格式化日期.
      *
      * @param value Object
-     * @param jsonConfig 配置
      * @return Object
      */
     private Object process(Object value) {

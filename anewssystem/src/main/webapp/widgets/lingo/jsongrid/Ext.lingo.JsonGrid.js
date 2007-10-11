@@ -67,7 +67,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
         // 生成data store
         if (!this.dataStore) {
-            this.dataStore = new Ext.data.Store({
+            this.dataStore = new Ext.lingo.Store({
                 proxy  : new Ext.data.HttpProxy({url:this.urlPagedQuery}),
                 reader : new Ext.data.JsonReader({
                     root          : "result",
@@ -100,17 +100,20 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
     , initColumnModel : function() {
         var columnHeaders = new Array();
         for (var i = 0; i < this.metaData.length; i++) {
-            if (this.metaData[i].showInGrid === false) {
+            var meta = this.metaData[i];
+            if (meta.showInGrid === false) {
                 continue;
             }
             var item = {};
-            item.header    = this.metaData[i].qtip;
-            item.dataIndex = this.metaData[i].id;
-            item.width     = this.metaData[i].w ? this.metaData[i].w : 110;
+            item.header    = meta.qtip;
+            item.sortable  = true;
+            item.dataIndex = meta.id;
+            item.mapping   = meta.mapping;
+            item.width     = meta.w ? meta.w : 110;
             item.defaultValue = "";
             // item.hidden = false;
-            if (this.metaData[i].renderer) {
-                item.renderer = this.metaData[i].renderer;
+            if (meta.renderer) {
+                item.renderer = meta.renderer;
             }
             columnHeaders[columnHeaders.length] = item;
         }
@@ -126,9 +129,13 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             this.toolbar = new Ext.Toolbar(gridHeader);
             var checkItems = new Array();
             for (var i = 0; i < this.metaData.length; i++) {
+                var meta = this.metaData[i];
+                if (meta.showInGrid === false) {
+                    continue;
+                }
                 var item = new Ext.menu.CheckItem({
-                    text         : this.metaData[i].qtip,
-                    value        : this.metaData[i].id,
+                    text         : meta.qtip,
+                    value        : meta.id,
                     checked      : true,
                     group        : "filter",
                     checkHandler : this.onItemCheck.createDelegate(this)
@@ -197,14 +204,19 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
 
         // 把分页工具条，放在页脚
         var paging = new Ext.PagingToolbar(gridFooter, this.dataStore, {
-            pageSize    : this.pageSize,
-            displayInfo : true,
-            displayMsg  : '显示: {0} - {1} 共 {2} 条记录',
-            emptyMsg    : "没有找到相关数据"
+            pageSize         : this.pageSize
+            , displayInfo    : true
+            , displayMsg     : '显示: {0} - {1} 共 {2} 条记录'
+            , emptyMsg       : "没有找到相关数据"
+            , beforePageText : "第"
+            , afterPageText  : "页，共{0}页"
         });
 
+        var pageSizePlugin = new Ext.ux.PageSizePlugin();
+        pageSizePlugin.init(paging);
+
         this.dataStore.load({
-            params:{start:0, limit:this.pageSize}
+            params:{start:0, limit:paging.pageSize}
         });
     }
 
@@ -231,16 +243,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         if (!this.dialog) {
             this.createDialog();
         }
-        for (var i in this.columns) {
-            var column = this.columns[i];
-            if (column.vType == "integer") {
-                column.setValue(0);
-            } else if(column.vType == "date") {
-                //
-            } else {
-                column.reset();
-            }
-        }
+        Ext.lingo.FormUtils.resetFields(this.columns);
         this.dialog.show(Ext.get("add"));
     }
 

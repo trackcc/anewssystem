@@ -31,6 +31,7 @@ Ext.lingo.JsonTree = function(container, config) {
     this.container     = Ext.get(container);
     this.id            = this.container.id;
     this.config        = config;
+    this.rootName      = config.rootName ? config.rootName : '分类';
     this.metaData      = config.metaData;
     this.urlGetAllTree = config.urlGetAllTree ? config.urlGetAllTree : "getAllTree.htm";
     this.urlInsertTree = config.urlInsertTree ? config.urlInsertTree : "insertTree.htm";
@@ -296,13 +297,13 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
                 },{
                     id      : 'refresh',
                     icon    : '../widgets/lingo/list-items.gif',
-                    handler : refresh,
+                    handler : this.refresh.createDelegate(this),
                     cls     : 'refresh',
                     text    : '刷新'
                 },{
                     id      : 'config',
                     icon    : '../widgets/lingo/list-items.gif',
-                    handler : configInfo,
+                    handler : this.configInfo.createDelegate(this),
                     text    : '详细配置'
             }]
         });
@@ -317,7 +318,7 @@ Ext.extend(Ext.lingo.JsonTree, Ext.util.Observable, {
         //
         // 不知道具体是哪里乱，另外，这个里边是包含了右键功能的
         var root = new Ext.tree.AsyncTreeNode({
-            text      : '分类',
+            text      : this.rootName,
             draggable : true,
             id        : '-1'
         });

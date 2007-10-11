@@ -2,6 +2,9 @@
 Tracker = {
     // 初始化
     init : function() {
+        // 开启提示功能
+        Ext.QuickTips.init();
+
         this.buildLayout();
         this.buildTree();
         this.buildGrid();
@@ -73,10 +76,12 @@ Tracker = {
         var metaData = [
             {id : 'id',      qtip : "ID",       vType : "integer", allowBlank : true,  defValue : -1},
             {id : 'name',    qtip : "项目名称", vType : "chn",     allowBlank : false},
+            {id : 'founder', qtip : "创建者",   vType : "chn",     allowBlank : false},
             {id : 'summary', qtip : "项目描述", vType : "editor",  allowBlank : true}
         ];
         Tracker.tree = new TrackerTree("tree_area", {
             metaData      : metaData,
+            rootName      : '所有工程',
             dlgWidth      : 450,
             dlgHeight     : 250,
             dialogContent : "tree_content",
@@ -98,7 +103,7 @@ Tracker = {
     // 创建表格
     , buildGrid : function() {
         var metaData = [
-            {id : 'id',         qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1, w:50},
+            {id : 'id',         qtip : "ID",       vType : "integer",  allowBlank : true,  defValue : -1, w:40},
             {id : 'project_id', qtip : "项目id",   vType : "integer",  allowBlank : false,mapping:'trackerProject.id',showInGrid:false},
             {id : 'issuename',  qtip : "任务名称", vType : "chn",      allowBlank : false, w:160, mapping:'name'},
             {id : 'priority',   qtip : "优先级",   vType : "comboBox", allowBlank : false, w:50, renderer:this.renderPriority},
@@ -160,7 +165,7 @@ Tracker = {
         } else if (value == 1) {
             return "<span style='color:green;font-weight:normal;'>已处理</span>"
         } else {
-            return "<span style='color:black;font-weight:italic;'>已关闭</span>"
+            return "<span style='color:gray;font-weight:italic;'>已关闭</span>"
         }
     }
 

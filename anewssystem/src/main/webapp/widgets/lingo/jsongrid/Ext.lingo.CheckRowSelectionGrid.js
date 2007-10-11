@@ -25,7 +25,7 @@ Ext.lingo.CheckRowSelectionGrid = function(container, config) {
     // id
     var id = this.root_cb_id = Ext.id(null, 'cbsm-');
     // checkbox模板
-    var cb_html = String.format("<input type='checkbox' id='{0}'/>", this.root_cb_id);
+    var cb_html = String.format("<input class='l-tcb' type='checkbox' id='{0}'/>", this.root_cb_id);
     // grid
     var grid = this;
     // columnModel
@@ -43,7 +43,7 @@ Ext.lingo.CheckRowSelectionGrid = function(container, config) {
         dataIndex : -1,
         renderer  : function(data, cell, record, rowIndex, columnIndex, store) {
             return String.format(
-                "<input type='checkbox' id='{0}-{1}' {2}/>",
+                "<input class='l-tcb' type='checkbox' id='{0}-{1}' {2}/>",
                 id,
                 rowIndex,
                 grid.getSelectionModel().isSelected(rowIndex) ? "checked='checked'" : ''
@@ -56,13 +56,48 @@ Ext.lingo.CheckRowSelectionGrid = function(container, config) {
 }
 
 Ext.extend(Ext.lingo.CheckRowSelectionGrid, Ext.grid.Grid, {
-    root_cb_id : null,
+    root_cb_id : null
 
-    getSelectionModel: function() {
+    // 获得选择模型，如果当前没有设置，就返回咱们定义的这个带checkbox的东东
+    , getSelectionModel: function() {
         if (!this.selModel) {
             this.selModel = new Ext.lingo.CheckRowSelectionModel();
         }
         return this.selModel;
+    }
+});
+
+Ext.lingo.Store = function(config){
+    Ext.lingo.Store.superclass.constructor.call(this, config);
+}
+
+Ext.extend(Ext.lingo.Store, Ext.data.Store, {
+
+    // 重写sort方法，让我们可以用mapping代替name进行排序
+    sort : function(fieldName, dir){
+        var f = this.fields.get(fieldName);
+
+        // 如果存在mapping，就使用mapping替换name实现排序
+        var sortName = f.name;
+        if (f.mapping) {
+            sortName = f.mapping;
+        }
+
+        if(!dir){
+            if(this.sortInfo && this.sortInfo.field == sortName){
+                dir = ([sortName] || "ASC").toggle("ASC", "DESC");
+            }else{
+                dir = f.sortDir;
+            }
+        }
+        this.sortToggle[sortName] = dir;
+        this.sortInfo = {field: sortName, direction: dir};
+        if(!this.remoteSort){
+            this.applySort();
+            this.fireEvent("datachanged", this);
+        }else{
+            this.load(this.lastOptions);
+        }
     }
 });
 

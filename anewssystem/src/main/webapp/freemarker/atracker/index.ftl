@@ -37,6 +37,8 @@
           <td>项目名</td>
           <td><input id="name" type="text"></td>
         </tr>
+          <td>创建者</td>
+          <td><input id="founder" type="text"></td>
         <tr>
           <td>简介</td>
           <td><input id="summary" type="text" value=""></td>
@@ -46,7 +48,7 @@
 
     <!--主区域-->
     <div id="main_area"></div>
-    <div id="grid_content">
+    <div id="grid_content" style="visibility:hidden">
       <table>
         <tr style="display:none;">
           <td>id</td>

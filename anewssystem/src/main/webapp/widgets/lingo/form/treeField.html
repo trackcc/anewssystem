@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>switch</title>
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/resources/css/yext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/resources/css/ytheme-aero.css" />
+    <link rel="stylesheet" type="text/css" href="../lingo.css" />
+    <script type="text/javascript" src="../../extjs/1.1/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../extjs/1.1/ext-all-debug.js"></script>
+    <script type="text/javascript">
+Ext.BLANK_IMAGE_URL = '../../extjs/1.1/resources/images/default/s.gif';
+Ext.BLANK_ROOT = '../../extjs/1.1';
+    </script>
+    <script type="text/javascript" src="../Ext.form.VTypes.js"></script>
+    <script type="text/javascript" src="./Ext.lingo.TreeField.js"></script>
+    <script type="text/javascript" src="../form/Ext.lingo.FormUtils.js"></script>
+    <script type="text/javascript" src="../form/Ext.lingo.LoginDialog.js"></script>
+    <script type="text/javascript" src="Ext.lingo.CheckRowSelectionGrid.js"></script>
+    <script type="text/javascript" src="Ext.lingo.JsonGrid.js"></script>
+  </head>
+  <body>
+    <div id="f"></div>
+
+<script type="text/javascript">
+
+Ext.onReady(function() {
+    var form = new Ext.form.Form({
+        labelAlign: 'right',
+        labelWidth: 75,
+        url:'onSubmit.htm'
+    });
+
+    var treeField = new Ext.lingo.TreeField({
+            id           : 'tree'
+            , boxLabel   : 'tree'
+            , allowBlank : false
+            , treeConfig : {
+                title          : 'tree'
+                , rootId       : 0
+                , height       : 200
+                , dataTag      : '../../../dept/getChildren.htm'
+                , treeHeight   : 150
+                , beforeSelect : function(){}
+            }
+        });
+    form.fieldset(
+        {legend:'test', hideLabels:true},
+        treeField
+    );
+
+    form.applyIfToFields({
+        width:230
+    });
+
+    form.addButton('提交');
+    form.addButton('重置');
+    form.addButton('getValue');
+
+    form.buttons[0].addListener("click", function() {
+        if (form.isValid()) {
+            form.submit({success:function(){Ext.MessageBox.alert("提示", "修改成功");}});
+        }
+    });
+
+    form.buttons[1].addListener("click", function() {
+        form.reset();
+    });
+
+    form.buttons[2].addListener("click", function() {
+        Ext.Msg.show({
+           title:'提示',
+           msg: "treeField.getValue() : " + treeField.getValue() +
+				"<hr> treeField.selectedId : " + treeField.selectedId,
+           buttons: Ext.Msg.YESNOCANCEL
+        });
+    });
+    form.render("f");
+});
+
+</script>
+  </body>
+</html>
+
+
+
+
+
+
+
+

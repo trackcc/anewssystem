@@ -585,7 +585,13 @@ public class NewsController extends LongGridController<News, NewsManager> {
                 + ".html");
         }
 
-        String tags = getStrParam("tags", "");
+        /*
+         *String tags = getStrParam("tags", "");
+         *logger.info(tags);
+         */
+        String data = getStrParam("data", "");
+        JSONObject jsonObject = JSONObject.fromObject(data);
+        String tags = jsonObject.getString("tags");
         logger.info(tags);
 
         if (!tags.equals("")) {

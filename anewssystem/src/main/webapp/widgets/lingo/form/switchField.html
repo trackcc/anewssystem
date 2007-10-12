@@ -22,8 +22,8 @@ Ext.BLANK_ROOT = '../../extjs/1.1';
   <body>
     <input id="text2">
     <select id="st2">
-      <option value="1">1</option>
-      <option value="2">2</option>
+      <option value="1">test1</option>
+      <option value="2">test2</option>
     </select>
     <input id="dp2">
     <textarea id="ta2"></textarea>
@@ -42,20 +42,21 @@ function errorHandler(errorString, exception) {
     console.error(errorString);
     console.error(exception);
 }
+field = null;
 
 function switchField(value) {
     var alter = Ext.get("alter");
 
     if (value == "TextField") {
         alter.update("<input id='tmp'>");
-        var field = new Ext.form.TextField({id:"tmp"});
+        field = new Ext.form.TextField({id:"tmp"});
         field.applyTo("tmp");
     } else if (value == "ComboBox") {
-        alter.update("<select id='tmp'><option value='1'>1</option><option value='2'>2</option></select>");
-        var field = new Ext.form.ComboBox({id:"tmp",transform:"tmp"});
+        alter.update("<select id='tmp'><option value='1'>test1</option><option value='2'>test2</option></select>");
+        field = new Ext.form.ComboBox({id:"tmp",transform:"tmp"});
     } else if (value == "DateField") {
         alter.update("<input id='tmp'>");
-        var field = new Ext.form.DateField({id:"tmp"});
+        field = new Ext.form.DateField({id:"tmp"});
         field.applyTo("tmp");
     }
 }
@@ -63,10 +64,10 @@ function switchField(value) {
 Ext.onReady(function() {
     columns = {};
 
-    columns.text2 = new Ext.form.TextField().applyTo('text2');
-    columns.st2 = new Ext.form.ComboBox({transform:'st2'});
-    columns.dp2 = new Ext.form.DateField().applyTo('dp2');
-    columns.ta2 = new Ext.form.TextArea().applyTo('ta2');
+    columns.text2 = new Ext.form.TextField({id:'text2'}).applyTo('text2');
+    columns.st2 = new Ext.form.ComboBox({id:'st2',transform:'st2'});
+    columns.dp2 = new Ext.form.DateField({id:'dp2'}).applyTo('dp2');
+    columns.ta2 = new Ext.form.TextArea({id:'ta2'}).applyTo('ta2');
 
 });
 

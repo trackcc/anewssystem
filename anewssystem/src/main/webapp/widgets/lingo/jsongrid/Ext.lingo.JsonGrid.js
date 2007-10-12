@@ -26,7 +26,8 @@ Ext.lingo.JsonGrid = function(container, config) {
     this.config    = config;
     this.metaData  = config.metaData;
     this.genHeader = config.genHeader !== false;
-    this.pageSize  = config.pageSize ? config.pageSize : 15;
+    this.useHistory = config.useHistory !== false;
+    this.pageSize   = config.pageSize ? config.pageSize : 15;
     this.dialogWidth  = config.dialogWidth;
     this.dialogHeight = config.dialogHeight;
     this.urlPagedQuery = config.urlPagedQuery ? config.urlPagedQuery : "pagedQuery.htm";
@@ -82,12 +83,13 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
         // 生成表格
         if (!this.grid) {
             this.grid = new Ext.lingo.CheckRowSelectionGrid(this.id, {
-                ds : this.dataStore,
-                cm : this.columnModel,
+                ds   : this.dataStore
+                , cm : this.columnModel
                 // selModel: new Ext.grid.CellSelectionModel(),
                 // selModel: new Ext.grid.RowSelectionModel({singleSelect:false}),
-                enableColLock:false,
-                loadMask : true
+                , selModel      : new Ext.lingo.CheckRowSelectionModel({useHistory:this.useHistory})
+                , enableColLock : false
+                , loadMask      : true
             });
             this.grid.on('rowdblclick', this.edit.createDelegate(this));
         }
@@ -323,11 +325,18 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             Ext.Msg.confirm("提示", "是否确定删除？", function(btn, text) {
                 if (btn == 'yes') {
                     var selections = this.grid.getSelections();
-                    var ids =new Array();
+                    var ids = new Array();
                     for(var i = 0, len = selections.length; i < len; i++){
-                        selections[i].get("id");
-                        ids[i] = selections[i].get("id");
-                        this.dataStore.remove(selections[i]);//从表格中删除
+                        try {
+                            // 如果选中的record没有在这一页显示，remove就会出问题
+                            selections[i].get("id");
+                            ids[i] = selections[i].get("id");
+                            this.dataStore.remove(selections[i]);//从表格中删除
+                        } catch (e) {
+                        }
+                        if (this.useHistory) {
+                            this.grid.selModel.Set.clear();
+                        }
                     }
                     Ext.Ajax.request({
                         url     : this.urlRemove + '?ids=' + ids,

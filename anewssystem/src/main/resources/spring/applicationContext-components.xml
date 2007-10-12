@@ -3,10 +3,12 @@
 <beans default-lazy-init="true">
     <!-- acegi security -->
     <import resource="classpath*:spring/security/acegi-with-channel.xml"/>
-    <!-- acegi security -->
     <import resource="classpath*:spring/security/channel-jcaptcha.xml"/>
+    <import resource="classpath*:spring/security/acegi-acl.xml"/>
+
     <!-- java mail -->
     <import resource="classpath*:spring/mail/applicationContext-mail.xml"/>
+
     <!-- compass search -->
 <!--
     <import resource="classpath*:spring/search/applicationContext-compass.xml"/>

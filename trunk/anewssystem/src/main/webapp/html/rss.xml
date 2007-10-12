@@ -6,11 +6,41 @@
     <language>zh-cn</language>
     <description >A news publishing system</description>
     <webMaster>xyz20003@gmail.com(Lingo)</webMaster>
-    <lastBuildDate>2007-10-6</lastBuildDate>
+    <lastBuildDate>2007-10-12</lastBuildDate>
+    <item>
+      <title>test</title>
+      <link>http://localhost:8080/anews//anews/html/3/2007/10/12/7.html</link>
+      <pubDate>2007-10-12 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;tse]]></description>
+    </item>
+    <item>
+      <title>唐山好</title>
+      <link>http://localhost:8080/anews//anews/html/3/2007/10/12/6.html</link>
+      <pubDate>2007-10-12 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;唐山特别特别好]]></description>
+    </item>
+    <item>
+      <title>6</title>
+      <link>http://localhost:8080/anews/</link>
+      <pubDate>2007-10-6 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;656]]></description>
+    </item>
+    <item>
+      <title>12</title>
+      <link>http://localhost:8080/anews/</link>
+      <pubDate>2007-10-6 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;54]]></description>
+    </item>
+    <item>
+      <title>1454</title>
+      <link>http://localhost:8080/anews/</link>
+      <pubDate>2007-10-6 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;654]]></description>
+    </item>
     <item>
       <title>tt</title>
       <link>http://localhost:8080/anews//anews/html/2/2007/10/06/2.html</link>
-      <pubDate>2007-10-6 21:17:41</pubDate>
+      <pubDate>2007-10-6 0:00:00</pubDate>
       <description><![CDATA[sadf]]></description>
     </item>
     <item>

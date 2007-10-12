@@ -60,6 +60,7 @@ Ext.extend(Ext.lingo.CheckRowSelectionGrid, Ext.grid.Grid, {
 
     // 获得选择模型，如果当前没有设置，就返回咱们定义的这个带checkbox的东东
     , getSelectionModel: function() {
+
         if (!this.selModel) {
             this.selModel = new Ext.lingo.CheckRowSelectionModel();
         }
@@ -85,7 +86,7 @@ Ext.extend(Ext.lingo.Store, Ext.data.Store, {
 
         if(!dir){
             if(this.sortInfo && this.sortInfo.field == sortName){
-                dir = ([sortName] || "ASC").toggle("ASC", "DESC");
+                dir = (this.sortToggle[sortName] || "ASC").toggle("ASC", "DESC");
             }else{
                 dir = f.sortDir;
             }
@@ -105,6 +106,35 @@ Ext.extend(Ext.lingo.Store, Ext.data.Store, {
 // 行模型
 Ext.lingo.CheckRowSelectionModel = function(options) {
     Ext.lingo.CheckRowSelectionModel.superclass.constructor.call(this, options);
+
+    this.useHistory = options.useHistory === true;
+    if (this.useHistory) {
+        this.Set = {
+            items : {}
+
+            , add : function(r) {
+                this.items[r.id] = r;
+            }
+
+            , remove : function(r) {
+                this.items[r.id] = null;
+            }
+
+            , clear : function() {
+                this.items = {};
+            }
+
+            , values : function() {
+                var array = new Array();
+                for (var i in this.items) {
+                    if (this.items[i]) {
+                        array[array.length] = this.items[i];
+                    }
+                }
+                return array;
+            }
+        };
+    }
 }
 
 Ext.extend(Ext.lingo.CheckRowSelectionModel, Ext.grid.RowSelectionModel, {
@@ -149,24 +179,51 @@ Ext.extend(Ext.lingo.CheckRowSelectionModel, Ext.grid.RowSelectionModel, {
 
     // 选择这一行
     selectRow: function(index, keepExisting, preventViewNotify) {
-        Ext.lingo.CheckRowSelectionModel.superclass.selectRow.call(
-            this, index, keepExisting, preventViewNotify
-        );
 
-        var row_id = this.grid.root_cb_id + '-' + index;
-        var cb_dom = Ext.fly(row_id).dom;
-        cb_dom.checked = true;
+        try {
+            Ext.lingo.CheckRowSelectionModel.superclass.selectRow.call(
+                this, index, keepExisting, preventViewNotify
+            );
+
+            var row_id = this.grid.root_cb_id + '-' + index;
+            var cb_dom = Ext.fly(row_id).dom;
+            cb_dom.checked = true;
+
+            if (this.useHistory) {
+                // change
+                var r = this.grid.dataSource.getAt(index);
+                this.Set.add(r);
+            }
+        } catch(e) {
+            if (this.useHistory) {
+                this.Set.clear();
+            }
+        }
     },
 
     // 反选，取消选择，这一行
     deselectRow: function(index, preventViewNotify) {
-        Ext.lingo.CheckRowSelectionModel.superclass.deselectRow.call(
-            this, index, preventViewNotify
-        );
 
-        var row_id = this.grid.root_cb_id + '-' + index;
-        var cb_dom = Ext.fly(row_id).dom;
-        cb_dom.checked = false;
+        try {
+            Ext.lingo.CheckRowSelectionModel.superclass.deselectRow.call(
+                this, index, preventViewNotify
+            );
+
+            var row_id = this.grid.root_cb_id + '-' + index;
+            var cb_dom = Ext.fly(row_id).dom;
+            cb_dom.checked = false;
+
+
+            if (this.useHistory) {
+                // change
+                var r = this.grid.dataSource.getAt(index);
+                this.Set.remove(r);
+            }
+        } catch (e) {
+            if (this.useHistory) {
+                this.Set.clear();
+            }
+        }
     },
 
     onGridRefresh: function() {
@@ -175,6 +232,27 @@ Ext.extend(Ext.lingo.CheckRowSelectionModel, Ext.grid.RowSelectionModel, {
         for (var i = 0; i < this.grid.getDataSource().getCount(); i++) {
             var cb_id = this.grid.root_cb_id + '-' + i;
             Ext.fly(cb_id).on('mousedown', this.onRowCheckboxClick, this, {stopPropagation:true});
+        }
+
+        if (this.useHistory) {
+            // change
+            var ds = this.grid.dataSource, i, v = this.grid.view;
+            var values = this.Set.values();
+
+            for (var i = 0; i < values.length; i++) {
+                var r = values[i];
+                var id = r.id;
+                if((index = ds.indexOfId(id)) != -1){
+                    // 让GridView看起来是选中的样子
+                    v.onRowSelect(index);
+                    // 让checkbox看起来是选中的样子
+                    var row_id = this.grid.root_cb_id + '-' + index;
+                    var cb_dom = Ext.fly(row_id).dom;
+                    cb_dom.checked = true;
+                }
+                // 让this.selections里边是选中的样子
+                this.selections.add(r);
+            }
         }
     },
 

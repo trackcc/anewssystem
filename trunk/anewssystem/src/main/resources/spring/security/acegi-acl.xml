@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+  <!-- ~~~~~~~~~~~~~~~~~~ "BEFORE INVOCATION" AUTHORIZATION DEFINITIONS ~~~~~~~~~~~~~~~~ -->
+  <!-- ~~~~~~~~~~~~~~~~~~ "调用之前"          权限定义                  ~~~~~~~~~~~~~~~~ -->
+
+  <!-- ACL permission masks used by this application -->
+  <!-- 程序使用的ACL 验证 遮罩码？                   -->
+  <bean id="org.acegisecurity.acls.domain.BasePermission.ADMINISTRATION"
+        class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+    <property name="staticField" value="org.acegisecurity.acls.domain.BasePermission.ADMINISTRATION"/>
+  </bean>
+  <bean id="org.acegisecurity.acls.domain.BasePermission.READ"
+        class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+    <property name="staticField" value="org.acegisecurity.acls.domain.BasePermission.READ"/>
+  </bean>
+  <bean id="org.acegisecurity.acls.domain.BasePermission.DELETE"
+        class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+    <property name="staticField" value="org.acegisecurity.acls.domain.BasePermission.DELETE"/>
+  </bean>
+
+
+  <!-- An access decision voter that reads ROLE_* configuration settings -->
+  <!-- 访问验证投票者？ 读取 ROLE_* 开头的配置                           -->
+  <bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter"/>
+
+  <!-- An access decision voter that reads ACL_CONTACT_READ configuration settings -->
+  <!-- 访问投票者，读取 ACL_READ 配置                                              -->
+  <bean id="aclReadVoter" class="org.acegisecurity.vote.AclEntryVoter">
+    <constructor-arg ref="aclService"/>
+    <constructor-arg value="ACL_READ"/>
+    <constructor-arg>
+      <list>
+        <ref local="org.acegisecurity.acls.domain.BasePermission.ADMINISTRATION"/>
+        <ref local="org.acegisecurity.acls.domain.BasePermission.READ"/>
+      </list>
+    </constructor-arg>
+    <property name="processDomainObjectClass" value="anni.core.acegi.acl.AclDomainAware"/>
+  </bean>
+
+  <!-- An access decision voter that reads ACL_CONTACT_DELETE configuration settings -->
+  <!-- 访问投票者，读取 ACL_DELETE 配置                                              -->
+  <bean id="aclDeleteVoter" class="org.acegisecurity.vote.AclEntryVoter">
+    <constructor-arg ref="aclService"/>
+    <constructor-arg value="ACL_DELETE"/>
+    <constructor-arg>
+      <list>
+        <ref local="org.acegisecurity.acls.domain.BasePermission.ADMINISTRATION"/>
+        <ref local="org.acegisecurity.acls.domain.BasePermission.DELETE"/>
+      </list>
+    </constructor-arg>
+    <property name="processDomainObjectClass" value="anni.core.acegi.acl.AclDomainAware"/>
+  </bean>
+
+  <!-- An access decision voter that reads ACL_CONTACT_ADMIN configuration settings -->
+  <!-- 访问投票者，读取 ACL_ADMIN 配置                                              -->
+  <bean id="aclAdminVoter" class="org.acegisecurity.vote.AclEntryVoter">
+    <constructor-arg ref="aclService"/>
+    <constructor-arg value="ACL_CONTACT_ADMIN"/>
+    <constructor-arg>
+      <list>
+        <ref local="org.acegisecurity.acls.domain.BasePermission.ADMINISTRATION"/>
+      </list>
+    </constructor-arg>
+    <property name="processDomainObjectClass" value="anni.core.acegi.acl.AclDomainAware"/>
+  </bean>
+
+  <!-- An access decision manager used by the business objects -->
+  <!-- 访问管理器，由业务对象调用                              -->
+  <bean id="businessAccessDecisionManager" class="org.acegisecurity.vote.AffirmativeBased">
+    <property name="allowIfAllAbstainDecisions" value="false"/>
+    <property name="decisionVoters">
+      <list>
+        <ref local="roleVoter"/>
+        <ref local="aclReadVoter"/>
+        <ref local="aclDeleteVoter"/>
+        <ref local="aclAdminVoter"/>
+      </list>
+    </property>
+  </bean>
+
+  <!-- ========= ACCESS CONTROL LIST LOOKUP MANAGER DEFINITIONS ========= -->
+  <!-- ========= 访问控制列表查找的 管理定义                    ========= -->
+
+  <bean id="aclCache" class="org.acegisecurity.acls.jdbc.EhCacheBasedAclCache">
+    <constructor-arg>
+      <bean class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+        <property name="cacheManager">
+          <bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
+        </property>
+        <property name="cacheName" value="aclCache"/>
+      </bean>
+    </constructor-arg>
+  </bean>
+
+  <bean id="lookupStrategy" class="org.acegisecurity.acls.jdbc.BasicLookupStrategy">
+    <constructor-arg ref="dataSource"/>
+    <constructor-arg ref="aclCache"/>
+    <constructor-arg ref="aclAuthorizationStrategy"/>
+    <constructor-arg>
+      <bean class="org.acegisecurity.acls.domain.ConsoleAuditLogger"/>
+    </constructor-arg>
+  </bean>
+
+  <bean id="aclAuthorizationStrategy" class="org.acegisecurity.acls.domain.AclAuthorizationStrategyImpl">
+    <constructor-arg>
+      <list>
+        <bean class="org.acegisecurity.GrantedAuthorityImpl">
+          <constructor-arg value="ROLE_ADMINISTRATOR"/>
+        </bean>
+        <bean class="org.acegisecurity.GrantedAuthorityImpl">
+          <constructor-arg value="ROLE_ADMINISTRATOR"/>
+        </bean>
+        <bean class="org.acegisecurity.GrantedAuthorityImpl">
+          <constructor-arg value="ROLE_ADMINISTRATOR"/>
+        </bean>
+      </list>
+    </constructor-arg>
+  </bean>
+
+  <bean id="aclService" class="org.acegisecurity.acls.jdbc.JdbcMutableAclService">
+    <constructor-arg ref="dataSource"/>
+    <constructor-arg ref="lookupStrategy"/>
+    <constructor-arg ref="aclCache"/>
+  </bean>
+
+  <!-- ============== "AFTER INTERCEPTION" AUTHORIZATION DEFINITIONS =========== -->
+  <!-- ============== "拦截后" 验证定义                              =========== -->
+
+  <bean id="afterInvocationManager" class="org.acegisecurity.afterinvocation.AfterInvocationProviderManager">
+    <property name="providers">
+      <list>
+        <ref local="afterAclRead"/>
+        <ref local="afterAclCollectionRead"/>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Processes AFTER_ACL_COLLECTION_READ configuration settings -->
+  <!-- 执行 AFTER_ACL_COLLECTION_READ 配置                        -->
+  <bean id="afterAclCollectionRead"
+        class="org.acegisecurity.afterinvocation.AclEntryAfterInvocationCollectionFilteringProvider">
+    <constructor-arg ref="aclService"/>
+    <constructor-arg>
+      <list>
+        <ref local="org.acegisecurity.acls.domain.BasePermission.ADMINISTRATION"/>
+        <ref local="org.acegisecurity.acls.domain.BasePermission.READ"/>
+      </list>
+    </constructor-arg>
+  </bean>
+
+  <!-- Processes AFTER_ACL_READ configuration settings -->
+  <!-- 执行 AFTER_ACL_READ 配置                        -->
+  <bean id="afterAclRead" class="org.acegisecurity.afterinvocation.AclEntryAfterInvocationProvider">
+    <constructor-arg ref="aclService"/>
+    <constructor-arg>
+      <list>
+        <ref local="org.acegisecurity.acls.domain.BasePermission.ADMINISTRATION"/>
+        <ref local="org.acegisecurity.acls.domain.BasePermission.READ"/>
+      </list>
+    </constructor-arg>
+  </bean>
+
+  <!-- ================= METHOD INVOCATION AUTHORIZATION ==================== -->
+  <!-- ================= 方法调用验证                    ==================== -->
+
+  <bean id="securityInterceptor"
+        class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
+    <property name="authenticationManager" ref="authenticationManager"/>
+    <property name="accessDecisionManager" ref="businessAccessDecisionManager"/>
+    <property name="afterInvocationManager" ref="afterInvocationManager"/>
+    <property name="runAsManager" ref="runAsManager"/>
+    <property name="objectDefinitionSource" ref="objectDefinitionSource"/>
+  </bean>
+
+</beans>

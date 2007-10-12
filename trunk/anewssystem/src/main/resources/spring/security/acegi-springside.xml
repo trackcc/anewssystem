@@ -245,9 +245,8 @@
         <property name="objectDefinitionSource" ref="filterDefinitionSource" />
     </bean>
 
-    <!--
-    　　　methodSecurityInterceptor在执行方法前进行拦截，检查用户权限信息
-    -->
+    <!-- methodSecurityInterceptor在执行方法前进行拦截，检查用户权限信息 -->
+<!--
     <bean id="securityInterceptor"
        class="org.acegisecurity.intercept.method.aopalliance.MethodSecurityInterceptor">
         <property name="validateConfigAttributes" value="false"/>
@@ -256,10 +255,9 @@
         <property name="runAsManager" ref="runAsManager"/>
         <property name="objectDefinitionSource" ref="objectDefinitionSource"/>
     </bean>
-
-    <!--
-    　　An access decision manager used by the business objects
-    -->
+-->
+    <!-- An access decision manager used by the business objects -->
+<!--
     <bean id="accessDecisionManager"
        class="org.acegisecurity.vote.AffirmativeBased">
         <property name="allowIfAllAbstainDecisions" value="false"/>
@@ -269,14 +267,15 @@
             </list>
         </property>
     </bean>
-
+-->
     <!-- An access decision voter that reads ROLE_* configuaration settings -->
-    <bean id="roleVoter"
-       class="org.acegisecurity.vote.RoleVoter" />
-
+<!--
+    <bean id="roleVoter" class="org.acegisecurity.vote.RoleVoter" />
+-->
     <!-- An access decision voter that reads AUTH_* configuaration settings -->
-    <bean id="authVoter"
-       class="org.acegisecurity.vote.AuthenticatedVoter" />
+<!--
+    <bean id="authVoter" class="org.acegisecurity.vote.AuthenticatedVoter" />
+-->
 
     <!-- RunAsManager -->
     <bean id="runAsManager"

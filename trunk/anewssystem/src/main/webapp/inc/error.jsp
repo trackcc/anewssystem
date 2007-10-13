@@ -3,14 +3,8 @@
 <%@ include file="/inc/taglibs.jsp"%>
 <html>
   <head>
-    <title>Error Page</title>
     <%@ include file="/inc/meta.jsp"%>
-    <script type="text/javascript" language="javascript">
-        function showDetail()
-        {
-            $('detail_error_msg').toggle();
-        }
-    </script>
+    <title>Error Page</title>
   </head>
 
   <body>
@@ -28,9 +22,7 @@
       <button onclick="history.back();">Back</button>
       <br>
 
-      <p><a href="#" onclick="showDetail();">Administrator click here to get the detail.</a></p>
-
-      <div id="detail_error_msg" style="display:none">
+      <div id="detail_error_msg" style="display:block">
         <pre><%exception.printStackTrace(new java.io.PrintWriter(out));%></pre>
       </div>
     </div>

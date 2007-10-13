@@ -1,1 +1,0 @@
-<script src="${ctx}/js/prototype/1.5.0/prototype.js" type="text/javascript"></script>

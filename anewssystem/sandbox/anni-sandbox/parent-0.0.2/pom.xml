@@ -318,7 +318,6 @@
       <artifactId>spring-modules-validation</artifactId>
       <version>0.8a</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-springmodules}</optional>
       <exclusions>
 <!--
         <exclusion>
@@ -337,7 +336,6 @@
       <artifactId>commons-validator</artifactId>
       <version>1.3.1</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-commons-validator}</optional>
     </dependency>
 
     <!--通用工具commons-lang-->
@@ -525,7 +523,6 @@
       <artifactId>p6spy</artifactId>
       <version>1.3</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-p6spy}</optional>
     </dependency>
 
     <!--ExtremeTable 表格Taglib -->
@@ -534,7 +531,6 @@
       <artifactId>extremecomponents</artifactId>
       <version>1.0.1</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-extremecomponents}</optional>
     </dependency>
 
     <!-- Excel文件按操作库 -->
@@ -543,7 +539,6 @@
       <artifactId>poi</artifactId>
       <version>3.0.1-FINAL</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-poi}</optional>
     </dependency>
 
     <!--pdf-->
@@ -590,14 +585,12 @@
       <artifactId>standard</artifactId>
       <version>1.1.2</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-jstl}</optional>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
       <version>1.1.2</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-jstl}</optional>
     </dependency>
 
     <!--freemarker-->
@@ -614,7 +607,6 @@
       <artifactId>fckeditor</artifactId>
       <version>2.3</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-fckeditor}</optional>
     </dependency>
 
     <!--pager 分页的taglib组件 -->
@@ -623,7 +615,6 @@
       <artifactId>pager-taglib</artifactId>
       <version>2.0</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-pager-taglib}</optional>
     </dependency>
 
     <!--菜单struts-menu-->
@@ -632,7 +623,6 @@
       <artifactId>struts-menu</artifactId>
       <version>2.4.3</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-struts-menu}</optional>
     </dependency>
 
     <!--velocity模板-->
@@ -641,7 +631,6 @@
       <artifactId>velocity-tools-view</artifactId>
       <version>1.2</version>
       <scope>${use-scope}</scope>
-      <optional>${ignore-velocity}</optional>
       <exclusions>
         <exclusion>
           <groupId>xml-apis</groupId>
@@ -1463,16 +1452,6 @@
 
     <skip-db-test>true</skip-db-test>
     <use-scope>compile</use-scope>
-    <ignore-springmodules>false</ignore-springmodules>
-    <ignore-commons-validator>false</ignore-commons-validator>
-    <ignore-p6spy>false</ignore-p6spy>
-    <ignore-extremecomponents>false</ignore-extremecomponents>
-    <ignore-poi>false</ignore-poi>
-    <ignore-jstl>false</ignore-jstl>
-    <ignore-fckeditor>false</ignore-fckeditor>
-    <ignore-pager-taglib>false</ignore-pager-taglib>
-    <ignore-struts-menu>false</ignore-struts-menu>
-    <ignore-velocity>false</ignore-velocity>
   </properties>
 
   <modules>

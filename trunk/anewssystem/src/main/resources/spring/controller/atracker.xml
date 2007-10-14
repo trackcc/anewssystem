@@ -3,11 +3,11 @@
 
 <!-- 项目跟踪 -->
 <beans default-lazy-init="false" default-autowire="byName">
-    <bean class="anni.atracker.web.TrackerProjectController" parent="baseController" scope="request">
+    <bean class="anni.atracker.web.TrackerProjectController" scope="request">
         <property name="entityDao" ref="trackerProjectManager"/>
     </bean>
-    <bean class="anni.atracker.web.TrackerIssueController" parent="baseController" scope="request">
+    <bean class="anni.atracker.web.TrackerIssueController" scope="request">
         <property name="entityDao" ref="trackerIssueManager"/>
     </bean>
-    <bean class="anni.atracker.web.TrackerController" parent="baseController" scope="request"/>
+    <bean class="anni.atracker.web.TrackerController" scope="request"/>
 </beans>

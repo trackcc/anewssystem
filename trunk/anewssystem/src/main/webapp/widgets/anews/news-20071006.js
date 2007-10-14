@@ -70,18 +70,6 @@ Ext.onReady(function(){
             closable   : false,
             fitToFrame : true
         }));
-        layout.add('north', new Ext.ContentPanel('tab6', {
-            title      : '推荐',
-            toolbar    : null,
-            closable   : false,
-            fitToFrame : true
-        }));
-        layout.add('north', new Ext.ContentPanel('tab7', {
-            title      : '隐藏',
-            toolbar    : null,
-            closable   : false,
-            fitToFrame : true
-        }));
         layout.add('center', new Ext.ContentPanel('gridPanel', {
             toolbar    : null,
             closable   : false,
@@ -99,7 +87,7 @@ Ext.onReady(function(){
     var metaData = [
         {id:'id',         qtip:"ID",       vType:"integer",   allowBlank:true, defValue:-1},
         {id:'category',   qtip:"分类",     vType:"treeField", allowBlank:false, mapping:"newsCategory.name", url:"../newscategory/getChildren.htm"},
-        {id:'name',      qtip:"标题",     vType:"chn",       allowBlank:true},
+        {id:'name',       qtip:"标题",     vType:"chn",       allowBlank:true},
         {id:'subtitle',   qtip:'副标题',   vType:'chn',       allowBlank:true},
         {id:'link',       qtip:'跳转链接', vType:'url',       allowBlank:true},
         {id:'editor',     qtip:'编辑',     vType:'chn',       allowBlank:true},
@@ -263,42 +251,9 @@ Ext.onReady(function(){
                 }
             });
         }
+        lightGrid.grid.selModel.Set.clear();
     };
 
-    var hideButton = new Ext.Toolbar.Button({
-        icon    : "../widgets/lingo/list-items.gif",
-        id      : 'hideButton',
-        text    : '隐藏',
-        cls     : 'add',
-        tooltip : '隐藏',
-        handler : changeStatus.createDelegate(lightGrid,[6, "隐藏"])
-    });
-    var recommendButton = new Ext.Toolbar.Button({
-        icon    : "../widgets/lingo/list-items.gif",
-        id      : 'recommendButton',
-        text    : '推荐',
-        cls     : 'add',
-        tooltip : '推荐',
-        handler : changeStatus.createDelegate(lightGrid,[5, "推荐"])
-    });
-    var permissionButton = new Ext.Toolbar.Button({
-        icon    : "../widgets/lingo/list-items.gif",
-        id      : 'permissionButton',
-        text    : '审批',
-        cls     : 'add',
-        tooltip : '审批',
-        hidden  : true,
-        handler : changeStatus.createDelegate(lightGrid,[0, "审批"])
-    });
-    var dismissButton = new Ext.Toolbar.Button({
-        icon    : "../widgets/lingo/list-items.gif",
-        id      : 'dismissButton',
-        text    : '驳回',
-        cls     : 'add',
-        tooltip : '驳回',
-        hidden  : true,
-        handler : changeStatus.createDelegate(lightGrid,[2, "驳回"])
-    });
     var draftButton = new Ext.Toolbar.Button({
         icon    : "../widgets/lingo/list-items.gif",
         id      : 'draftButton',
@@ -317,22 +272,8 @@ Ext.onReady(function(){
         hidden  : true,
         handler : changeStatus.createDelegate(lightGrid,[4, "放入垃圾箱"])
     });
-    var cancelButton = new Ext.Toolbar.Button({
-        icon    : "../widgets/lingo/list-items.gif",
-        id      : 'submitButton',
-        text    : '取消',
-        cls     : 'add',
-        tooltip : '取消',
-        hidden  : true,
-        handler : changeStatus.createDelegate(lightGrid,[0, "取消"])
-    });
-    lightGrid.toolbar.insertButton(3, hideButton);
-    lightGrid.toolbar.insertButton(4, recommendButton);
-    lightGrid.toolbar.insertButton(5, permissionButton);
-    lightGrid.toolbar.insertButton(6, dismissButton);
-    lightGrid.toolbar.insertButton(7, draftButton);
-    lightGrid.toolbar.insertButton(8, rubbishButton);
-    lightGrid.toolbar.insertButton(9, cancelButton);
+    lightGrid.toolbar.insertButton(3, draftButton);
+    lightGrid.toolbar.insertButton(4, rubbishButton);
 
     // Tabs
     tabs.getTab(0).on("activate", function(e) {
@@ -340,90 +281,39 @@ Ext.onReady(function(){
         currentStatus = 0;
         lightGrid.dataStore.reload();
 
-        hideButton.show();
-        recommendButton.show();
-        permissionButton.hide();
-        dismissButton.hide();
         draftButton.hide();
         rubbishButton.hide();
-        cancelButton.hide();
     });
     tabs.getTab(1).on("activate", function(e) {
         layout.getRegion('north').titleTextEl.innerHTML = "<b>新闻管理 - (" + tabs.getTab(1).getText() + ")</b>";
         currentStatus = 1;
         lightGrid.dataStore.reload();
 
-        hideButton.hide();
-        recommendButton.hide();
-        permissionButton.show();
-        dismissButton.show();
-        draftButton.hide();
-        rubbishButton.hide();
-        cancelButton.hide();
+        draftButton.show();
+        rubbishButton.show();
     });
     tabs.getTab(2).on("activate", function(e) {
         layout.getRegion('north').titleTextEl.innerHTML = "<b>新闻管理 - (" + tabs.getTab(2).getText() + ")</b>";
         currentStatus = 2;
         lightGrid.dataStore.reload();
 
-        hideButton.hide();
-        recommendButton.hide();
-        permissionButton.hide();
-        dismissButton.hide();
         draftButton.show();
         rubbishButton.show();
-        cancelButton.show();
     });
     tabs.getTab(3).on("activate", function(e) {
         layout.getRegion('north').titleTextEl.innerHTML = "<b>新闻管理 - (" + tabs.getTab(3).getText() + ")</b>";
         currentStatus = 3;
         lightGrid.dataStore.reload();
 
-        hideButton.hide();
-        recommendButton.hide();
-        permissionButton.hide();
-        dismissButton.hide();
         draftButton.hide();
         rubbishButton.show();
-        cancelButton.show();
     });
     tabs.getTab(4).on("activate", function(e) {
         layout.getRegion('north').titleTextEl.innerHTML = "<b>新闻管理 - (" + tabs.getTab(4).getText() + ")</b>";
         currentStatus = 4;
         lightGrid.dataStore.reload();
 
-        hideButton.hide();
-        recommendButton.hide();
-        permissionButton.hide();
-        dismissButton.hide();
         draftButton.show();
         rubbishButton.hide();
-        cancelButton.hide();
-    });
-    tabs.getTab(5).on("activate", function(e) {
-        layout.getRegion('north').titleTextEl.innerHTML = "<b>新闻管理 - (" + tabs.getTab(5).getText() + ")</b>";
-        currentStatus = 5;
-        lightGrid.dataStore.reload();
-
-        hideButton.hide();
-        recommendButton.hide();
-        permissionButton.hide();
-        dismissButton.hide();
-        draftButton.hide();
-        rubbishButton.hide();
-        cancelButton.show();
-    });
-    tabs.getTab(6).on("activate", function(e) {
-        layout.getRegion('north').titleTextEl.innerHTML = "<b>新闻管理 - (" + tabs.getTab(6).getText() + ")</b>";
-        currentStatus = 6;
-        lightGrid.dataStore.reload();
-
-        hideButton.hide();
-        recommendButton.hide();
-        permissionButton.hide();
-        dismissButton.hide();
-        draftButton.hide();
-        rubbishButton.hide();
-        cancelButton.show();
     });
 });

@@ -4,23 +4,20 @@
 <html>
   <head>
     <#include "/include/meta.ftl">
-    <TITLE>管理新闻</TITLE>
+    <TITLE>审核新闻</TITLE>
     <#include "/include/extjs.ftl">
-    <script type="text/javascript" src="${ctx}/widgets/anews/news-20071006.js"></script>
+    <script type="text/javascript" src="${ctx}/widgets/anews/news-manage.js"></script>
   </head>
   <body>
     <div id="loading">
       <div class="waitting">请稍候...</div>
     </div>
     <div id="tabs">
-      <div id="tab1"></div>
+      <div id="tab1">
+        <div id="toolbar"></div>
+        <div id="lightgrid" style="border: 0px solid #cccccc; overflow: hidden; width:auto;height:100%;"></div>
+      </div>
       <div id="tab2"></div>
-      <div id="tab3"></div>
-      <div id="tab4"></div>
-      <div id="tab5"></div>
-    </div>
-    <div id="gridPanel">
-      <div id="lightgrid" style="border: 0px solid #cccccc; overflow: hidden; width:auto;height:100%;"></div>
     </div>
     <!-- 增加、修改、查看 弹出框内容-->
     <div id="news-content">

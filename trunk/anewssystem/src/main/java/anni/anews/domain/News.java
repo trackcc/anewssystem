@@ -60,7 +60,7 @@ public class News extends LongGridBean {
     /** * 推荐. */
     public static final int STATUS_RECOMMEND = 5;
 
-    /** * 关闭. */
+    /** * 隐藏. */
     public static final int STATUS_HIDE = 6;
 
     /** * id. */

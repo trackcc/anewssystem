@@ -6,7 +6,7 @@
     <language>zh-cn</language>
     <description >A news publishing system</description>
     <webMaster>xyz20003@gmail.com(Lingo)</webMaster>
-    <lastBuildDate>2007-10-12</lastBuildDate>
+    <lastBuildDate>2007-10-14</lastBuildDate>
     <item>
       <title>test</title>
       <link>http://localhost:8080/anews//anews/html/3/2007/10/12/7.html</link>
@@ -46,7 +46,7 @@
     <item>
       <title>dd</title>
       <link>http://localhost:8080/anews//anews/html/3/2007/09/17/1.html</link>
-      <pubDate>2007-9-17 11:25:48</pubDate>
+      <pubDate>2007-9-17 0:00:00</pubDate>
       <description><![CDATA[dd]]></description>
     </item>
   </channel>

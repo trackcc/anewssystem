@@ -419,6 +419,14 @@ public class NewsController extends LongGridController<News, NewsManager> {
     }
 
     /**
+     * 审核新闻.
+     */
+    public void manage() {
+        logger.info("start");
+        mv.setViewName("anews/news/manage");
+    }
+
+    /**
      * 修改新闻状态.
      *
      * @throws Exception 异常
@@ -498,6 +506,55 @@ public class NewsController extends LongGridController<News, NewsManager> {
         }
 
         criteria = criteria.add(Restrictions.eq("status", status));
+
+        Page page = getEntityDao().pagedQuery(criteria, pageNo, pageSize);
+
+        JsonUtils.write(page, response.getWriter(), getExcludes(),
+            getDatePattern());
+    }
+
+    /**
+     * 分页浏览记录，在审核新闻时，使用到的分页查询.
+     *
+     * @throws Exception 异常
+     */
+    public void pagedQueryManage() throws Exception {
+        logger.info(params());
+
+        // 分页
+        int pageSize = getIntParam("limit", 1);
+        int start = getIntParam("start", 0);
+        int pageNo = (start / pageSize) + 1;
+
+        // 排序
+        String sort = getStrParam("sort", null);
+        String dir = getStrParam("dir", "asc");
+
+        // 搜索
+        String filterTxt = getStrParam("filterTxt", "").trim();
+        String filterValue = getStrParam("filterValue", "").trim();
+
+        Criteria criteria;
+
+        if (sort != null) {
+            boolean isAsc = dir.equalsIgnoreCase("asc");
+            criteria = getEntityDao().createCriteria(sort, isAsc);
+        } else {
+            criteria = getEntityDao().createCriteria("id", false);
+        }
+
+        if ((!filterTxt.equals("")) && (!filterValue.equals(""))) {
+            criteria = criteria.add(Restrictions.like(filterTxt,
+                        "%" + filterValue + "%"));
+        }
+
+        if (!"status".equals(filterTxt)) {
+            criteria = criteria.add(Restrictions.in("status",
+                        new Integer[] {
+                            News.STATUS_NORMAL, News.STATUS_WAIT,
+                            News.STATUS_RECOMMEND, News.STATUS_HIDE
+                        }));
+        }
 
         Page page = getEntityDao().pagedQuery(criteria, pageNo, pageSize);
 

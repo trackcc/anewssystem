@@ -824,5 +824,6 @@
     <module>anni-core</module>
     <module>anni-mock</module>
     <module>anni-sandbox</module>
+    <module>anni-security</module>
   </modules>
 </project>

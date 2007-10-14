@@ -3,19 +3,19 @@
 
 <!-- 权限 -->
 <beans default-lazy-init="false" default-autowire="byName">
-    <bean class="anni.asecurity.web.DeptController" parent="baseController" scope="request">
+    <bean class="anni.asecurity.web.DeptController" scope="request">
         <property name="entityDao" ref="deptManager"/>
     </bean>
-    <bean class="anni.asecurity.web.UserController" parent="baseController" scope="request">
+    <bean class="anni.asecurity.web.UserController" scope="request">
         <property name="entityDao" ref="userManager"/>
     </bean>
-    <bean class="anni.asecurity.web.RoleController" parent="baseController" scope="request">
+    <bean class="anni.asecurity.web.RoleController" scope="request">
         <property name="entityDao" ref="roleManager"/>
     </bean>
-    <bean class="anni.asecurity.web.ResourceController" parent="baseController" scope="request">
+    <bean class="anni.asecurity.web.ResourceController" scope="request">
         <property name="entityDao" ref="resourceManager"/>
     </bean>
-    <bean class="anni.asecurity.web.MenuController" parent="baseController" scope="request">
+    <bean class="anni.asecurity.web.MenuController" scope="request">
         <property name="entityDao" ref="menuManager"/>
     </bean>
 </beans>

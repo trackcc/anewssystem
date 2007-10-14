@@ -139,7 +139,7 @@ Tracker = {
     // priority优先级
     , renderPriority : function(value) {
         if (value == 0) {
-            return "<span style='color:green;font-weight:italic;'>低</span>";
+            return "<span style='color:green;font-style:italic;'>低</span>";
         } else if (value == 1) {
             return "<span style='color:black;font-weight:normal;'>中</span>"
         } else {
@@ -150,7 +150,7 @@ Tracker = {
     // severity严重度
     , renderSeverity : function(value) {
         if (value == 0) {
-            return "<span style='color:green;font-weight:italic;'>轻微</span>";
+            return "<span style='color:green;font-style:italic;'>轻微</span>";
         } else if (value == 1) {
             return "<span style='color:black;font-weight:normal;'>一般</span>"
         } else {
@@ -165,7 +165,7 @@ Tracker = {
         } else if (value == 1) {
             return "<span style='color:green;font-weight:normal;'>已处理</span>"
         } else {
-            return "<span style='color:gray;font-weight:italic;'>已关闭</span>"
+            return "<span style='color:gray;font-style:italic;'>已关闭</span>"
         }
     }
 

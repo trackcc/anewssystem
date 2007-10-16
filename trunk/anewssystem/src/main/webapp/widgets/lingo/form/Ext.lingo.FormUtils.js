@@ -445,6 +445,7 @@ Ext.lingo.FormUtils = function() {
                 , minHeight  : 100
                 , closable   : true
                 , autoCreate : true
+                , title      : '&nbsp;'
             });
 
             // ESC键关闭对话框

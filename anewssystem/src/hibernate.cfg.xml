@@ -24,6 +24,9 @@
         <mapping class="anni.asecurity.domain.Role"/>
         <mapping class="anni.asecurity.domain.Resource"/>
         <mapping class="anni.asecurity.domain.Menu"/>
+
+        <mapping class="anni.atracker.domain.TrackerProject"/>
+        <mapping class="anni.atracker.domain.TrackerIssue"/>
     </session-factory>
 </hibernate-configuration>
 

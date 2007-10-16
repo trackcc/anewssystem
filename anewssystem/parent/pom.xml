@@ -1140,6 +1140,8 @@
             <drop>true</drop>
             <configurationfile>src/hibernate.cfg.xml</configurationfile>
             <propertyfile>src/database.properties</propertyfile>
+            <export>${export-to-database}</export>
+            <outputfilename>01.create-schema.sql</outputfilename>
           </componentProperties>
         </configuration>
       </plugin>
@@ -1207,8 +1209,14 @@
         <artifactId>hsqldb</artifactId>
         <version>1.8.0.7</version>
       </extension>
+      <extension>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.0.5</version>
+      </extension>
     </extensions>
   </build>
+
   <reporting>
     <plugins>
       <plugin>
@@ -1473,6 +1481,8 @@
     <ignore-pager-taglib>false</ignore-pager-taglib>
     <ignore-struts-menu>false</ignore-struts-menu>
     <ignore-velocity>false</ignore-velocity>
+
+    <export-to-database>false</export-to-database>
   </properties>
 
   <modules>

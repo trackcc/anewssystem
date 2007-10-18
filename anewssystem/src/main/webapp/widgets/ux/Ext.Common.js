@@ -124,7 +124,7 @@ Cookies.clear = function(A) {
   if(Cookies.get(A)) {
     document.cookie = A + "=" + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
   }
-} ;
+};
 
 Cookies.getCookieVal = function(B) {
   var A = document.cookie.indexOf(";", B);

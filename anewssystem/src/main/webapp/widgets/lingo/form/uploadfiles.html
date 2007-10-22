@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>upload files</title>
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/resources/css/yext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../../extjs/1.1/resources/css/ytheme-aero.css" />
+    <link rel="stylesheet" type="text/css" href="../lingo.css" />
+    <script type="text/javascript" src="../../extjs/1.1/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../extjs/1.1/ext-all-debug.js"></script>
+    <script type="text/javascript">
+Ext.BLANK_IMAGE_URL = '../../extjs/1.1/resources/images/default/s.gif';
+Ext.BLANK_ROOT = '../../extjs/1.1';
+    </script>
+    <script type="text/javascript" src="../Ext.form.VTypes.js"></script>
+    <script type="text/javascript" src="../form/Ext.lingo.FormUtils.js"></script>
+    <script type="text/javascript" src="../form/Ext.lingo.LoginDialog.js"></script>
+    <script type="text/javascript" src="Ext.lingo.CheckRowSelectionGrid.js"></script>
+    <script type="text/javascript" src="Ext.lingo.JsonGrid.js"></script>
+    <script type="text/javascript" src="MenuGrid.js" ></script>
+    <script type="text/javascript">
+
+Ext.onReady(function() {
+    var fieldPicture = new Ext.form.TextField({
+            fieldLabel : 'Picture',
+            id         : 'picture',
+            name       : 'picture',
+            inputType  : 'file'
+    });
+
+    var oForm = new Ext.Form({
+        fileUpload: true,
+        labelWidth:150,
+        url: 'uploadfiles.jsp',
+        method : 'POST',
+        enctype : "multipart/form-data"
+    });
+
+    oForm.add(fieldPicture);
+
+    oForm.addButton('提交');
+
+    oForm.buttons[0].addListener("click", function() {
+        if (oForm.isValid()) {
+            oForm.submit({success:function(){Ext.MessageBox.alert("提示", "修改成功");}});
+        }
+    });
+    oForm.render("oForm");
+});
+    </script>
+  </head>
+  <body>
+    <div id="oForm"></div>
+  </body>
+</html>
+
+
+
+
+
+
+
+

@@ -39,6 +39,8 @@ import org.hibernate.Criteria;
 
 import org.hibernate.criterion.Restrictions;
 
+import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.ServletRequestDataBinder;
 
 
@@ -112,46 +114,30 @@ public class NewsController extends LongGridController<News, NewsManager> {
     protected void preBind(HttpServletRequest request, Object command,
         ServletRequestDataBinder binder) throws Exception {
         binder.setDisallowedFields(new String[] {
-                "category_id", "tags", "status", "quick"
+                "category_id", "tags", "status", "enter", "image"
             });
 
         News entity = (News) command;
 
-        // 修改时，不会更新发布时间
-        long updateDate;
-
-        if (entity.getUpdateDate() == null) {
-            updateDate = System.currentTimeMillis();
-        } else {
-            updateDate = entity.getUpdateDate().getTime();
-        }
-
-        entity.setUpdateDate(new SimpleDateEditor.ExtDate(updateDate));
-
-        // 这里绑定新闻分类
+        // ================================================
+        // 绑定新闻分类
         long categoryId = getLongParam("category_id", -1L);
+        NewsCategory newsCategory = newsCategoryManager.get(categoryId);
+        entity.setNewsCategory(newsCategory);
 
-        if (categoryId != -1L) {
-            NewsCategory category = newsCategoryManager.get(categoryId);
+        // ================================================
+        // 图片上传
+        String imagePath = upload2File("uploadfiles/news/images/", "image");
 
-            if (category == null) {
-                logger.info("指定分类不存在" + categoryId);
-                binder.getBindingResult()
-                      .rejectValue("newsCategory", "指定分类不存在",
-                    new Object[0], "指定分类不存在");
-            } else {
-                entity.setNewsCategory(category);
-            }
-        } else {
-            binder.getBindingResult()
-                  .rejectValue("newsCategory", "请选择分类", new Object[0],
-                "请选择分类");
-            logger.info("请选择分类");
+        if (imagePath != null) {
+            entity.setImage(imagePath);
         }
 
-        String enter = getStrParam("enter", "");
+        // ================================================
+        // 确定新闻状态
+        int status = getIntParam("status", 0);
 
-        if (enter.equals("存为草稿")) {
+        if (status == News.STATUS_DRAFT) {
             entity.setStatus(News.STATUS_DRAFT);
         } else {
             // 是否立即发布
@@ -408,6 +394,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
     }
 
     // ====================================================
+    // ====================================================
     /**
      * index.
      */
@@ -424,6 +411,12 @@ public class NewsController extends LongGridController<News, NewsManager> {
     public void manage() {
         logger.info("start");
         mv.setViewName("anews/news/manage");
+    }
+
+    /** * 添加新闻. */
+    public void addNews() {
+        logger.info("start");
+        mv.setViewName("anews/news/addNews");
     }
 
     /**
@@ -563,6 +556,31 @@ public class NewsController extends LongGridController<News, NewsManager> {
     }
 
     /**
+     * 添加新闻.
+    *
+    * @throws Exception 异常
+     */
+    public void insert() throws Exception {
+        logger.info(params());
+
+        News entity = new News();
+        BindingResult bindingResult = bindObject(request, entity);
+
+        if (bindingResult.hasErrors()) {
+            logger.info(bindingResult);
+            response.getWriter().print("{success:false,info:'数据绑定错误'}");
+
+            return;
+        }
+
+        //
+        entityDao.save(entity);
+        postEdit(entity);
+        logger.info("success");
+        response.getWriter().print("{success:true}");
+    }
+
+    /**
      * 保存，新增或修改.
      *
      * @throws Exception 异常
@@ -636,6 +654,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
         // 如果不是链接新闻，则根据updateDate生成指向静态页面的路径
         if ((news.getLink() == null) || news.getLink().equals("")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
             news.setLink(request.getContextPath() + "/html/"
                 + news.getNewsCategory().getId() + "/"
                 + sdf.format(news.getUpdateDate()) + "/" + news.getId()
@@ -646,10 +665,12 @@ public class NewsController extends LongGridController<News, NewsManager> {
          *String tags = getStrParam("tags", "");
          *logger.info(tags);
          */
-        String data = getStrParam("data", "");
-        JSONObject jsonObject = JSONObject.fromObject(data);
-        String tags = jsonObject.getString("tags");
-        logger.info(tags);
+
+        //String data = getStrParam("data", "");
+        //JSONObject jsonObject = JSONObject.fromObject(data);
+        //String tags = jsonObject.getString("tags");
+        //logger.info(tags);
+        String tags = getStrParam("tags", "");
 
         if (!tags.equals("")) {
             String[] array = tags.split(",");
@@ -702,5 +723,11 @@ public class NewsController extends LongGridController<News, NewsManager> {
             "qtip", "allowDelete", "allowEdit", "draggable",
             "levelByCharCode", "levelByBitCode", "allowChildren", "root"
         };
+    }
+
+    /** * @return DatePattern. */
+    @Override
+    public String getDatePattern() {
+        return "yyyy-MM-dd";
     }
 }

@@ -10,7 +10,7 @@
 <#list page.result as item>
     <item>
       <title>${item.name?xml}</title>
-      <link>http://localhost:8080/anews/${item.link}</link>
+      <link>http://localhost:8080/anews/${item.link!}</link>
       <pubDate>${item.updateDate?datetime}</pubDate>
       <description><![CDATA[${item.content}]]></description>
     </item>

@@ -87,6 +87,13 @@ Ext.onReady(function(){
     // 渲染表格
     lightGrid.render();
 
+    // 取消双击修改
+    //lightGrid.grid.un("rowdblclick", lightGrid.edit);
+    lightGrid.grid.events["rowdblclick"].clearListeners();
+    // 取消右键菜单
+    //lightGrid.grid.un("rowcontextmenu", lightGrid.contextmenu);
+    lightGrid.grid.events["rowcontextmenu"].clearListeners();
+
     var changeStatus = function(status, operation) {
         var selections = lightGrid.grid.getSelections();
         if (selections.length == 0) {

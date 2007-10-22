@@ -63,6 +63,15 @@ public class News extends LongGridBean {
     /** * 隐藏. */
     public static final int STATUS_HIDE = 6;
 
+    /** * 不分页. */
+    public static final int NO_PAGE = 0;
+
+    /** * 自动分页. */
+    public static final int AUTO_PAGE = 1;
+
+    /** * 手工分页. */
+    public static final int PAGE_BY_HAND = 2;
+
     /** * id. */
     //@SearchableId
     private Long id;
@@ -81,6 +90,15 @@ public class News extends LongGridBean {
 
     /** * link. */
     private String link;
+
+    /** * 生成的静态页面地址. */
+    private String html;
+
+    /** * 分页方式. */
+    private int pageType;
+
+    /** * 自动分页字数. */
+    private int pageSize;
 
     /** * image. */
     private String image;
@@ -177,6 +195,39 @@ public class News extends LongGridBean {
     /** * @param link link. */
     public void setLink(String link) {
         this.link = link;
+    }
+
+    /** * @return html. */
+    @Column(name = "HTML", length = 100)
+    public String getHtml() {
+        return html;
+    }
+
+    /** * @param html html. */
+    public void setHtml(String html) {
+        this.html = html;
+    }
+
+    /** * @return 分页方式. */
+    @Column(name = "PAGE_TYPE")
+    public int getPageType() {
+        return pageType;
+    }
+
+    /** * @param pageType int. */
+    public void setPageType(int pageType) {
+        this.pageType = pageType;
+    }
+
+    /** * @return 自动分页字数. */
+    @Column(name = "PAGE_SIZE")
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    /** * @param pageSize int. */
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     /** * @return image. */

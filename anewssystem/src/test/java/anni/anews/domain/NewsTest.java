@@ -49,5 +49,13 @@ public class NewsTest extends TestCase {
         assertNull(entity.getNewsComments());
         entity.setNewsTags(null);
         assertNull(entity.getNewsTags());
+
+        // ��ҳ
+        entity.setHtml("html");
+        assertEquals("html", entity.getHtml());
+        entity.setPageType(0);
+        assertEquals(0, entity.getPageType());
+        entity.setPageSize(0);
+        assertEquals(0, entity.getPageSize());
     }
 }

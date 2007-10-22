@@ -119,4 +119,22 @@ public class NewsControllerTest extends AbstractWebTests {
             mvHelper.assertViewName(mv, "/anews/news/search");
         }
     */
+
+    // 不考虑图片上传的情况
+    public void testInsert() throws Exception {
+        request.setRequestURI("/news/insert.htm");
+        request.addParameter("name", "新闻标题");
+        request.addParameter("subtitle", "副标题");
+        request.addParameter("category_id", "1");
+        request.addParameter("source", "原创");
+        request.addParameter("editor", "Lingo");
+        request.addParameter("updateDate", "2007-10-21");
+        request.addParameter("tags", "news,extjs,java");
+        request.addParameter("pageType", "0");
+        request.addParameter("pageSize", "1000");
+        request.addParameter("summary", "简介");
+        request.addParameter("content", "<p>内容</p>");
+        mv = controller.handleRequest(request, response);
+        assertNull(mv.getViewName());
+    }
 }

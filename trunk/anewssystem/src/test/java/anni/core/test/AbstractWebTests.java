@@ -14,6 +14,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.mock.web.MockMultipartHttpServletRequest;
 import org.springframework.mock.web.MockServletContext;
 
 import org.springframework.orm.hibernate3.SessionFactoryUtils;
@@ -62,6 +63,9 @@ public class AbstractWebTests
     /** * HttpServletRequest. */
     protected MockHttpServletRequest request = new MockHttpServletRequest(SERVLET_CONTEXT,
             "GET", "");
+
+    /** * MultipartHttpServletRequest. */
+    protected MockMultipartHttpServletRequest uploadRequest = new MockMultipartHttpServletRequest();
 
     /** * HttpServletResponse. */
     protected MockHttpServletResponse response = new MockHttpServletResponse();

@@ -655,10 +655,18 @@ public class NewsController extends LongGridController<News, NewsManager> {
         if ((news.getLink() == null) || news.getLink().equals("")) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-            news.setLink(request.getContextPath() + "/html/"
-                + news.getNewsCategory().getId() + "/"
-                + sdf.format(news.getUpdateDate()) + "/" + news.getId()
-                + ".html");
+            String fileName;
+
+            if (news.getNewsCategory() == null) {
+                fileName = "/html/0/" + sdf.format(news.getUpdateDate())
+                    + "/" + news.getId() + ".html";
+            } else {
+                fileName = "/html/" + news.getNewsCategory().getId() + "/"
+                    + sdf.format(news.getUpdateDate()) + "/"
+                    + news.getId() + ".html";
+            }
+
+            news.setLink(fileName);
         }
 
         /*

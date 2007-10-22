@@ -122,19 +122,20 @@ public class NewsControllerTest extends AbstractWebTests {
 
     // 不考虑图片上传的情况
     public void testInsert() throws Exception {
-        request.setRequestURI("/news/insert.htm");
-        request.addParameter("name", "新闻标题");
-        request.addParameter("subtitle", "副标题");
-        request.addParameter("category_id", "1");
-        request.addParameter("source", "原创");
-        request.addParameter("editor", "Lingo");
-        request.addParameter("updateDate", "2007-10-21");
-        request.addParameter("tags", "news,extjs,java");
-        request.addParameter("pageType", "0");
-        request.addParameter("pageSize", "1000");
-        request.addParameter("summary", "简介");
-        request.addParameter("content", "<p>内容</p>");
-        mv = controller.handleRequest(request, response);
+        uploadRequest.setMethod("POST");
+        uploadRequest.setRequestURI("/news/insert.htm");
+        uploadRequest.addParameter("name", "新闻标题");
+        uploadRequest.addParameter("subtitle", "副标题");
+        uploadRequest.addParameter("category_id", "1");
+        uploadRequest.addParameter("source", "原创");
+        uploadRequest.addParameter("editor", "Lingo");
+        uploadRequest.addParameter("updateDate", "2007-10-21");
+        uploadRequest.addParameter("tags", "news,extjs,java");
+        uploadRequest.addParameter("pageType", "0");
+        uploadRequest.addParameter("pageSize", "1000");
+        uploadRequest.addParameter("summary", "简介");
+        uploadRequest.addParameter("content", "<p>内容</p>");
+        mv = controller.handleRequest(uploadRequest, response);
         assertNull(mv.getViewName());
     }
 }

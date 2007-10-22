@@ -1,3 +1,7 @@
+insert into A_NEWS_CATEGORY(id,bit_code,char_code,name,status,the_sort,parent_id) values(1,72057594037927936,'null','地方新闻',null,0,null);
+insert into A_NEWS_CATEGORY(id,bit_code,char_code,name,status,the_sort,parent_id) values(2,72339069014638592,'null','河北新闻',null,1,1);
+insert into A_NEWS_CATEGORY(id,bit_code,char_code,name,status,the_sort,parent_id) values(3,72340168526266368,'null','唐山新闻',null,2,2);
+
 insert into A_NEWS(id,content,editor,hit,image,link,name,source,status,subtitle,summary,update_date,category_id) values(1,'dd','',null,'','/anews/html/3/2007/09/17/1.html','dd','【本站原创】',2,'ddd','dd','2007-09-17 00:00:00.000000000',3);
 insert into A_NEWS(id,content,editor,hit,image,link,name,source,status,subtitle,summary,update_date,category_id) values(2,'sadf','',null,'','/anews/html/2/2007/10/06/2.html','tt','【本站原创】',3,'est','tset','2007-10-06 00:00:00.000000000',1);
 insert into A_NEWS(id,content,editor,hit,image,link,name,source,status,subtitle,summary,update_date,category_id) values(3,'&nbsp;654','',null,'null','','1454','【本站原创】',null,'45','4541','2007-10-06 00:00:00.000000000',null);
@@ -6,22 +10,17 @@ insert into A_NEWS(id,content,editor,hit,image,link,name,source,status,subtitle,
 insert into A_NEWS(id,content,editor,hit,image,link,name,source,status,subtitle,summary,update_date,category_id) values(6,'&nbsp;唐山特别特别好','',null,'null','/anews/html/3/2007/10/12/6.html','唐山好','【本站原创】',3,'唐山很好','唐山特别好','2007-10-12 00:00:00.000000000',3);
 insert into A_NEWS(id,content,editor,hit,image,link,name,source,status,subtitle,summary,update_date,category_id) values(7,'&nbsp;tse','临远',null,'null','/anews/html/3/2007/10/12/7.html','test','【本站原创】',3,'tset','tset','2007-10-12 00:00:00.000000000',3);
 
-insert into A_NEWS_CATEGORY(id,bit_code,char_code,name,status,the_sort,parent_id) values(1,72057594037927936,'null','地方新闻',null,0,null);
-insert into A_NEWS_CATEGORY(id,bit_code,char_code,name,status,the_sort,parent_id) values(2,72339069014638592,'null','河北新闻',null,1,1);
-insert into A_NEWS_CATEGORY(id,bit_code,char_code,name,status,the_sort,parent_id) values(3,72340168526266368,'null','唐山新闻',null,2,2);
-
-
 insert into A_NEWS_CONFIG(id,category_strategy,comment_need_audit,could_comment,news_need_audit,template_name) values(1,0,0,0,0,'extjs');
-
-insert into A_NEWS_NEWSTAG(newstag_id,news_id) values(2,2);
-insert into A_NEWS_NEWSTAG(newstag_id,news_id) values(3,2);
-insert into A_NEWS_NEWSTAG(newstag_id,news_id) values(4,2);
-insert into A_NEWS_NEWSTAG(newstag_id,news_id) values(5,7);
 
 insert into A_NEWS_TAG(id,name,the_sort) values(2,'222',null);
 insert into A_NEWS_TAG(id,name,the_sort) values(3,'2',null);
 insert into A_NEWS_TAG(id,name,the_sort) values(4,'444',null);
 insert into A_NEWS_TAG(id,name,the_sort) values(5,'test',null);
+
+insert into A_NEWS_NEWSTAG(newstag_id,news_id) values(2,2);
+insert into A_NEWS_NEWSTAG(newstag_id,news_id) values(3,2);
+insert into A_NEWS_NEWSTAG(newstag_id,news_id) values(4,2);
+insert into A_NEWS_NEWSTAG(newstag_id,news_id) values(5,7);
 
 insert into A_SECURITY_DEPT(id,descn,name,the_sort,parent_id) values(1,'','技术部',0,null);
 insert into A_SECURITY_DEPT(id,descn,name,the_sort,parent_id) values(2,'市场','市场部',4,null);
@@ -56,6 +55,45 @@ insert into A_SECURITY_MENU(id,descn,url,image,name,the_sort,qtip,parent_id) val
 insert into A_SECURITY_MENU(id,descn,url,image,name,the_sort,qtip,parent_id) values(71,'树形下拉框','../widgets/lingo/form/treeField.html','user.gif','树形下拉框',15,'树形下拉框',44);
 insert into A_SECURITY_MENU(id,descn,url,image,name,the_sort,qtip,parent_id) values(72,'级联combobox','../widgets/lingo/form/room.html','user.gif','级联combobox',14,'级联combobox',44);
 insert into A_SECURITY_MENU(id,descn,url,image,name,the_sort,qtip,parent_id) values(73,'审核新闻','../news/manage.htm','user.gif','审核新闻',1,'审核新闻',47);
+
+insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(2,'后台管理','admin','/admin/**','URL');
+insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(3,'资源管理','resource','/resource/**','URL');
+insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(4,'用户管理','user','/user/**','URL');
+insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(5,'角色管理','role','/role/**','URL');
+insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(6,'菜单管理','menu','/menu/**','URL');
+insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(7,'部门管理','dept','/dept/**','URL');
+
+insert into A_SECURITY_ROLE(id,descn,name) values(2,'管理员','ROLE_ADMIN');
+insert into A_SECURITY_ROLE(id,descn,name) values(3,'用户','ROLE_USER');
+insert into A_SECURITY_ROLE(id,descn,name) values(4,'测试用户','ROLE_TEST');
+
+insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(22,'2007-09-23 00:00:00.000000000','null','test','无','echo_o@163.com','11111111111','098f6bcd4621d373cade4e832627b4f6','0','0','111111','test','test2',1);
+insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(23,'2007-09-27 00:00:00.000000000','null','test','sdf','test','sdfasdf','098f6bcd4621d373cade4e832627b4f6','0','0','asdfasdf','afdasdf','test1',3);
+insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(27,'2007-09-27 00:00:00.000000000','null','销售部的aaa','aa','aa','aaa','aa','0','0','d','aaa','aaa',3);
+insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(28,'2007-09-27 00:00:00.000000000','null','','222','222','22','2222222','1','0','222','22222','122222',5);
+insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(29,'2007-09-27 00:00:00.000000000','null','test','tset','test','test','098f6bcd4621d373cade4e832627b4f6','0','1','test','临远','test',1);
+insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(30,'2007-09-28 00:00:00.000000000','null','小兵','小兵','echo_o@163.com','11111111111','ee11cbb19052e40b07aac0ca060c23ee','null','1','11111111','user','user',2);
+
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(2,2);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(3,2);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(4,2);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(5,2);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(7,2);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(2,4);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(3,4);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(4,4);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(5,4);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(6,4);
+insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(7,4);
+
+insert into A_SECURITY_ROLE_USER(role_id,user_id) values(2,22);
+insert into A_SECURITY_ROLE_USER(role_id,user_id) values(3,22);
+insert into A_SECURITY_ROLE_USER(role_id,user_id) values(4,22);
+insert into A_SECURITY_ROLE_USER(role_id,user_id) values(3,27);
+insert into A_SECURITY_ROLE_USER(role_id,user_id) values(2,29);
+insert into A_SECURITY_ROLE_USER(role_id,user_id) values(3,29);
+insert into A_SECURITY_ROLE_USER(role_id,user_id) values(4,29);
+insert into A_SECURITY_ROLE_USER(role_id,user_id) values(3,30);
 
 insert into A_SECURITY_MENU_ROLE(menu_id,role_id) values(47,2);
 insert into A_SECURITY_MENU_ROLE(menu_id,role_id) values(48,2);
@@ -102,44 +140,10 @@ insert into A_SECURITY_MENU_ROLE(menu_id,role_id) values(71,4);
 insert into A_SECURITY_MENU_ROLE(menu_id,role_id) values(72,4);
 insert into A_SECURITY_MENU_ROLE(menu_id,role_id) values(73,4);
 
-insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(2,'后台管理','admin','/admin/**','URL');
-insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(3,'资源管理','resource','/resource/**','URL');
-insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(4,'用户管理','user','/user/**','URL');
-insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(5,'角色管理','role','/role/**','URL');
-insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(6,'菜单管理','menu','/menu/**','URL');
-insert into A_SECURITY_RESOURCE(id,descn,name,res_string,res_type) values(7,'部门管理','dept','/dept/**','URL');
-
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(2,2);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(3,2);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(4,2);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(5,2);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(7,2);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(2,4);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(3,4);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(4,4);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(5,4);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(6,4);
-insert into A_SECURITY_RESOURCE_ROLE(resource_id,role_id) values(7,4);
-
-insert into A_SECURITY_ROLE(id,descn,name) values(2,'管理员','ROLE_ADMIN');
-insert into A_SECURITY_ROLE(id,descn,name) values(3,'用户','ROLE_USER');
-insert into A_SECURITY_ROLE(id,descn,name) values(4,'测试用户','ROLE_TEST');
-
-insert into A_SECURITY_ROLE_USER(role_id,user_id) values(2,22);
-insert into A_SECURITY_ROLE_USER(role_id,user_id) values(3,22);
-insert into A_SECURITY_ROLE_USER(role_id,user_id) values(4,22);
-insert into A_SECURITY_ROLE_USER(role_id,user_id) values(3,27);
-insert into A_SECURITY_ROLE_USER(role_id,user_id) values(2,29);
-insert into A_SECURITY_ROLE_USER(role_id,user_id) values(3,29);
-insert into A_SECURITY_ROLE_USER(role_id,user_id) values(4,29);
-insert into A_SECURITY_ROLE_USER(role_id,user_id) values(3,30);
-
-insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(22,'2007-09-23 00:00:00.000000000','null','test','无','echo_o@163.com','11111111111','098f6bcd4621d373cade4e832627b4f6','0','0','111111','test','test2',1);
-insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(23,'2007-09-27 00:00:00.000000000','null','test','sdf','test','sdfasdf','098f6bcd4621d373cade4e832627b4f6','0','0','asdfasdf','afdasdf','test1',3);
-insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(27,'2007-09-27 00:00:00.000000000','null','销售部的aaa','aa','aa','aaa','aa','0','0','d','aaa','aaa',3);
-insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(28,'2007-09-27 00:00:00.000000000','null','','222','222','22','2222222','1','0','222','22222','122222',5);
-insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(29,'2007-09-27 00:00:00.000000000','null','test','tset','test','test','098f6bcd4621d373cade4e832627b4f6','0','1','test','临远','test',1);
-insert into A_SECURITY_USER(id,birthday,code,descn,duty,email,mobile,password,sex,status,tel,truename,username,dept_id) values(30,'2007-09-28 00:00:00.000000000','null','小兵','小兵','echo_o@163.com','11111111111','ee11cbb19052e40b07aac0ca060c23ee','null','1','11111111','user','user',2);
+insert into A_TRACKER_PROJECT(id,name,summary,the_sort,founder) values(9,'b2b','<font face="仿宋">中俄商务贸易网<br>从5月底到呼</font><font face="仿宋">和浩特以后，就一直在做的东西，启动很不顺利，慢慢来吧。</font><br>',null,'lingo');
+insert into A_TRACKER_PROJECT(id,name,summary,the_sort,founder) values(10,'新闻发布[anews]','',null,'lingo');
+insert into A_TRACKER_PROJECT(id,name,summary,the_sort,founder) values(11,'项目跟踪[atracker]','',null,'lingo');
+insert into A_TRACKER_PROJECT(id,name,summary,the_sort,founder) values(12,'权限[asecurity]','抄袭springside-2.0项目sandbox下的security模块，完全抄袭了RBAC模型。<br>可cac老大没有演示咋用ACL，所以没抄到。<br>',null,'lingo');
 
 insert into A_TRACKER_ISSUE(id,add_time,assign_to,content,file,name,priority,severity,status,submit_by,update_date,project_id) values(1,'2007-10-08 00:00:00.000000000','Lingo','b2b启动','','b2b启动',1,1,1,'anyone','2007-10-08 00:00:00.000000000',9);
 insert into A_TRACKER_ISSUE(id,add_time,assign_to,content,file,name,priority,severity,status,submit_by,update_date,project_id) values(2,'2007-10-08 00:00:00.000000000','Lingo','询价功能不完整，原来是与留言做在一起，现在询价的功能比留言多出了几部分<br><ol><li>可以添加订购量，订购金额</li><li>可以从产品属性中选择感兴趣的部分，使用checkbox选择</li><li>与留言都存在的问题，没有验证码。<br></li></ol>','','询价部分功能不完整',2,2,1,'anyone','2007-10-08 00:00:00.000000000',9);
@@ -158,9 +162,4 @@ insert into A_TRACKER_ISSUE(id,add_time,assign_to,content,file,name,priority,sev
 insert into A_TRACKER_ISSUE(id,add_time,assign_to,content,file,name,priority,severity,status,submit_by,update_date,project_id) values(15,'2007-10-11 00:00:00.000000000','Lingo','网站助手中的公司介绍和联系方式，都需要审核才能发布到网上。','','公司信息和联系方法都需要审核',2,2,0,'anyone','2007-10-11 00:00:00.000000000',9);
 insert into A_TRACKER_ISSUE(id,add_time,assign_to,content,file,name,priority,severity,status,submit_by,update_date,project_id) values(16,'2007-10-12 00:00:00.000000000','Lingo','交易管理中，现在只有我是买家和我是卖家两个功能，现在需要添加发送订单功能。','','添加发送订单功能',1,1,0,'anyone','2007-10-12 00:00:00.000000000',9);
 insert into A_TRACKER_ISSUE(id,add_time,assign_to,content,file,name,priority,severity,status,submit_by,update_date,project_id) values(17,'2007-10-12 00:00:00.000000000','Lingo','现在添加联系方式后，没有任何提示，需要添加成功修改的提示','','修改联系方式后，添加修改成功提示',1,1,0,'anyone','2007-10-12 00:00:00.000000000',9);
-
-insert into A_TRACKER_PROJECT(id,name,summary,the_sort,founder) values(9,'b2b','<font face="仿宋">中俄商务贸易网<br>从5月底到呼</font><font face="仿宋">和浩特以后，就一直在做的东西，启动很不顺利，慢慢来吧。</font><br>',null,'lingo');
-insert into A_TRACKER_PROJECT(id,name,summary,the_sort,founder) values(10,'新闻发布[anews]','',null,'lingo');
-insert into A_TRACKER_PROJECT(id,name,summary,the_sort,founder) values(11,'项目跟踪[atracker]','',null,'lingo');
-insert into A_TRACKER_PROJECT(id,name,summary,the_sort,founder) values(12,'权限[asecurity]','抄袭springside-2.0项目sandbox下的security模块，完全抄袭了RBAC模型。<br>可cac老大没有演示咋用ACL，所以没抄到。<br>',null,'lingo');
 

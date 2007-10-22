@@ -15,14 +15,17 @@ import java.util.List;
 import java.util.Map;
 
 import anni.anews.domain.News;
-import anni.anews.domain.NewsTag;
-
-import anni.anews.manager.NewsManager;
-import anni.anews.manager.NewsTagManager;
 
 /*
 *import anni.anews.manager.NewsCategoryManager;
 */
+import anni.anews.domain.NewsConfig;
+import anni.anews.domain.NewsTag;
+
+import anni.anews.manager.NewsConfigManager;
+import anni.anews.manager.NewsManager;
+import anni.anews.manager.NewsTagManager;
+
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
@@ -59,6 +62,9 @@ public class FreemarkerGenerator {
     /** * newsTagManager. */
     private NewsTagManager newsTagManager = null;
 
+    /** * newsConfigManager. */
+    private NewsConfigManager newsConfigManager = null;
+
     /** * @param newsManager NewsManager. */
     public void setNewsManager(NewsManager newsManager) {
         this.newsManager = newsManager;
@@ -67,6 +73,11 @@ public class FreemarkerGenerator {
     /** * @param newsTagManager NewsTagManager. */
     public void setNewsTagManager(NewsTagManager newsTagManager) {
         this.newsTagManager = newsTagManager;
+    }
+
+    /** * @param newsConfigManager NewsConfigManager. */
+    public void setNewsConfigManager(NewsConfigManager newsConfigManager) {
+        this.newsConfigManager = newsConfigManager;
     }
 
     /*
@@ -97,6 +108,12 @@ public class FreemarkerGenerator {
     public void genNews(News news, int page, int pageSize, String root,
         String ctx, String templateName) {
         logger.info("start generate...");
+        logger.info(news);
+        logger.info(page);
+        logger.info(pageSize);
+        logger.info(root);
+        logger.info(ctx);
+        logger.info(templateName);
 
         Date date = news.getUpdateDate();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -117,9 +134,13 @@ public class FreemarkerGenerator {
                 news.getId(), news.getId()).setMaxResults(10).list();
         model.put("tagList", tagList);
 
+        NewsConfig newsConfig = newsConfigManager.getDefaultConfig();
+
         if (page == 0) {
             // 无分页
-            template2File("/anews/newstemplates/news3.ftl", fileName, model);
+            template2File("/anews/template/"
+                + newsConfig.getTemplateName() + "/detail.ftl", fileName,
+                model);
         } else {
             List<String> pages = new ArrayList<String>();
             String content = news.getContent();
@@ -165,8 +186,9 @@ public class FreemarkerGenerator {
                         + (i + 1) + ".html";
                 }
 
-                template2File("/anews/newstemplates/news3.ftl", fileName,
-                    model);
+                template2File("/anews/template/"
+                    + newsConfig.getTemplateName() + "/detail.ftl",
+                    fileName, model);
             }
         }
 

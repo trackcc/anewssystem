@@ -29,7 +29,7 @@ drop table if exists A_SECURITY_ROLE_USER;
 drop table if exists A_SECURITY_USER;
 drop table if exists A_TRACKER_ISSUE;
 drop table if exists A_TRACKER_PROJECT;
-create table A_NEWS (ID bigint not null unique, SUBTITLE varchar(100), LINK varchar(100), HIT integer, SUMMARY varchar(255), UPDATE_DATE datetime, NAME varchar(100), CONTENT text, SOURCE varchar(50), IMAGE varchar(50), EDITOR varchar(50), STATUS integer, CATEGORY_ID bigint, primary key (ID));
+create table A_NEWS (ID bigint not null unique, SUBTITLE varchar(100), LINK varchar(100), HTML varchar(100), PAGE_TYPE integer, PAGE_SIZE integer, HIT integer, SUMMARY varchar(255), UPDATE_DATE datetime, NAME varchar(100), CONTENT text, SOURCE varchar(50), IMAGE varchar(50), EDITOR varchar(50), STATUS integer, CATEGORY_ID bigint, primary key (ID));
 create table A_NEWS_CATEGORY (ID bigint not null unique, THE_SORT integer, BIT_CODE bigint, CHAR_CODE varchar(255), NAME varchar(50), STATUS integer, PARENT_ID bigint, primary key (ID));
 create table A_NEWS_COMMENT (ID bigint not null unique, USERNAME varchar(50), UPDATE_DATE datetime, IP varchar(20), NAME varchar(100), CONTENT text, STATUS integer, NEWS_ID bigint, primary key (ID));
 create table A_NEWS_CONFIG (ID bigint not null unique, NEWS_NEED_AUDIT integer, COMMENT_NEED_AUDIT integer, COULD_COMMENT integer, CATEGORY_STRATEGY integer, TEMPLATE_NAME varchar(50), primary key (ID));

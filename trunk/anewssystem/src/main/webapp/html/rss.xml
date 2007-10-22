@@ -6,48 +6,66 @@
     <language>zh-cn</language>
     <description >A news publishing system</description>
     <webMaster>xyz20003@gmail.com(Lingo)</webMaster>
-    <lastBuildDate>2007-10-14</lastBuildDate>
+    <lastBuildDate>2007-10-22</lastBuildDate>
     <item>
-      <title>test</title>
-      <link>http://localhost:8080/anews//anews/html/3/2007/10/12/7.html</link>
-      <pubDate>2007-10-12 0:00:00</pubDate>
-      <description><![CDATA[&nbsp;tse]]></description>
+      <title>fds</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/22.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
     </item>
     <item>
-      <title>唐山好</title>
-      <link>http://localhost:8080/anews//anews/html/3/2007/10/12/6.html</link>
-      <pubDate>2007-10-12 0:00:00</pubDate>
-      <description><![CDATA[&nbsp;唐山特别特别好]]></description>
+      <title>sdf</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/21.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
     </item>
     <item>
-      <title>6</title>
-      <link>http://localhost:8080/anews/</link>
-      <pubDate>2007-10-6 0:00:00</pubDate>
-      <description><![CDATA[&nbsp;656]]></description>
+      <title>sdf</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/20.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
     </item>
     <item>
-      <title>12</title>
-      <link>http://localhost:8080/anews/</link>
-      <pubDate>2007-10-6 0:00:00</pubDate>
-      <description><![CDATA[&nbsp;54]]></description>
+      <title>dsf</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/19.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
     </item>
     <item>
-      <title>1454</title>
-      <link>http://localhost:8080/anews/</link>
-      <pubDate>2007-10-6 0:00:00</pubDate>
-      <description><![CDATA[&nbsp;654]]></description>
+      <title>dsf</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/18.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
     </item>
     <item>
-      <title>tt</title>
-      <link>http://localhost:8080/anews//anews/html/2/2007/10/06/2.html</link>
-      <pubDate>2007-10-6 0:00:00</pubDate>
-      <description><![CDATA[sadf]]></description>
+      <title>dsf</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/17.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
     </item>
     <item>
-      <title>dd</title>
-      <link>http://localhost:8080/anews//anews/html/3/2007/09/17/1.html</link>
-      <pubDate>2007-9-17 0:00:00</pubDate>
-      <description><![CDATA[dd]]></description>
+      <title>dsf</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/16.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
+    </item>
+    <item>
+      <title>dsf</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/15.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
+    </item>
+    <item>
+      <title>dsf</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/14.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
+    </item>
+    <item>
+      <title>dsf</title>
+      <link>http://localhost:8080/anews//anews/html/1/2007/10/22/13.html</link>
+      <pubDate>2007-10-22 0:00:00</pubDate>
+      <description><![CDATA[&nbsp;asdf]]></description>
     </item>
   </channel>
 </rss>

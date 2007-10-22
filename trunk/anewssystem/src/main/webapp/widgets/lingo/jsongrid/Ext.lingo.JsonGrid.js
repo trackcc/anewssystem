@@ -91,11 +91,11 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
                 , enableColLock : false
                 , loadMask      : true
             });
-            this.grid.on('rowdblclick', this.edit.createDelegate(this));
+            this.grid.on('rowdblclick', this.edit, this);
         }
 
         //右键菜单
-        this.grid.addListener('rowcontextmenu', this.contextmenu.createDelegate(this));
+        this.grid.addListener('rowcontextmenu', this.contextmenu, this);
     }
 
     // 初始化ColumnModel
@@ -312,7 +312,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             }
             this.dialog.show(Ext.get("edit"));
         }.createDelegate(this));
-        this.menuData.reload();
+        this.menuData.load();
     }
 
     // 删除记录

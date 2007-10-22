@@ -138,11 +138,11 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <includes>
+            <include>**/NewsControllerTest.java</include>
 <!--
-            <include>**/Test.java</include>
--->
             <include>**/*Test.java</include>
             <include>**/*TestCase.java</include>
+-->
           </includes>
           <excludes>
             <exclude>**/Abstract*.java</exclude>

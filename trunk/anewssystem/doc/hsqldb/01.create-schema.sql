@@ -29,7 +29,7 @@ drop table A_SECURITY_ROLE_USER if exists;
 drop table A_SECURITY_USER if exists;
 drop table A_TRACKER_ISSUE if exists;
 drop table A_TRACKER_PROJECT if exists;
-create table A_NEWS (ID bigint not null, SUBTITLE varchar(100), LINK varchar(100), HIT integer, SUMMARY varchar(255), UPDATE_DATE timestamp, NAME varchar(100), CONTENT longvarchar, SOURCE varchar(50), IMAGE varchar(50), EDITOR varchar(50), STATUS integer, CATEGORY_ID bigint, primary key (ID), unique (ID));
+create table A_NEWS (ID bigint not null, SUBTITLE varchar(100), LINK varchar(100), HTML varchar(100), PAGE_TYPE integer, PAGE_SIZE integer, HIT integer, SUMMARY varchar(255), UPDATE_DATE timestamp, NAME varchar(100), CONTENT longvarchar, SOURCE varchar(50), IMAGE varchar(50), EDITOR varchar(50), STATUS integer, CATEGORY_ID bigint, primary key (ID), unique (ID));
 create table A_NEWS_CATEGORY (ID bigint not null, THE_SORT integer, BIT_CODE bigint, CHAR_CODE varchar(255), NAME varchar(50), STATUS integer, PARENT_ID bigint, primary key (ID), unique (ID));
 create table A_NEWS_COMMENT (ID bigint not null, USERNAME varchar(50), UPDATE_DATE timestamp, IP varchar(20), NAME varchar(100), CONTENT longvarchar, STATUS integer, NEWS_ID bigint, primary key (ID), unique (ID));
 create table A_NEWS_CONFIG (ID bigint not null, NEWS_NEED_AUDIT integer, COMMENT_NEED_AUDIT integer, COULD_COMMENT integer, CATEGORY_STRATEGY integer, TEMPLATE_NAME varchar(50), primary key (ID), unique (ID));

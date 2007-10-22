@@ -97,8 +97,17 @@ Ext.extend(Ext.lingo.TreeField, Ext.form.TriggerField, {
         autocomplete : "off"
     },
 
+    onRender : function(ct, position) {
+        Ext.lingo.TreeField.superclass.onRender.call(this, ct, position);
+        var hiddenId = this.el.id + "_id";
+        this.hiddenField = this.el.insertSibling(
+            {tag:'input', type:'hidden', name: hiddenId, id: hiddenId},
+            'before', true);
+    },
+
     getValue : function() {
         return Ext.lingo.TreeField.superclass.getValue.call(this) || "";
+        //return this.selectedId;
     },
 
     setValue : function(val) {
@@ -108,18 +117,20 @@ Ext.extend(Ext.lingo.TreeField, Ext.form.TriggerField, {
     menuListeners : {
         select:function (item, picker, node) {
             var v = node.text;
+            //var v = node.id;
             var ed = this.ed;
             if(this.selfunc) {
                 v = this.selfunc(node);
             }
             if(ed) {
-                var r= ed.record;
+                var r = ed.record;
                 r.set(this.fn, v);
             } else {
                 this.focus();
                 this.setValue(v);
                 // document.getElementById("category_id").value = node.id;
                 this.selectedId = node.id;
+                document.getElementById(this.el.id + "_id").value = node.id;
             }
         }, hide : function(){
         }
@@ -226,6 +237,7 @@ Ext.extend(Ext.TreePicker, Ext.Component, {
             animate         : true,
             loader          : new Tree.TreeLoader({dataUrl:url}), // c.dataTag
             enableDD        : false,
+            rootVisible     : false,
             containerScroll : true
         });
 

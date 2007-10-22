@@ -108,19 +108,21 @@ public class FreemarkerGenerator {
     public void genNews(News news, int page, int pageSize, String root,
         String ctx, String templateName) {
         logger.info("start generate...");
-        logger.info(news);
-        logger.info(page);
-        logger.info(pageSize);
-        logger.info(root);
-        logger.info(ctx);
-        logger.info(templateName);
 
         Date date = news.getUpdateDate();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
         // root是用getRealPath("/")获得的根目录，将html保存在网站根目录下，可以通过tomcat直接访问
-        String fileName = root + "/html/" + news.getNewsCategory().getId()
-            + "/" + sdf.format(date) + "/" + news.getId() + ".html";
+        String fileName = null;
+
+        if (news.getNewsCategory() == null) {
+            fileName = root + "/html/0/" + sdf.format(date) + "/"
+                + news.getId() + ".html";
+        } else {
+            fileName = root + "/html/" + news.getNewsCategory().getId()
+                + "/" + sdf.format(date) + "/" + news.getId() + ".html";
+        }
+
         Map model = new HashMap();
         model.put("news", news);
         model.put("ctx", ctx);

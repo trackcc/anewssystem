@@ -16,5 +16,5 @@ public interface AclDomainAware {
      *
      * @return id
      */
-    public Serializable getId();
+    Serializable getId();
 }

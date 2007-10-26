@@ -8,6 +8,7 @@
     <import resource="classpath*:spring/controller/anews.xml"/>
     <import resource="classpath*:spring/controller/asecurity.xml"/>
     <import resource="classpath*:spring/controller/atracker.xml"/>
+    <import resource="classpath*:spring/controller/aerp.xml"/>
     <!-- compass -->
 <!--
     <import resource="classpath*:spring/search/compass-controller.xml"/>

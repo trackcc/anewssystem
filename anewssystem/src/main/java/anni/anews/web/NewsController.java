@@ -25,15 +25,12 @@ import anni.core.grid.LongGridController;
 
 import anni.core.json.JsonUtils;
 
-import anni.core.web.prototype.ExtremeTablePage;
 import anni.core.web.prototype.SimpleDateEditor;
 
 import net.sf.json.JSONObject;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.extremecomponents.table.limit.Limit;
 
 import org.hibernate.Criteria;
 
@@ -239,68 +236,6 @@ public class NewsController extends LongGridController<News, NewsManager> {
                 newsConfig.getTemplateName());
         }
     */
-
-    /**
-     * 按状态查询新闻记录.
-     *
-     * @throws Exception 异常
-     */
-    public void list() throws Exception {
-        //mv = new ModelAndView(listView);
-        Limit limit = ExtremeTablePage.getLimit(request,
-                Page.DEFAULT_PAGE_SIZE);
-        int status = getIntParam("status", 0);
-        int pageNo = limit.getPage();
-        int pageSize = limit.getCurrentRowsDisplayed();
-        Map<String, String> sortMap = ExtremeTablePage.getSort(limit);
-        logger.info(sortMap);
-
-        String hql = "from News where status=?";
-
-        // 添加可以根据分类搜索的功能
-        // add by Lingo 2007-09-17 09:58
-        // -1代表没有参数传递进来，0代表选择全部分类
-        long categoryId = getLongParam("category_id", -1L);
-
-        if (categoryId == -1L) {
-            Long newsCategoryId = (Long) session.getAttribute(
-                    "news_category_id");
-
-            if (newsCategoryId == null) {
-                categoryId = 0L;
-            } else {
-                categoryId = newsCategoryId;
-            }
-        }
-
-        // 重新向session中设置news_category_id
-        session.setAttribute("news_category_id", categoryId);
-
-        // 如果不是选择全部分类，就需要按分类查询新闻
-        if (categoryId != 0L) {
-            hql += (" and newsCategory.id=" + categoryId);
-            mv.addObject("categoryId", categoryId);
-        }
-
-        if (sortMap.isEmpty()) {
-            hql += " order by id desc";
-        } else {
-            Map.Entry entry = (Map.Entry) sortMap.entrySet().iterator()
-                                                 .next();
-            hql += (" order by " + entry.getKey() + " " + entry.getValue());
-        }
-
-        logger.info(hql);
-
-        Page page = getEntityDao().pagedQuery(hql, pageNo, pageSize, status);
-
-        mv.addObject("page", page.getResult());
-        mv.addObject("totalRows",
-            Integer.valueOf((int) page.getTotalCount()));
-        referenceData(mv.getModel());
-
-        //onList();
-    }
 
     /**
      * 修改新闻状态.

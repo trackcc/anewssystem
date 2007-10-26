@@ -54,6 +54,15 @@
                 <value>anni.asecurity.domain.Role</value>
                 <value>anni.asecurity.domain.Resource</value>
                 <value>anni.asecurity.domain.Menu</value>
+                <value>anni.asecurity.domain.Region</value>
+                <value>anni.asecurity.domain.Dictionary</value>
+
+                <value>anni.aerp.domain.ErpMaterial</value>
+                <value>anni.aerp.domain.ErpProduct</value>
+                <value>anni.aerp.domain.ErpCustomer</value>
+                <value>anni.aerp.domain.ErpRation</value>
+                <value>anni.aerp.domain.ErpOrder</value>
+                <value>anni.aerp.domain.ErpOrderInfo</value>
 
                 <value>anni.atracker.domain.TrackerProject</value>
                 <value>anni.atracker.domain.TrackerIssue</value>

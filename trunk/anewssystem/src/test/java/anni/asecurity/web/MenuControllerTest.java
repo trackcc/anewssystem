@@ -58,6 +58,7 @@ public class MenuControllerTest extends AbstractWebTests {
     //        assertTrue(true);
     //    }
     //}
+    /*
     public void testCreateMenu() throws Exception {
         request.setRequestURI("/menu/createMenu.htm");
         session.setAttribute("loginUser", userManager.get(1L));
@@ -65,8 +66,7 @@ public class MenuControllerTest extends AbstractWebTests {
         // mvHelper.assertModelAttributeAvailable(mv, "repository");
         mvHelper.assertViewName(mv, "asecurity/menu/createMenu");
     }
-
-    /*
+    
         public void testListMenuRole() throws Exception {
             request.setRequestURI("/menu/listMenuRole.htm");
             request.addParameter("roleId", "1");
@@ -91,14 +91,12 @@ public class MenuControllerTest extends AbstractWebTests {
         mvHelper.assertModelAttributeAvailable(mv, "treeText");
         mvHelper.assertViewName(mv, null);
     }
-    */
     public void testSaveMenuRole() throws Exception {
         request.setRequestURI("/menu/saveMenuRole.htm");
         mv = controller.handleRequest(request, response);
         mvHelper.assertModelAttributeAvailable(mv, "roleId");
         mvHelper.assertViewName(mv, "forward:/menu/listMenuRole.htm");
     }
-
     public void testSaveMenuRole2() throws Exception {
         request.setRequestURI("/menu/saveMenuRole.htm");
         request.addParameter("roleId", "2");
@@ -107,7 +105,7 @@ public class MenuControllerTest extends AbstractWebTests {
         mvHelper.assertViewName(mv,
             "forward:/menu/listMenuRole.htm?roleId=2");
     }
-
+    */
     public void testGetExcludesForAll() {
         MenuController target = (MenuController) controller;
         assertEquals(6, target.getExcludesForAll().length);

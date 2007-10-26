@@ -18,4 +18,10 @@
     <bean class="anni.asecurity.web.MenuController" scope="request">
         <property name="entityDao" ref="menuManager"/>
     </bean>
+    <bean class="anni.asecurity.web.RegionController" scope="request">
+        <property name="entityDao" ref="regionManager"/>
+    </bean>
+    <bean class="anni.asecurity.web.DictionaryController" scope="request">
+        <property name="entityDao" ref="dictionaryManager"/>
+    </bean>
 </beans>

@@ -15,6 +15,16 @@
   <bean id="roleManager" class="anni.asecurity.manager.RoleManager"/>
   <bean id="resourceManager" class="anni.asecurity.manager.ResourceManager"/>
   <bean id="menuManager" class="anni.asecurity.manager.MenuManager"/>
+  <bean id="regionManager" class="anni.asecurity.manager.RegionManager"/>
+  <bean id="dictionaryManager" class="anni.asecurity.manager.DictionaryManager"/>
+
+  <!--aerp-->
+  <bean id="erpMaterialManager" class="anni.aerp.manager.ErpMaterialManager"/>
+  <bean id="erpProductManager" class="anni.aerp.manager.ErpProductManager"/>
+  <bean id="erpCustomerManager" class="anni.aerp.manager.ErpCustomerManager"/>
+  <bean id="erpRationManager" class="anni.aerp.manager.ErpRationManager"/>
+  <bean id="erpOrderManager" class="anni.aerp.manager.ErpOrderManager"/>
+  <bean id="erpOrderInfoManager" class="anni.aerp.manager.ErpOrderInfoManager"/>
 
   <!--atracker-->
   <bean id="trackerProjectManager" class="anni.atracker.manager.TrackerProjectManager"/>

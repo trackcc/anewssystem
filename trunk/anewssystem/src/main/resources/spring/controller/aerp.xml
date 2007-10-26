@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<!-- 小型企业erp -->
+<beans default-lazy-init="false" default-autowire="byName">
+    <bean class="anni.aerp.web.ErpMaterialController" scope="request">
+        <property name="entityDao" ref="erpMaterialManager"/>
+    </bean>
+    <bean class="anni.aerp.web.ErpProductController" scope="request">
+        <property name="entityDao" ref="erpProductManager"/>
+    </bean>
+    <bean class="anni.aerp.web.ErpCustomerController" scope="request">
+        <property name="entityDao" ref="erpCustomerManager"/>
+    </bean>
+    <bean class="anni.aerp.web.ErpRationController" scope="request">
+        <property name="entityDao" ref="erpRationManager"/>
+    </bean>
+    <bean class="anni.aerp.web.ErpOrderController" scope="request">
+        <property name="entityDao" ref="erpOrderManager"/>
+    </bean>
+</beans>

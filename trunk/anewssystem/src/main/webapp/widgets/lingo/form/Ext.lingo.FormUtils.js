@@ -256,6 +256,9 @@ Ext.lingo.FormUtils = function() {
             var columns = {};
             for (var i = 0; i < metaArray.length; i++) {
                 var meta = metaArray[i];
+                if (meta.skip === true) {
+                    continue;
+                }
 
                 try {
                     if (meta.vType == "date") {

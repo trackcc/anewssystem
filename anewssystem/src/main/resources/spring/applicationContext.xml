@@ -27,6 +27,7 @@
                 <value>i18n/anews</value>
                 <value>i18n/asecurity</value>
                 <value>i18n/atracker</value>
+                <value>i18n/aerp</value>
                 <value>i18n/message</value>
                 <value>classpath:/org/acegisecurity/messages</value>
             </list>

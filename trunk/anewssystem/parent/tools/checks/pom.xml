@@ -17,14 +17,14 @@
   </developers>
   <repositories>
     <repository>
-      <id>central</id>
+      <id>redv</id>
       <name>Internal Repository</name>
       <url>http://mirrors.redv.com/maven2</url>
     </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
-      <id>central</id>
+      <id>redv</id>
       <name>Internal Repository</name>
       <url>http://mirrors.redv.com/maven2</url>
     </pluginRepository>

@@ -28,4 +28,4 @@
         }
     }
 %>
-{success:true}
+{success:true,name:'Lingo'}

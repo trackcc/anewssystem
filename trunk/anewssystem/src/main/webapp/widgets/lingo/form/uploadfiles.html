@@ -42,7 +42,9 @@ Ext.onReady(function() {
 
     oForm.buttons[0].addListener("click", function() {
         if (oForm.isValid()) {
-            oForm.submit({success:function(){Ext.MessageBox.alert("提示", "修改成功");}});
+            oForm.submit({success:function(form,action){
+                Ext.MessageBox.alert("提示", "修改成功" + action.result.name);
+            }});
         }
     });
     oForm.render("oForm");

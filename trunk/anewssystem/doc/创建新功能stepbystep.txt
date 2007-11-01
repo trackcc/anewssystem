@@ -1,0 +1,47 @@
+1,domain加了个javabean
+2,然后在manager加了个server Manager类和
+
+3,在web加了个controller类 
+4,在dispatcher-servlet.xml加了个controller bean
+
+5,在applictionContext-manager.xml加了个manager bean
+
+6,在applictionContexg-hibernate加了行domain注册 
+
+说明:因为spring mvc所以没有了struts-config的配置 ;再加上webRoot/freemarker的ftl就完成
+
+
+
+
+1,生成domain类,manager类,web的controll类
+
+2,在controll类加上index方法
+
+java 代码
+public void index() {    
+       logger.info("start");    
+       mv.setViewName("anews/person/index");    
+   }   
+
+3,在applicationContex-hibernate加上domain类的annontiacton 的value
+
+4,在applicationContext-manager加上manager bean的声明
+
+5,在dispatcher-servlet.xml加上
+
+java 代码
+class="anni.anews.web.PersonController" parent="baseController" scope="request">    
+       "entityDao" ref="personManager"/>    
+      
+
+6,在freemarker的anews/person目录下加index.ftl,listPerson.ftl,editPerson.ftl等
+
+7,在widgets的anews目录下加上person.js
+ 
+8,在dwr.xml增加
+
+java 代码
+"bean" match="anni.anews.domain.Person">    
+    "include" value="id,name,code"/>    
+     
+ 

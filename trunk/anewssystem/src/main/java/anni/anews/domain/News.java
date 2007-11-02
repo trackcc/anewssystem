@@ -231,7 +231,7 @@ public class News extends LongGridBean {
     }
 
     /** * @return image. */
-    @Column(name = "IMAGE", length = 50)
+    @Column(name = "IMAGE", length = 100)
     public String getImage() {
         return image;
     }

@@ -48,10 +48,10 @@ public class FreemarkerGenerator {
     private static Log logger = LogFactory.getLog(FreemarkerGenerator.class);
 
     /** * fckeditor在firefox上的分页符. */
-    public static final String FCK_PAGE_BREAK_FF = "<div style=\"page-break-after: always;\"><span style=\"display: none;\">&nbsp;</span></div>";
+    public static final String FCK_PAGE_BREAK_FF = "<div style=\"page-break-after: always;\"><span style=\"display: none;\">&nbsp;</span><br></div>";
 
     /** * fckeditor在ie上的分页符. */
-    public static final String FCK_PAGE_BREAK_IE = "<div style=\"PAGE-BREAK-AFTER: always\"><span style=\"DISPLAY: none\">&nbsp;</span></div>";
+    public static final String FCK_PAGE_BREAK_IE = "<div style=\"PAGE-BREAK-AFTER: always\"><span style=\"DISPLAY: none\">&nbsp;</span><br></div>";
 
     /** * freemarker配置. */
     private FreeMarkerConfigurer freemarkerConfig = null;
@@ -146,10 +146,8 @@ public class FreemarkerGenerator {
         } else {
             List<String> pages = new ArrayList<String>();
             String content = news.getContent();
-            logger.info("page : " + page);
-            logger.info(content);
 
-            if (page == 1) {
+            if (page == 2) {
                 if (content.indexOf(FCK_PAGE_BREAK_FF) != -1) {
                     String[] tmp = content.split(FCK_PAGE_BREAK_FF);
 

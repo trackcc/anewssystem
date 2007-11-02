@@ -206,6 +206,16 @@ public class NewsCategoryManager extends LongTreeHibernateDao<NewsCategory> {
     /**
      * 获得分类，以及分类的所有子分类下的所有新闻.
      *
+     * @param id 新闻分类的id
+     * @return List
+     */
+    public List<News> getAllNews(Long id) {
+        return this.getAllNews(this.get(id), getCategoryStrategy());
+    }
+
+    /**
+     * 获得分类，以及分类的所有子分类下的所有新闻.
+     *
      * @param newsCategory 新闻分类
      * @return List
      */
@@ -242,7 +252,7 @@ public class NewsCategoryManager extends LongTreeHibernateDao<NewsCategory> {
     private List<News> getAllNewsByBitCode(NewsCategory newsCategory) {
         long code = newsCategory.getBitCode();
         long base = 1L << (8 * (8 - newsCategory.getLevel()));
-        List<News> newsList = find("from News where newsCategory.code>? and newsCategory.code<?",
+        List<News> newsList = find("from News where newsCategory.bitCode>? and newsCategory.bitCode<?",
                 code - 1, (code + base));
 
         return newsList;
@@ -256,7 +266,7 @@ public class NewsCategoryManager extends LongTreeHibernateDao<NewsCategory> {
      */
     private List<News> getAllNewsByCharCode(NewsCategory newsCategory) {
         String code = newsCategory.getCharCode();
-        List<News> newsList = find("from News where newsCategory.code like ?",
+        List<News> newsList = find("from News where newsCategory.charCode like ?",
                 code + "%");
 
         return newsList;

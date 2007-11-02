@@ -126,7 +126,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
         // 图片上传
         String imagePath = upload2File("uploadfiles/news/images/", "image");
 
-        if (imagePath != null) {
+        if ((imagePath != null) && !imagePath.equals("")) {
             entity.setImage(imagePath);
         }
 
@@ -242,7 +242,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
      */
 
     /*
-        public void changeStatus() {
+        public vo2007-11-1 changeStatus() {
             logger.info("start");
             int status = getIntParam("status", -1);
             if ((status == -1) || (status > 6)) {
@@ -425,7 +425,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
             boolean isAsc = dir.equalsIgnoreCase("asc");
             criteria = getEntityDao().createCriteria(sort, isAsc);
         } else {
-            criteria = getEntityDao().createCriteria();
+            criteria = getEntityDao().createCriteria("id", false);
         }
 
         if ((!filterTxt.equals("")) && (!filterValue.equals(""))) {
@@ -498,7 +498,14 @@ public class NewsController extends LongGridController<News, NewsManager> {
     public void insert() throws Exception {
         logger.info(params());
 
-        News entity = new News();
+        long id = getLongParam("id", -1L);
+
+        News entity = getEntityDao().get(id);
+
+        if (entity == null) {
+            entity = new News();
+        }
+
         BindingResult bindingResult = bindObject(request, entity);
 
         if (bindingResult.hasErrors()) {
@@ -645,7 +652,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
      */
     private void generateHtml(News entity) {
         // 0 不分页 1 手工分页 2 自动分页
-        int page = getIntParam("page", 0);
+        int page = getIntParam("pageType", 0);
         int pageSize = getIntParam("pagesize", 1000);
         String root = request.getRealPath("/");
         String ctx = request.getContextPath();

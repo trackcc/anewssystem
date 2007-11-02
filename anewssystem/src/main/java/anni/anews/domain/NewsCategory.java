@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.OrderBy;
 
 import anni.core.tree.LongTreeNode;
 
@@ -137,6 +138,7 @@ public class NewsCategory extends LongTreeNode<NewsCategory> {
 
     /** * @return Set. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parent")
+	@OrderBy("theSort asc, id desc")
     public Set<NewsCategory> getChildren() {
         return children;
     }

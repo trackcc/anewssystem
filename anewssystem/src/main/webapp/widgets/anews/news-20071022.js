@@ -19,11 +19,13 @@ Ext.onReady(function(){
     Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
     layout = new Ext.BorderLayout(document.body, {
         north: {
-            split:false,
-            initialSize: 22,
-            titlebar: false,
-            collapsible: false,
-            animate: false
+            autoScroll     : true,
+            titlebar       : true,
+            tabPosition    : 'top',
+            closeOnTab     : false,
+            alwaysShowTabs : true,
+            resizeTabs     : true,
+            fillToFrame    : true
         },
         south: {
             split:true,
@@ -385,7 +387,7 @@ Ext.onReady(function(){
             name:'source',
             fieldLabel:'来源',
             allowBlank:false,
-            value:'原创'
+            value:'东方之子'
         })
 
         , new Ext.form.TextField({
@@ -393,7 +395,7 @@ Ext.onReady(function(){
             name:'editor',
             fieldLabel:'编辑',
             allowBlank:false,
-            value:'管理员'
+            value:'东方之子'
         })
 
         , new Ext.form.DateField({
@@ -642,13 +644,18 @@ Ext.onReady(function(){
             var pageType = menuData.getAt(0).data["pageType"];
             var pageSize = menuData.getAt(0).data["pageSize"];
 
+            var tags = [];
+            for (var i = 0; i < newsTags.length; i++) {
+                tags.push(newsTags[i].name);
+            }
+
             form.setValues([
                 {id:'id',value:id},
                 {id:'name',value:name},
-                {id:'category',value:newsCategory==null ? 0 : newsCategory.id},
+                {id:'category',value:newsCategory==null ? '' : newsCategory.name},
                 {id:'summary',value:summary},
                 {id:'updateDate',value:updateDate},
-                {id:'tags',value:newsTags.join(",")},
+                {id:'tags',value:tags.join(",")},
                 {id:'content',value:content},
                 {id:'editor',value:editor},
                 {id:'source',value:source},
@@ -656,6 +663,7 @@ Ext.onReady(function(){
                 {id:'pageType',value:pageType},
                 {id:'pageSize',value:pageSize}
             ]);
+			document.getElementById("category_id").value = newsCategory.id;
             if (image == null || image == "") {
                 document.getElementById('imagePreview').src = '../images/no.jpg';
             } else {

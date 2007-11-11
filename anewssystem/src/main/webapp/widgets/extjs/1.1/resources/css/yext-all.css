@@ -544,7 +544,6 @@ q:before,q:after{content:'';}
     /*font:normal 12px tahoma, arial, helvetica, sans-serif;*/
 }
 
-
 .x-form-text, textarea.x-form-field{
     padding: 1px 3px;
     background:#fff url(../images/default/form/text-bg.gif) repeat-x 0 0;
@@ -602,6 +601,10 @@ q:before,q:after{content:'';}
     /*davi*/
     margin-top: 1px;
     /*----*/
+}
+.x-form-field-wrap .x-form-clear-trigger{
+    background-image:url(../images/default/form/clear-trigger.gif);
+    cursor:pointer;
 }
 .ext-safari .x-form-field-wrap .x-form-trigger{
     height:19px;

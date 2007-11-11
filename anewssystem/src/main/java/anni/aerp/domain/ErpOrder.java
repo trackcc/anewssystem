@@ -118,7 +118,7 @@ public class ErpOrder extends LongGridBean {
     /** * @param orderDate Date. */
     public void setOrderDate(Date orderDate) {
         if (orderDate == null) {
-            orderDate = null;
+            this.orderDate = null;
         } else {
             this.orderDate = (Date) orderDate.clone();
         }

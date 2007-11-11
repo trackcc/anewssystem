@@ -252,7 +252,7 @@ public class NewsCategoryManager extends LongTreeHibernateDao<NewsCategory> {
     private List<News> getAllNewsByBitCode(NewsCategory newsCategory) {
         long code = newsCategory.getBitCode();
         long base = 1L << (8 * (8 - newsCategory.getLevel()));
-        List<News> newsList = find("from News where newsCategory.bitCode>? and newsCategory.bitCode<?",
+        List<News> newsList = find("from News where newsCategory.bitCode>? and newsCategory.bitCode<? order by id desc",
                 code - 1, (code + base));
 
         return newsList;
@@ -266,7 +266,7 @@ public class NewsCategoryManager extends LongTreeHibernateDao<NewsCategory> {
      */
     private List<News> getAllNewsByCharCode(NewsCategory newsCategory) {
         String code = newsCategory.getCharCode();
-        List<News> newsList = find("from News where newsCategory.charCode like ?",
+        List<News> newsList = find("from News where newsCategory.charCode like ? order by id desc",
                 code + "%");
 
         return newsList;
@@ -283,7 +283,8 @@ public class NewsCategoryManager extends LongTreeHibernateDao<NewsCategory> {
         getIdList(newsCategory, idList);
 
         List<News> newsList = find("from News where newsCategory.id in ("
-                + idList.toString().substring(1, idList.size() - 1) + ")");
+                + idList.toString().substring(1, idList.size() - 1)
+                + ") order by id desc");
 
         return newsList;
     }

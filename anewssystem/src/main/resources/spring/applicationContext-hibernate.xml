@@ -43,6 +43,22 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="annotatedClasses">
             <list>
+                <value>anni.aerp.domain.ErpMaterial</value>
+                <value>anni.aerp.domain.ErpProduct</value>
+                <value>anni.aerp.domain.ErpCustomer</value>
+                <value>anni.aerp.domain.ErpRation</value>
+                <value>anni.aerp.domain.ErpOrder</value>
+                <value>anni.aerp.domain.ErpOrderInfo</value>
+
+                <value>anni.aerp2.domain.Erp2Supplier</value>
+                <value>anni.aerp2.domain.Erp2Product</value>
+                <value>anni.aerp2.domain.Erp2Bid</value>
+                <value>anni.aerp2.domain.Erp2InviteBid</value>
+                <value>anni.aerp2.domain.Erp2SuccessBid</value>
+                <value>anni.aerp2.domain.Erp2BuyOrder</value>
+                <value>anni.aerp2.domain.Erp2BuyOrderInfo</value>
+                <value>anni.aerp2.domain.Erp2BuyContract</value>
+
                 <value>anni.anews.domain.NewsCategory</value>
                 <value>anni.anews.domain.NewsConfig</value>
                 <value>anni.anews.domain.News</value>
@@ -56,13 +72,6 @@
                 <value>anni.asecurity.domain.Menu</value>
                 <value>anni.asecurity.domain.Region</value>
                 <value>anni.asecurity.domain.Dictionary</value>
-
-                <value>anni.aerp.domain.ErpMaterial</value>
-                <value>anni.aerp.domain.ErpProduct</value>
-                <value>anni.aerp.domain.ErpCustomer</value>
-                <value>anni.aerp.domain.ErpRation</value>
-                <value>anni.aerp.domain.ErpOrder</value>
-                <value>anni.aerp.domain.ErpOrderInfo</value>
 
                 <value>anni.atracker.domain.TrackerProject</value>
                 <value>anni.atracker.domain.TrackerIssue</value>

@@ -891,6 +891,7 @@
 
   <modules>
     <module>anni-core</module>
+    <module>anni-maven-plugin</module>
     <module>anni-mock</module>
     <module>anni-sample</module>
     <module>anni-security</module>

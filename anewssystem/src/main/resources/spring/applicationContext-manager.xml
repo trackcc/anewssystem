@@ -2,6 +2,23 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 
 <beans default-lazy-init="true" default-autowire="byName">
+  <!--aerp-->
+  <bean id="erpMaterialManager" class="anni.aerp.manager.ErpMaterialManager"/>
+  <bean id="erpProductManager" class="anni.aerp.manager.ErpProductManager"/>
+  <bean id="erpCustomerManager" class="anni.aerp.manager.ErpCustomerManager"/>
+  <bean id="erpRationManager" class="anni.aerp.manager.ErpRationManager"/>
+  <bean id="erpOrderManager" class="anni.aerp.manager.ErpOrderManager"/>
+  <bean id="erpOrderInfoManager" class="anni.aerp.manager.ErpOrderInfoManager"/>
+
+  <bean id="erp2SupplierManager" class="anni.aerp2.manager.Erp2SupplierManager"/>
+  <bean id="erp2ProductManager" class="anni.aerp2.manager.Erp2ProductManager"/>
+  <bean id="erp2BidManager" class="anni.aerp2.manager.Erp2BidManager"/>
+  <bean id="erp2InviteBidManager" class="anni.aerp2.manager.Erp2InviteBidManager"/>
+  <bean id="erp2SuccessBidManager" class="anni.aerp2.manager.Erp2SuccessBidManager"/>
+  <bean id="erp2BuyOrderManager" class="anni.aerp2.manager.Erp2BuyOrderManager"/>
+  <bean id="erp2BuyOrderInfoManager" class="anni.aerp2.manager.Erp2BuyOrderInfoManager"/>
+  <bean id="erp2BuyContractManager" class="anni.aerp2.manager.Erp2BuyContractManager"/>
+
   <!--anews-->
   <bean id="newsCategoryManager" class="anni.anews.manager.NewsCategoryManager"/>
   <bean id="newsConfigManager" class="anni.anews.manager.NewsConfigManager"/>
@@ -17,14 +34,6 @@
   <bean id="menuManager" class="anni.asecurity.manager.MenuManager"/>
   <bean id="regionManager" class="anni.asecurity.manager.RegionManager"/>
   <bean id="dictionaryManager" class="anni.asecurity.manager.DictionaryManager"/>
-
-  <!--aerp-->
-  <bean id="erpMaterialManager" class="anni.aerp.manager.ErpMaterialManager"/>
-  <bean id="erpProductManager" class="anni.aerp.manager.ErpProductManager"/>
-  <bean id="erpCustomerManager" class="anni.aerp.manager.ErpCustomerManager"/>
-  <bean id="erpRationManager" class="anni.aerp.manager.ErpRationManager"/>
-  <bean id="erpOrderManager" class="anni.aerp.manager.ErpOrderManager"/>
-  <bean id="erpOrderInfoManager" class="anni.aerp.manager.ErpOrderInfoManager"/>
 
   <!--atracker-->
   <bean id="trackerProjectManager" class="anni.atracker.manager.TrackerProjectManager"/>

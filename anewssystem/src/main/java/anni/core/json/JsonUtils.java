@@ -11,8 +11,10 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
@@ -158,9 +160,20 @@ public class JsonUtils {
         T entity, String[] excludes, String datePattern)
         throws Exception {
         // JsonUtils.configJson(excludes, datePattern);
+        Set<String> excludeSet = new HashSet<String>();
+
+        for (String exclude : excludes) {
+            excludeSet.add(exclude);
+        }
+
         for (Object object : jsonObject.entrySet()) {
             Map.Entry entry = (Map.Entry) object;
             String propertyName = entry.getKey().toString();
+
+            if (excludeSet.contains(propertyName)) {
+                continue;
+            }
+
             String propertyValue = entry.getValue().toString();
 
             try {
@@ -221,9 +234,28 @@ public class JsonUtils {
     public static <T extends Object> List<T> json2List(String data,
         Class<T> clazz, String[] excludes, String datePattern)
         throws Exception {
-        // JsonUtils.configJson(excludes, datePattern);
-        List<T> list = new ArrayList<T>();
         JSONArray jsonArray = JSONArray.fromObject(data);
+
+        return json2List(jsonArray, clazz, excludes, datePattern);
+    }
+
+    /**
+     * data=[{"id":"1"},{"id":2}]用json里的数据，创建pojo队列.
+     *
+     * @param <T> Object
+     * @param jsonArray JSONArray
+     * @param clazz 需要转换成node的具体类型
+     * @param excludes 不需要转换的属性数组
+     * @param datePattern 日期转换模式
+     * @return List
+     * @throws Exception java.lang.InstantiationException,
+     *                   java.beans.IntrospectionException,
+     *                   java.lang.IllegalAccessException
+     */
+    public static <T extends Object> List<T> json2List(
+        JSONArray jsonArray, Class<T> clazz, String[] excludes,
+        String datePattern) throws Exception {
+        List<T> list = new ArrayList<T>();
 
         for (int i = 0; i < jsonArray.size(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(i);

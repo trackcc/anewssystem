@@ -50,6 +50,8 @@ public class RoleManager extends HibernateEntityDao<Role> {
     public void save(Object o) {
         super.save(o);
 
+        flush();
+
         Role role = (Role) o;
         Set<Resource> resources = role.getResources();
 
@@ -77,6 +79,8 @@ public class RoleManager extends HibernateEntityDao<Role> {
     public void saveRoleInCache(Resource resc) {
         GrantedAuthority[] authorities = AuthenticationHelper
             .convertToGrantedAuthority(resc.getRoles(), "name");
+
+        logger.info(java.util.Arrays.asList(resc.getResString()));
         logger.info(java.util.Arrays.asList(authorities));
 
         ResourceDetails rd = acegiCacheManager.getResourceFromCache(resc

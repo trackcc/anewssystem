@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import anni.core.tree.LongTreeNode;
@@ -126,6 +127,7 @@ public class Dept extends LongTreeNode<Dept> {
 
     /** * @return children. */
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "parent")
+    @OrderBy("theSort asc, id desc")
     public Set<Dept> getChildren() {
         return children;
     }

@@ -138,11 +138,13 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <includes>
+            <include>anni/aerp2/domain/*Test.java</include>
+            <include>anni/aerp2/manager/*Test.java</include>
+            <include>anni/aerp2/controller/*Test.java</include>
 <!--
-            <include>**/Test.java</include>
--->
             <include>**/*Test.java</include>
             <include>**/*TestCase.java</include>
+-->
           </includes>
           <excludes>
             <exclude>**/Abstract*.java</exclude>
@@ -238,6 +240,10 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>jdepend-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+      </plugin>
 <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -278,6 +284,7 @@
     <ignore-pager-taglib>true</ignore-pager-taglib>
     <ignore-struts-menu>true</ignore-struts-menu>
     <ignore-velocity>true</ignore-velocity>
+    <export-to-database>true</export-to-database>
   </properties>
 
 </project>

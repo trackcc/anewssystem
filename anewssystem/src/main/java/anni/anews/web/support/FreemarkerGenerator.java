@@ -163,8 +163,9 @@ public class FreemarkerGenerator {
                 }
             } else {
                 for (int i = 0; i <= (content.length() / pageSize); i++) {
-                    if ((i * pageSize) > content.length()) {
-                        pages.add(content.substring(i * pageSize, pageSize));
+                    if (((i + 1) * pageSize) < content.length()) {
+                        pages.add(content.substring(i * pageSize,
+                                (i + 1) * pageSize));
                     } else {
                         pages.add(content.substring(i * pageSize,
                                 content.length()));

@@ -43,34 +43,34 @@ public class News extends LongGridBean {
     static final long serialVersionUID = 0L;
 
     /** * 正常状态. */
-    public static final int STATUS_NORMAL = 0;
+    public static final Integer STATUS_NORMAL = 0;
 
     /** * 待审. */
-    public static final int STATUS_WAIT = 1;
+    public static final Integer STATUS_WAIT = 1;
 
     /** * 被驳回. */
-    public static final int STATUS_REJECT = 2;
+    public static final Integer STATUS_REJECT = 2;
 
     /** * 草稿. */
-    public static final int STATUS_DRAFT = 3;
+    public static final Integer STATUS_DRAFT = 3;
 
     /** * 垃圾. */
-    public static final int STATUS_RUBBISH = 4;
+    public static final Integer STATUS_RUBBISH = 4;
 
     /** * 推荐. */
-    public static final int STATUS_RECOMMEND = 5;
+    public static final Integer STATUS_RECOMMEND = 5;
 
     /** * 隐藏. */
-    public static final int STATUS_HIDE = 6;
+    public static final Integer STATUS_HIDE = 6;
 
     /** * 不分页. */
-    public static final int NO_PAGE = 0;
+    public static final Integer NO_PAGE = 0;
 
     /** * 自动分页. */
-    public static final int AUTO_PAGE = 1;
+    public static final Integer AUTO_PAGE = 1;
 
     /** * 手工分页. */
-    public static final int PAGE_BY_HAND = 2;
+    public static final Integer PAGE_BY_HAND = 2;
 
     /** * id. */
     //@SearchableId
@@ -95,10 +95,10 @@ public class News extends LongGridBean {
     private String html;
 
     /** * 分页方式. */
-    private int pageType;
+    private Integer pageType;
 
     /** * 自动分页字数. */
-    private int pageSize;
+    private Integer pageSize;
 
     /** * image. */
     private String image;
@@ -210,23 +210,23 @@ public class News extends LongGridBean {
 
     /** * @return 分页方式. */
     @Column(name = "PAGE_TYPE")
-    public int getPageType() {
+    public Integer getPageType() {
         return pageType;
     }
 
-    /** * @param pageType int. */
-    public void setPageType(int pageType) {
+    /** * @param pageType Integer. */
+    public void setPageType(Integer pageType) {
         this.pageType = pageType;
     }
 
     /** * @return 自动分页字数. */
     @Column(name = "PAGE_SIZE")
-    public int getPageSize() {
+    public Integer getPageSize() {
         return pageSize;
     }
 
-    /** * @param pageSize int. */
-    public void setPageSize(int pageSize) {
+    /** * @param pageSize Integer. */
+    public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
 

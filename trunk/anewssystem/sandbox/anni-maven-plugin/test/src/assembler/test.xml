@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<assembler>
+  <scripts>
+    <script>
+      <fileName>test.js</fileName>
+      <includes>
+        <include>test.js</include>
+      </includes>
+    </script>
+  </scripts>
+</assembler>

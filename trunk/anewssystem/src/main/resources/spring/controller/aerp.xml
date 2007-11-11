@@ -18,4 +18,30 @@
     <bean class="anni.aerp.web.ErpOrderController" scope="request">
         <property name="entityDao" ref="erpOrderManager"/>
     </bean>
+    <bean class="anni.aerp.web.ErpController" scope="request"/>
+
+    <bean class="anni.aerp2.web.Erp2SupplierController" scope="request">
+        <property name="entityDao" ref="erp2SupplierManager"/>
+    </bean>
+    <bean class="anni.aerp2.web.Erp2ProductController" scope="request">
+        <property name="entityDao" ref="erp2ProductManager"/>
+    </bean>
+    <bean class="anni.aerp2.web.Erp2BidController" scope="request">
+        <property name="entityDao" ref="erp2BidManager"/>
+    </bean>
+    <bean class="anni.aerp2.web.Erp2InviteBidController" scope="request">
+        <property name="entityDao" ref="erp2InviteBidManager"/>
+    </bean>
+    <bean class="anni.aerp2.web.Erp2SuccessBidController" scope="request">
+        <property name="entityDao" ref="erp2SuccessBidManager"/>
+    </bean>
+    <bean class="anni.aerp2.web.Erp2BuyOrderController" scope="request">
+        <property name="entityDao" ref="erp2BuyOrderManager"/>
+    </bean>
+    <bean class="anni.aerp2.web.Erp2BuyOrderInfoController" scope="request">
+        <property name="entityDao" ref="erp2BuyOrderInfoManager"/>
+    </bean>
+    <bean class="anni.aerp2.web.Erp2BuyContractController" scope="request">
+        <property name="entityDao" ref="erp2BuyContractManager"/>
+    </bean>
 </beans>

@@ -29,4 +29,5 @@ Ext.BLANK_IMAGE_URL = '${ext}/resources/images/default/s.gif';
 <script type="text/javascript" src="${ctx}/widgets/ux/Ext.ux.PasswordMeter.js"></script>
 <link rel="stylesheet" type="text/css" href="${ctx}/widgets/ux/passwordmeter.css" />
 <link rel="stylesheet" type="text/css" href="${ext}/resources/css/editor.css" />
+<script type="text/javascript" src="${ctx}/widgets/lingo/form/HistoryClearableComboBox.js"></script>
 

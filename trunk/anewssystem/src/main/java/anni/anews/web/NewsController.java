@@ -492,8 +492,8 @@ public class NewsController extends LongGridController<News, NewsManager> {
 
     /**
      * 添加新闻.
-    *
-    * @throws Exception 异常
+     *
+     * @throws Exception 异常
      */
     public void insert() throws Exception {
         logger.info(params());
@@ -653,7 +653,7 @@ public class NewsController extends LongGridController<News, NewsManager> {
     private void generateHtml(News entity) {
         // 0 不分页 1 手工分页 2 自动分页
         int page = getIntParam("pageType", 0);
-        int pageSize = getIntParam("pagesize", 1000);
+        int pageSize = getIntParam("pageSize", 1000);
         String root = request.getRealPath("/");
         String ctx = request.getContextPath();
         NewsConfig newsConfig = newsConfigManager.getDefaultConfig();

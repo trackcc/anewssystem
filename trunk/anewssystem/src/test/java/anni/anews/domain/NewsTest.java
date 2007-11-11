@@ -50,12 +50,12 @@ public class NewsTest extends TestCase {
         entity.setNewsTags(null);
         assertNull(entity.getNewsTags());
 
-        // ��ҳ
+        // 分页
         entity.setHtml("html");
         assertEquals("html", entity.getHtml());
         entity.setPageType(0);
-        assertEquals(0, entity.getPageType());
+        assertEquals(new Integer(0), entity.getPageType());
         entity.setPageSize(0);
-        assertEquals(0, entity.getPageSize());
+        assertEquals(new Integer(0), entity.getPageSize());
     }
 }

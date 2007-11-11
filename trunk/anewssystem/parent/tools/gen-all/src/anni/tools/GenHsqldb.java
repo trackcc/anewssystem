@@ -53,6 +53,9 @@ public class GenHsqldb {
             // foreign keys
             Map fks = new HashMap();
             for (Row row : bean.rowList) {
+                if ("".equals(row.name)) {
+                    continue;
+                }
                 buff.append("    ").append(row.name).append(" ").append(row.type);
                 if ("not null".equals(row.notNull)) {
                     buff.append(" not null");

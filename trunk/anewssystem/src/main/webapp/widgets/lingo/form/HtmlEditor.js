@@ -928,7 +928,7 @@ Ext.form.HtmlEditor = Ext.extend(Ext.form.Field, {
         // ====================================================
         // modify by 2007-10-06
         // I want page break
-        createImg : {
+        createPageBreak : {
             title: '分页符',
             text: '手工插入分页符',
             cls: 'x-html-editor-tip'

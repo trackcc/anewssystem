@@ -76,6 +76,18 @@ public class JsonUtilsTest extends TestCase {
         assertEquals(0, list.size());
     }
 
+    public void testJson2List3() throws Exception {
+        String json = "[{\"id\":1,name:'name1'},{\"id\":2,name:'name2'}]";
+        String[] excludes = new String[] {"id", "class", "root", "parent"};
+        List<LongTreeNode> list = JsonUtils.json2List(json,
+                LongTreeNode.class, excludes, null);
+        assertEquals(2, list.size());
+
+        for (LongTreeNode node : list) {
+            assertNull(node.getId());
+        }
+    }
+
     public static class TestNode {
         private Byte theByte;
         private Short theShort;

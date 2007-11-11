@@ -13,6 +13,22 @@
         <mapping class="anni.Foo"/>
         <mapping resource="anni/Foo.hbm.xml"/>
 -->
+        <mapping class="anni.aerp.domain.ErpMaterial"/>
+        <mapping class="anni.aerp.domain.ErpProduct"/>
+        <mapping class="anni.aerp.domain.ErpCustomer"/>
+        <mapping class="anni.aerp.domain.ErpRation"/>
+        <mapping class="anni.aerp.domain.ErpOrder"/>
+        <mapping class="anni.aerp.domain.ErpOrderInfo"/>
+
+        <mapping class="anni.aerp2.domain.Erp2Supplier"/>
+        <mapping class="anni.aerp2.domain.Erp2Product"/>
+        <mapping class="anni.aerp2.domain.Erp2Bid"/>
+        <mapping class="anni.aerp2.domain.Erp2InviteBid"/>
+        <mapping class="anni.aerp2.domain.Erp2SuccessBid"/>
+        <mapping class="anni.aerp2.domain.Erp2BuyOrder"/>
+        <mapping class="anni.aerp2.domain.Erp2BuyOrderInfo"/>
+        <mapping class="anni.aerp2.domain.Erp2BuyContract"/>
+
         <mapping class="anni.anews.domain.News"/>
         <mapping class="anni.anews.domain.NewsCategory"/>
         <mapping class="anni.anews.domain.NewsConfig"/>
@@ -23,6 +39,8 @@
         <mapping class="anni.asecurity.domain.User"/>
         <mapping class="anni.asecurity.domain.Role"/>
         <mapping class="anni.asecurity.domain.Resource"/>
+        <mapping class="anni.asecurity.domain.Region"/>
+        <mapping class="anni.asecurity.domain.Dictionary"/>
         <mapping class="anni.asecurity.domain.Menu"/>
 
         <mapping class="anni.atracker.domain.TrackerProject"/>

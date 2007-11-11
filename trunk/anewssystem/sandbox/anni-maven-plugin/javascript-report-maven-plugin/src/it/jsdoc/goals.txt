@@ -1,0 +1,1 @@
+clean org.codehaus.mojo:javascript-maven-report-plugin:jsdoc

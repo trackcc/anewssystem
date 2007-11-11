@@ -71,7 +71,7 @@ public class GenHibernateReveng {
             for (int i = 0; i < list.size(); i++) {
                 String name = (String) list.get(i);
 
-                Pattern p = Pattern.compile("[A-Z][a-z]*");
+                Pattern p = Pattern.compile("[A-Z][a-z0-9]*");
                 Matcher m = p.matcher(name);
                 StringBuffer buff = new StringBuffer();
                 while (m.find()) {

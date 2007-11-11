@@ -103,6 +103,7 @@ public class UserManager extends HibernateEntityDao<User> {
         GrantedAuthority[] authorities = AuthenticationHelper
             .convertToGrantedAuthority(user.getRoles(), "name");
 
+        //logger.info(java.util.Arrays.asList());
         if (user.getUsername() != null) {
             acegiCacheManager.addUser(user.getUsername(),
                 user.getPassword(), user.isEnabled(), true, true, true,

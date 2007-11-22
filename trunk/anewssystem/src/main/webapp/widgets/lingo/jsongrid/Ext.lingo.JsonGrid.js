@@ -26,7 +26,8 @@ Ext.lingo.JsonGrid = function(container, config) {
     this.config    = config;
     this.metaData  = config.metaData;
     this.genHeader = config.genHeader !== false;
-    this.useHistory = config.useHistory !== false;
+    //this.useHistory = config.useHistory !== false;
+    this.useHistory = false;
     this.pageSize   = config.pageSize ? config.pageSize : 15;
     this.dialogWidth  = config.dialogWidth;
     this.dialogHeight = config.dialogHeight;

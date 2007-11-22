@@ -67,12 +67,14 @@ public class GenericsUtils {
             return Object.class;
         }
 
-        // 不知道这个是做什么的，似乎没可能不是class
-        //if (!(params[index] instanceof Class)) {
-        //    LOGGER.warn(clazz.getSimpleName()
-        //        + " not set the actual class on superclass generic parameter");
-        //    return Object.class;
-        //}
+        // 好不容易发现了这种情况，参考GenericsUtilsTest.testNotClass()测试里的内容
+        if (!(params[index] instanceof Class)) {
+            LOGGER.warn(clazz.getSimpleName()
+                + " not set the actual class on superclass generic parameter");
+
+            return Object.class;
+        }
+
         return (Class) params[index];
     }
 }

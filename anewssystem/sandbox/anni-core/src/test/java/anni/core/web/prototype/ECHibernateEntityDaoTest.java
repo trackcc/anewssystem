@@ -113,7 +113,7 @@ public class ECHibernateEntityDaoTest extends TestCase {
 
     public void testRemoveById() {
         Object obj = new Object();
-        EasyMock.expect(mockHibernateTemplate.get(Object.class, 1L))
+        EasyMock.expect(mockHibernateTemplate.load(Object.class, 1L))
                 .andReturn(obj);
         mockHibernateTemplate.delete(obj);
         EasyMock.replay(mockHibernateTemplate);

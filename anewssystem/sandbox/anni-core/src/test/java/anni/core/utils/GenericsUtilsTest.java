@@ -46,10 +46,7 @@ public class GenericsUtilsTest extends TestCase {
             GenericsUtils.getSuperClassGenricType(TestInterface.class));
     }
 
-    /**
-     * 测试超类参数可能不是class的情况
-     */
-    public void testNoClass() {
+    public void testOutRange() {
         // ?
         assertEquals(Object.class,
             GenericsUtils.getSuperClassGenricType(
@@ -58,6 +55,13 @@ public class GenericsUtilsTest extends TestCase {
         assertEquals(Object.class,
             GenericsUtils.getSuperClassGenricType(
                 TestActualGenericsBean.class, -1));
+    }
+
+    /**
+     * 测试超类参数可能不是class的情况
+     */
+    public void testNotClass() {
+        GenericsUtils.getSuperClassGenricType(MyClass2.class);
     }
 
     /**
@@ -97,6 +101,13 @@ public class GenericsUtilsTest extends TestCase {
     }
 
     public class TextNoClass<T, T2> extends TestGenericsBean {
+    }
+
+    // 帮助我解开最后那个if not instance of Class的谜题
+    static class MyClass<T> {
+    }
+
+    static class MyClass2<T> extends MyClass<T> {
     }
     enum TestEnumEnum {
     }

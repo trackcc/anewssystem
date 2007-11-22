@@ -12,6 +12,41 @@
   <version>0.0.3</version>
   <name>RBAC and ACL module.</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.acegisecurity</groupId>
+            <artifactId>acegi-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jcaptcha</groupId>
+            <artifactId>jcaptcha-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+    </dependencies>
+
   <build>
     <defaultGoal>install</defaultGoal>
     <plugins>
@@ -23,8 +58,8 @@
 <!--
             <include>**/Test.java</include>
 -->
-            <include>**/*Test.java</include>
-            <include>**/*TestCase.java</include>
+            <include>anni/core/security/**/*Test.java</include>
+            <include>anni/core/security/**/*TestCase.java</include>
           </includes>
           <excludes>
             <exclude>**/Abstract*.java</exclude>
@@ -54,5 +89,9 @@
       </plugin>
     </plugins>
   </build>
+
+  <properties>
+    <skip.jalopy>false</skip.jalopy>
+  </properties>
 
 </project>

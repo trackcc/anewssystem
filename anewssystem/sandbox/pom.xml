@@ -1002,10 +1002,10 @@
   </properties>
 
   <modules>
-    <module>anni-core</module>
     <module>anni-maven-plugin</module>
     <module>anni-mock</module>
-    <module>anni-sample</module>
+    <module>anni-core</module>
     <module>anni-security</module>
+    <module>anni-sample</module>
   </modules>
 </project>

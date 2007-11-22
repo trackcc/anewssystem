@@ -72,6 +72,14 @@
             <artifactId>extremecomponents</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>anni</groupId>
+            <artifactId>anni-mock</artifactId>
+            <version>0.0.3</version>
+            <scope>test</scope>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
   <build>
@@ -82,11 +90,11 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <includes>
-            <include>anni/core/utils/GenericsUtilsTest.java</include>
 <!--
             <include>anni/core/**/*Test.java</include>
-            <include>anni/core/**/*TestCase.java</include>
 -->
+            <include>anni/core/**/*Test.java</include>
+            <include>anni/core/**/*TestCase.java</include>
           </includes>
           <excludes>
             <exclude>**/Abstract*.java</exclude>

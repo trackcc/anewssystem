@@ -14,6 +14,7 @@
   <modules>
     <module>javascript-report-maven-plugin</module>
     <module>taglist-maven-plugin</module>
+    <module>cobertura-maven-plugin</module>
     <module>test</module>
   </modules>
 

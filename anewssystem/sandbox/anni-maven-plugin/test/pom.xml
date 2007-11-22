@@ -10,6 +10,7 @@
   <artifactId>test</artifactId>
   <packaging>javascript</packaging>
   <version>0.0.1</version>
+  <name> - test the javascript-maven-tools</name>
 
   <dependencies>
     <dependency>

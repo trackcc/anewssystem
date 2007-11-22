@@ -903,6 +903,7 @@
                 <delete>
                   <fileset dir="${basedir}">
                     <include name="**/*.bak"/>
+                    <include name="**/Thumbs.db"/>
                     <include name="cobertura.ser"/>
                     <include name="*.log"/>
                     <include name="*.log.*"/>

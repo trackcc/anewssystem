@@ -218,6 +218,24 @@ var index = function() {
                 }
             }
             layout.getRegion("west").expand();
+        },
+
+        checkLogin : function() {
+            Ext.lib.Ajax.request(
+                'POST',
+                "../login/isLogin.htm",
+                {success:function(data){
+                    var json = eval("(" + data.responseText + ")");
+                    if (json.success) {
+                        this.setLoginName(json.response);
+                    } else {
+                        this.logout();
+                    }
+                }.createDelegate(this),failure:function(){
+                    this.logout();
+                }},
+                ''
+            );
         }
     }
 }();

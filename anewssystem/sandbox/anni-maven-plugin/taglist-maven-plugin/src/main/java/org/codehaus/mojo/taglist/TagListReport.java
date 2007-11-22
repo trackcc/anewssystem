@@ -165,7 +165,7 @@ public class TagListReport
 
         if ( tags == null || tags.length == 0 )
         {
-            tags = new String[] { "@todo", "TODO" };
+            tags = new String[] { "@todo", "TODO","FIXME" };
         }
 
         File outputDir = new File( outputDirectory );
@@ -348,7 +348,7 @@ public class TagListReport
 
     /**
      * Tells wether to look for tags without comments
-     * 
+     *
      * @return the emptyComments
      */
     public boolean isEmptyComments()

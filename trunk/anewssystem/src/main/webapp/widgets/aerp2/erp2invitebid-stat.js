@@ -56,7 +56,7 @@ Ext.onReady(function(){
         {header:'序号',sortable:true,dataIndex:'id',width:40},
         {header:'投标单位名称',sortable:true,dataIndex:'companyName',width:80},
         {header:'所投标书编号',sortable:true,dataIndex:'bidCode',width:90},
-        {header:'进标价格',sortable:true,dataIndex:'price',width:80},
+        {header:'竞标价格',sortable:true,dataIndex:'price',width:80},
         {header:'投标单位地址',sortable:true,dataIndex:'address',width:80},
         {header:'联系电话',sortable:true,dataIndex:'tel',width:100},
         {header:'投标日期',sortable:true,dataIndex:'bidDate',width:100},

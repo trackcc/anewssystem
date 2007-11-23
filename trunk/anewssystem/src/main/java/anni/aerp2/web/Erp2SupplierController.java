@@ -89,15 +89,32 @@ public class Erp2SupplierController extends LongGridController<Erp2Supplier, Erp
                 }, "yyyy-MM-dd");
         logger.info(entity.getId());
 
-        long townId = supplierValue.getLong("town");
-        Region region = regionManager.get(townId);
-        entity.setRegion(region);
-
+        // 新需求要求：县是可以不填写的，如果不填写县，就把市当作region，设置到供应商信息中。
+        // 我决定这是一个很正当的需求
         try {
-            entity.setArea(region.getParent().getParent().getName() + "-"
-                + region.getParent().getName() + "-" + region.getName());
-        } catch (NullPointerException ex) {
-            entity.setArea("");
+            long townId = supplierValue.getLong("town");
+            Region region = regionManager.get(townId);
+            entity.setRegion(region);
+
+            try {
+                entity.setArea(region.getParent().getParent().getName()
+                    + "-" + region.getParent().getName() + "-"
+                    + region.getName());
+            } catch (NullPointerException ex) {
+                entity.setArea("");
+            }
+        } catch (Exception e) {
+            // 如果取得town失败，就是说town发送过来是空的，就是没选，那么我们操作city
+            long cityId = supplierValue.getLong("city");
+            Region region = regionManager.get(cityId);
+            entity.setRegion(region);
+
+            try {
+                entity.setArea(region.getParent().getName() + "-"
+                    + region.getName());
+            } catch (NullPointerException ex) {
+                entity.setArea("");
+            }
         }
 
         getEntityDao().save(entity);

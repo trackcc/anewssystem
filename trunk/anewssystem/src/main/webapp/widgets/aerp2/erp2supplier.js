@@ -682,7 +682,7 @@ Supplier = {
             selectOnFocus:true,
             width:100,
             readOnly:true,
-            allowBlank:false
+            allowBlank:true
         });
         provinceStore.load();
         //cityStore.load();
@@ -764,7 +764,7 @@ Supplier = {
                 selectOnFocus:true
             }))
         },{
-            header:"成分",
+            header:"型号",
             dataIndex:"material",
             editor:new Ext.grid.GridEditor(new Ext.form.TextField({allowBlank:false}))
         },{

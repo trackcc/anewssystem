@@ -64,7 +64,7 @@ Ext.onReady(function(){
                 return "<span style='color:blue;'>设备</span>";
             }
         }},
-        {header:'成分',sortable:true,dataIndex:'material',width:80},
+        {header:'型号',sortable:true,dataIndex:'material',width:80},
         {header:'供应商',sortable:true,dataIndex:'supplier',width:60},
         {header:'生产厂家',sortable:true,dataIndex:'factory',width:60},
         {header:'数量',sortable:true,dataIndex:'num',width:60},

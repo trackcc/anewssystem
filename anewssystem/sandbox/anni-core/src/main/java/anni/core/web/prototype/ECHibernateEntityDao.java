@@ -1,7 +1,5 @@
 package anni.core.web.prototype;
 
-import java.io.Serializable;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,11 +8,7 @@ import anni.core.dao.HibernateEntityDao;
 
 import anni.core.page.Page;
 
-import anni.core.utils.GenericsUtils;
-
 import org.hibernate.Query;
-
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -31,8 +25,6 @@ import org.springframework.util.CollectionUtils;
  * 来自www.springside.org.cn
  *
  * @author calvin
- * @since 2007-03-30
- * @version 1.0
  * @param <T> 实体类
  */
 public class ECHibernateEntityDao<T> extends HibernateEntityDao<T>

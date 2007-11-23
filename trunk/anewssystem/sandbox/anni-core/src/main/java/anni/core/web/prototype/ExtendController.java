@@ -399,6 +399,8 @@ public class ExtendController extends PrototypeController {
     /**
      * 显示request中所有参数.
      * 调试
+     *
+     * @return 请求中所有参数以及取值的字符串
      */
     protected StringBuffer params() {
         Map map = request.getParameterMap();

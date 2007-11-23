@@ -7,7 +7,8 @@ import java.io.Serializable;
  * 专门用于primary key为long情况的BaseController.
  *
  * @author Lingo
- * @since 2007-06-22
+ * @param <T> 实体类的类型
+ * @param <D> 实体类对应的dao类型
  */
 public class BaseLongController<T, D extends EntityDao<T>>
     extends BaseController<T, D> {

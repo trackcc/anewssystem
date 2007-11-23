@@ -345,45 +345,85 @@ public class BaseController<T, D extends EntityDao<T>>
     // ----------------------------------------------------
     // 子类实现的回调方法
     // ----------------------------------------------------
-    /** * onList. */
+
+    /**
+     * 执行list方法的回调方法.
+     *
+     * @throws Exception 可能抛出任何异常
+     */
     protected void onList() throws Exception {
     }
 
-    /** * onCreate. */
+    /**
+     * 执行create方法的回调方法.
+     *
+     * @throws Exception 可能抛出任何异常
+     */
     protected void onCreate() throws Exception {
     }
 
-    /** * onSave. */
+    /**
+     * 执行save方法的回调方法.
+     *
+     * @throws Exception 可能抛出任何异常
+     */
     protected void onInsert() throws Exception {
     }
 
-    /** * onEdit. */
+    /**
+     * 执行edit方法的回调方法.
+     *
+     * @throws Exception 可能抛出任何异常
+     */
     protected void onEdit() throws Exception {
     }
 
-    /** * onUpdate. */
+    /**
+     * 执行update方法的回调方法.
+     *
+     * @throws Exception 可能抛出任何异常
+     */
     protected void onUpdate() throws Exception {
     }
 
-    /** * onRemove. */
+    /**
+     * 执行remove方法的回调方法.
+     *
+     * @throws Exception 可能抛出任何异常
+     */
     protected void onRemove() throws Exception {
     }
 
-    /** * onRemoveAll. */
+    /**
+     * 执行removeAll方法的回调方法.
+     *
+     * @throws Exception 可能抛出任何异常
+     */
     protected void onRemoveAll() throws Exception {
     }
 
-    /** * onShow. */
+    /**
+     * 执行show方法的回调方法.
+     *
+     * @throws Exception 可能抛出任何异常
+     */
     protected void onShow() throws Exception {
     }
 
-    /** * onQuery. */
+    /**
+     * 执行query方法的回调方法.
+     *
+     * @throws Exception 可能抛出任何异常
+     */
     protected void onQuery() throws Exception {
     }
 
     /**
      * 回调函数.校验出错时,将出错的对象及出错信息放回model.
      * 在{@link #onSave(HttpServletRequest,HttpServletResponse,ModelAndView,boolean)}中调用.
+     *
+     * @param result 绑定结果
+     * @param entity 实体对象
      */
     protected void onBindError(BindingResult result, T entity) {
         mv.setViewName(editView);

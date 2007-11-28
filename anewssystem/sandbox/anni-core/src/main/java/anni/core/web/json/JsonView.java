@@ -75,7 +75,13 @@ public class JsonView extends AbstractView {
      * @param excludedProperties 设置需要排除的属性
      */
     public void setExcludedProperties(String[] excludedProperties) {
-        this.excludedProperties = excludedProperties;
+        if (excludedProperties == null) {
+            this.excludedProperties = null;
+        } else {
+            this.excludedProperties = new String[excludedProperties.length];
+            System.arraycopy(excludedProperties, 0,
+                this.excludedProperties, 0, excludedProperties.length);
+        }
     }
 
     /**

@@ -26,7 +26,6 @@ import java.util.Set;
 
 import org.springframework.util.ClassUtils;
 
-import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.handler.AbstractUrlHandlerMapping;
 import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.mvc.throwaway.ThrowawayController;
@@ -70,7 +69,7 @@ import org.springframework.web.servlet.mvc.throwaway.ThrowawayController;
  * @see org.springframework.web.servlet.mvc.multiaction.MultiActionController
  */
 public class ControllerClassNameHandlerMapping
-    extends AbstractUrlHandlerMapping implements HandlerMapping {
+    extends AbstractUrlHandlerMapping {
     /**
      * Common suffix at the end of controller implementation classes.
      * Removed when generating the URL path.

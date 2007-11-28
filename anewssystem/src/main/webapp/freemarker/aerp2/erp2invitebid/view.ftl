@@ -16,7 +16,7 @@
             <td>所投标书编号:</td><td>${entity.erp2Bid.code!}</td>
         </tr>
         <tr>
-            <td>进标价格:</td><td>${entity.price!}</td>
+            <td>竞标价格:</td><td>${entity.price!}</td>
         </tr>
         <tr>
             <td>投标单位地址:</td><td>${entity.address!}</td>

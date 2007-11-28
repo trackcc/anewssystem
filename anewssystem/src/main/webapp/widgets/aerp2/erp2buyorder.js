@@ -699,7 +699,7 @@ EditForm = {
                 }
             }
         },{
-            header:"成分",
+            header:"型号",
             dataIndex:"material",
             width:40
         },{

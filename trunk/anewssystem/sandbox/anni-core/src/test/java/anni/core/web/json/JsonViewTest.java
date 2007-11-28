@@ -119,6 +119,7 @@ public class JsonViewTest extends TestCase {
 
     public void testSetter() throws Exception {
         JsonView view = new JsonView();
+        view.setExcludedProperties(null);
         view.setDatePattern("yyyy-MM-dd");
         view.setIgnoreDefaultExcludes(true);
     }

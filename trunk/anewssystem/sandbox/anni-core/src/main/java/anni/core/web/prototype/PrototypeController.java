@@ -296,10 +296,16 @@ public class PrototypeController extends AbstractController
      * Set the Validators for this controller.
      * The Validator must support the specified command class.
      *
-     * @param validatorsIn Validator
+     * @param validators Validator
      */
-    public final void setValidators(Validator[] validatorsIn) {
-        this.validators = validatorsIn;
+    public final void setValidators(Validator[] validators) {
+        if (validators == null) {
+            this.validators = null;
+        } else {
+            this.validators = new Validator[validators.length];
+            System.arraycopy(validators, 0, this.validators, 0,
+                validators.length);
+        }
     }
 
     /**
@@ -308,7 +314,14 @@ public class PrototypeController extends AbstractController
      * @return Validator[] 校验器
      */
     public final Validator[] getValidators() {
-        return validators;
+        if (validators == null) {
+            return new Validator[0];
+        } else {
+            Validator[] vs = new Validator[validators.length];
+            System.arraycopy(validators, 0, vs, 0, validators.length);
+
+            return vs;
+        }
     }
 
     /**

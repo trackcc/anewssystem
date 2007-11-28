@@ -10,7 +10,7 @@ import javax.servlet.jsp.tagext.TagSupport;
  * 完全使用js和css制作的图像幻灯片效果，没有flash实现的效果好看.
  * JSP：<pre><@modules.slide info=datas/></pre>
  * 需要的数据格式：<pre>
- * String[][] datas = new String[][3]{
+ * String[][] datas = new String[][]{
  *     {"图片地址","图片链接","图片名称"}
  * };
  * </pre>
@@ -18,6 +18,9 @@ import javax.servlet.jsp.tagext.TagSupport;
  * @author Lingo
  */
 public class SlideTag extends TagSupport {
+    /** * serial. */
+    static final long serialVersionUID = 0L;
+
     /** * 图片信息. */
     private String[][] info = null;
 
@@ -27,7 +30,11 @@ public class SlideTag extends TagSupport {
      * @param info 图片信息
      */
     public void setInfo(String[][] info) {
-        this.info = info;
+        if (info == null) {
+            this.info = null;
+        } else {
+            this.info = (String[][]) info.clone();
+        }
     }
 
     /**
@@ -36,7 +43,11 @@ public class SlideTag extends TagSupport {
      * @return 图片信息
      */
     public String[][] getInfo() {
-        return info;
+        if (info == null) {
+            return null;
+        } else {
+            return (String[][]) info.clone();
+        }
     }
 
     /**

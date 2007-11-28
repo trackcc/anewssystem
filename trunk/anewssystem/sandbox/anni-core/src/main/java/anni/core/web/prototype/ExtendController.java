@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -406,9 +407,11 @@ public class ExtendController extends PrototypeController {
         Map map = request.getParameterMap();
         StringBuffer buff = new StringBuffer();
 
-        for (Iterator iter = map.keySet().iterator(); iter.hasNext();) {
-            String key = (String) iter.next();
-            String[] values = (String[]) map.get(key);
+        Set<Map.Entry> entrySet = map.entrySet();
+
+        for (Map.Entry entry : entrySet) {
+            String key = (String) entry.getKey();
+            String[] values = (String[]) entry.getValue();
             buff.append(key).append(" : ").append(Arrays.asList(values))
                 .append("\n");
         }

@@ -61,11 +61,11 @@ public class Erp2BuyOrderController extends LongGridController<Erp2BuyOrder, Erp
     }
 
     /**
-     * insert添加一条采购订单.
+     * update修改一条采购订单.
      *
      * @throws Exception json操作出现的异常
      */
-    public void insert() throws Exception {
+    public void update() throws Exception {
         String data = getStrParam("data", null);
         logger.info(data);
 
@@ -76,6 +76,7 @@ public class Erp2BuyOrderController extends LongGridController<Erp2BuyOrder, Erp
 
         long id = buyOrderValue.getLong("id");
         Erp2BuyOrder entity = getEntityDao().get(id);
+
         //
         entity = JsonUtils.json2Bean(buyOrderValue, entity,
                 new String[] {
@@ -129,11 +130,11 @@ public class Erp2BuyOrderController extends LongGridController<Erp2BuyOrder, Erp
     }
 
     /**
-     * update修改一条采购订单.
+     * insert添加一条采购订单.
      *
      * @throws Exception json操作出现的异常
      */
-    public void update() throws Exception {
+    public void insert() throws Exception {
         String data = getStrParam("data", null);
         logger.info(data);
 

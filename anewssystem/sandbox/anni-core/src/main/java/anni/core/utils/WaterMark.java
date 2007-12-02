@@ -6,8 +6,13 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 
 
 /**
@@ -96,5 +101,31 @@ public class WaterMark {
         ImageIO.write(destImage, DEFAULT_FORMAT, new File(dest));
 
         return dest;
+    }
+
+    /**
+     * 返回图片的格式.
+     * 当不知道是什么格式的时候，就返回null
+     *
+     * @param file 图片对象，我这里倾向于用File类型
+     * @return 格式名称
+     * @throws IOException 1.如果createImageInputStream的时候，无法生成缓存文件
+     *                     2.如果getFormatName的时候，无法读取格式信息
+     */
+    public static String getFormatName(File file) throws IOException {
+        ImageInputStream iis = ImageIO.createImageInputStream(file);
+
+        Iterator<ImageReader> iter = ImageIO.getImageReaders(iis);
+
+        if (!iter.hasNext()) {
+            throw new IllegalArgumentException("can't get image.");
+        }
+
+        // 一个文件，只能有一个图片吧？多图片的咱们也不考虑，先
+        ImageReader reader = iter.next();
+
+        iis.close();
+
+        return reader.getFormatName();
     }
 }

@@ -1,5 +1,7 @@
 package anni.core.utils;
 
+import java.io.*;
+
 import java.lang.reflect.*;
 
 import junit.framework.TestCase;
@@ -45,5 +47,20 @@ public class WaterMarkTest extends TestCase {
                 "target/test-classes/image/1_jpg");
 
         assertEquals("target/test-classes/image/1_jpg.jpg", fileName);
+    }
+
+    public void testGetFormatName() throws IOException {
+        assertEquals("JPEG",
+            WaterMark.getFormatName(
+                new File("target/test-classes/image/1_jpg")));
+    }
+
+    public void testGetFormatName2() throws IOException {
+        try {
+            WaterMark.getFormatName(new File("pom.xml"));
+            fail();
+        } catch (IllegalArgumentException ex) {
+            assertTrue(true);
+        }
     }
 }

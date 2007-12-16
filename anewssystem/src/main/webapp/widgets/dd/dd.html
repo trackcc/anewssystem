@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Drag and Drop</title>
+    <link rel="stylesheet" type="text/css" href="../extjs/1.1/resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="../extjs/1.1/examples.css" />
+    <script type="text/javascript" src="../extjs/1.1/adapter/yui/yui-utilities.js"></script>
+    <script type="text/javascript" src="../extjs/1.1/adapter/yui/ext-yui-adapter.js"></script>
+    <script type="text/javascript" src="../extjs/1.1/ext-all.js"></script>
+    <script type="text/javascript" src="dd.js"></script>
+    <link rel="stylesheet" type="text/css" href="dd.css" />
+  </head>
+  <body>
+    <p>新闻分类：[<a href="#" class="add-block" id="${item.id}">${item.name}</a>] </p>
+    <div class="section" id="container">
+      <div class="slot" id="slot1">
+        <div class="block" id="block${item.id}">
+          <div class="operation">[<a href="#" class="add-line" id="addLine${item.id}">+</a>][<a href="#" class="delete-line" id="deleteLine${item.id}">-</a>][<a href="#" class="delete-block" id="deleteBlock${item.id}">x</a>]</div>
+          <div class="title">${item.name}</div>
+          <div class="content">
+            <p>&nbsp;新闻</p>
+            <p>&nbsp;新闻</p>
+            <p>&nbsp;新闻</p>
+            <p>&nbsp;新闻</p>
+            <p>&nbsp;新闻</p>
+          </div>
+          <div class="foot">更多</div>
+        </div>
+      </div>
+      <div class="slot" id="slot2">
+      </div>
+      <hr />
+    </div>
+  </body>
+</html>
+

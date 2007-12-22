@@ -86,6 +86,60 @@ public class JsonUtilsTest extends TestCase {
         }
     }
 
+    public void testPrimitive() throws Exception {
+        String json;
+        String[] excludes = new String[0];
+        TestPrimitive bean;
+        // byte
+        json = "{byteField:1}";
+
+        bean = JsonUtils.json2Bean(json, TestPrimitive.class, excludes,
+                null);
+        assertEquals((byte) 1, bean.getByteField());
+        // short
+        json = "{shortField:1}";
+
+        bean = JsonUtils.json2Bean(json, TestPrimitive.class, excludes,
+                null);
+        assertEquals((short) 1, bean.getShortField());
+        // int
+        json = "{intField:1}";
+
+        bean = JsonUtils.json2Bean(json, TestPrimitive.class, excludes,
+                null);
+        assertEquals(1, bean.getIntField());
+        // long
+        json = "{longField:1}";
+
+        bean = JsonUtils.json2Bean(json, TestPrimitive.class, excludes,
+                null);
+        assertEquals(1L, bean.getLongField());
+        // float
+        json = "{floatField:1}";
+
+        bean = JsonUtils.json2Bean(json, TestPrimitive.class, excludes,
+                null);
+        assertEquals(1.0F, bean.getFloatField());
+        // double
+        json = "{doubleField:1}";
+
+        bean = JsonUtils.json2Bean(json, TestPrimitive.class, excludes,
+                null);
+        assertEquals(1.0D, bean.getDoubleField());
+        // boolean
+        json = "{booleanField:true}";
+
+        bean = JsonUtils.json2Bean(json, TestPrimitive.class, excludes,
+                null);
+        assertTrue(bean.getBooleanField());
+        // char
+        json = "{charField:'a'}";
+
+        bean = JsonUtils.json2Bean(json, TestPrimitive.class, excludes,
+                null);
+        assertEquals('a', bean.getCharField());
+    }
+
     public static class TestNode {
         private Byte theByte;
         private Short theShort;
@@ -160,6 +214,81 @@ public class JsonUtilsTest extends TestCase {
 
         public void setTheBoolean(Boolean theBoolean) {
             this.theBoolean = theBoolean;
+        }
+    }
+
+    public static class TestPrimitive {
+        private byte byteField;
+        private short shortField;
+        private int intField;
+        private long longField;
+        private float floatField;
+        private double doubleField;
+        private boolean booleanField;
+        private char charField;
+
+        public byte getByteField() {
+            return byteField;
+        }
+
+        public void setByteField(byte byteField) {
+            this.byteField = byteField;
+        }
+
+        public short getShortField() {
+            return shortField;
+        }
+
+        public void setShortField(short shortField) {
+            this.shortField = shortField;
+        }
+
+        public int getIntField() {
+            return intField;
+        }
+
+        public void setIntField(int intField) {
+            this.intField = intField;
+        }
+
+        public long getLongField() {
+            return longField;
+        }
+
+        public void setLongField(long longField) {
+            this.longField = longField;
+        }
+
+        public float getFloatField() {
+            return floatField;
+        }
+
+        public void setFloatField(float floatField) {
+            this.floatField = floatField;
+        }
+
+        public double getDoubleField() {
+            return doubleField;
+        }
+
+        public void setDoubleField(double doubleField) {
+            this.doubleField = doubleField;
+        }
+
+        public boolean getBooleanField() {
+            return booleanField;
+        }
+
+        public void setBooleanField(boolean booleanField) {
+            this.booleanField = booleanField;
+        }
+
+        public char getCharField() {
+            return charField;
+        }
+
+        public void setCharField(char charField) {
+            this.charField = charField;
         }
     }
 }

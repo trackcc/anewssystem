@@ -185,24 +185,37 @@ public class JsonUtils {
 
                 if (propertyType == String.class) {
                     writeMethod.invoke(entity, propertyValue);
-                } else if (propertyType == Long.class) {
-                    writeMethod.invoke(entity,
-                        Long.parseLong(propertyValue));
-                } else if (propertyType == Byte.class) {
+                } else if ((propertyType == Byte.class)
+                        || (propertyType == byte.class)) {
                     writeMethod.invoke(entity,
                         Byte.parseByte(propertyValue));
-                } else if (propertyType == Integer.class) {
-                    writeMethod.invoke(entity,
-                        Integer.parseInt(propertyValue));
-                } else if (propertyType == Short.class) {
+                } else if ((propertyType == Short.class)
+                        || (propertyType == short.class)) {
                     writeMethod.invoke(entity,
                         Short.parseShort(propertyValue));
-                } else if (propertyType == Float.class) {
+                } else if ((propertyType == Integer.class)
+                        || (propertyType == int.class)) {
+                    writeMethod.invoke(entity,
+                        Integer.parseInt(propertyValue));
+                } else if ((propertyType == Long.class)
+                        || (propertyType == long.class)) {
+                    writeMethod.invoke(entity,
+                        Long.parseLong(propertyValue));
+                } else if ((propertyType == Float.class)
+                        || (propertyType == float.class)) {
                     writeMethod.invoke(entity,
                         Float.parseFloat(propertyValue));
-                } else if (propertyType == Double.class) {
+                } else if ((propertyType == Double.class)
+                        || (propertyType == double.class)) {
                     writeMethod.invoke(entity,
                         Double.parseDouble(propertyValue));
+                } else if ((propertyType == Boolean.class)
+                        || (propertyType == boolean.class)) {
+                    writeMethod.invoke(entity,
+                        Boolean.parseBoolean(propertyValue));
+                } else if ((propertyType == Character.class)
+                        || (propertyType == char.class)) {
+                    writeMethod.invoke(entity, propertyValue.charAt(0));
                 } else if (propertyType == Date.class) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
                     writeMethod.invoke(entity,

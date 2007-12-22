@@ -34,7 +34,7 @@ public class GenHibernateReveng {
     }
 
     static String getClassName(String tableName) {
-        String[] tmp = tableName.split("_");
+        String[] tmp = tableName.toLowerCase().split("_");
         StringBuffer buff = new StringBuffer();
         for (int i = 0; i < tmp.length; i++) {
             String name = tmp[i].substring(0, 1).toUpperCase() + tmp[i].substring(1);

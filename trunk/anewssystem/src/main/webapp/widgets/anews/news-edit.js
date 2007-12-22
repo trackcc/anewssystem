@@ -178,7 +178,7 @@ Ext.onReady(function(){
         if (form.isValid()) {
             form.submit({
                 success:function(){
-					form.reset();
+                    form.reset();
                     Ext.MessageBox.alert("提示", "修改成功");
                 }
             });
@@ -208,7 +208,7 @@ Ext.onReady(function(){
         tag:'center',
         cn:[{
             tag:'img',
-			id:'imagePreview',
+            id:'imagePreview',
             src: '../images/no.jpg',
             style:'margin-bottom:5px;width:80px;height:80px;'
         },{

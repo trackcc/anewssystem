@@ -424,31 +424,26 @@ public class NewsController extends LongGridController<News, NewsManager> {
         if (sort != null) {
             boolean isAsc = dir.equalsIgnoreCase("asc");
             criteria = getEntityDao().createCriteria(sort, isAsc);
+
             // patch by 我想我是海39893874
-                //if(isAsc){
-                //    criteria =criteria.createAlias("dept", "dept0").addOrder(Order.asc("dept0.name"));
-                //}else{
-                //    criteria =criteria.createAlias("dept", "dept0").addOrder(Order.desc("dept0.name"));
-                //}
+            //if(isAsc){
+            //    criteria =criteria.createAlias("dept", "dept0").addOrder(Order.asc("dept0.name"));
+            //}else{
+            //    criteria =criteria.createAlias("dept", "dept0").addOrder(Order.desc("dept0.name"));
+            //}
         } else {
             criteria = getEntityDao().createCriteria("id", false);
         }
 
-
-
-
         if ((!filterTxt.equals("")) && (!filterValue.equals(""))) {
-
             // patch by 我想我是海39893874
-          if((filterTxt.equals("dept")) == true){
-
+            if ((filterTxt.equals("dept")) == true) {
                 criteria = criteria.createAlias("dept", "dept0")
-                                       .add(Restrictions.like("dept0.name",
-                                "%" + filterValue + "%"));
-
-            }else{
+                                   .add(Restrictions.like("dept0.name",
+                            "%" + filterValue + "%"));
+            } else {
                 criteria = criteria.add(Restrictions.like(filterTxt,
-                        "%" + filterValue + "%"));
+                            "%" + filterValue + "%"));
             }
         }
 

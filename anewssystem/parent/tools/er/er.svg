@@ -1,0 +1,1058 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN' 'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' width='1000' height='700' viewBox='0 0 1000 700'  onmousemove='doDrag(evt)'>
+    <script type='text/ecmascript' xlink:href='er.js'/>
+    <script type='text/ecmascript'>
+    <![CDATA[
+    tables['A_ERP2_BUY_CONTRACT'] = new Table('A_ERP2_BUY_CONTRACT', 10.0,10.0,260.0,220.0);
+    tables['A_SECURITY_MENU'] = new Table('A_SECURITY_MENU', 280.0,10.0,190.0,180.0);
+    tables['A_NEWS'] = new Table('A_NEWS', 480.0,10.0,240.0,340.0);
+    tables['A_ERP2_BUY_ORDER_INFO'] = new Table('A_ERP2_BUY_ORDER_INFO', 730.0,10.0,220.0,200.0);
+    tables['A_TRACKER_PROJECT'] = new Table('A_TRACKER_PROJECT', 10.0,290.0,220.0,120.0);
+    tables['A_SECURITY_DICTIONARY'] = new Table('A_SECURITY_DICTIONARY', 240.0,290.0,210.0,120.0);
+    tables['A_ERP2_BID'] = new Table('A_ERP2_BID', 460.0,290.0,230.0,200.0);
+    tables['A_SECURITY_RESOURCE'] = new Table('A_SECURITY_RESOURCE', 700.0,290.0,230.0,120.0);
+    tables['A_SECURITY_DEPT'] = new Table('A_SECURITY_DEPT', 10.0,570.0,190.0,120.0);
+    tables['A_ERP2_INVITE_BID'] = new Table('A_ERP2_INVITE_BID', 210.0,570.0,220.0,200.0);
+    tables['A_ERP_CUSTOMER'] = new Table('A_ERP_CUSTOMER', 440.0,570.0,230.0,440.0);
+    tables['A_ERP_ORDER'] = new Table('A_ERP_ORDER', 680.0,570.0,230.0,300.0);
+    tables['A_SECURITY_RESOURCE_ROLE'] = new Table('A_SECURITY_RESOURCE_ROLE', 10.0,850.0,240.0,100.0);
+    tables['A_NEWS_CATEGORY'] = new Table('A_NEWS_CATEGORY', 260.0,850.0,220.0,160.0);
+    tables['A_NEWS_COMMENT'] = new Table('A_NEWS_COMMENT', 490.0,850.0,240.0,180.0);
+    tables['A_ERP_MATERIAL'] = new Table('A_ERP_MATERIAL', 740.0,850.0,230.0,220.0);
+    tables['A_ERP2_BUY_ORDER'] = new Table('A_ERP2_BUY_ORDER', 10.0,1130.0,250.0,260.0);
+    tables['A_ERP2_SUCCESS_BID'] = new Table('A_ERP2_SUCCESS_BID', 270.0,1130.0,250.0,140.0);
+    tables['A_SECURITY_ROLE_USER'] = new Table('A_SECURITY_ROLE_USER', 530.0,1130.0,200.0,100.0);
+    tables['A_SECURITY_REGION'] = new Table('A_SECURITY_REGION', 740.0,1130.0,190.0,120.0);
+    tables['A_ERP_PRODUCT'] = new Table('A_ERP_PRODUCT', 10.0,1410.0,230.0,260.0);
+    tables['A_NEWS_TAG'] = new Table('A_NEWS_TAG', 250.0,1410.0,190.0,80.0);
+    tables['A_SECURITY_USER'] = new Table('A_SECURITY_USER', 450.0,1410.0,210.0,300.0);
+    tables['A_NEWS_NEWSTAG'] = new Table('A_NEWS_NEWSTAG', 670.0,1410.0,200.0,100.0);
+    tables['A_ERP2_PRODUCT'] = new Table('A_ERP2_PRODUCT', 10.0,1690.0,210.0,240.0);
+    tables['A_ERP_ORDER_INFO'] = new Table('A_ERP_ORDER_INFO', 230.0,1690.0,210.0,280.0);
+    tables['A_ERP2_SUPPLIER'] = new Table('A_ERP2_SUPPLIER', 450.0,1690.0,200.0,340.0);
+    tables['A_SECURITY_ROLE'] = new Table('A_SECURITY_ROLE', 660.0,1690.0,180.0,80.0);
+    tables['A_NEWS_CONFIG'] = new Table('A_NEWS_CONFIG', 10.0,1970.0,290.0,140.0);
+    tables['A_SECURITY_MENU_ROLE'] = new Table('A_SECURITY_MENU_ROLE', 310.0,1970.0,200.0,100.0);
+    tables['A_TRACKER_ISSUE'] = new Table('A_TRACKER_ISSUE', 520.0,1970.0,240.0,260.0);
+    tables['A_ERP_RATION'] = new Table('A_ERP_RATION', 770.0,1970.0,230.0,200.0);
+
+    fks['FK6FD185064E5B1FF1'] = new Fk('FK6FD185064E5B1FF1', 'A_SECURITY_RESOURCE_ROLE', 'A_SECURITY_RESOURCE');
+    fks['FK33849C668034938C'] = new Fk('FK33849C668034938C', 'A_SECURITY_DEPT', 'A_SECURITY_DEPT');
+    fks['FK705A3D99411FEDC5'] = new Fk('FK705A3D99411FEDC5', 'A_ERP2_INVITE_BID', 'A_ERP2_BID');
+    fks['FKC5F51617CFF5909D'] = new Fk('FKC5F51617CFF5909D', 'A_SECURITY_DICTIONARY', 'A_SECURITY_DICTIONARY');
+    fks['FK14BCADD53D7765D1'] = new Fk('FK14BCADD53D7765D1', 'A_SECURITY_MENU_ROLE', 'A_SECURITY_MENU');
+    fks['FKD9550759BEBEA05B'] = new Fk('FKD9550759BEBEA05B', 'A_ERP_ORDER_INFO', 'A_ERP_ORDER');
+    fks['FK6567A56CAF1C28CB'] = new Fk('FK6567A56CAF1C28CB', 'A_NEWS_CATEGORY', 'A_NEWS_CATEGORY');
+    fks['FK705A3D99E8F95E07'] = new Fk('FK705A3D99E8F95E07', 'A_ERP2_INVITE_BID', 'A_ERP2_SUPPLIER');
+    fks['FKCF98988AB850EF62'] = new Fk('FKCF98988AB850EF62', 'A_ERP2_BUY_ORDER_INFO', 'A_ERP2_BUY_ORDER');
+    fks['FKA74D99CFC301B3B2'] = new Fk('FKA74D99CFC301B3B2', 'A_ERP2_SUCCESS_BID', 'A_ERP2_INVITE_BID');
+    fks['FK923EAD9963BB8EF0'] = new Fk('FK923EAD9963BB8EF0', 'A_NEWS_NEWSTAG', 'A_NEWS_TAG');
+    fks['FK923EAD997E0115E4'] = new Fk('FK923EAD997E0115E4', 'A_NEWS_NEWSTAG', 'A_NEWS');
+    fks['FK3388B3808038AAA6'] = new Fk('FK3388B3808038AAA6', 'A_SECURITY_MENU', 'A_SECURITY_MENU');
+    fks['FK5CDABC117E0115E4'] = new Fk('FK5CDABC117E0115E4', 'A_NEWS_COMMENT', 'A_NEWS');
+    fks['FK88EB762BCB310305'] = new Fk('FK88EB762BCB310305', 'A_ERP2_BID', 'A_ERP2_PRODUCT');
+    fks['FK744A3C118F5E23F7'] = new Fk('FK744A3C118F5E23F7', 'A_NEWS', 'A_NEWS_CATEGORY');
+    fks['FK7CAEBCD59C267A7B'] = new Fk('FK7CAEBCD59C267A7B', 'A_SECURITY_REGION', 'A_SECURITY_REGION');
+    fks['FK83C6047356E5FA71'] = new Fk('FK83C6047356E5FA71', 'A_SECURITY_ROLE_USER', 'A_SECURITY_ROLE');
+    fks['FK338C89EC6176F411'] = new Fk('FK338C89EC6176F411', 'A_SECURITY_USER', 'A_SECURITY_DEPT');
+    fks['FK20F791548D35A05B'] = new Fk('FK20F791548D35A05B', 'A_TRACKER_ISSUE', 'A_TRACKER_PROJECT');
+    fks['FK48EE253DAF5697EF'] = new Fk('FK48EE253DAF5697EF', 'A_ERP2_BUY_CONTRACT', 'A_ERP2_SUPPLIER');
+    fks['FKCAB3D2E3AF5697EF'] = new Fk('FKCAB3D2E3AF5697EF', 'A_ERP2_BUY_ORDER', 'A_ERP2_SUPPLIER');
+    fks['FK70F2953E252E3FF1'] = new Fk('FK70F2953E252E3FF1', 'A_ERP2_SUPPLIER', 'A_SECURITY_REGION');
+    fks['FK6FD1850656E5FA71'] = new Fk('FK6FD1850656E5FA71', 'A_SECURITY_RESOURCE_ROLE', 'A_SECURITY_ROLE');
+    fks['FK83C60473FC10BE51'] = new Fk('FK83C60473FC10BE51', 'A_SECURITY_ROLE_USER', 'A_SECURITY_USER');
+    fks['FKCF98988ACB310305'] = new Fk('FKCF98988ACB310305', 'A_ERP2_BUY_ORDER_INFO', 'A_ERP2_PRODUCT');
+    fks['FK914C771DAF5697EF'] = new Fk('FK914C771DAF5697EF', 'A_ERP2_PRODUCT', 'A_ERP2_SUPPLIER');
+    fks['FK14BCADD556E5FA71'] = new Fk('FK14BCADD556E5FA71', 'A_SECURITY_MENU_ROLE', 'A_SECURITY_ROLE');
+    ]]>
+    </script>
+    <defs>
+        <g id='A_ERP2_BUY_CONTRACT'>
+            <rect id='use_A_ERP2_BUY_CONTRACT_rect' x='0' y='0' width='260.0' height='220.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='260.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP2_BUY_CONTRACT</text>
+            <line x1='0' y1='20' x2='260.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='260.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='260.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>STATUS VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='260.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>RECEIPT VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='260.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>USERNAME VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='260.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>CONTRACT_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='120' x2='260.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>LINKMAN VARCHAR(50)</text>
+            <line x1='0' y1='140' x2='260.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>CODE VARCHAR(50)</text>
+            <line x1='0' y1='160' x2='260.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='180' x2='260.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>PROVIDE_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='200' x2='260.0' y2='200' style='stroke:black;'/>
+            <rect x='0' y='200' width='260.0' height='20' style='fill:green;'/>
+            <text x='5' y='215' style='fill:white;'>SUPPLIER_ID BIGINT(0)</text>
+            <line x1='0' y1='220' x2='260.0' y2='220' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_MENU'>
+            <rect id='use_A_SECURITY_MENU_rect' x='0' y='0' width='190.0' height='180.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='190.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_MENU</text>
+            <line x1='0' y1='20' x2='190.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='190.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='190.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>IMAGE VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='190.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>URL VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='190.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='190.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>QTIP VARCHAR(50)</text>
+            <line x1='0' y1='120' x2='190.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>DESCN VARCHAR(200)</text>
+            <line x1='0' y1='140' x2='190.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>THE_SORT INTEGER(0)</text>
+            <line x1='0' y1='160' x2='190.0' y2='160' style='stroke:black;'/>
+            <rect x='0' y='160' width='190.0' height='20' style='fill:green;'/>
+            <text x='5' y='175' style='fill:white;'>PARENT_ID BIGINT(0)</text>
+            <line x1='0' y1='180' x2='190.0' y2='180' style='stroke:black;'/>
+        </g>
+        <g id='A_NEWS'>
+            <rect id='use_A_NEWS_rect' x='0' y='0' width='240.0' height='340.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='240.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_NEWS</text>
+            <line x1='0' y1='20' x2='240.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='240.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='240.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>IMAGE VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='240.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>PAGE_TYPE INTEGER(0)</text>
+            <line x1='0' y1='80' x2='240.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>SUBTITLE VARCHAR(100)</text>
+            <line x1='0' y1='100' x2='240.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>UPDATE_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='120' x2='240.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>SUMMARY VARCHAR(255)</text>
+            <line x1='0' y1='140' x2='240.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>HTML VARCHAR(100)</text>
+            <line x1='0' y1='160' x2='240.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>HIT INTEGER(0)</text>
+            <line x1='0' y1='180' x2='240.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>LINK VARCHAR(100)</text>
+            <line x1='0' y1='200' x2='240.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>EDITOR VARCHAR(50)</text>
+            <line x1='0' y1='220' x2='240.0' y2='220' style='stroke:black;'/>
+            <text x='5' y='235' style='fill:black;'>STATUS INTEGER(0)</text>
+            <line x1='0' y1='240' x2='240.0' y2='240' style='stroke:black;'/>
+            <text x='5' y='255' style='fill:black;'>SOURCE VARCHAR(50)</text>
+            <line x1='0' y1='260' x2='240.0' y2='260' style='stroke:black;'/>
+            <text x='5' y='275' style='fill:black;'>CONTENT LONGVARCHAR(0)</text>
+            <line x1='0' y1='280' x2='240.0' y2='280' style='stroke:black;'/>
+            <text x='5' y='295' style='fill:black;'>NAME VARCHAR(100)</text>
+            <line x1='0' y1='300' x2='240.0' y2='300' style='stroke:black;'/>
+            <text x='5' y='315' style='fill:black;'>PAGE_SIZE INTEGER(0)</text>
+            <line x1='0' y1='320' x2='240.0' y2='320' style='stroke:black;'/>
+            <rect x='0' y='320' width='240.0' height='20' style='fill:green;'/>
+            <text x='5' y='335' style='fill:white;'>CATEGORY_ID BIGINT(0)</text>
+            <line x1='0' y1='340' x2='240.0' y2='340' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP2_BUY_ORDER_INFO'>
+            <rect id='use_A_ERP2_BUY_ORDER_INFO_rect' x='0' y='0' width='220.0' height='200.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='220.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP2_BUY_ORDER_INFO</text>
+            <line x1='0' y1='20' x2='220.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='220.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='220.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>PARAMETER VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='220.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>TOTAL_PRICE DOUBLE(0)</text>
+            <line x1='0' y1='80' x2='220.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>PRICE DOUBLE(0)</text>
+            <line x1='0' y1='100' x2='220.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>CODE VARCHAR(50)</text>
+            <line x1='0' y1='120' x2='220.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='140' x2='220.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>NUM INTEGER(0)</text>
+            <line x1='0' y1='160' x2='220.0' y2='160' style='stroke:black;'/>
+            <rect x='0' y='160' width='220.0' height='20' style='fill:green;'/>
+            <text x='5' y='175' style='fill:white;'>BUY_ORDER_ID BIGINT(0)</text>
+            <line x1='0' y1='180' x2='220.0' y2='180' style='stroke:black;'/>
+            <rect x='0' y='180' width='220.0' height='20' style='fill:green;'/>
+            <text x='5' y='195' style='fill:white;'>PRODUCT_ID BIGINT(0)</text>
+            <line x1='0' y1='200' x2='220.0' y2='200' style='stroke:black;'/>
+        </g>
+        <g id='A_TRACKER_PROJECT'>
+            <rect id='use_A_TRACKER_PROJECT_rect' x='0' y='0' width='220.0' height='120.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='220.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_TRACKER_PROJECT</text>
+            <line x1='0' y1='20' x2='220.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='220.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='220.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>SUMMARY LONGVARCHAR(0)</text>
+            <line x1='0' y1='60' x2='220.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>FOUNDER VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='220.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>NAME VARCHAR(100)</text>
+            <line x1='0' y1='100' x2='220.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>THE_SORT INTEGER(0)</text>
+            <line x1='0' y1='120' x2='220.0' y2='120' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_DICTIONARY'>
+            <rect id='use_A_SECURITY_DICTIONARY_rect' x='0' y='0' width='210.0' height='120.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='210.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_DICTIONARY</text>
+            <line x1='0' y1='20' x2='210.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='210.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='210.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='210.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>DESCN VARCHAR(200)</text>
+            <line x1='0' y1='80' x2='210.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>THE_SORT INTEGER(0)</text>
+            <line x1='0' y1='100' x2='210.0' y2='100' style='stroke:black;'/>
+            <rect x='0' y='100' width='210.0' height='20' style='fill:green;'/>
+            <text x='5' y='115' style='fill:white;'>PARENT_ID BIGINT(0)</text>
+            <line x1='0' y1='120' x2='210.0' y2='120' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP2_BID'>
+            <rect id='use_A_ERP2_BID_rect' x='0' y='0' width='230.0' height='200.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='230.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP2_BID</text>
+            <line x1='0' y1='20' x2='230.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='230.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='230.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>OPEN_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='60' x2='230.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>PARAMETER VARCHAR(200)</text>
+            <line x1='0' y1='80' x2='230.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>CODE VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='230.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>PRODUCT_NUM INTEGER(0)</text>
+            <line x1='0' y1='120' x2='230.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>START_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='140' x2='230.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='160' x2='230.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>END_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='180' x2='230.0' y2='180' style='stroke:black;'/>
+            <rect x='0' y='180' width='230.0' height='20' style='fill:green;'/>
+            <text x='5' y='195' style='fill:white;'>PRODUCT_ID BIGINT(0)</text>
+            <line x1='0' y1='200' x2='230.0' y2='200' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_RESOURCE'>
+            <rect id='use_A_SECURITY_RESOURCE_rect' x='0' y='0' width='230.0' height='120.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='230.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_RESOURCE</text>
+            <line x1='0' y1='20' x2='230.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='230.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='230.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>RES_TYPE VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='230.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='230.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>RES_STRING VARCHAR(200)</text>
+            <line x1='0' y1='100' x2='230.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>DESCN VARCHAR(200)</text>
+            <line x1='0' y1='120' x2='230.0' y2='120' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_DEPT'>
+            <rect id='use_A_SECURITY_DEPT_rect' x='0' y='0' width='190.0' height='120.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='190.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_DEPT</text>
+            <line x1='0' y1='20' x2='190.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='190.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='190.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='190.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>DESCN VARCHAR(200)</text>
+            <line x1='0' y1='80' x2='190.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>THE_SORT INTEGER(0)</text>
+            <line x1='0' y1='100' x2='190.0' y2='100' style='stroke:black;'/>
+            <rect x='0' y='100' width='190.0' height='20' style='fill:green;'/>
+            <text x='5' y='115' style='fill:white;'>PARENT_ID BIGINT(0)</text>
+            <line x1='0' y1='120' x2='190.0' y2='120' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP2_INVITE_BID'>
+            <rect id='use_A_ERP2_INVITE_BID_rect' x='0' y='0' width='220.0' height='200.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='220.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP2_INVITE_BID</text>
+            <line x1='0' y1='20' x2='220.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='220.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='220.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>BID_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='60' x2='220.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>PRICE DOUBLE(0)</text>
+            <line x1='0' y1='80' x2='220.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='100' x2='220.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>TEL VARCHAR(50)</text>
+            <line x1='0' y1='120' x2='220.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>EMAIL VARCHAR(50)</text>
+            <line x1='0' y1='140' x2='220.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>ADDRESS VARCHAR(50)</text>
+            <line x1='0' y1='160' x2='220.0' y2='160' style='stroke:black;'/>
+            <rect x='0' y='160' width='220.0' height='20' style='fill:green;'/>
+            <text x='5' y='175' style='fill:white;'>SUPPLLIER_ID BIGINT(0)</text>
+            <line x1='0' y1='180' x2='220.0' y2='180' style='stroke:black;'/>
+            <rect x='0' y='180' width='220.0' height='20' style='fill:green;'/>
+            <text x='5' y='195' style='fill:white;'>BID_ID BIGINT(0)</text>
+            <line x1='0' y1='200' x2='220.0' y2='200' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP_CUSTOMER'>
+            <rect id='use_A_ERP_CUSTOMER_rect' x='0' y='0' width='230.0' height='440.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='230.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP_CUSTOMER</text>
+            <line x1='0' y1='20' x2='230.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='230.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='230.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>TYPE VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='230.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>LEADER VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='230.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>PROVINCE VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='230.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>FAX VARCHAR(50)</text>
+            <line x1='0' y1='120' x2='230.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>HOMEPAGE VARCHAR(50)</text>
+            <line x1='0' y1='140' x2='230.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='160' x2='230.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>INPUT_TIME TIMESTAMP(6)</text>
+            <line x1='0' y1='180' x2='230.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>EMAIL VARCHAR(50)</text>
+            <line x1='0' y1='200' x2='230.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>INPUT_MAN VARCHAR(50)</text>
+            <line x1='0' y1='220' x2='230.0' y2='220' style='stroke:black;'/>
+            <text x='5' y='235' style='fill:black;'>RANK VARCHAR(50)</text>
+            <line x1='0' y1='240' x2='230.0' y2='240' style='stroke:black;'/>
+            <text x='5' y='255' style='fill:black;'>LINK_MAN VARCHAR(50)</text>
+            <line x1='0' y1='260' x2='230.0' y2='260' style='stroke:black;'/>
+            <text x='5' y='275' style='fill:black;'>STATUS VARCHAR(50)</text>
+            <line x1='0' y1='280' x2='230.0' y2='280' style='stroke:black;'/>
+            <text x='5' y='295' style='fill:black;'>CITY VARCHAR(50)</text>
+            <line x1='0' y1='300' x2='230.0' y2='300' style='stroke:black;'/>
+            <text x='5' y='315' style='fill:black;'>SOURCE VARCHAR(50)</text>
+            <line x1='0' y1='320' x2='230.0' y2='320' style='stroke:black;'/>
+            <text x='5' y='335' style='fill:black;'>CODE VARCHAR(50)</text>
+            <line x1='0' y1='340' x2='230.0' y2='340' style='stroke:black;'/>
+            <text x='5' y='355' style='fill:black;'>ZIP VARCHAR(50)</text>
+            <line x1='0' y1='360' x2='230.0' y2='360' style='stroke:black;'/>
+            <text x='5' y='375' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='380' x2='230.0' y2='380' style='stroke:black;'/>
+            <text x='5' y='395' style='fill:black;'>TOWN VARCHAR(50)</text>
+            <line x1='0' y1='400' x2='230.0' y2='400' style='stroke:black;'/>
+            <text x='5' y='415' style='fill:black;'>TEL VARCHAR(50)</text>
+            <line x1='0' y1='420' x2='230.0' y2='420' style='stroke:black;'/>
+            <text x='5' y='435' style='fill:black;'>ADDRESS VARCHAR(50)</text>
+            <line x1='0' y1='440' x2='230.0' y2='440' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP_ORDER'>
+            <rect id='use_A_ERP_ORDER_rect' x='0' y='0' width='230.0' height='300.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='230.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP_ORDER</text>
+            <line x1='0' y1='20' x2='230.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='230.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='230.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>HAND_MAN VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='230.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>PAYMENT VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='230.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>DELIVERY VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='230.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>CUSTOMER VARCHAR(50)</text>
+            <line x1='0' y1='120' x2='230.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='140' x2='230.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>INPUT_TIME TIMESTAMP(6)</text>
+            <line x1='0' y1='160' x2='230.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>INPUT_MAN VARCHAR(50)</text>
+            <line x1='0' y1='180' x2='230.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>AMOUNT VARCHAR(50)</text>
+            <line x1='0' y1='200' x2='230.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>ORDER_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='220' x2='230.0' y2='220' style='stroke:black;'/>
+            <text x='5' y='235' style='fill:black;'>LINK_MAN VARCHAR(50)</text>
+            <line x1='0' y1='240' x2='230.0' y2='240' style='stroke:black;'/>
+            <text x='5' y='255' style='fill:black;'>STATUS VARCHAR(50)</text>
+            <line x1='0' y1='260' x2='230.0' y2='260' style='stroke:black;'/>
+            <text x='5' y='275' style='fill:black;'>CODE VARCHAR(50)</text>
+            <line x1='0' y1='280' x2='230.0' y2='280' style='stroke:black;'/>
+            <text x='5' y='295' style='fill:black;'>TEL VARCHAR(50)</text>
+            <line x1='0' y1='300' x2='230.0' y2='300' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_RESOURCE_ROLE'>
+            <rect id='use_A_SECURITY_RESOURCE_ROLE_rect' x='0' y='0' width='240.0' height='100.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='240.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_RESOURCE_ROLE</text>
+            <line x1='0' y1='20' x2='240.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='240.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>RESOURCE_ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='240.0' y2='40' style='stroke:black;'/>
+            <rect x='0' y='40' width='240.0' height='20' style='fill:red;'/>
+            <text x='5' y='55' style='fill:white;'>ROLE_ID BIGINT(0)</text>
+            <line x1='0' y1='60' x2='240.0' y2='60' style='stroke:black;'/>
+            <rect x='0' y='60' width='240.0' height='20' style='fill:green;'/>
+            <text x='5' y='75' style='fill:white;'>RESOURCE_ID BIGINT(0)</text>
+            <line x1='0' y1='80' x2='240.0' y2='80' style='stroke:black;'/>
+            <rect x='0' y='80' width='240.0' height='20' style='fill:green;'/>
+            <text x='5' y='95' style='fill:white;'>ROLE_ID BIGINT(0)</text>
+            <line x1='0' y1='100' x2='240.0' y2='100' style='stroke:black;'/>
+        </g>
+        <g id='A_NEWS_CATEGORY'>
+            <rect id='use_A_NEWS_CATEGORY_rect' x='0' y='0' width='220.0' height='160.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='220.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_NEWS_CATEGORY</text>
+            <line x1='0' y1='20' x2='220.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='220.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='220.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>STATUS INTEGER(0)</text>
+            <line x1='0' y1='60' x2='220.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>BIT_CODE BIGINT(0)</text>
+            <line x1='0' y1='80' x2='220.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='220.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>CHAR_CODE VARCHAR(255)</text>
+            <line x1='0' y1='120' x2='220.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>THE_SORT INTEGER(0)</text>
+            <line x1='0' y1='140' x2='220.0' y2='140' style='stroke:black;'/>
+            <rect x='0' y='140' width='220.0' height='20' style='fill:green;'/>
+            <text x='5' y='155' style='fill:white;'>PARENT_ID BIGINT(0)</text>
+            <line x1='0' y1='160' x2='220.0' y2='160' style='stroke:black;'/>
+        </g>
+        <g id='A_NEWS_COMMENT'>
+            <rect id='use_A_NEWS_COMMENT_rect' x='0' y='0' width='240.0' height='180.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='240.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_NEWS_COMMENT</text>
+            <line x1='0' y1='20' x2='240.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='240.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='240.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>UPDATE_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='60' x2='240.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>STATUS INTEGER(0)</text>
+            <line x1='0' y1='80' x2='240.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>USERNAME VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='240.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>NAME VARCHAR(100)</text>
+            <line x1='0' y1='120' x2='240.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>CONTENT LONGVARCHAR(0)</text>
+            <line x1='0' y1='140' x2='240.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>IP VARCHAR(20)</text>
+            <line x1='0' y1='160' x2='240.0' y2='160' style='stroke:black;'/>
+            <rect x='0' y='160' width='240.0' height='20' style='fill:green;'/>
+            <text x='5' y='175' style='fill:white;'>NEWS_ID BIGINT(0)</text>
+            <line x1='0' y1='180' x2='240.0' y2='180' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP_MATERIAL'>
+            <rect id='use_A_ERP_MATERIAL_rect' x='0' y='0' width='230.0' height='220.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='230.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP_MATERIAL</text>
+            <line x1='0' y1='20' x2='230.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='230.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='230.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>STATUS VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='230.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>PRICE DOUBLE(0)</text>
+            <line x1='0' y1='80' x2='230.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>SOURCE VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='230.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='120' x2='230.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>SUPPLIER VARCHAR(50)</text>
+            <line x1='0' y1='140' x2='230.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>INPUT_TIME TIMESTAMP(6)</text>
+            <line x1='0' y1='160' x2='230.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='180' x2='230.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>UNIT VARCHAR(50)</text>
+            <line x1='0' y1='200' x2='230.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>INPUT_MAN VARCHAR(50)</text>
+            <line x1='0' y1='220' x2='230.0' y2='220' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP2_BUY_ORDER'>
+            <rect id='use_A_ERP2_BUY_ORDER_rect' x='0' y='0' width='250.0' height='260.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='250.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP2_BUY_ORDER</text>
+            <line x1='0' y1='20' x2='250.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='250.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='250.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>ORDER_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='60' x2='250.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>STATUS INTEGER(0)</text>
+            <line x1='0' y1='80' x2='250.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>USERNAME VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='250.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>TOTAL_PRICE DOUBLE(0)</text>
+            <line x1='0' y1='120' x2='250.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>PRICE DOUBLE(0)</text>
+            <line x1='0' y1='140' x2='250.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>LINKMAN VARCHAR(50)</text>
+            <line x1='0' y1='160' x2='250.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>CODE VARCHAR(50)</text>
+            <line x1='0' y1='180' x2='250.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='200' x2='250.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>PROVIDE_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='220' x2='250.0' y2='220' style='stroke:black;'/>
+            <text x='5' y='235' style='fill:black;'>AUDIT INTEGER(0)</text>
+            <line x1='0' y1='240' x2='250.0' y2='240' style='stroke:black;'/>
+            <rect x='0' y='240' width='250.0' height='20' style='fill:green;'/>
+            <text x='5' y='255' style='fill:white;'>SUPPLIER_ID BIGINT(0)</text>
+            <line x1='0' y1='260' x2='250.0' y2='260' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP2_SUCCESS_BID'>
+            <rect id='use_A_ERP2_SUCCESS_BID_rect' x='0' y='0' width='250.0' height='140.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='250.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP2_SUCCESS_BID</text>
+            <line x1='0' y1='20' x2='250.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='250.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='250.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>PRICE DOUBLE(0)</text>
+            <line x1='0' y1='60' x2='250.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>BID_CONTENT VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='250.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>PUBLISH_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='100' x2='250.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='120' x2='250.0' y2='120' style='stroke:black;'/>
+            <rect x='0' y='120' width='250.0' height='20' style='fill:green;'/>
+            <text x='5' y='135' style='fill:white;'>INVITE_BID_ID BIGINT(0)</text>
+            <line x1='0' y1='140' x2='250.0' y2='140' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_ROLE_USER'>
+            <rect id='use_A_SECURITY_ROLE_USER_rect' x='0' y='0' width='200.0' height='100.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='200.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_ROLE_USER</text>
+            <line x1='0' y1='20' x2='200.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='200.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ROLE_ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='200.0' y2='40' style='stroke:black;'/>
+            <rect x='0' y='40' width='200.0' height='20' style='fill:red;'/>
+            <text x='5' y='55' style='fill:white;'>USER_ID BIGINT(0)</text>
+            <line x1='0' y1='60' x2='200.0' y2='60' style='stroke:black;'/>
+            <rect x='0' y='60' width='200.0' height='20' style='fill:green;'/>
+            <text x='5' y='75' style='fill:white;'>ROLE_ID BIGINT(0)</text>
+            <line x1='0' y1='80' x2='200.0' y2='80' style='stroke:black;'/>
+            <rect x='0' y='80' width='200.0' height='20' style='fill:green;'/>
+            <text x='5' y='95' style='fill:white;'>USER_ID BIGINT(0)</text>
+            <line x1='0' y1='100' x2='200.0' y2='100' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_REGION'>
+            <rect id='use_A_SECURITY_REGION_rect' x='0' y='0' width='190.0' height='120.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='190.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_REGION</text>
+            <line x1='0' y1='20' x2='190.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='190.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='190.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='190.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>DESCN VARCHAR(200)</text>
+            <line x1='0' y1='80' x2='190.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>THE_SORT INTEGER(0)</text>
+            <line x1='0' y1='100' x2='190.0' y2='100' style='stroke:black;'/>
+            <rect x='0' y='100' width='190.0' height='20' style='fill:green;'/>
+            <text x='5' y='115' style='fill:white;'>PARENT_ID BIGINT(0)</text>
+            <line x1='0' y1='120' x2='190.0' y2='120' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP_PRODUCT'>
+            <rect id='use_A_ERP_PRODUCT_rect' x='0' y='0' width='230.0' height='260.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='230.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP_PRODUCT</text>
+            <line x1='0' y1='20' x2='230.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='230.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='230.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>TYPE VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='230.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>SALE_PRICE DOUBLE(0)</text>
+            <line x1='0' y1='80' x2='230.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>STATUS VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='230.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>BUY_PRICE DOUBLE(0)</text>
+            <line x1='0' y1='120' x2='230.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>CODE VARCHAR(50)</text>
+            <line x1='0' y1='140' x2='230.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='160' x2='230.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>INPUT_TIME TIMESTAMP(6)</text>
+            <line x1='0' y1='180' x2='230.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='200' x2='230.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>PIC VARCHAR(50)</text>
+            <line x1='0' y1='220' x2='230.0' y2='220' style='stroke:black;'/>
+            <text x='5' y='235' style='fill:black;'>UNIT VARCHAR(50)</text>
+            <line x1='0' y1='240' x2='230.0' y2='240' style='stroke:black;'/>
+            <text x='5' y='255' style='fill:black;'>INPUT_MAN VARCHAR(50)</text>
+            <line x1='0' y1='260' x2='230.0' y2='260' style='stroke:black;'/>
+        </g>
+        <g id='A_NEWS_TAG'>
+            <rect id='use_A_NEWS_TAG_rect' x='0' y='0' width='190.0' height='80.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='190.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_NEWS_TAG</text>
+            <line x1='0' y1='20' x2='190.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='190.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='190.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='190.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>THE_SORT INTEGER(0)</text>
+            <line x1='0' y1='80' x2='190.0' y2='80' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_USER'>
+            <rect id='use_A_SECURITY_USER_rect' x='0' y='0' width='210.0' height='300.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='210.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_USER</text>
+            <line x1='0' y1='20' x2='210.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='210.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='210.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>BIRTHDAY TIMESTAMP(6)</text>
+            <line x1='0' y1='60' x2='210.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>MOBILE VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='210.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>TRUENAME VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='210.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>PASSWORD VARCHAR(50)</text>
+            <line x1='0' y1='120' x2='210.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>USERNAME VARCHAR(50)</text>
+            <line x1='0' y1='140' x2='210.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>DESCN VARCHAR(200)</text>
+            <line x1='0' y1='160' x2='210.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>EMAIL VARCHAR(100)</text>
+            <line x1='0' y1='180' x2='210.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>DUTY VARCHAR(50)</text>
+            <line x1='0' y1='200' x2='210.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>SEX TINYINT(0)</text>
+            <line x1='0' y1='220' x2='210.0' y2='220' style='stroke:black;'/>
+            <text x='5' y='235' style='fill:black;'>STATUS TINYINT(0)</text>
+            <line x1='0' y1='240' x2='210.0' y2='240' style='stroke:black;'/>
+            <text x='5' y='255' style='fill:black;'>CODE VARCHAR(50)</text>
+            <line x1='0' y1='260' x2='210.0' y2='260' style='stroke:black;'/>
+            <text x='5' y='275' style='fill:black;'>TEL VARCHAR(50)</text>
+            <line x1='0' y1='280' x2='210.0' y2='280' style='stroke:black;'/>
+            <rect x='0' y='280' width='210.0' height='20' style='fill:green;'/>
+            <text x='5' y='295' style='fill:white;'>DEPT_ID BIGINT(0)</text>
+            <line x1='0' y1='300' x2='210.0' y2='300' style='stroke:black;'/>
+        </g>
+        <g id='A_NEWS_NEWSTAG'>
+            <rect id='use_A_NEWS_NEWSTAG_rect' x='0' y='0' width='200.0' height='100.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='200.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_NEWS_NEWSTAG</text>
+            <line x1='0' y1='20' x2='200.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='200.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>NEWS_ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='200.0' y2='40' style='stroke:black;'/>
+            <rect x='0' y='40' width='200.0' height='20' style='fill:red;'/>
+            <text x='5' y='55' style='fill:white;'>NEWSTAG_ID BIGINT(0)</text>
+            <line x1='0' y1='60' x2='200.0' y2='60' style='stroke:black;'/>
+            <rect x='0' y='60' width='200.0' height='20' style='fill:green;'/>
+            <text x='5' y='75' style='fill:white;'>NEWSTAG_ID BIGINT(0)</text>
+            <line x1='0' y1='80' x2='200.0' y2='80' style='stroke:black;'/>
+            <rect x='0' y='80' width='200.0' height='20' style='fill:green;'/>
+            <text x='5' y='95' style='fill:white;'>NEWS_ID BIGINT(0)</text>
+            <line x1='0' y1='100' x2='200.0' y2='100' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP2_PRODUCT'>
+            <rect id='use_A_ERP2_PRODUCT_rect' x='0' y='0' width='210.0' height='240.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='210.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP2_PRODUCT</text>
+            <line x1='0' y1='20' x2='210.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='210.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='210.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>TYPE INTEGER(0)</text>
+            <line x1='0' y1='60' x2='210.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>FACTORY VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='210.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>PRICE DOUBLE(0)</text>
+            <line x1='0' y1='100' x2='210.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>TOTAL DOUBLE(0)</text>
+            <line x1='0' y1='120' x2='210.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='140' x2='210.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>MATERIAL VARCHAR(50)</text>
+            <line x1='0' y1='160' x2='210.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='180' x2='210.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>UNIT INTEGER(0)</text>
+            <line x1='0' y1='200' x2='210.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>NUM INTEGER(0)</text>
+            <line x1='0' y1='220' x2='210.0' y2='220' style='stroke:black;'/>
+            <rect x='0' y='220' width='210.0' height='20' style='fill:green;'/>
+            <text x='5' y='235' style='fill:white;'>SUPPLIER_ID BIGINT(0)</text>
+            <line x1='0' y1='240' x2='210.0' y2='240' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP_ORDER_INFO'>
+            <rect id='use_A_ERP_ORDER_INFO_rect' x='0' y='0' width='210.0' height='280.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='210.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP_ORDER_INFO</text>
+            <line x1='0' y1='20' x2='210.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='210.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='210.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>TYPE VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='210.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>UNIT_TYPE VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='210.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>NUM VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='210.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>AMOUNT VARCHAR(50)</text>
+            <line x1='0' y1='120' x2='210.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>PRODUCT VARCHAR(50)</text>
+            <line x1='0' y1='140' x2='210.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>STATUS VARCHAR(50)</text>
+            <line x1='0' y1='160' x2='210.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>HEIGHT VARCHAR(50)</text>
+            <line x1='0' y1='180' x2='210.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>PRICE VARCHAR(50)</text>
+            <line x1='0' y1='200' x2='210.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>AREA VARCHAR(50)</text>
+            <line x1='0' y1='220' x2='210.0' y2='220' style='stroke:black;'/>
+            <text x='5' y='235' style='fill:black;'>WIDTH VARCHAR(50)</text>
+            <line x1='0' y1='240' x2='210.0' y2='240' style='stroke:black;'/>
+            <text x='5' y='255' style='fill:black;'>UNIT VARCHAR(50)</text>
+            <line x1='0' y1='260' x2='210.0' y2='260' style='stroke:black;'/>
+            <rect x='0' y='260' width='210.0' height='20' style='fill:green;'/>
+            <text x='5' y='275' style='fill:white;'>ORDER_ID BIGINT(0)</text>
+            <line x1='0' y1='280' x2='210.0' y2='280' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP2_SUPPLIER'>
+            <rect id='use_A_ERP2_SUPPLIER_rect' x='0' y='0' width='200.0' height='340.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='200.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP2_SUPPLIER</text>
+            <line x1='0' y1='20' x2='200.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='200.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='200.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>TYPE INTEGER(0)</text>
+            <line x1='0' y1='60' x2='200.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>FAX VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='200.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>HOMEPAGE VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='200.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='120' x2='200.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>EMAIL VARCHAR(50)</text>
+            <line x1='0' y1='140' x2='200.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>RANK INTEGER(0)</text>
+            <line x1='0' y1='160' x2='200.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>LEAD VARCHAR(50)</text>
+            <line x1='0' y1='180' x2='200.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>CODE VARCHAR(50)</text>
+            <line x1='0' y1='200' x2='200.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>LINKMAN VARCHAR(50)</text>
+            <line x1='0' y1='220' x2='200.0' y2='220' style='stroke:black;'/>
+            <text x='5' y='235' style='fill:black;'>ZIP VARCHAR(50)</text>
+            <line x1='0' y1='240' x2='200.0' y2='240' style='stroke:black;'/>
+            <text x='5' y='255' style='fill:black;'>AREA VARCHAR(50)</text>
+            <line x1='0' y1='260' x2='200.0' y2='260' style='stroke:black;'/>
+            <text x='5' y='275' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='280' x2='200.0' y2='280' style='stroke:black;'/>
+            <text x='5' y='295' style='fill:black;'>TEL VARCHAR(50)</text>
+            <line x1='0' y1='300' x2='200.0' y2='300' style='stroke:black;'/>
+            <text x='5' y='315' style='fill:black;'>ADDRESS VARCHAR(50)</text>
+            <line x1='0' y1='320' x2='200.0' y2='320' style='stroke:black;'/>
+            <rect x='0' y='320' width='200.0' height='20' style='fill:green;'/>
+            <text x='5' y='335' style='fill:white;'>REGION_ID BIGINT(0)</text>
+            <line x1='0' y1='340' x2='200.0' y2='340' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_ROLE'>
+            <rect id='use_A_SECURITY_ROLE_rect' x='0' y='0' width='180.0' height='80.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='180.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_ROLE</text>
+            <line x1='0' y1='20' x2='180.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='180.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='180.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='180.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>DESCN VARCHAR(200)</text>
+            <line x1='0' y1='80' x2='180.0' y2='80' style='stroke:black;'/>
+        </g>
+        <g id='A_NEWS_CONFIG'>
+            <rect id='use_A_NEWS_CONFIG_rect' x='0' y='0' width='290.0' height='140.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='290.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_NEWS_CONFIG</text>
+            <line x1='0' y1='20' x2='290.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='290.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='290.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>TEMPLATE_NAME VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='290.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>COULD_COMMENT INTEGER(0)</text>
+            <line x1='0' y1='80' x2='290.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>NEWS_NEED_AUDIT INTEGER(0)</text>
+            <line x1='0' y1='100' x2='290.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>COMMENT_NEED_AUDIT INTEGER(0)</text>
+            <line x1='0' y1='120' x2='290.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>CATEGORY_STRATEGY INTEGER(0)</text>
+            <line x1='0' y1='140' x2='290.0' y2='140' style='stroke:black;'/>
+        </g>
+        <g id='A_SECURITY_MENU_ROLE'>
+            <rect id='use_A_SECURITY_MENU_ROLE_rect' x='0' y='0' width='200.0' height='100.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='200.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_SECURITY_MENU_ROLE</text>
+            <line x1='0' y1='20' x2='200.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='200.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ROLE_ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='200.0' y2='40' style='stroke:black;'/>
+            <rect x='0' y='40' width='200.0' height='20' style='fill:red;'/>
+            <text x='5' y='55' style='fill:white;'>MENU_ID BIGINT(0)</text>
+            <line x1='0' y1='60' x2='200.0' y2='60' style='stroke:black;'/>
+            <rect x='0' y='60' width='200.0' height='20' style='fill:green;'/>
+            <text x='5' y='75' style='fill:white;'>ROLE_ID BIGINT(0)</text>
+            <line x1='0' y1='80' x2='200.0' y2='80' style='stroke:black;'/>
+            <rect x='0' y='80' width='200.0' height='20' style='fill:green;'/>
+            <text x='5' y='95' style='fill:white;'>MENU_ID BIGINT(0)</text>
+            <line x1='0' y1='100' x2='200.0' y2='100' style='stroke:black;'/>
+        </g>
+        <g id='A_TRACKER_ISSUE'>
+            <rect id='use_A_TRACKER_ISSUE_rect' x='0' y='0' width='240.0' height='260.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='240.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_TRACKER_ISSUE</text>
+            <line x1='0' y1='20' x2='240.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='240.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='240.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>ASSIGN_TO VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='240.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>UPDATE_DATE TIMESTAMP(6)</text>
+            <line x1='0' y1='80' x2='240.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>STATUS INTEGER(0)</text>
+            <line x1='0' y1='100' x2='240.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>PRIORITY INTEGER(0)</text>
+            <line x1='0' y1='120' x2='240.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>FILE VARCHAR(100)</text>
+            <line x1='0' y1='140' x2='240.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>ADD_TIME TIMESTAMP(6)</text>
+            <line x1='0' y1='160' x2='240.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>NAME VARCHAR(50)</text>
+            <line x1='0' y1='180' x2='240.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>CONTENT LONGVARCHAR(0)</text>
+            <line x1='0' y1='200' x2='240.0' y2='200' style='stroke:black;'/>
+            <text x='5' y='215' style='fill:black;'>SEVERITY INTEGER(0)</text>
+            <line x1='0' y1='220' x2='240.0' y2='220' style='stroke:black;'/>
+            <text x='5' y='235' style='fill:black;'>SUBMIT_BY VARCHAR(50)</text>
+            <line x1='0' y1='240' x2='240.0' y2='240' style='stroke:black;'/>
+            <rect x='0' y='240' width='240.0' height='20' style='fill:green;'/>
+            <text x='5' y='255' style='fill:white;'>PROJECT_ID BIGINT(0)</text>
+            <line x1='0' y1='260' x2='240.0' y2='260' style='stroke:black;'/>
+        </g>
+        <g id='A_ERP_RATION'>
+            <rect id='use_A_ERP_RATION_rect' x='0' y='0' width='230.0' height='200.0' style='fill:white; stroke:black;'/>
+            <rect x='0' y='0' width='230.0' height='20' style='fill:yellow;'/>
+            <text x='5' y='15'>A_ERP_RATION</text>
+            <line x1='0' y1='20' x2='230.0' y2='20' style='stroke:black;'/>
+            <rect x='0' y='20' width='230.0' height='20' style='fill:red;'/>
+            <text x='5' y='35' style='fill:white;'>ID BIGINT(0)</text>
+            <line x1='0' y1='40' x2='230.0' y2='40' style='stroke:black;'/>
+            <text x='5' y='55' style='fill:black;'>PRODUCT VARCHAR(50)</text>
+            <line x1='0' y1='60' x2='230.0' y2='60' style='stroke:black;'/>
+            <text x='5' y='75' style='fill:black;'>STATUS VARCHAR(50)</text>
+            <line x1='0' y1='80' x2='230.0' y2='80' style='stroke:black;'/>
+            <text x='5' y='95' style='fill:black;'>MATERIAL VARCHAR(50)</text>
+            <line x1='0' y1='100' x2='230.0' y2='100' style='stroke:black;'/>
+            <text x='5' y='115' style='fill:black;'>INPUT_TIME TIMESTAMP(6)</text>
+            <line x1='0' y1='120' x2='230.0' y2='120' style='stroke:black;'/>
+            <text x='5' y='135' style='fill:black;'>DESCN LONGVARCHAR(0)</text>
+            <line x1='0' y1='140' x2='230.0' y2='140' style='stroke:black;'/>
+            <text x='5' y='155' style='fill:black;'>UNIT VARCHAR(50)</text>
+            <line x1='0' y1='160' x2='230.0' y2='160' style='stroke:black;'/>
+            <text x='5' y='175' style='fill:black;'>RATE VARCHAR(50)</text>
+            <line x1='0' y1='180' x2='230.0' y2='180' style='stroke:black;'/>
+            <text x='5' y='195' style='fill:black;'>INPUT_MAN VARCHAR(50)</text>
+            <line x1='0' y1='200' x2='230.0' y2='200' style='stroke:black;'/>
+        </g>
+    </defs>
+    <use xlink:href='#A_ERP2_BUY_CONTRACT' id='use_A_ERP2_BUY_CONTRACT' x='10.0' y='10.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP2_BUY_CONTRACT")' onmouseup='endDrag("use_A_ERP2_BUY_CONTRACT")' />
+    <use xlink:href='#A_SECURITY_MENU' id='use_A_SECURITY_MENU' x='280.0' y='10.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_MENU")' onmouseup='endDrag("use_A_SECURITY_MENU")' />
+    <use xlink:href='#A_NEWS' id='use_A_NEWS' x='480.0' y='10.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_NEWS")' onmouseup='endDrag("use_A_NEWS")' />
+    <use xlink:href='#A_ERP2_BUY_ORDER_INFO' id='use_A_ERP2_BUY_ORDER_INFO' x='730.0' y='10.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP2_BUY_ORDER_INFO")' onmouseup='endDrag("use_A_ERP2_BUY_ORDER_INFO")' />
+    <use xlink:href='#A_TRACKER_PROJECT' id='use_A_TRACKER_PROJECT' x='10.0' y='290.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_TRACKER_PROJECT")' onmouseup='endDrag("use_A_TRACKER_PROJECT")' />
+    <use xlink:href='#A_SECURITY_DICTIONARY' id='use_A_SECURITY_DICTIONARY' x='240.0' y='290.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_DICTIONARY")' onmouseup='endDrag("use_A_SECURITY_DICTIONARY")' />
+    <use xlink:href='#A_ERP2_BID' id='use_A_ERP2_BID' x='460.0' y='290.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP2_BID")' onmouseup='endDrag("use_A_ERP2_BID")' />
+    <use xlink:href='#A_SECURITY_RESOURCE' id='use_A_SECURITY_RESOURCE' x='700.0' y='290.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_RESOURCE")' onmouseup='endDrag("use_A_SECURITY_RESOURCE")' />
+    <use xlink:href='#A_SECURITY_DEPT' id='use_A_SECURITY_DEPT' x='10.0' y='570.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_DEPT")' onmouseup='endDrag("use_A_SECURITY_DEPT")' />
+    <use xlink:href='#A_ERP2_INVITE_BID' id='use_A_ERP2_INVITE_BID' x='210.0' y='570.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP2_INVITE_BID")' onmouseup='endDrag("use_A_ERP2_INVITE_BID")' />
+    <use xlink:href='#A_ERP_CUSTOMER' id='use_A_ERP_CUSTOMER' x='440.0' y='570.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP_CUSTOMER")' onmouseup='endDrag("use_A_ERP_CUSTOMER")' />
+    <use xlink:href='#A_ERP_ORDER' id='use_A_ERP_ORDER' x='680.0' y='570.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP_ORDER")' onmouseup='endDrag("use_A_ERP_ORDER")' />
+    <use xlink:href='#A_SECURITY_RESOURCE_ROLE' id='use_A_SECURITY_RESOURCE_ROLE' x='10.0' y='850.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_RESOURCE_ROLE")' onmouseup='endDrag("use_A_SECURITY_RESOURCE_ROLE")' />
+    <use xlink:href='#A_NEWS_CATEGORY' id='use_A_NEWS_CATEGORY' x='260.0' y='850.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_NEWS_CATEGORY")' onmouseup='endDrag("use_A_NEWS_CATEGORY")' />
+    <use xlink:href='#A_NEWS_COMMENT' id='use_A_NEWS_COMMENT' x='490.0' y='850.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_NEWS_COMMENT")' onmouseup='endDrag("use_A_NEWS_COMMENT")' />
+    <use xlink:href='#A_ERP_MATERIAL' id='use_A_ERP_MATERIAL' x='740.0' y='850.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP_MATERIAL")' onmouseup='endDrag("use_A_ERP_MATERIAL")' />
+    <use xlink:href='#A_ERP2_BUY_ORDER' id='use_A_ERP2_BUY_ORDER' x='10.0' y='1130.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP2_BUY_ORDER")' onmouseup='endDrag("use_A_ERP2_BUY_ORDER")' />
+    <use xlink:href='#A_ERP2_SUCCESS_BID' id='use_A_ERP2_SUCCESS_BID' x='270.0' y='1130.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP2_SUCCESS_BID")' onmouseup='endDrag("use_A_ERP2_SUCCESS_BID")' />
+    <use xlink:href='#A_SECURITY_ROLE_USER' id='use_A_SECURITY_ROLE_USER' x='530.0' y='1130.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_ROLE_USER")' onmouseup='endDrag("use_A_SECURITY_ROLE_USER")' />
+    <use xlink:href='#A_SECURITY_REGION' id='use_A_SECURITY_REGION' x='740.0' y='1130.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_REGION")' onmouseup='endDrag("use_A_SECURITY_REGION")' />
+    <use xlink:href='#A_ERP_PRODUCT' id='use_A_ERP_PRODUCT' x='10.0' y='1410.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP_PRODUCT")' onmouseup='endDrag("use_A_ERP_PRODUCT")' />
+    <use xlink:href='#A_NEWS_TAG' id='use_A_NEWS_TAG' x='250.0' y='1410.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_NEWS_TAG")' onmouseup='endDrag("use_A_NEWS_TAG")' />
+    <use xlink:href='#A_SECURITY_USER' id='use_A_SECURITY_USER' x='450.0' y='1410.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_USER")' onmouseup='endDrag("use_A_SECURITY_USER")' />
+    <use xlink:href='#A_NEWS_NEWSTAG' id='use_A_NEWS_NEWSTAG' x='670.0' y='1410.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_NEWS_NEWSTAG")' onmouseup='endDrag("use_A_NEWS_NEWSTAG")' />
+    <use xlink:href='#A_ERP2_PRODUCT' id='use_A_ERP2_PRODUCT' x='10.0' y='1690.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP2_PRODUCT")' onmouseup='endDrag("use_A_ERP2_PRODUCT")' />
+    <use xlink:href='#A_ERP_ORDER_INFO' id='use_A_ERP_ORDER_INFO' x='230.0' y='1690.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP_ORDER_INFO")' onmouseup='endDrag("use_A_ERP_ORDER_INFO")' />
+    <use xlink:href='#A_ERP2_SUPPLIER' id='use_A_ERP2_SUPPLIER' x='450.0' y='1690.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP2_SUPPLIER")' onmouseup='endDrag("use_A_ERP2_SUPPLIER")' />
+    <use xlink:href='#A_SECURITY_ROLE' id='use_A_SECURITY_ROLE' x='660.0' y='1690.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_ROLE")' onmouseup='endDrag("use_A_SECURITY_ROLE")' />
+    <use xlink:href='#A_NEWS_CONFIG' id='use_A_NEWS_CONFIG' x='10.0' y='1970.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_NEWS_CONFIG")' onmouseup='endDrag("use_A_NEWS_CONFIG")' />
+    <use xlink:href='#A_SECURITY_MENU_ROLE' id='use_A_SECURITY_MENU_ROLE' x='310.0' y='1970.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_SECURITY_MENU_ROLE")' onmouseup='endDrag("use_A_SECURITY_MENU_ROLE")' />
+    <use xlink:href='#A_TRACKER_ISSUE' id='use_A_TRACKER_ISSUE' x='520.0' y='1970.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_TRACKER_ISSUE")' onmouseup='endDrag("use_A_TRACKER_ISSUE")' />
+    <use xlink:href='#A_ERP_RATION' id='use_A_ERP_RATION' x='770.0' y='1970.0' style='cursor:move;' onmousedown='startDrag(evt, "use_A_ERP_RATION")' onmouseup='endDrag("use_A_ERP_RATION")' />
+    <g id='FK6FD185064E5B1FF1'>
+        <line id='FK6FD185064E5B1FF1_line' x1='192.2727272727273' y1='850.0' x2='740.2727272727273' y2='410.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK6FD185064E5B1FF1_polyline' points='740.2727272727273 410.0,720.5835076290532 413.51206916548614,732.5899007979009 428.46548611214195' style='fill:blue;'/>
+        <text id='FK6FD185064E5B1FF1_text' x='376.27272727272725' y='630.0'>FK6FD185064E5B1FF1</text>
+    </g>
+    <g id='FK33849C668034938C'>
+        <polyline id='FK33849C668034938C_line' points='200.0 630.0,295.0 630.0,295.0 510.0,105.0,510.0,105.0 570.0' style='fill:none;stroke:blue;stroke-width:2;'/>
+        <polyline id='FK33849C668034938C_polyline' points='105.0 570.0,95.0 550.0,115.0 550.0' style='fill:blue;'/>
+        <text id='FK33849C668034938C_text' x='105.0' y='570.0'>FK33849C668034938C</text>
+    </g>
+    <g id='FK705A3D99411FEDC5'>
+        <line id='FK705A3D99411FEDC5_line' x1='411.07142857142856' y1='570.0' x2='483.9285714285714' y2='490.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK705A3D99411FEDC5_polyline' points='483.9285714285714 490.0,465.0213315238372 496.5204508421448,479.19971630197244 509.4329084079465' style='fill:blue;'/>
+        <text id='FK705A3D99411FEDC5_text' x='357.5' y='530.0'>FK705A3D99411FEDC5</text>
+    </g>
+    <g id='FKC5F51617CFF5909D'>
+        <polyline id='FKC5F51617CFF5909D_line' points='450.0 350.0,555.0 350.0,555.0 230.0,345.0,230.0,345.0 290.0' style='fill:none;stroke:blue;stroke-width:2;'/>
+        <polyline id='FKC5F51617CFF5909D_polyline' points='345.0 290.0,335.0 270.0,355.0 270.0' style='fill:blue;'/>
+        <text id='FKC5F51617CFF5909D_text' x='345.0' y='290.0'>FKC5F51617CFF5909D</text>
+    </g>
+    <g id='FK14BCADD53D7765D1'>
+        <line id='FK14BCADD53D7765D1_line' x1='409.08854166666663' y1='1970.0' x2='376.640625' y2='190.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK14BCADD53D7765D1_polyline' points='376.640625 190.0,367.37360580261645 207.72349726197754,386.54744185440563 207.37397420895013' style='fill:blue;'/>
+        <text id='FK14BCADD53D7765D1_text' x='302.8645833333333' y='1080.0'>FK14BCADD53D7765D1</text>
+    </g>
+    <g id='FKD9550759BEBEA05B'>
+        <line id='FKD9550759BEBEA05B_line' x1='393.0180180180181' y1='1690.0' x2='732.8378378378379' y2='870.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FKD9550759BEBEA05B_polyline' points='732.8378378378379 870.0,717.2603323277285 882.5435769253635,734.9763317194514 889.8853424390504' style='fill:blue;'/>
+        <text id='FKD9550759BEBEA05B_text' x='472.92792792792807' y='1280.0'>FKD9550759BEBEA05B</text>
+    </g>
+    <g id='FK6567A56CAF1C28CB'>
+        <polyline id='FK6567A56CAF1C28CB_line' points='480.0 930.0,590.0 930.0,590.0 770.0,370.0,770.0,370.0 850.0' style='fill:none;stroke:blue;stroke-width:2;'/>
+        <polyline id='FK6567A56CAF1C28CB_polyline' points='370.0 850.0,360.0 830.0,380.0 830.0' style='fill:blue;'/>
+        <text id='FK6567A56CAF1C28CB_text' x='370.0' y='850.0'>FK6567A56CAF1C28CB</text>
+    </g>
+    <g id='FK705A3D99E8F95E07'>
+        <line id='FK705A3D99E8F95E07_line' x1='339.327731092437' y1='770.0' x2='517.1428571428571' y2='1690.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK705A3D99E8F95E07_polyline' points='517.1428571428571 1690.0,523.2264441812306 1670.9477043706925,504.3978792815952 1674.586838763059' style='fill:blue;'/>
+        <text id='FK705A3D99E8F95E07_text' x='338.2352941176471' y='1230.0'>FK705A3D99E8F95E07</text>
+    </g>
+    <g id='FKCF98988AB850EF62'>
+        <line id='FKCF98988AB850EF62_line' x1='778.695652173913' y1='210.0' x2='214.69565217391298' y2='1130.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FKCF98988AB850EF62_polyline' points='214.69565217391298 1130.0,232.0436701467533 1120.0478006242836,215.69433927719197 1110.0249499607698' style='fill:blue;'/>
+        <text id='FKCF98988AB850EF62_text' x='406.695652173913' y='670.0'>FKCF98988AB850EF62</text>
+    </g>
+    <g id='FKA74D99CFC301B3B2'>
+        <line id='FKA74D99CFC301B3B2_line' x1='385.0943396226415' y1='1130.0' x2='334.1509433962264' y2='770.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FKA74D99CFC301B3B2_polyline' points='334.1509433962264 770.0,327.11624239278785 788.7219919290716,346.10409120909696 786.0350321909146' style='fill:blue;'/>
+        <text id='FKA74D99CFC301B3B2_text' x='269.62264150943395' y='950.0'>FKA74D99CFC301B3B2</text>
+    </g>
+    <g id='FK923EAD9963BB8EF0'>
+        <line id='FK923EAD9963BB8EF0_line' x1='670.0' y1='1457.6470588235295' x2='440.0' y2='1452.235294117647' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK923EAD9963BB8EF0_polyline' points='440.0 1452.235294117647,457.32124507477323 1462.2340174891403,457.77234425663926 1443.0623022598343' style='fill:blue;'/>
+        <text id='FK923EAD9963BB8EF0_text' x='465.0' y='1454.9411764705883'>FK923EAD9963BB8EF0</text>
+    </g>
+    <g id='FK923EAD997E0115E4'>
+        <line id='FK923EAD997E0115E4_line' x1='763.359375' y1='1410.0' x2='622.578125' y2='350.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK923EAD997E0115E4_polyline' points='622.578125 350.0,615.3838658904288 368.6612602967847,634.3939592937777 366.13648226665237' style='fill:blue;'/>
+        <text id='FK923EAD997E0115E4_text' x='602.96875' y='880.0'>FK923EAD997E0115E4</text>
+    </g>
+    <g id='FK3388B3808038AAA6'>
+        <polyline id='FK3388B3808038AAA6_line' points='470.0 100.0,565.0 100.0,565.0 -80.0,375.0,-80.0,375.0 10.0' style='fill:none;stroke:blue;stroke-width:2;'/>
+        <polyline id='FK3388B3808038AAA6_polyline' points='375.0 10.0,365.0 -10.0,385.0 -10.0' style='fill:blue;'/>
+        <text id='FK3388B3808038AAA6_text' x='375.0' y='10.0'>FK3388B3808038AAA6</text>
+    </g>
+    <g id='FK5CDABC117E0115E4'>
+        <line id='FK5CDABC117E0115E4_line' x1='608.8157894736842' y1='850.0' x2='602.2368421052631' y2='350.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK5CDABC117E0115E4_polyline' points='602.2368421052631 350.0,592.8800840462379 367.6762857700612,612.0554457452007 367.42397837928536' style='fill:blue;'/>
+        <text id='FK5CDABC117E0115E4_text' x='515.5263157894736' y='600.0'>FK5CDABC117E0115E4</text>
+    </g>
+    <g id='FK88EB762BCB310305'>
+        <line id='FK88EB762BCB310305_line' x1='542.6056338028169' y1='490.0' x2='153.8732394366197' y2='1690.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK88EB762BCB310305_polyline' points='153.8732394366197 1690.0,168.40408353613316 1676.2575631798566,150.16042616509083 1670.3476460033216' style='fill:blue;'/>
+        <text id='FK88EB762BCB310305_text' x='258.2394366197183' y='1090.0'>FK88EB762BCB310305</text>
+    </g>
+    <g id='FK744A3C118F5E23F7'>
+        <line id='FK744A3C118F5E23F7_line' x1='547.8666666666668' y1='350.0' x2='394.5333333333334' y2='850.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK744A3C118F5E23F7_polyline' points='394.5333333333334 850.0,408.84643728216605 836.0309250359978,390.5121651342038 830.4084149106228' style='fill:blue;'/>
+        <text id='FK744A3C118F5E23F7_text' x='381.2000000000001' y='600.0'>FK744A3C118F5E23F7</text>
+    </g>
+    <g id='FK7CAEBCD59C267A7B'>
+        <polyline id='FK7CAEBCD59C267A7B_line' points='930.0 1190.0,1025.0 1190.0,1025.0 1070.0,835.0,1070.0,835.0 1130.0' style='fill:none;stroke:blue;stroke-width:2;'/>
+        <polyline id='FK7CAEBCD59C267A7B_polyline' points='835.0 1130.0,825.0 1110.0,845.0 1110.0' style='fill:blue;'/>
+        <text id='FK7CAEBCD59C267A7B_text' x='835.0' y='1130.0'>FK7CAEBCD59C267A7B</text>
+    </g>
+    <g id='FK83C6047356E5FA71'>
+        <line id='FK83C6047356E5FA71_line' x1='640.909090909091' y1='1230.0' x2='741.2727272727274' y2='1690.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK83C6047356E5FA71_polyline' points='741.2727272727274 1690.0,746.8994192659155 1670.8078053049217,728.1631669603643 1674.8957148988602' style='fill:blue;'/>
+        <text id='FK83C6047356E5FA71_text' x='601.0909090909092' y='1460.0'>FK83C6047356E5FA71</text>
+    </g>
+    <g id='FK338C89EC6176F411'>
+        <line id='FK338C89EC6176F411_line' x1='482.41935483870975' y1='1410.0' x2='134.0322580645162' y2='690.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK338C89EC6176F411_polyline' points='134.0322580645162 690.0,133.0458848886295 709.9756618903577,150.30825824620706 701.6229005883041' style='fill:blue;'/>
+        <text id='FK338C89EC6176F411_text' x='218.22580645161298' y='1050.0'>FK338C89EC6176F411</text>
+    </g>
+    <g id='FK20F791548D35A05B'>
+        <line id='FK20F791548D35A05B_line' x1='601.3714285714285' y1='1970.0' x2='137.82857142857142' y2='410.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK20F791548D35A05B_polyline' points='137.82857142857142 410.0,133.63655892238035 429.5557416414704,152.01920658294515 424.0934691937597' style='fill:blue;'/>
+        <text id='FK20F791548D35A05B_text' x='279.59999999999997' y='1190.0'>FK20F791548D35A05B</text>
+    </g>
+    <g id='FK48EE253DAF5697EF'>
+        <line id='FK48EE253DAF5697EF_line' x1='165.91954022988506' y1='230.0' x2='509.94252873563215' y2='1690.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK48EE253DAF5697EF_polyline' points='509.94252873563215 1690.0,515.2499550415678 1670.7170742363337,496.5841208746246 1675.115345505556' style='fill:blue;'/>
+        <text id='FK48EE253DAF5697EF_text' x='247.9310344827586' y='960.0'>FK48EE253DAF5697EF</text>
+    </g>
+    <g id='FKCAB3D2E3AF5697EF'>
+        <line id='FKCAB3D2E3AF5697EF_line' x1='224.9166666666667' y1='1390.0' x2='450.0' y2='1715.421686746988' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FKCAB3D2E3AF5697EF_polyline' points='450.0 1715.421686746988,447.90164487976045 1695.5320687066794,432.12971741017304 1706.4409852064773' style='fill:blue;'/>
+        <text id='FKCAB3D2E3AF5697EF_text' x='247.45833333333337' y='1552.7108433734938'>FKCAB3D2E3AF5697EF</text>
+    </g>
+    <g id='FK70F2953E252E3FF1'>
+        <line id='FK70F2953E252E3FF1_line' x1='622.313432835821' y1='1690.0' x2='809.4776119402985' y2='1250.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK70F2953E252E3FF1_polyline' points='809.4776119402985 1250.0,793.7839263162904 1262.3979123861561,811.430760955218 1269.904401747491' style='fill:blue;'/>
+        <text id='FK70F2953E252E3FF1_text' x='625.8955223880598' y='1470.0'>FK70F2953E252E3FF1</text>
+    </g>
+    <g id='FK6FD1850656E5FA71'>
+        <line id='FK6FD1850656E5FA71_line' x1='167.34939759036143' y1='950.0' x2='720.1204819277109' y2='1690.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK6FD1850656E5FA71_polyline' points='720.1204819277109 1690.0,717.2985182416013 1670.200087854885,701.9347168691698 1681.6766623740505' style='fill:blue;'/>
+        <text id='FK6FD1850656E5FA71_text' x='353.73493975903614' y='1320.0'>FK6FD1850656E5FA71</text>
+    </g>
+    <g id='FK83C60473FC10BE51'>
+        <line id='FK83C60473FC10BE51_line' x1='620.1315789473684' y1='1230.0' x2='584.6052631578948' y2='1410.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK83C60473FC10BE51_polyline' points='584.6052631578948 1410.0,597.4108814902045 1394.637183229394,578.596803713524 1390.9238784050492' style='fill:blue;'/>
+        <text id='FK83C60473FC10BE51_text' x='512.3684210526317' y='1320.0'>FK83C60473FC10BE51</text>
+    </g>
+    <g id='FKCF98988ACB310305'>
+        <line id='FKCF98988ACB310305_line' x1='797.3529411764706' y1='210.0' x2='166.17647058823528' y2='1690.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FKCF98988ACB310305_polyline' points='166.17647058823528 1690.0,181.88166630776033 1677.616671392093,164.24181233070968 1670.0937924901154' style='fill:blue;'/>
+        <text id='FKCF98988ACB310305_text' x='391.7647058823529' y='950.0'>FKCF98988ACB310305</text>
+    </g>
+    <g id='FK914C771DAF5697EF'>
+        <line id='FK914C771DAF5697EF_line' x1='220.0' y1='1822.0689655172414' x2='450.0' y2='1848.5057471264367' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK914C771DAF5697EF_polyline' points='450.0 1848.5057471264367,433.65807520804407 1836.9757213634969,431.46823821898107 1856.027303168345' style='fill:blue;'/>
+        <text id='FK914C771DAF5697EF_text' x='245.0' y='1835.287356321839'>FK914C771DAF5697EF</text>
+    </g>
+    <g id='FK14BCADD556E5FA71'>
+        <line id='FK14BCADD556E5FA71_line' x1='468.6206896551722' y1='1970.0' x2='703.1034482758619' y2='1770.0' style='stroke:blue; stroke-width:2;'/>
+        <polyline id='FK14BCADD556E5FA71_polyline' points='703.1034482758619 1770.0,683.5271245782614 1774.0948199577963,695.9719876241251 1788.6853490460503' style='fill:blue;'/>
+        <text id='FK14BCADD556E5FA71_text' x='495.862068965517' y='1870.0'>FK14BCADD556E5FA71</text>
+    </g>
+</svg>

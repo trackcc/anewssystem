@@ -1,17 +1,17 @@
 
 package ${webPackage};
 
-import anni.core.test.PrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class AdminControllerTest extends PrototypeControllerTest {
+public class AdminControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(AdminControllerTest.class);
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (AdminController) ctx.getBean(
+        controller = (AdminController) applicationContext.getBean(
                 "${webPackage}.AdminController");
     }
     /** * tearDown */

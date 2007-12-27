@@ -1,18 +1,18 @@
 
 package ${pkg}.web;
 
-import anni.core.test.PrototypeControllerTest;
+import anni.core.test.AbstractWebTests;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import ${pkg}.domain.${clz};
 
-public class ${clz}ControllerTest extends PrototypeControllerTest {
+public class ${clz}ControllerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(${clz}ControllerTest.class);
     /** * setup */
     @Override
     protected void onSetUpBeforeTransaction() throws Exception {
         super.onSetUpBeforeTransaction();
-        controller = (${clz}Controller) ctx.getBean(
+        controller = (${clz}Controller) applicationContext.getBean(
                 "${pkg}.web.${clz}Controller");
     }
     /** * tearDown */

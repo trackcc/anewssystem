@@ -4,9 +4,14 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
 
 
 /**
- * 使用DbUnit和spring测试hibernate3的dao.
+ * 使用spring测试hibernate3的dao.
+ * 默认从spring/*.xml和classpath:test/*.xml读取配置文件，
+ * 注意：spring-mock会根据getConfigLocations()的值来缓存ctx
+ * 此处与AbstractWebTests相同，会导致AbstractWebTests提取scope="request"类型的bean失效
+ * 这个类只适用于单独使用，或者不需要考虑测试scope的时候与其他类合作
+ * 如果需要测试scope="request"的类，必须都替换成AbstractWebTests避免出现问题
  *
- * @since 2007-03-19
+ * @author Lingo
  */
 public class AbstractDaoTestCase
     extends AbstractTransactionalDataSourceSpringContextTests {

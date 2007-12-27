@@ -3,6 +3,6 @@
 
 <!-- 后台管理 -->
 <beans default-lazy-init="false" default-autowire="byName">
-    <bean class="${webPackage}.AdminController" scope="request"/>
-    <bean class="${webPackage}.IndexController" scope="request"/>
+    <bean class="anni.b2b.shop.web.AdminController" scope="request"/>
+    <bean class="anni.b2b.shop.web.IndexController" scope="request"/>
 </beans>

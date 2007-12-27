@@ -1,12 +1,12 @@
 
 package ${pkg}.manager;
 
-import anni.core.test.AbstractDaoTestCase;
+import anni.core.test.AbstractWebTests;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import ${pkg}.domain.${clz};
 
-public class ${clz}ManagerTest extends AbstractDaoTestCase {
+public class ${clz}ManagerTest extends AbstractWebTests {
     protected static Log logger = LogFactory.getLog(${clz}ManagerTest.class);
     private ${clz}Manager ${clz?uncap_first}Manager;
 

@@ -100,7 +100,7 @@ public class GenManager {
         model.put("pkg", rootPackage);
         model.put("pojo", className);
         model.put("now", now);
-		model.put("projectName", projectName);
+        model.put("projectName", projectName);
         // manager
         FreemarkerUtils.process("templates/src/main/java/web/controller.java",
             model,
@@ -128,11 +128,17 @@ public class GenManager {
         Map model = new HashMap();
         model.put("classes", classes);
         model.put("pkg", rootPackage);
+        model.put("projectName", projectName);
 
         FreemarkerUtils.process("templates/src/main/resources/spring/dispatcher-servlet.xml",
             model,
             "target/" + projectName + "/src/main/resources/spring/",
             "dispatcher-servlet.xml");
+
+        FreemarkerUtils.process("templates/src/main/resources/spring/controller/controller.xml",
+            model,
+            "target/" + projectName + "/src/main/resources/spring/controller/",
+            projectName + "-controller.xml");
     }
 
     static void generateWebController() throws Exception {

@@ -8,12 +8,8 @@
 
     <!-- 后台管理 -->
     <import resource="classpath*:spring/controller/admin-controller.xml"/>
-
-<#list classes as c>
-    <bean class="${pkg}.web.${c}Controller" parent="baseController" scope="request">
-        <property name="entityDao" ref="${c?uncap_first}Manager"/>
-    </bean>
-</#list>
+    <!-- shop -->
+    <import resource="classpath*:spring/controller/shop-controller.xml"/>
 
     <bean class="anni.core.web.prototype.ControllerClassNameHandlerMapping"/>
 

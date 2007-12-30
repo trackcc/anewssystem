@@ -258,6 +258,8 @@ Ext.onReady(function(){
         this.menuTree.root.expand(true, false);
     }
 
+    var configMenuDialog;
+
     // 选择菜单
     function selectMenu() {
         var m = lightGrid.grid.getSelections();
@@ -265,65 +267,73 @@ Ext.onReady(function(){
             Ext.MessageBox.alert('提示', '请选择需要配置的角色！');
             return;
         }
+        this.currentRoleId = m[0].id;
         //Ext.lingo.FormUtils.createDialogContent({id:'menuDialog',title:'选择菜单'});
         //var configMenuDialog = Ext.lingo.FormUtils.createDialog({id:'menuDialog' + "-dialog-content"});
 
-        var configMenuDialog = Ext.lingo.FormUtils.createTabedDialog('menuDialog', ['选择菜单','帮助']);
+        if (!configMenuDialog) {
+            var id = 'menuDialog' + Ext.id();
+            configMenuDialog = Ext.lingo.FormUtils.createTabedDialog(id, ['选择菜单','帮助']);
 
-        this.yesBtn = configMenuDialog.addButton("确定", function() {
-            // 如果不全部展开，那么未展开的部分，无法取得数据。
-            //this.menuTree.root.expand(true, false);
-            Ext.lib.Ajax.request(
-                'POST',
-                'selectMenu.htm',
-                {success:solveMenuResponse.createDelegate(this),failure:solveMenuResponse.createDelegate(this)},
-                'ids=' + this.menuTree.getChecked().join(",") + "&roleId=" + lightGrid.grid.getSelections()[0].id
-            );
-        }.createDelegate(this), configMenuDialog);
-        this.tabs = configMenuDialog.getTabs();
+            this.yesBtn = configMenuDialog.addButton("确定", function() {
+                // 如果不全部展开，那么未展开的部分，无法取得数据。
+                //this.menuTree.root.expand(true, false);
+                Ext.lib.Ajax.request(
+                    'POST',
+                    'selectMenu.htm',
+                    {success:solveMenuResponse.createDelegate(this),failure:solveMenuResponse.createDelegate(this)},
+                    'ids=' + this.menuTree.getChecked().join(",") + "&roleId=" + lightGrid.grid.getSelections()[0].id
+                );
+            }.createDelegate(this), configMenuDialog);
+            this.tabs = configMenuDialog.getTabs();
 
-        this.tabs.getTab(0).on("activate", function() {
-            this.yesBtn.show();
-        }, this, true);
-        this.tabs.getTab(1).on("activate", function() {
-            this.yesBtn.hide();
-        }, this, true);
+            this.tabs.getTab(0).on("activate", function() {
+                this.yesBtn.show();
+            }, this, true);
+            this.tabs.getTab(1).on("activate", function() {
+                this.yesBtn.hide();
+            }, this, true);
 
-        this.tabs.getTab(0).setContent("<div id='menuTree'></div>");
-        //this.tabs.getTab(0).setContent(Ext.get("tree-div").dom.innerHTML);
+            var treeId = 'menuTree' + Ext.id();
+            this.tabs.getTab(0).setContent("<div id='" + treeId + "'></div>");
+            //this.tabs.getTab(0).setContent(Ext.get("tree-div").dom.innerHTML);
 
-        this.menuTree = new Ext.tree.TreePanel('menuTree', {
-            rootVisible : true,
-            animate     : true,
-            loader      : new Ext.tree.CustomUITreeLoader({
-                dataUrl  : 'getMenuByRole.htm?id=' + m[0].id,
-                baseAttr : {
-                    uiProvider : Ext.tree.CheckboxNodeUI
-                }
-            }),
-            enableDD        : false,
-            containerScroll : true,
-            rootUIProvider  : Ext.tree.CheckboxNodeUI,
-            selModel        : new Ext.tree.CheckNodeMultiSelectionModel(),
-            rootVisible     : false
-        });
+            this.menuTree = new Ext.tree.TreePanel(treeId, {
+                rootVisible : true,
+                animate     : true,
+                loader      : new Ext.tree.CustomUITreeLoader({
+                    dataUrl  : 'getMenuByRole.htm',
+                    baseAttr : {
+                        uiProvider : Ext.tree.CheckboxNodeUI
+                    }
+                }),
+                enableDD        : false,
+                containerScroll : true,
+                rootUIProvider  : Ext.tree.CheckboxNodeUI,
+                selModel        : new Ext.tree.CheckNodeMultiSelectionModel(),
+                rootVisible     : false
+            });
+            this.menuTree.getLoader().baseParams = {id: this.currentRoleId};
 
-        // 设置根节点
-        this.treeRoot = new Ext.tree.AsyncTreeNode({
-            text       : '选择菜单',
-            draggable  : false,
-            id         : '0',
-            uiProvider : Ext.tree.CheckboxNodeUI
-        });
-        this.menuTree.setRootNode(this.treeRoot);
-        // 渲染树
-        this.menuTree.render();
-        this.menuTree.root.expand(true, false);
+            //var dialogContent = Ext.get(this.config.dialogContent + "-content");
+            //this.tabs.getTab(0).setContent(dialogContent.dom.innerHTML);
+            //this.applyElements();
+            this.noBtn = configMenuDialog.addButton("取消", configMenuDialog.hide, configMenuDialog);
+            // 设置根节点
+            this.treeRoot = new Ext.tree.AsyncTreeNode({
+                text       : '选择菜单',
+                draggable  : false,
+                id         : '0',
+                uiProvider : Ext.tree.CheckboxNodeUI
+            });
+            this.menuTree.setRootNode(this.treeRoot);
+            // 渲染树
+            this.menuTree.render();
+        }
 
-        //var dialogContent = Ext.get(this.config.dialogContent + "-content");
-        //this.tabs.getTab(0).setContent(dialogContent.dom.innerHTML);
-        //this.applyElements();
-        this.noBtn = configMenuDialog.addButton("取消", configMenuDialog.hide, configMenuDialog);
+        this.menuTree.getLoader().baseParams = {id: this.currentRoleId};
+        this.treeRoot.reload();
+        this.treeRoot.expand(true, false);
 
         configMenuDialog.show(Ext.get("selectMenu"));
     }

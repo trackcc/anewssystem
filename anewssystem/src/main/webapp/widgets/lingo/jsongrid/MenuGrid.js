@@ -58,7 +58,10 @@ Ext.onReady(function(){
         {id : 'url',        qtip : "访问路径", vType : "url",      allowBlank : true, w:100},
         {id : 'image',      qtip : "图片",     vType : "alphanum", allowBlank : true,  defValue : "user.gif", w:100},
         {id : 'updateDate', qtip : "更新时间", vType : "date",     allowBlank : false, w:120},
-        {id : 'descn',      qtip : "描述",     vType : "chn",      allowBlank : true, w:150}
+        {id : 'descn',      qtip : "描述",     vType : "chn",      allowBlank : true, w:150},
+        {id : 'checkbox',   qtip : "checkbox", vType : "checkbox", inputValue : 'true', renderer: function(value) {
+            return value == 'true' ? '是' : '否';
+        }}
     ];
 
     // 创建表格

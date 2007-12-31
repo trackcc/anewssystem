@@ -162,10 +162,11 @@ Ext.lingo.FormUtils = function() {
         // 创建复选框
         , createCheckBox : function(meta) {
             var field = new Ext.form.Checkbox({
-                id        : meta.id
-                , name    : meta.id
-                , vType   : 'checkbox'
-                , mapping : meta.mapping
+                id: meta.id
+                , name: meta.id
+                , vType: 'checkbox'
+                , inputValue: meta.inputValue
+                , mapping: meta.mapping
             });
             if (isApply) {
                 field.applyTo(meta.id);
@@ -278,6 +279,9 @@ Ext.lingo.FormUtils = function() {
                         columns[meta.id] = field;
                     } else if (meta.vType == "treeField") {
                         var field = Ext.lingo.FormUtils.createTreeField(meta);
+                        columns[meta.id] = field;
+                    } else if (meta.vType == "checkbox") {
+                        var field = Ext.lingo.FormUtils.createCheckBox(meta);
                         columns[meta.id] = field;
                     } else if (meta.vType == "radio") {
                         var fields = Ext.lingo.FormUtils.createRadio(meta);

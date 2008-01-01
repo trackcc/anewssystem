@@ -55,6 +55,39 @@ Ext.lingo.FormUtils = function() {
             return field;
         }
 
+        // 创建<input type="text">输入框
+        , createTextField : function(meta) {
+            var field = new Ext.form.NumberField({
+                allowBlank  : meta.allowBlank == undefined ? false : meta.allowBlank
+                , cls       : meta.type == "password" ? meta.cls : null
+                , width     : meta.vWidth
+                , id        : meta.id
+                , name      : meta.id
+                , style     : (meta.vType == "integer" || meta.vType == "number" ? "text-align: right;" : "")
+                , readOnly  : meta.readOnly
+                , defValue  : meta.defValue
+                , alt       : meta.alt
+                , maxLength : meta.maxlength ? meta.maxlength : Number.MAX_VALUE
+                , minLength : meta.minlength ? meta.minlength : 0
+                , minValue  : meta.minvalue ? meta.minvalue : 0
+                , maxValue  : meta.maxvalue ? meta.maxvalue : Number.MAX_VALUE
+                , mapping   : meta.mapping
+            });
+            if(meta.readOnly) {
+                field.style += "color:#656B86;";
+            }
+            //if(meta.value != "" && meta.format == "date") {
+            //    field.value = datagrids[0].date(meta.value);
+            //}
+            if (isApply) {
+                field.applyTo(meta.id);
+            }
+            if(meta.defValue) {
+                field.setValue(meta.defValue);
+            }
+            return field;
+        }
+
         // 创建textarea文本框
         , createTextArea : function(meta) {
 
@@ -290,6 +323,9 @@ Ext.lingo.FormUtils = function() {
                         }
                     } else if (meta.vType == "editor") {
                         var field = Ext.lingo.FormUtils.createHtmlEditor(meta);
+                        columns[meta.id] = field;
+                    } else if (meta.vType == "number") {
+                        var field = Ext.lingo.FormUtils.createNumberField(meta);
                         columns[meta.id] = field;
                     } else {
                         var field = Ext.lingo.FormUtils.createTextField(meta);

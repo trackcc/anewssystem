@@ -138,13 +138,13 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <includes>
+<!--
             <include>anni/aerp2/domain/*Test.java</include>
             <include>anni/aerp2/manager/*Test.java</include>
             <include>anni/aerp2/controller/*Test.java</include>
-<!--
-            <include>**/*Test.java</include>
-            <include>**/*TestCase.java</include>
 -->
+            <include>anni/**/*Test.java</include>
+            <include>anni/**/*TestCase.java</include>
           </includes>
           <excludes>
             <exclude>**/Abstract*.java</exclude>

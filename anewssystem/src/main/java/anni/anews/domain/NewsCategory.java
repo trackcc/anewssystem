@@ -73,6 +73,9 @@ public class NewsCategory extends LongTreeNode<NewsCategory> {
     /** * charCode. */
     private String charCode;
 
+    /** * descn. */
+    private String descn;
+
     /** * 构造方法. */
     public NewsCategory() {
     }
@@ -183,6 +186,17 @@ public class NewsCategory extends LongTreeNode<NewsCategory> {
     /** * @param charCode String. */
     public void setCharCode(String charCode) {
         this.charCode = charCode;
+    }
+
+    /** * @return descn. */
+    @Column(name = "DESCN", length = 255)
+    public String getDescn() {
+        return descn;
+    }
+
+    /** * @param descn String. */
+    public void setDescn(String descn) {
+        this.descn = descn;
     }
 
     /**

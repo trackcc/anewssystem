@@ -55,8 +55,8 @@ Ext.lingo.FormUtils = function() {
             return field;
         }
 
-        // 创建<input type="text">输入框
-        , createTextField : function(meta) {
+        // 数字输入框
+        , createNumberField : function(meta) {
             var field = new Ext.form.NumberField({
                 allowBlank  : meta.allowBlank == undefined ? false : meta.allowBlank
                 , cls       : meta.type == "password" ? meta.cls : null

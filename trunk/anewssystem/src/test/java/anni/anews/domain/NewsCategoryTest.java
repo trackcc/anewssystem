@@ -34,6 +34,8 @@ public class NewsCategoryTest extends TestCase {
         assertNull(entity.getChildren());
         entity.setNewses(null);
         assertNull(entity.getNewses());
+        entity.setDescn(null);
+        assertNull(entity.getDescn());
 
         entity.setBitCode(1L);
         assertEquals(new Long(1L), entity.getBitCode());

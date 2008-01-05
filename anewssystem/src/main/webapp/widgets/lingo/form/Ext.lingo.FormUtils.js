@@ -9,6 +9,9 @@
  * @since 2007-09-19
  * http://code.google.com/p/anewssystem/
  */
+
+
+
 /**
  * 声明Ext.lingo命名控件
  * TODO: 完全照抄，作用不明
@@ -46,11 +49,11 @@ Ext.lingo.FormUtils = function() {
             //if(meta.value != "" && meta.format == "date") {
             //    field.value = datagrids[0].date(meta.value);
             //}
-            if (isApply) {
-                field.applyTo(meta.id);
-            }
             if(meta.defValue) {
                 field.setValue(meta.defValue);
+            }
+            if (isApply) {
+                field.applyTo(meta.id);
             }
             return field;
         }
@@ -69,21 +72,27 @@ Ext.lingo.FormUtils = function() {
                 , alt       : meta.alt
                 , maxLength : meta.maxlength ? meta.maxlength : Number.MAX_VALUE
                 , minLength : meta.minlength ? meta.minlength : 0
-                , minValue  : meta.minvalue ? meta.minvalue : 0
+                , minValue  : meta.minvalue ? meta.minvalue : Number.NEGATIVE_INFINITY
                 , maxValue  : meta.maxvalue ? meta.maxvalue : Number.MAX_VALUE
                 , mapping   : meta.mapping
             });
+            field.parseValue = function(value){
+                value = parseFloat(String(value).replace(this.decimalSeparator, "."));
+                return isNaN(value) ? '' : value;
+            };
             if(meta.readOnly) {
                 field.style += "color:#656B86;";
             }
             //if(meta.value != "" && meta.format == "date") {
             //    field.value = datagrids[0].date(meta.value);
             //}
-            if (isApply) {
-                field.applyTo(meta.id);
-            }
             if(meta.defValue) {
                 field.setValue(meta.defValue);
+            } else {
+                field.setValue(0);
+            }
+            if (isApply) {
+                field.applyTo(meta.id);
             }
             return field;
         }
@@ -109,11 +118,11 @@ Ext.lingo.FormUtils = function() {
             if(meta.readOnly) {
                 field.style += "color:#656B86;";
             }
-            if (isApply) {
-                field.applyTo(meta.id);
-            }
             if(meta.defValue) {
                 field.setValue(meta.defValue);
+            }
+            if (isApply) {
+                field.applyTo(meta.id);
             }
 
             return field;
@@ -135,13 +144,13 @@ Ext.lingo.FormUtils = function() {
                 , mapping    : meta.mapping
             });
 
-            if (isApply) {
-                field.applyTo(meta.id);
-            }
             if(meta.defValue) {
                 field.setValue(meta.defValue);
             } else {
                 field.setValue(new Date());
+            }
+            if (isApply) {
+                field.applyTo(meta.id);
             }
             return field;
         }

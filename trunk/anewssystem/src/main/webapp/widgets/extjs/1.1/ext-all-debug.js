@@ -21030,7 +21030,7 @@ Ext.extend(Ext.form.TextField, Ext.form.Field,  {
         }
     },
 
-        onKeyUp : function(e){
+    onKeyUp : function(e){
         if(!e.isNavKeyPress()){
             this.autoSize();
         }
@@ -21049,7 +21049,7 @@ Ext.extend(Ext.form.TextField, Ext.form.Field,  {
         }
     },
 
-        preFocus : function(){
+    preFocus : function(){
         if(this.emptyText){
             if(this.el.dom.value == this.emptyText){
                 this.setRawValue('');
@@ -21061,11 +21061,11 @@ Ext.extend(Ext.form.TextField, Ext.form.Field,  {
         }
     },
 
-        postBlur : function(){
+    postBlur : function(){
         this.applyEmptyText();
     },
 
-        filterKeys : function(e){
+    filterKeys : function(e){
         var k = e.getKey();
         if(!Ext.isIE && (e.isNavKeyPress() || k == e.BACKSPACE || (k == e.DELETE && e.button == -1))){
             return;
@@ -21467,7 +21467,7 @@ Ext.extend(Ext.form.NumberField, Ext.form.TextField,  {
 
     nanText : "{0} is not a valid number",
 
-        initEvents : function(){
+    initEvents : function(){
         Ext.form.NumberField.superclass.initEvents.call(this);
         var allowed = "0123456789";
         if(this.allowDecimals){
@@ -21490,7 +21490,7 @@ Ext.extend(Ext.form.NumberField, Ext.form.TextField,  {
         this.el.on("keypress", keyPress, this);
     },
 
-        validateValue : function(value){
+    validateValue : function(value){
         if(!Ext.form.NumberField.superclass.validateValue.call(this, value)){
             return false;
         }
@@ -21516,11 +21516,11 @@ Ext.extend(Ext.form.NumberField, Ext.form.TextField,  {
         return this.fixPrecision(this.parseValue(Ext.form.NumberField.superclass.getValue.call(this)));
     },
 
-        parseValue : function(value){
+    parseValue : function(value){
         return parseFloat(String(value).replace(this.decimalSeparator, ".")) || '';
     },
 
-        fixPrecision : function(value){
+    fixPrecision : function(value){
         var nan = isNaN(value);
         if(!this.allowDecimals || this.decimalPrecision == -1 || nan || !value){
            return nan ? '' : value;
@@ -21531,7 +21531,7 @@ Ext.extend(Ext.form.NumberField, Ext.form.TextField,  {
        return fixed / (scale/10);
     },
 
-        decimalPrecisionFcn : function(v){
+    decimalPrecisionFcn : function(v){
         return Math.floor(v);
     },
 

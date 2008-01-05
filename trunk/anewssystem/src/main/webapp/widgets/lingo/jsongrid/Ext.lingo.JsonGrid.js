@@ -389,6 +389,7 @@ Ext.extend(Ext.lingo.JsonGrid, Ext.util.Observable, {
             this.dialog.hide();
             this.refresh.apply(this);
         }.createDelegate(this);
+        console.error(Ext.encode(item));
         Ext.lib.Ajax.request(
             'POST',
             this.urlSave,

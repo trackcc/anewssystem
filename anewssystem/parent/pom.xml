@@ -11,7 +11,7 @@
     <developer>
       <name>Lingo</name>
       <id>Lingo</id>
-      <email>echo_o@163.com</email>
+      <email>xyz20003@gmail.com</email>
       <timezone>+8</timezone>
       <organization/>
       <roles>
@@ -165,7 +165,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-mock</artifactId>
-      <version>2.0.7</version>
+      <version>2.0.8</version>
       <scope>test</scope>
     </dependency>
 
@@ -286,7 +286,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring</artifactId>
-      <version>2.0.7</version>
+      <version>2.0.8</version>
       <scope>${use-scope}</scope>
     </dependency>
 

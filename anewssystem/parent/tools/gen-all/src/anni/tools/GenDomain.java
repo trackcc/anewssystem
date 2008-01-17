@@ -123,6 +123,8 @@ public class GenDomain {
         for (Field field : clz.getDeclaredFields()) {
             if (field.getType() == Date.class) {
                 importList.add("java.util.Date");
+                importList.add("javax.persistence.Temporal");
+                importList.add("javax.persistence.TemporalType");
             }
         }
         return importList;

@@ -54,13 +54,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/index.htm");
+            .andReturn("/index.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/index.htm");
+            .andReturn("/index.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -91,13 +91,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/create.htm");
+            .andReturn("/create.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/create.htm");
+            .andReturn("/create.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -128,13 +128,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/insert.htm");
+            .andReturn("/insert.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/insert.htm");
+            .andReturn("/insert.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -168,13 +168,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/edit.htm");
+            .andReturn("/edit.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/edit.htm");
+            .andReturn("/edit.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -204,13 +204,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/show.htm");
+            .andReturn("/show.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/show.htm");
+            .andReturn("/show.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -241,13 +241,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/update.htm");
+            .andReturn("/update.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/update.htm");
+            .andReturn("/update.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -283,13 +283,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/query.htm");
+            .andReturn("/query.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/query.htm");
+            .andReturn("/query.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -319,13 +319,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/removeAll.htm");
+            .andReturn("/removeAll.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/removeAll.htm");
+            .andReturn("/removeAll.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -357,13 +357,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/remove.htm");
+            .andReturn("/remove.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/remove.htm");
+            .andReturn("/remove.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -394,13 +394,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/removeAll.htm");
+            .andReturn("/removeAll.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/removeAll.htm");
+            .andReturn("/removeAll.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -431,13 +431,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/remove.htm");
+            .andReturn("/remove.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/remove.htm");
+            .andReturn("/remove.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -468,13 +468,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/removeAll.htm");
+            .andReturn("/removeAll.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/removeAll.htm");
+            .andReturn("/removeAll.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -510,13 +510,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/remove.htm");
+            .andReturn("/remove.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/remove.htm");
+            .andReturn("/remove.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -553,13 +553,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/upload.htm");
+            .andReturn("/upload.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/upload.htm");
+            .andReturn("/upload.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");
@@ -597,13 +597,13 @@ public class BaseControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/getStr.htm");
+            .andReturn("/getStr.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/getStr.htm");
+            .andReturn("/getStr.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");

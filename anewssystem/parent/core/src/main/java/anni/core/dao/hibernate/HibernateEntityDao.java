@@ -171,4 +171,19 @@ public class HibernateEntityDao<T> extends HibernateGenericDao {
     public T initialize(Serializable id) {
         return initialize(getEntityClass(), id);
     }
+
+    /**
+     * 获得总数.
+     * @return Long
+     */
+    public Long getCount() {
+        return getCount(getEntityClass());
+    }
+
+    /**
+     * 获得总数.
+     */
+    public Long getCountBy(String name, Object value) {
+        return getCount(getEntityClass(), name, value);
+    }
 }

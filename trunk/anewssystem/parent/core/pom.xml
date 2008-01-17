@@ -18,7 +18,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>3.8.2</version>
       <scope>provided</scope>
     </dependency>
 
@@ -40,7 +40,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-mock</artifactId>
-      <version>2.0.7</version>
+      <version>2.0.8</version>
       <scope>provided</scope>
     </dependency>
 
@@ -120,14 +120,14 @@
         <configuration>
           <includes>
 <!--
-            <include>**/ECHibernateEntityDaoTest.java</include>
+            <include>anni/core/**/*Test.java</include>
 -->
-            <include>**/*Test.java</include>
-            <include>**/*TestCase.java</include>
+            <include>anni/core/**/*Test.java</include>
+            <include>anni/core/**/*TestCase.java</include>
           </includes>
           <excludes>
-            <exclude>**/Abstract*.java</exclude>
-            <exclude>**/selenium/**</exclude>
+            <exclude>anni/core/**/Abstract*.java</exclude>
+            <exclude>anni/core/**/selenium/**</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -185,7 +185,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>taglist-maven-plugin</artifactId>
-        <version>2.1-SNAPSHOT</version>
+        <version>2.1</version>
         <configuration>
           <encoding>UTF-8</encoding>
         </configuration>

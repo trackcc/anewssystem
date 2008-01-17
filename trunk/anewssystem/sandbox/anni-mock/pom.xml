@@ -10,7 +10,7 @@
   <artifactId>anni-mock</artifactId>
   <packaging>jar</packaging>
   <version>0.0.3</version>
-  <name>Here is the test and mock object.</name>
+  <name>test and mock.</name>
 
     <dependencies>
         <dependency>

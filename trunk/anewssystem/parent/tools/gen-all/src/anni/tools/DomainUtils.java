@@ -8,7 +8,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 public class DomainUtils {
-	public static String prefix = "";
+    public static String prefix = "";
 
     public String createEntity(Class pojo) {
         Annotation[] annotations = pojo.getAnnotations();
@@ -106,8 +106,12 @@ public class DomainUtils {
                     .append("\")},inverseJoinColumns={@JoinColumn(name=\"")
                     .append(makeInverseColumn(field))
                     .append("\")})\r\n");
+            } else if (annotation.annotationType() == Temporal.class) {
+                Temporal anno = (Temporal) annotation;
+                buff.append("    @Temporal(TemporalType.TIMESTAMP)\r\n");
             } else {
                 buff.append("    ").append(annotation).append("\r\n");
+                System.out.println(annotation);
             }
         }
         if (buff.length() > 2) {

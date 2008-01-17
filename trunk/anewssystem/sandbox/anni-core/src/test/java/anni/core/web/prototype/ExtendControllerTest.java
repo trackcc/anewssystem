@@ -62,13 +62,13 @@ public class ExtendControllerTest extends TestCase {
         expect(request.getSession()).andReturn(session).anyTimes();
         expect(session.getServletContext()).andReturn(context).anyTimes();
         expect(request.getAttribute("javax.servlet.include.context_path"))
-            .andReturn("/");
+            .andReturn("/").anyTimes();
         expect(request.getContextPath()).andReturn("/").anyTimes();
         expect(request.getAttribute("javax.servlet.include.request_uri"))
-            .andReturn("/getInt.htm");
+            .andReturn("/getInt.htm").anyTimes();
         expect(request.getRequestURI()).andReturn("/index.htm").anyTimes();
         expect(request.getAttribute("javax.servlet.include.servlet_path"))
-            .andReturn("/getInt.htm");
+            .andReturn("/getInt.htm").anyTimes();
         expect(request.getServletPath()).andReturn("/index.htm").anyTimes();
         expect(context.getInitParameter(
                 "extremecomponentsPreferencesLocation")).andReturn("/");

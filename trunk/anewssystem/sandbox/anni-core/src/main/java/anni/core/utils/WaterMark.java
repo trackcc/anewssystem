@@ -38,7 +38,7 @@ public class WaterMark {
     }
 
     /**
-     * 与springmvc中上传文件配合，添加水印
+     * 与springmvc中上传文件配合，添加水印.
      * @param fileName 上传文件名
      * @param ctx request.getRealPath
      * @return 去掉了realPath部分的相对路径

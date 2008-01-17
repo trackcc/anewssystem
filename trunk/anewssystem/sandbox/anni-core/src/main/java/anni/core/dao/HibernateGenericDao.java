@@ -596,4 +596,52 @@ public class HibernateGenericDao extends HibernateDaoSupport {
 
         return entity;
     }
+
+    /**
+     * 获得总数.
+     * @param clz 实体类
+     * @param <T> 实体类型
+     * @return count
+     */
+    public <T> Long getCount(Class<T> clz) {
+        Criteria c = getSession().createCriteria(clz)
+                         .setProjection(Projections.rowCount());
+
+        return (Long) c.uniqueResult();
+    }
+
+    /**
+     * 获得总数.
+     * @param clz 实体类
+     * @param name 字段名称
+     * @param value 字段值
+     * @param <T> 实体类型
+     * @return count
+     */
+    public <T> Long getCount(Class<T> clz, String name, Object value) {
+        Criteria c = getSession().createCriteria(clz)
+                         .add(Restrictions.eq(name, value))
+                         .setProjection(Projections.rowCount());
+
+        return (Long) c.uniqueResult();
+    }
+
+    /**
+     * 获得总数.
+     * @param hql 查询语句
+     * @return count
+     */
+    public Long getCount(String hql) {
+        return (Long) getHibernateTemplate().find(hql).get(0);
+    }
+
+    /**
+     * 获得总数.
+     * @param hql 查询语句
+     * @param values 参数
+     * @return count
+     */
+    public Long getCount(String hql, Object... values) {
+        return (Long) getHibernateTemplate().find(hql, values).get(0);
+    }
 }

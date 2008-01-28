@@ -186,4 +186,18 @@ public class HibernateEntityDao<T> extends HibernateGenericDao {
     public Long getCountBy(String name, Object value) {
         return getCount(getEntityClass(), name, value);
     }
+
+    /**
+     * sum.
+     */
+    public Long getSum(String fieldName) {
+        return getSum(getEntityClass(), fieldName);
+    }
+
+    /**
+     * sum.
+     */
+    public Long getSumBy(String fieldName, String name, Object value) {
+        return getSum(getEntityClass(), fieldName, name, value);
+    }
 }

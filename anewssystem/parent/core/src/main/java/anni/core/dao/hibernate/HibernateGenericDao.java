@@ -475,6 +475,7 @@ public class HibernateGenericDao extends HibernateDaoSupport {
         return entity;
     }
 
+    // count
     /**
      * 获得总数.
      */
@@ -482,7 +483,17 @@ public class HibernateGenericDao extends HibernateDaoSupport {
         Criteria c = getSession().createCriteria(clz)
                          .setProjection(Projections.rowCount());
 
-        return (Long) c.uniqueResult();
+        Object result = c.uniqueResult();
+
+        if (result == null) {
+            return 0L;
+        } else if (result instanceof Integer) {
+            return ((Integer) result).longValue();
+        } else if (result instanceof Long) {
+            return (Long) result;
+        } else {
+            return 0L;
+        }
     }
 
     /**
@@ -493,20 +504,93 @@ public class HibernateGenericDao extends HibernateDaoSupport {
                          .add(Restrictions.eq(name, value))
                          .setProjection(Projections.rowCount());
 
-        return (Long) c.uniqueResult();
-    }
+        Object result = c.uniqueResult();
 
-    /**
-     * 获得总数.
-     */
-    public Long getCount(String hql) {
-        return (Long) getHibernateTemplate().find(hql).get(0);
+        if (result == null) {
+            return 0L;
+        } else if (result instanceof Integer) {
+            return ((Integer) result).longValue();
+        } else if (result instanceof Long) {
+            return (Long) result;
+        } else {
+            return 0L;
+        }
     }
 
     /**
      * 获得总数.
      */
     public Long getCount(String hql, Object... values) {
-        return (Long) getHibernateTemplate().find(hql, values).get(0);
+        Object result = getHibernateTemplate().find(hql, values).get(0);
+
+        if (result == null) {
+            return 0L;
+        } else if (result instanceof Integer) {
+            return ((Integer) result).longValue();
+        } else if (result instanceof Long) {
+            return (Long) result;
+        } else {
+            return 0L;
+        }
+    }
+
+    // sum
+    /**
+     * 求和.
+     */
+    public <T> Long getSum(Class<T> clz, String fieldName) {
+        Criteria c = getSession().createCriteria(clz)
+                         .setProjection(Projections.sum(fieldName));
+
+        Object result = c.uniqueResult();
+
+        if (result == null) {
+            return 0L;
+        } else if (result instanceof Integer) {
+            return ((Integer) result).longValue();
+        } else if (result instanceof Long) {
+            return (Long) result;
+        } else {
+            return 0L;
+        }
+    }
+
+    /**
+     * 求和.
+     */
+    public <T> Long getSum(Class<T> clz, String fieldName, String name,
+        Object value) {
+        Criteria c = getSession().createCriteria(clz)
+                         .setProjection(Projections.sum(fieldName))
+                         .add(Restrictions.eq(name, value));
+
+        Object result = c.uniqueResult();
+
+        if (result == null) {
+            return 0L;
+        } else if (result instanceof Integer) {
+            return ((Integer) result).longValue();
+        } else if (result instanceof Long) {
+            return (Long) result;
+        } else {
+            return 0L;
+        }
+    }
+
+    /**
+     * 求和.
+     */
+    public Long getSum(String hql, Object... values) {
+        Object result = getHibernateTemplate().find(hql, values).get(0);
+
+        if (result == null) {
+            return 0L;
+        } else if (result instanceof Integer) {
+            return ((Integer) result).longValue();
+        } else if (result instanceof Long) {
+            return (Long) result;
+        } else {
+            return 0L;
+        }
     }
 }

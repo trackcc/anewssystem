@@ -48,7 +48,7 @@ import org.springframework.web.servlet.mvc.throwaway.ThrowawayController;
  * <li><code>HomeController</code> -> <code>/home*</code></li>
  * </ul>
  *
- * <p>For {@link MultiActionController MultiActionControllers} then a similar mapping is registered,
+ * <p>For {@link org.springframework.web.servlet.mvc.multiaction.MultiActionController MultiActionControllers} then a similar mapping is registered,
  * except that all sub-paths are registed using the trailing wildcard pattern <code>/*</code>.
  * For example:
  * <ul>
@@ -56,7 +56,7 @@ import org.springframework.web.servlet.mvc.throwaway.ThrowawayController;
  * <li><code>CatalogController</code> -> <code>/catalog/*</code></li>
  * </ul>
  *
- * <p>For {@link MultiActionController} it is often useful to use
+ * <p>For {@link org.springframework.web.servlet.mvc.multiaction.MultiActionController} it is often useful to use
  * this mapping strategy in conjunction with the
  * {@link org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver}.
  *

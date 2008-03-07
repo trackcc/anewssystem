@@ -30,10 +30,10 @@ public class CompassSearchService implements InitializingBean {
     /**
      * 公开的搜索接口，返回匹配的搜索结果，与
      * {@link org.compass.spring.web.mvc.CompassSearchController#handle(javax.servlet.http.HttpServletRequest,
-     *javax.servlet.http.HttpServletResponse,Object,org.springframework.validation.BindException) 处理相似
+     javax.servlet.http.HttpServletResponse,java.lang.Object,org.springframework.validation.BindException)} 处理相似
      *
      * @see org.compass.spring.web.mvc.CompassSearchController#handle(javax.servlet.http.HttpServletRequest,
-     *javax.servlet.http.HttpServletResponse,java.lang.Object,org.springframework.validation.BindException)
+     javax.servlet.http.HttpServletResponse,java.lang.Object,org.springframework.validation.BindException)
      */
     public CompassSearchResults search(final CompassSearchCommand command) {
         return (CompassSearchResults) getCompassTemplate().execute(CompassTransaction.TransactionIsolation.READ_ONLY_READ_COMMITTED,
@@ -46,9 +46,6 @@ public class CompassSearchService implements InitializingBean {
 
     /**
      * 通过此方法调用搜索引擎,进行结果匹配搜索.
-     *
-     * @see org.compass.spring.web.mvc.CompassSearchController#performSearch(
-     *org.compass.spring.web.mvc.CompassSearchCommand,org.compass.core.CompassSession)
      */
     protected CompassSearchResults performSearch(
         CompassSearchCommand searchCommand, CompassSession session) {

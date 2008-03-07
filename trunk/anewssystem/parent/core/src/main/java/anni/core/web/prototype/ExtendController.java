@@ -51,7 +51,7 @@ public class ExtendController extends PrototypeController {
      * 初始化binder的回调函数.
      * 默认以yyyy-MM-dd日期格式设置DateEditor及允许Integer,Double的字符串为空.
      *
-     * @see MultiActionController#createBinder(HttpServletRequest,Object)
+     * @see org.springframework.web.servlet.mvc.multiaction.MultiActionController#createBinder(HttpServletRequest,Object)
      * @param requestIn 请求
      * @param binder 用来绑定数据的工具
      */
@@ -152,7 +152,7 @@ public class ExtendController extends PrototypeController {
     /**
      * 向View层传递message时将message放入httpSession的messages变量中.
      * 放在session中能保证message即使Redirect也不会消失。
-     * 需配合{@link org.springside.core.web.MessageFilter MessageFilter}使用
+     * 需配合{@link anni.core.web.filter.MessageFilter MessageFilter}使用
      *
      * @param message 保存的反馈信息
      */

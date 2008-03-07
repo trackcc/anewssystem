@@ -45,7 +45,7 @@ public class HibernateEntityDao<T> extends HibernateGenericDao {
     /**
      * 根据ID获取对象.
      *
-     * @see HibernateGenericDao#get(Class,Object)
+     * @see HibernateGenericDao#get(Class,java.io.Serializable)
      */
     public T get(Serializable id) {
         return get(getEntityClass(), id);
@@ -54,7 +54,7 @@ public class HibernateEntityDao<T> extends HibernateGenericDao {
     /**
      * 根据ID获取对象.
      *
-     * @see HibernateGenericDao#load(Class,Object)
+     * @see HibernateGenericDao#load(Class,java.io.Serializable)
      */
     public T load(Serializable id) {
         return load(getEntityClass(), id);

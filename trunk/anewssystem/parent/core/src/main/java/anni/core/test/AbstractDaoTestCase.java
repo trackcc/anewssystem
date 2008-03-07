@@ -46,7 +46,7 @@ public class AbstractDaoTestCase
     /**
      * 关闭.
      *
-     s* @throws Exception 可能抛出异常
+     * @throws Exception 可能抛出异常
      */
     @Override
     public void onTearDownAfterTransaction() throws Exception {

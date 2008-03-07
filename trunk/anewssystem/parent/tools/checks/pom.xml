@@ -15,6 +15,7 @@
       <organization/>
     </developer>
   </developers>
+<!--
   <repositories>
     <repository>
       <id>redv</id>
@@ -29,7 +30,6 @@
       <url>http://mirrors.redv.com/maven2</url>
     </pluginRepository>
   </pluginRepositories>
-<!--
   <repositories>
     <repository>
       <id>it su se</id>

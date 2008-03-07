@@ -1,0 +1,10 @@
+<project name="cleancvs" default="cleansvn" basedir=".">
+    <target name="cleancvs">
+        <defaultexcludes remove="**/CVS"/>
+        <defaultexcludes remove="**/CVS/**"/>
+        <delete includeemptydirs="true">
+            <fileset dir="." includes="**/CVS/**"/>
+            <fileset dir="." includes="**/Thumbs.db"/>
+        </delete>
+    </target>
+</project>

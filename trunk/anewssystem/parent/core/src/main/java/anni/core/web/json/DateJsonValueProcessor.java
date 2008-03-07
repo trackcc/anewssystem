@@ -11,7 +11,7 @@ import net.sf.json.processors.JsonValueProcessor;
 
 
 /**
- * @auhtor Lingo
+ * @author Lingo
  * @since 2007-08-02
  */
 public class DateJsonValueProcessor implements JsonValueProcessor {

@@ -6,7 +6,7 @@ import anni.core.security.resource.ResourceDetails;
 
 
 /**
- * 为 {@link org.springside.components.acegi.resource.Resource} 实例提供缓存.
+ * 为 {@link anni.core.security.resource.Resource} 实例提供缓存.
  * 来自www.springside.org.cn
  *
  * @author cac

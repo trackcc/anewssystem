@@ -319,6 +319,7 @@ public class FormTag extends BodyTagSupport {
                     Object vals = values.get(currentSelectName);
 
                     //logger.info(vals);
+                    //logger.info(tagValue);
                     //logger.info(vals.getClass());
                     //logger.info(values);
                     if (vals != null) {

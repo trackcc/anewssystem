@@ -29,8 +29,8 @@ import java.util.Date;
  *
  * 多说一句，springside里不知道是不是为了避免这个问题，Book.java里的时间字段都是String类型，唉……都无语了。
  *
- * @author:Lingo
- * @date:2006-11-08
+ * @author Lingo
+ * @since 2006-11-08
  */
 public class SimpleDateEditor extends PropertyEditorSupport {
     /**
@@ -76,8 +76,8 @@ public class SimpleDateEditor extends PropertyEditorSupport {
     /**
      * 我要默认显示的toString()，是yyyy-MM-dd格式的时间.
      *
-     * @author:Lingo
-     * @date:2006-11-08
+     * @author Lingo
+     * @since 2006-11-08
      */
     public static class ExtDate extends Date {
         /** * 持久化. */

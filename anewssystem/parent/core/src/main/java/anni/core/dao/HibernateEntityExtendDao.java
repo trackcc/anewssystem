@@ -30,8 +30,8 @@ import org.springframework.util.ReflectionUtils;
  * @see HibernateEntityDao
  * @see EntityInfo
  * @see UndeleteableEntityOperation
- * @see Undeletable
- * @see UndeletableEntity
+ * @see anni.core.dao.undelete.Undeletable
+ * @see anni.core.dao.undelete.UndeletableEntity
  */
 @SuppressWarnings("unchecked")
 public class HibernateEntityExtendDao<T> extends HibernateEntityDao<T>
@@ -75,7 +75,7 @@ public class HibernateEntityExtendDao<T> extends HibernateEntityDao<T>
     /**
      * 获取过滤已删除对象的Criterion条件语句.
      *
-     * @see UndeleteableEntityOperation#
+     * @see UndeleteableEntityOperation
      */
     public Criterion getUnDeletableCriterion() {
         return Restrictions.not(Restrictions.eq(

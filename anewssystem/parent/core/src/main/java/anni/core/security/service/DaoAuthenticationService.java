@@ -63,7 +63,7 @@ public class DaoAuthenticationService extends JdbcDaoSupport
     /**
      * 获取所有资源实例.
      *
-     * @see lg.lag.security.service.AuthenticationService#getResources()
+     * @see anni.core.security.service.AuthenticationService#getResources()
      * @return List
      */
     public List<Resource> getResources() {
@@ -87,7 +87,7 @@ public class DaoAuthenticationService extends JdbcDaoSupport
     /**
      * 获取所有用户实例.
      *
-     * @see lg.lag.security.service.AuthenticationService#getUsers()
+     * @see anni.core.security.service.AuthenticationService#getUsers()
      * @return List
      */
     public List<User> getUsers() {

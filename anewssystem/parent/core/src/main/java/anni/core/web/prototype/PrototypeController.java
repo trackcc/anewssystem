@@ -118,10 +118,10 @@ import org.springframework.web.util.NestedServletException;
  * @author Rob Harrop
  * @author Lingo
  * @since 2007-04-07
- * @see MethodNameResolver
- * @see InternalPathMethodNameResolver
- * @see PropertiesMethodNameResolver
- * @see ParameterMethodNameResolver
+ * @see org.springframework.web.servlet.mvc.multiaction.MethodNameResolver
+ * @see org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver
+ * @see org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver
+ * @see org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver
  * @see org.springframework.web.servlet.mvc.LastModified#getLastModified
  * @see org.springframework.web.bind.ServletRequestDataBinder
  */
@@ -213,7 +213,7 @@ public class PrototypeController extends AbstractController
     }
 
     /**
-     * @see MultiActionController#handleRequest.
+     * @see org.springframework.web.servlet.mvc.multiaction.MultiActionController#handleRequestInternal(HttpServletRequest,HttpServletResponse).
      * @param requestIn request
      * @param responseIn respnonseIn
      * @return ModelAndView mv

@@ -29,13 +29,10 @@ import org.springframework.web.servlet.ModelAndView;
  * SpringSide 基于命名规则的CRUD Controller基类.
  * 结合了Multi-Action 与 Form Controller的优点，
  * 本类演示的仅仅是封装的一种可能性,大家可以根据自己的项目自由扩展或重定义.
- * 如果不需要这么紧密的封装，可用{@link BaseController}
  * 来自www.springside.org.cn
  *
  *
  * @author calvin
- * @see BaseController
- * @see org.springside.bookstore.admin.web.BookManageController
  * @param <T> 实体类
  * @param <D> 实体类dao
  */
@@ -354,7 +351,7 @@ public class BaseController<T, D extends EntityDao<T>>
     protected void onCreate() throws Exception {
     }
 
-    /** * onSave. */
+    /** * onInsert. */
     protected void onInsert() throws Exception {
     }
 
@@ -384,7 +381,7 @@ public class BaseController<T, D extends EntityDao<T>>
 
     /**
      * 回调函数.校验出错时,将出错的对象及出错信息放回model.
-     * 在{@link #onSave(HttpServletRequest,HttpServletResponse,ModelAndView,boolean)}中调用.
+     * 在{@link #onInsert}和{@link #onUpdate}中调用.
      */
     protected void onBindError(BindingResult result, T entity) {
         mv.setViewName(editView);

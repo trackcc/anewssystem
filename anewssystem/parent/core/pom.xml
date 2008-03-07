@@ -149,6 +149,24 @@
         </executions>
       </plugin>
 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <encoding>UTF-8</encoding>
+          <docencoding>UTF-8</docencoding>
+          <charset>UTF-8</charset>
+          <tags>
+            <tag>
+              <name>web.listener</name>
+              <placement>a</placement>
+              <head>xdoclet需要的监听器标签:</head>
+            </tag>
+          </tags>
+          <quiet>true</quiet>
+          <javadocVersion>1.5</javadocVersion>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

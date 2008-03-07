@@ -231,7 +231,7 @@ public class IBatisGenericDao extends SqlMapClientDaoSupport {
     /**
      * 分页查询函数，使用PaginatedList.
      *
-     * @param pageNo页号,从1开始.
+     * @param pageNo 页号,从1开始.
      * @return 含总记录数和当前页数据的Page对象.
      */
     public Page pagedQuery(Class entityClass, Object parameterObject,

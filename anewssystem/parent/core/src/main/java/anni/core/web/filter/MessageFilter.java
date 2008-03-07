@@ -14,13 +14,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * 为了信息在redirect时不会消失.
- * {@link org.springside.core.commons.BaseController#saveMessage(javax.servlet.http.HttpServletRequest, String)}
+ * {@link anni.core.web.prototype.ExtendController#saveMessage(String)}
  * 使用session暂存message．
  * 而此filter负责把消息 从session 搬回到 request．
  * 来自www.springside.org.cn
  *
  * @author calvin
- * @see org.springside.core.commons.BaseController#saveMessage(javax.servlet.http.HttpServletRequest, String)
+ * @see anni.core.web.prototype.ExtendController#saveMessage(String)
  * @since 2007-03-14
  * @version 1.0
  */
@@ -31,8 +31,8 @@ public class MessageFilter extends OncePerRequestFilter {
      * @param request 请求
      * @param response 响应
      * @param filterChain 过滤器链
-    * @throws IOException io异常
-    * @throws ServletException servlet异常
+     * @throws IOException io异常
+     * @throws ServletException servlet异常
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request,

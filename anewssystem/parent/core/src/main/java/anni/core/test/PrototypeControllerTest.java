@@ -118,7 +118,7 @@ public class PrototypeControllerTest
         };
     }
 
-    /** * setter */
+    /** * setter. */
     //public void setUserController(UserController userControllerIn) {
     //    userController = userControllerIn;
     //}
@@ -130,11 +130,11 @@ public class PrototypeControllerTest
      * 3.open session in view
      *
      * 具体使用的时候要覆盖这个方法
-     * @Override
+     * <pre>@Override
      * protected void onSetUpBeforeTransaction() throws Exception {
      *     super.onSetUpBeforeTransaction();
      *     controller = (Controller) ctx.getBean("anni.cms.lag.web.UserController");
-     * }
+     * }</pre>
      * FIXME: 代码量还是嫌多了，怎么简化？
      *
      * @throws Exception 初始化的错误

@@ -26,8 +26,8 @@ import com.octo.captcha.image.gimpy.GimpyFactory;
  * Captcha增强版本.
  *
  * @author david.turing@gmail.com
- * @modifyTime 21:01:52
- * @description Install Captcha Instruction
+ * modifyTime: 21:01:52
+ * description: Install Captcha Instruction
  * 1，add captchaValidationProcessingFilter to applicationContext-acegi-security.xml
  * 2，modify applicationContext-security-captcha.xml:
  * 2.1 make sure that captchaValidationProcessingFilter Call captchaService

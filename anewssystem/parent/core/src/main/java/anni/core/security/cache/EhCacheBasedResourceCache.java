@@ -55,7 +55,7 @@ public class EhCacheBasedResourceCache implements ResourceCache {
 
     /**
      * 根据资源内容，从缓存获得资源细节.
-     * @see lg.lag.security.cache.ResourceCache#getResourceFromCache(java.lang.String)
+     * @see anni.core.security.cache.ResourceCache#getResourceFromCache(java.lang.String)
      *
      * @param resString resource string
      * @return ResourceDetails
@@ -84,7 +84,7 @@ public class EhCacheBasedResourceCache implements ResourceCache {
 
     /**
      * 添加一个资源信息.
-     * @see lg.lag.security.cache.ResourceCache#putResourceInCache(lg.lag.security.model.ResourceDetails)
+     * @see anni.core.security.cache.ResourceCache#putResourceInCache(anni.core.security.resource.ResourceDetails)
      *
      * @param resourceDetails 资源信息.
      */
@@ -101,7 +101,7 @@ public class EhCacheBasedResourceCache implements ResourceCache {
 
     /**
      * 根据资源内容，删除一个资源.
-     * @see lg.lag.security.cache.ResourceCache#removeResourceFromCache(java.lang.String)
+     * @see anni.core.security.cache.ResourceCache#removeResourceFromCache(java.lang.String)
      *
      * @param resString resource string
      */

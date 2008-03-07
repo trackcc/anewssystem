@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * 实际中使用时，实现类需要使用导入javax.persistence.Column
  * 并对name字段进行如下注释
- * @Column(unique = true, nullable = false)
+ * <pre>@Column(unique = true, nullable = false)</pre>
  * 我们考虑使用NamedEntityBean的情况，很可能是除了id就只有name字段的情况
  * 这样，name重复，或者为空，就没有实际意义了，所以在进行这样的解释
  *
